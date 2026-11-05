@@ -48,7 +48,7 @@ Each member's work can be checked through the linked issues, pull requests and c
 
 **Work done:**
 - Initial OpenAPI contract (`api/openapi.yaml`) and API guide (`api/README.md`): [#20](https://github.com/seng321-7th-team/PantryChef/issues/20), [#22](https://github.com/seng321-7th-team/PantryChef/issues/22), [#23](https://github.com/seng321-7th-team/PantryChef/issues/23), [#24](https://github.com/seng321-7th-team/PantryChef/issues/24), PR [#25](https://github.com/seng321-7th-team/PantryChef/pull/25)
-- Reviews: PR [#6](https://github.com/seng321-7th-team/PantryChef/pull/6), PR [#7](https://github.com/seng321-7th-team/PantryChef/pull/7), PR [#8](https://github.com/seng321-7th-team/PantryChef/pull/8), PR [#12](https://github.com/seng321-7th-team/PantryChef/pull/12), PR [#16](https://github.com/seng321-7th-team/PantryChef/pull/16), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17)
+- Reviews: PR [#6](https://github.com/seng321-7th-team/PantryChef/pull/6), PR [#7](https://github.com/seng321-7th-team/PantryChef/pull/7), PR [#8](https://github.com/seng321-7th-team/PantryChef/pull/8), PR [#12](https://github.com/seng321-7th-team/PantryChef/pull/12), PR [#16](https://github.com/seng321-7th-team/PantryChef/pull/16), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17), PR [#21](https://github.com/seng321-7th-team/PantryChef/pull/21)
 
 **Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=ayseddurall
 
@@ -86,6 +86,6 @@ Each member's work can be checked through the linked issues, pull requests and c
 **Sprint 1 responsibilities:** Implementation and integration review of the Sprint 1 documents: vision, backlog and API from the UI and integration side.
 
 **Work done:**
-- Reviews: PR [#16](https://github.com/seng321-7th-team/PantryChef/pull/16), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (MVP scope and business rules checked against the proposal and vision)
+- Reviews: PR [#11](https://github.com/seng321-7th-team/PantryChef/pull/11), PR [#16](https://github.com/seng321-7th-team/PantryChef/pull/16), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (MVP scope and business rules checked against the proposal and vision)
 
 **Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=tucevik
