@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  openapi-lint:
+    # This name is the required status check in the main and develop rulesets.
+    # Renaming it requires updating those rulesets.
+    name: OpenAPI lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Validate api/openapi.yaml
+        run: |
+          if [ ! -f api/openapi.yaml ]; then
+            echo "::notice title=OpenAPI lint::api/openapi.yaml does not exist yet; skipping validation."
+            exit 0
+          fi
+          npx --yes @redocly/cli@2.64.1 lint api/openapi.yaml
