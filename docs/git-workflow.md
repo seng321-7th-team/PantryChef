@@ -2,7 +2,8 @@
 
 **Course:** BM 321 – Software Engineering
 **Team:** 7
-**Document Owner:** Emre Boz (DevOps and CI/CD Infrastructure Engineer)
+**Document Owner:** Bilgesu Nacak (Scrum Master)
+**Prepared with:** Emre Boz (DevOps), who also owns branch protection and CI
 **Status:** Draft, Sprint 1
 
 This is how we use branches, issues and pull requests in this repo. Most of the rules below are enforced with GitHub rulesets, so GitHub blocks anything that doesn't follow them.
@@ -68,7 +69,7 @@ Rebase merge is turned off.
 
 ## 5. Protection rules
 
-Configured in Settings → Rules → Rulesets.
+Configured in Settings → Rules → Rulesets. Active rulesets: [Protect main branch](https://github.com/seng321-7th-team/PantryChef/rules/26623570), [Protect develop branch](https://github.com/seng321-7th-team/PantryChef/rules/26623572), [Protect release tags](https://github.com/seng321-7th-team/PantryChef/rules/26623573). PR #6 shows them working: it needed an approval and a passing `OpenAPI lint` check before it could merge.
 
 | Rule | `main` | `develop` |
 |---|:---:|:---:|
