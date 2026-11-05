@@ -8,7 +8,7 @@
 **Role:** Product Owner and Requirements Engineer  
 **RACI:** Responsible (R) and Accountable (A)  
 **Document:** `docs/project-proposal.md`  
-**Status:** Updated — Pending Team Review
+**Status:** Revised — Pending Team Review
 
 ---
 
@@ -116,7 +116,7 @@ The system also supports controlled cancellation and low-stock monitoring.
 
 ### 5.1 Order Lifecycle
 
-The approved order lifecycle consists of the following states:
+The MVP order lifecycle consists of the following states, consistent with the latest team workflow diagram:
 
 | Order Status | Description | Inventory Effect |
 |---|---|---|
@@ -129,7 +129,7 @@ The normal workflow is:
 
 **Order Created → Pending → Preparing → Ready**
 
-An order may transition to Cancelled according to the cancellation policy.
+An order may transition from Pending, Preparing, or Ready to Cancelled only under the cancellation policy. Cancelled is terminal.
 
 Ready represents the final state of the normal MVP order workflow. A separate Delivered status is not included.
 
@@ -370,11 +370,11 @@ The MIT License is appropriate for PantryChef because:
 - It has relatively simple compliance requirements.
 - It is compatible with common open-source development workflows.
 
-The corresponding `LICENSE` file will be added to the repository using the standard MIT License text and appropriate copyright information.
+The corresponding `LICENSE` file should contain the standard MIT License text and appropriate copyright information. Its repository status must be verified before marking this deliverable complete.
 
 ## 12. Sprint 1 Responsibilities and Collaboration
 
-The Sprint 1 responsibilities follow the updated PantryChef team responsibility distribution.
+The Sprint 1 responsibilities follow the proposed 05 November 2026 team responsibility distribution, subject to team approval and corresponding RACI updates.
 
 ### 12.1 Product Owner and Requirements Engineer
 
@@ -399,7 +399,7 @@ The Product Owner and Requirements Engineer is responsible for three main Sprint
 - Identify primary actors and external stakeholders.
 - Specify the system boundary and external interactions.
 - Define in-scope and out-of-scope capabilities.
-- Document the approved order lifecycle: Pending, Preparing, Ready, and Cancelled.
+- Document the MVP order lifecycle: Pending, Preparing, Ready, and Cancelled.
 - Describe atomic ingredient reservation and physical stock consumption.
 - Define cancellation permissions and inventory restoration rules.
 - Prepare the system boundary diagram.
@@ -446,9 +446,9 @@ Maintains repository infrastructure, Git-Flow documentation, branch protection, 
 
 ### 12.3 Sprint 1 Documentation Consistency
 
-The Project Proposal, System Vision and Boundary, Initial Product Backlog, and OpenAPI draft must follow the same approved PantryChef scenario.
+The Project Proposal, System Vision and Boundary, Initial Product Backlog, and OpenAPI draft must follow the same PantryChef scenario.
 
-The approved order lifecycle is:
+The MVP order lifecycle shown in the latest team workflow diagram is:
 
 **Order Created → Pending → Preparing → Ready**
 
@@ -457,6 +457,8 @@ Cancellation follows the defined authorization and inventory rules.
 Ingredient reservation occurs during Pending, while physical stock consumption occurs exactly once when preparation begins.
 
 The Product Owner is responsible for maintaining consistency between product scope, requirements, and backlog priorities.
+
+The proposed Initial Product Backlog ownership is Burcu (A/R), with Beyzanur consulted for testability. This assignment must be reflected in the team RACI and meeting decisions once approved.
 
 Team responsibilities must remain aligned with the updated Sprint 1 responsibility distribution and RACI Matrix.
 
