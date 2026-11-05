@@ -73,6 +73,7 @@ Each member's work can be checked through the linked issues, pull requests and c
 - MIT LICENSE file: [#13](https://github.com/seng321-7th-team/PantryChef/issues/13), PR [#14](https://github.com/seng321-7th-team/PantryChef/pull/14)
 - README and Git-Flow doc aligned with the corrected RACI: [#18](https://github.com/seng321-7th-team/PantryChef/issues/18), PR [#19](https://github.com/seng321-7th-team/PantryChef/pull/19)
 - Reviews: PR [#15](https://github.com/seng321-7th-team/PantryChef/pull/15), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17)
+- Link and status fixes in PR [#15](https://github.com/seng321-7th-team/PantryChef/pull/15) while Bilgesu was away
 - This contributions file: [#10](https://github.com/seng321-7th-team/PantryChef/issues/10)
 - Repository settings: `develop` as default branch, merge options, labels, Sprint 1 milestone, secret scanning
 
