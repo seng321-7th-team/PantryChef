@@ -50,7 +50,7 @@ The system connects customer orders with recipe-based ingredient reservations an
 
 |---|---|
 
-| Waiter | Creates customer orders and delivers completed orders. |
+| Waiter | Creates customer orders and tracks preparation status. |
 
 | Chef | Views kitchen orders and updates preparation status. |
 
@@ -109,9 +109,9 @@ Own feature implementation, cross-component integration, API/UI coordination, in
 
 The main order lifecycle is:
 
-**Pending → Preparing → Ready → Delivered**
+**Pending → Preparing → Ready**
 
-Permitted cancellation branches: Pending → Cancelled; Preparing → Cancelled or Ready → Cancelled only when the requester has cancellation permission. Delivered is not cancelled through the ordinary order-cancellation workflow.
+Permitted cancellation branches: Pending → Cancelled; Preparing → Cancelled or Ready → Cancelled only when the requester has cancellation permission.
 
 | State | Trigger | Inventory Behavior |
 
@@ -122,8 +122,6 @@ Permitted cancellation branches: Pending → Cancelled; Preparing → Cancelled 
 | Preparing | Chef starts preparation | Reserved ingredients are deducted from physical stock. |
 
 | Ready | Chef completes preparation | Order status changes; no additional stock deduction. |
-
-| Delivered | Waiter delivers the order | Delivery is recorded; no additional stock deduction. |
 
 ### 3.2 Inventory Definitions
 
@@ -197,21 +195,13 @@ When the chef selects Ready:
 
 3. No additional inventory deduction occurs.
 
-### 3.7 Delivered – Order Delivery
+### 3.7 MVP Workflow Boundary
 
-When the waiter delivers the prepared order:
-
-1. The order must be Ready.
-
-2. The order status becomes Delivered.
-
-3. The delivery event is recorded.
-
-4. Physical and reserved stock remain unchanged.
+The normal preparation workflow ends at Ready. Customer delivery and delivery-status tracking are outside the MVP. Authorized cancellation from Ready to Cancelled remains possible; Cancelled is terminal.
 
 ### 3.8 Authorized Cancellation After Preparing
 
-Once preparation has started, ingredients have already been deducted. An authorized user may cancel an order in Preparing or Ready status, subject to server-side permission checks. The order becomes Cancelled and the cancellation actor, reason, and time must be recorded. Delivered orders are outside this normal cancellation flow; any later correction requires a separate approved process.
+Once preparation has started, ingredients have already been deducted. An authorized user may cancel an order in Preparing or Ready status, subject to server-side permission checks. The order becomes Cancelled and the cancellation actor, reason, and time must be recorded.
 
 Therefore:
 
@@ -239,15 +229,11 @@ Later changes to a recipe must not modify ingredient quantities already associat
 
 - Insufficient stock must prevent reservation.
 
-- Cancelled orders cannot proceed to Preparing, Ready, or Delivered.
+- Cancelled orders cannot proceed to Preparing or Ready.
 
 - Only a permitted actor may cancel an order after Preparing; the cancellation must record who, when, and why.
 
-- Delivered orders cannot be cancelled through the ordinary order workflow.
-
 - Ready requires Preparing.
-
-- Delivered requires Ready.
 
 - Inventory adjustments must be traceable.
 
@@ -268,8 +254,6 @@ Assume the restaurant has 20 eggs and an order requires 5 eggs.
 | Preparing | 15 | 0 | 15 |
 
 | Ready | 15 | 0 | 15 |
-
-| Delivered | 15 | 0 | 15 |
 
 If the order is cancelled during Pending:
 
@@ -520,7 +504,7 @@ The Scrum Master coordinates verification that:
 
 - The same actors are used across project documents.
 
-- Order states follow Pending → Preparing → Ready → Delivered.
+- Order states follow Pending → Preparing → Ready.
 
 - Ingredients are reserved during Pending.
 

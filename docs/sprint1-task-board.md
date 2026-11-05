@@ -99,7 +99,7 @@ The following tasks are planned according to the Sprint 1 team responsibility di
 
 All relevant project documents should follow the same workflow:
 
-**Pending → Preparing → Ready → Delivered**
+**Pending → Preparing → Ready**
 
 - [ ] Order creation reserves ingredients according to the associated recipe.
 - [ ] Physical stock remains unchanged during Pending.
@@ -109,12 +109,11 @@ All relevant project documents should follow the same workflow:
 - [ ] Preparing deducts physical stock and clears reservations atomically.
 - [ ] Repeated Preparing requests do not deduct stock twice.
 - [ ] Ready changes the order status without additional deduction.
-- [ ] Delivered records delivery without additional deduction.
+- [ ] The normal preparation workflow ends at Ready; customer delivery and delivery-status tracking are outside the MVP.
 - [ ] Approved by the team on November 4, 2026: Restaurant Manager or explicitly authorized Waiter may cancel Preparing or Ready orders after server-side permission checks; unauthorized Waiters may not.
 - [ ] Such cancellation records the actor, reason, and timestamp and changes the order status to Cancelled.
 - [ ] Cancellation after Preparing or Ready does not automatically restore physical stock or release already-cleared reservations.
-- [ ] Delivered orders cannot use the ordinary cancellation workflow.
-- [ ] Cancelled orders cannot proceed to Preparing, Ready, or Delivered.
+- [ ] Cancelled orders cannot proceed to Preparing or Ready.
 - [ ] Unauthorized cancellation and conflicting requests return appropriate API errors (including 403/409).
 - [ ] Insufficient stock prevents reservation.
 - [ ] Concurrent orders cannot over-reserve ingredients.

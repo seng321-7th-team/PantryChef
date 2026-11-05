@@ -58,7 +58,7 @@ This is a document correction requested by the user, not a new team meeting or a
 
 The proposed order lifecycle is:
 
-**Pending → Preparing → Ready → Delivered**
+**Pending → Preparing → Ready**
 
 ### 3.1 Pending – Order Creation
 
@@ -88,10 +88,11 @@ The proposed order lifecycle is:
 - The chef changes the status from Preparing to Ready.
 - No additional physical stock deduction occurs.
 
-### 3.5 Delivered – Order Delivered
+### 3.5 MVP Workflow Boundary
 
-- The waiter records delivery of a Ready order.
-- No additional stock deduction occurs.
+- The normal preparation workflow ends at Ready.
+- Customer delivery and delivery-status tracking are outside the MVP.
+- Authorized cancellation from Ready to Cancelled remains possible; Cancelled is terminal.
 
 ### 3.6 Authorized Cancellation During Preparing or Ready
 
@@ -100,7 +101,6 @@ The proposed order lifecycle is:
 - Previously consumed ingredients are not automatically returned to physical stock.
 - Cleared reservations must not be released again; no duplicate reservation release is allowed.
 - Any necessary inventory correction requires a separate authorized and traceable manual adjustment.
-- Delivered orders cannot be cancelled through the ordinary order workflow.
 - These permission and audit rules were approved by the team on November 4, 2026, and must be reflected consistently in the system vision, API contract, backlog, and tests. Cross-document consistency remains pending verification.
 
 ### 3.7 Recipe Version and Concurrency
@@ -153,18 +153,18 @@ Assignments are corrected against the authoritative image. Work status and evide
 
 | ID | Topic | Decision / Proposal | Status |
 |---|---|---|---|
-| D-01 | Order lifecycle | Pending → Preparing → Ready → Delivered | Pending confirmation |
+| D-01 | Order lifecycle | Pending → Preparing → Ready | Pending confirmation |
 | D-02 | Ingredient reservation | Reserve ingredients during Pending without reducing physical stock | Pending confirmation |
 | D-03 | Pending cancellation | Release reservations without increasing physical stock | Pending confirmation |
 | D-04 | Preparing | Deduct physical stock and clear reservations atomically | Pending confirmation |
 | D-05 | Duplicate requests | Prevent repeated stock deduction | Pending confirmation |
-| D-06 | Ready and Delivered | No further inventory deduction | Pending confirmation |
+| D-06 | Ready | No further inventory deduction | Pending confirmation |
 | D-07 | Recipe version | Preserve recipe version associated with each order | Pending confirmation |
 | D-08 | Team responsibilities | Approve the Sprint 1 RACI Matrix | Pending confirmation |
 | D-09 | GitHub workflow | Follow the DevOps Lead's Git-Flow documentation | Pending confirmation |
 | D-10 | Task tracking | Track tasks using GitHub Issues and Projects | Pending confirmation |
 | D-11 | Stock deduction timing revision | Rev 2 stated that physical stock would be deducted at Ready. The updated workflow specifies deduction when the order enters Preparing, while Ready causes no additional deduction. | Revision documented; team confirmation pending |
-| D-12 | Authorized cancellation in Preparing / Ready | Restaurant Manager and explicitly authorized Waiter may cancel Preparing or Ready orders after server-side permission checks; record actor, reason, and timestamp; do not automatically restore consumed stock or release cleared reservations again; exclude Delivered from ordinary cancellation. | Approved by team on November 4, 2026; cross-document verification pending |
+| D-12 | Authorized cancellation in Preparing / Ready | Restaurant Manager and explicitly authorized Waiter may cancel Preparing or Ready orders after server-side permission checks; record actor, reason, and timestamp; do not automatically restore consumed stock or release cleared reservations again. | Approved by team on November 4, 2026; cross-document verification pending |
 | D-13 | Historical backlog RACI - superseded | Original record assigned drafting to Beyzanur and approval to Burcu. Corrected source ownership: Burcu A/R; Beyzanur QA consultation only. | Superseded by source correction on 5 November 2026; historical review/PR claim is not new approval |
 
 Decision D-12 was approved by the team on November 4, 2026. Decision D-13 was reviewed by the team, with PR #3 review pending. All other decisions remain pending confirmation unless explicitly documented otherwise.
