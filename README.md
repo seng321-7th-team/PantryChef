@@ -6,14 +6,16 @@ PantryChef links customer orders to recipe-based ingredient reservations and sto
 
 ## Team
 
-| Member | Role |
-|---|---|
-| Burcu Ücük | Product Owner and Requirements Engineer |
-| Bilgesu Nacak | Scrum Master and Agile Process Coach |
-| Ayşe Dural | Lead Software Architect and Technical Lead |
-| Beyzanur Alpay | Quality Assurance and Test Automation Engineer |
-| Emre Boz | DevOps and CI/CD Infrastructure Engineer |
-| Tuğçe Çevik | Implementation and Integration Engineer |
+| Member | GitHub | Role |
+|---|---|---|
+| Burcu Ücük | [@burcucuk5](https://github.com/burcucuk5) | Product Owner and Requirements Engineer |
+| Bilgesu Nacak | [@BilgesuNacak](https://github.com/BilgesuNacak) | Scrum Master and Agile Process Coach |
+| Ayşe Dural | [@ayseddurall](https://github.com/ayseddurall) | Lead Software Architect and Technical Lead |
+| Beyzanur Alpay | [@beyzanuralpayy](https://github.com/beyzanuralpayy) | Quality Assurance and Test Automation Engineer |
+| Emre Boz | [@emrboz](https://github.com/emrboz) | DevOps and CI/CD Infrastructure Engineer |
+| Tuğçe Çevik | [@tucevik](https://github.com/tucevik) | Implementation and Integration Engineer |
+
+Individual contributions are listed in [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md).
 
 ## Sprint 1 deliverables
 
