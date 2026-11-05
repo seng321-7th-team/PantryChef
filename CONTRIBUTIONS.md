@@ -1,0 +1,81 @@
+# PantryChef – Individual Contributions
+
+**Course:** SENG 321 / BM 321 – Software Engineering
+**Team:** 7
+**Project:** PantryChef – Restaurant Inventory and Order Tracking System
+**Repository:** https://github.com/seng321-7th-team/PantryChef
+
+Each member's work can be checked through the linked issues, pull requests and commits.
+
+## Team members
+
+| Name | Student No | GitHub | Role |
+|---|---|---|---|
+| Burcu Ücük | | [@burcucuk5](https://github.com/burcucuk5) | Product Owner and Requirements Engineer |
+| Bilgesu Nacak | | [@BilgesuNacak](https://github.com/BilgesuNacak) | Scrum Master and Agile Process Coach |
+| Ayşe Dural | | [@ayseddurall](https://github.com/ayseddurall) | Lead Software Architect and Technical Lead |
+| Beyzanur Alpay | | [@beyzanuralpayy](https://github.com/beyzanuralpayy) | Quality Assurance and Test Automation Engineer |
+| Emre Boz | | [@emrboz](https://github.com/emrboz) | DevOps and CI/CD Infrastructure Engineer |
+| Tuğçe Çevik | | [@tucevik](https://github.com/tucevik) | Implementation and Integration Engineer |
+
+---
+
+## Burcu Ücük
+
+**Sprint 1 responsibilities:** Project proposal, MVP scope, stakeholders and risks, open-source license decision, approval of backlog priorities and acceptance criteria.
+
+**Work done:**
+- 
+
+**Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=burcucuk5
+
+## Bilgesu Nacak
+
+**Sprint 1 responsibilities:** Team roles and RACI matrix, meeting notes and decision log, Sprint 1 task board, cross-document consistency review.
+
+**Work done:**
+- 
+
+**Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=BilgesuNacak
+
+## Ayşe Dural
+
+**Sprint 1 responsibilities:** Initial OpenAPI contract (`api/openapi.yaml`): order, inventory and recipe operations, schemas, error responses and cancellation rules.
+
+**Work done:**
+- 
+
+**Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=ayseddurall
+
+## Beyzanur Alpay
+
+**Sprint 1 responsibilities:** Initial product backlog, user stories, story points and acceptance criteria (with Burcu's approval), initial test cases.
+
+**Work done:**
+- 
+
+**Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=beyzanuralpayy
+
+## Emre Boz
+
+**Sprint 1 responsibilities:** GitHub repository setup, Git-Flow rules, branch protection, issue and PR templates, CI.
+
+**Work done:**
+- Repository structure and README: [#1](https://github.com/seng321-7th-team/PantryChef/issues/1), PR [#7](https://github.com/seng321-7th-team/PantryChef/pull/7)
+- Git-Flow workflow document (`docs/git-workflow.md`): [#2](https://github.com/seng321-7th-team/PantryChef/issues/2), PR [#8](https://github.com/seng321-7th-team/PantryChef/pull/8)
+- Issue and pull request templates: [#3](https://github.com/seng321-7th-team/PantryChef/issues/3), PR [#9](https://github.com/seng321-7th-team/PantryChef/pull/9)
+- Rulesets for `main`, `develop` and release tags: [#4](https://github.com/seng321-7th-team/PantryChef/issues/4)
+- CI check that validates the OpenAPI contract: [#5](https://github.com/seng321-7th-team/PantryChef/issues/5), PR [#6](https://github.com/seng321-7th-team/PantryChef/pull/6)
+- This contributions file: [#10](https://github.com/seng321-7th-team/PantryChef/issues/10)
+- Repository settings: `develop` as default branch, merge options, labels, Sprint 1 milestone, secret scanning
+
+**Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=emrboz
+
+## Tuğçe Çevik
+
+**Sprint 1 responsibilities:** System vision and boundary, system context diagram, order state diagram, API–UI alignment review.
+
+**Work done:**
+- 
+
+**Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=tucevik
