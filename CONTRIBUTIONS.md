@@ -56,7 +56,7 @@ Each member's work can be checked through the linked issues, pull requests and c
 **Sprint 1 responsibilities:** QA review of Sprint 1 deliverables: testability of acceptance criteria and consistency of the order workflow.
 
 **Work done:**
-- Reviews: PR [#9](https://github.com/seng321-7th-team/PantryChef/pull/9) (order workflow fix in the PR template), PR [#8](https://github.com/seng321-7th-team/PantryChef/pull/8) (order workflow in the Git-Flow doc), PR [#12](https://github.com/seng321-7th-team/PantryChef/pull/12), PR [#14](https://github.com/seng321-7th-team/PantryChef/pull/14), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (story point totals)
+- Reviews: PR [#9](https://github.com/seng321-7th-team/PantryChef/pull/9) (order workflow fix in the PR template), PR [#8](https://github.com/seng321-7th-team/PantryChef/pull/8) (order workflow in the Git-Flow doc), PR [#12](https://github.com/seng321-7th-team/PantryChef/pull/12), PR [#14](https://github.com/seng321-7th-team/PantryChef/pull/14), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (story point totals), PR [#19](https://github.com/seng321-7th-team/PantryChef/pull/19)
 
 **Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=beyzanuralpayy
 
