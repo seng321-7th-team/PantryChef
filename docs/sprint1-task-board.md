@@ -57,31 +57,31 @@ The following tasks are planned according to the Sprint 1 team responsibility di
 
 | Task ID | Task | Owner | Expected Deliverable | Status |
 |---|---|---|---|---|
-| S1-01 | Prepare Project Proposal | Burcu | `docs/project-proposal.md` ([PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12)) | In Review |
-| S1-02 | Define MVP scope, stakeholders, and risks | Burcu | Project Proposal sections ([PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12)) | In Review |
+| S1-01 | Prepare Project Proposal | Burcu | `docs/project-proposal.md` ([PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12)) | Done |
+| S1-02 | Define MVP scope, stakeholders, and risks | Burcu | Project Proposal sections ([PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12)) | Done |
 | S1-03 | Select and justify open-source license | Burcu | License decision ([PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12), [PR #14](https://github.com/seng321-7th-team/PantryChef/pull/14)) | Done |
-| S1-04 | Prepare System Vision & Boundary | Burcu | `docs/system-vision.md` ([PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16)) | In Review |
+| S1-04 | Prepare System Vision & Boundary | Burcu | `docs/system-vision.md` ([PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16)) | Done |
 | S1-05 | Supporting diagram work - not an independent required S1 delivery | Burcu (vision); Ayşe (technical consultation) | System context diagram ([PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16)) | Optional supporting work; diagrams are in the vision document |
 | S1-06 | Supporting diagram work - not an independent required S1 delivery | Burcu (vision); Ayşe (technical consultation) | Order lifecycle diagram ([PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16)) | Optional supporting work; diagrams are in the vision document |
-| S1-07 | Document reservation and approved cancellation rules, including Manager / authorized Waiter permission | Burcu | System Vision workflow and state diagram ([PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16)) | In Review |
-| S1-08 | Prepare initial OpenAPI YAML | Ayşe | `api/openapi.yaml` | To Do |
-| S1-09 | Define order, inventory, and recipe API operations | Ayşe | API paths and schemas | To Do |
-| S1-10 | Define API errors, idempotency, and approved Manager / authorized Waiter cancellation checks (403/409) | Ayşe | API responses, permissions, and rules | To Do |
-| S1-11 | Prepare team roles and RACI Matrix | Bilgesu | `docs/team-roles-raci.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | In Review |
-| S1-12 | Maintain meeting notes and decisions | Bilgesu | `docs/sprint1-meeting-notes.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | In Review |
-| S1-13 | Track Sprint 1 tasks and impediments | Bilgesu | `docs/sprint1-task-board.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | In Review |
-| S1-14 | Coordinate workflow consistency review | Bilgesu | Review records | To Do |
+| S1-07 | Document reservation and approved cancellation rules, including Manager / authorized Waiter permission | Burcu | System Vision workflow and state diagram ([PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16)) | Done |
+| S1-08 | Prepare initial OpenAPI YAML | Ayşe | `api/openapi.yaml` ([PR #25](https://github.com/seng321-7th-team/PantryChef/pull/25)) | Done |
+| S1-09 | Define order, inventory, and recipe API operations | Ayşe | API paths and schemas ([PR #25](https://github.com/seng321-7th-team/PantryChef/pull/25)) | Done |
+| S1-10 | Define API errors, idempotency, and approved Manager / authorized Waiter cancellation checks (403/409) | Ayşe | API responses, permissions, and rules ([PR #25](https://github.com/seng321-7th-team/PantryChef/pull/25)) | Done |
+| S1-11 | Prepare team roles and RACI Matrix | Bilgesu | `docs/team-roles-raci.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | Done |
+| S1-12 | Maintain meeting notes and decisions | Bilgesu | `docs/sprint1-meeting-notes.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | Done |
+| S1-13 | Track Sprint 1 tasks and impediments | Bilgesu | `docs/sprint1-task-board.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | Done |
+| S1-14 | Coordinate workflow consistency review | Bilgesu | Review records ([PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12), [PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16), [PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17), [PR #25](https://github.com/seng321-7th-team/PantryChef/pull/25)) | Done |
 | S1-15 | Configure GitHub repository structure | Emre | GitHub repository ([PR #7](https://github.com/seng321-7th-team/PantryChef/pull/7)) | Done |
 | S1-16 | Prepare Git-Flow documentation ([PR #8](https://github.com/seng321-7th-team/PantryChef/pull/8), [Issue #2](https://github.com/seng321-7th-team/PantryChef/issues/2)) | Bilgesu | `docs/git-workflow.md` | Done |
 | S1-17 | Prepare Issue/PR templates ([PR #9](https://github.com/seng321-7th-team/PantryChef/pull/9)) and branch protection ([Issue #4](https://github.com/seng321-7th-team/PantryChef/issues/4)) | Bilgesu (process); Emre (settings/implementation) | GitHub settings and templates | Done |
-| S1-18 | Prepare initial Product Backlog and priorities | Burcu | `docs/product-backlog.md` ([PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17)) | In Review |
-| S1-19 | Draft user stories, story points, and measurable acceptance criteria | Burcu | `docs/product-backlog.md` ([PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17)) | In Review |
+| S1-18 | Prepare initial Product Backlog and priorities | Burcu | `docs/product-backlog.md` ([PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17)) | Done |
+| S1-19 | Draft user stories, story points, and measurable acceptance criteria | Burcu | `docs/product-backlog.md` ([PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17)) | Done |
 | S1-20 (deferred) | Later QA scope: Prepare later-sprint test cases | Beyzanur | `docs/test-cases.md` | Outside required S1 scope; S2 plan / later tests |
 | S1-21 (deferred) | Later QA scope: Review recipe-version, concurrency, and authorized cancellation test scenarios | Beyzanur | `docs/test-cases.md` | Outside required S1 scope; S2 plan / later tests |
-| S1-22 | Review Sprint 1 deliverables | All team members | Review evidence | In Progress |
-| S1-23 | Collect Sprint 1 submission evidence | Bilgesu | Issue, PR, and document links | To Do |
-| S1-24 | Review and approve Product Backlog priorities and acceptance criteria | Burcu (A/R); Beyzanur (C) | Review record / approved backlog ([PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17)) | In Review |
-| S1-25 | Specify approved Manager / authorized Waiter cancellation policy, actor, reason, timestamp, and server-side checks | Ayşe (API); Burcu (vision) | `api/openapi.yaml`; `docs/system-vision.md` | To Do |
+| S1-22 | Review Sprint 1 deliverables | All team members | Review evidence | Done |
+| S1-23 | Collect Sprint 1 submission evidence | Bilgesu | Release notes and `CONTRIBUTIONS.md` ([PR #11](https://github.com/seng321-7th-team/PantryChef/pull/11), [PR #21](https://github.com/seng321-7th-team/PantryChef/pull/21)) | Done |
+| S1-24 | Review and approve Product Backlog priorities and acceptance criteria | Burcu (A/R); Beyzanur (C) | Review record / approved backlog ([PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17)) | Done |
+| S1-25 | Specify approved Manager / authorized Waiter cancellation policy, actor, reason, timestamp, and server-side checks | Ayşe (API); Burcu (vision) | `api/openapi.yaml` ([PR #25](https://github.com/seng321-7th-team/PantryChef/pull/25)); `docs/system-vision.md` ([PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16)) | Done |
 | S1-26 (deferred) | Later QA scope: Define test cases for approved Restaurant Manager / authorized Waiter cancellation, including unauthorized access, duplicate cancellation, and no automatic stock restoration | Beyzanur | `docs/test-cases.md` | Outside required S1 scope; S2 plan / later tests |
 
 | S1-27 | Set up GitHub organization and project board | Bilgesu | Organization and [project board](https://github.com/orgs/seng321-7th-team/projects/4) | Done |
@@ -167,8 +167,8 @@ Each GitHub Issue should contain:
 | Evidence | Reference | Verification |
 |---|---|---|
 | GitHub Projects Board | [PantryChef Sprint 1 project](https://github.com/orgs/seng321-7th-team/projects/4) | Linked |
-| Sprint 1 Issues | [Issue #1](https://github.com/seng321-7th-team/PantryChef/issues/1); [Issue #2](https://github.com/seng321-7th-team/PantryChef/issues/2); [Issue #3](https://github.com/seng321-7th-team/PantryChef/issues/3); [Issue #4](https://github.com/seng321-7th-team/PantryChef/issues/4); [Issue #5](https://github.com/seng321-7th-team/PantryChef/issues/5); [Issue #13](https://github.com/seng321-7th-team/PantryChef/issues/13); [Issue #18](https://github.com/seng321-7th-team/PantryChef/issues/18) | Linked |
-| Pull Requests | [PR #6](https://github.com/seng321-7th-team/PantryChef/pull/6); [PR #7](https://github.com/seng321-7th-team/PantryChef/pull/7); [PR #8](https://github.com/seng321-7th-team/PantryChef/pull/8); [PR #9](https://github.com/seng321-7th-team/PantryChef/pull/9); [PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12); [PR #14](https://github.com/seng321-7th-team/PantryChef/pull/14); [PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15); [PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16); [PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17); [PR #19](https://github.com/seng321-7th-team/PantryChef/pull/19) | Linked |
+| Sprint 1 Issues | [Issue #1](https://github.com/seng321-7th-team/PantryChef/issues/1); [Issue #2](https://github.com/seng321-7th-team/PantryChef/issues/2); [Issue #3](https://github.com/seng321-7th-team/PantryChef/issues/3); [Issue #4](https://github.com/seng321-7th-team/PantryChef/issues/4); [Issue #5](https://github.com/seng321-7th-team/PantryChef/issues/5); [Issue #13](https://github.com/seng321-7th-team/PantryChef/issues/13); [Issue #18](https://github.com/seng321-7th-team/PantryChef/issues/18); [Issue #10](https://github.com/seng321-7th-team/PantryChef/issues/10); [Issue #20](https://github.com/seng321-7th-team/PantryChef/issues/20); [Issue #22](https://github.com/seng321-7th-team/PantryChef/issues/22); [Issue #23](https://github.com/seng321-7th-team/PantryChef/issues/23); [Issue #24](https://github.com/seng321-7th-team/PantryChef/issues/24) | Linked |
+| Pull Requests | [PR #6](https://github.com/seng321-7th-team/PantryChef/pull/6); [PR #7](https://github.com/seng321-7th-team/PantryChef/pull/7); [PR #8](https://github.com/seng321-7th-team/PantryChef/pull/8); [PR #9](https://github.com/seng321-7th-team/PantryChef/pull/9); [PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12); [PR #14](https://github.com/seng321-7th-team/PantryChef/pull/14); [PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15); [PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16); [PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17); [PR #19](https://github.com/seng321-7th-team/PantryChef/pull/19); [PR #11](https://github.com/seng321-7th-team/PantryChef/pull/11); [PR #25](https://github.com/seng321-7th-team/PantryChef/pull/25); [PR #21](https://github.com/seng321-7th-team/PantryChef/pull/21) | Linked |
 | Team document reviews | Records pending | Pending |
 | Sprint 1 meeting notes | `docs/sprint1-meeting-notes.md` | Draft |
 | Sprint 1 RACI Matrix | `docs/team-roles-raci.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | In Review |

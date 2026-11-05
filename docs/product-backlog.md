@@ -625,7 +625,7 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Estimated P0 Total:** 68 Story Points  
 **Estimated P1 Total:** 13 Story Points  
-**Estimated Overall Total:** 76 Story Points
+**Estimated Overall Total:** 81 Story Points
 
 These estimates are preliminary and require team review. They do not represent a commitment to implement all backlog items during Sprint 1.
 
