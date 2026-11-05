@@ -52,4 +52,4 @@ The full rules are in [`docs/git-workflow.md`](docs/git-workflow.md).
 
 ## License
 
-The open-source license is chosen by the Product Owner as part of the project proposal (task S1-03). The `LICENSE` file will be added once the decision is recorded.
+Not decided yet (S1-03, part of the project proposal). The LICENSE file will be added after the decision.
