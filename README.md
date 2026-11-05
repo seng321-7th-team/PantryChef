@@ -54,4 +54,4 @@ The full rules are in [`docs/git-workflow.md`](docs/git-workflow.md).
 
 ## License
 
-Not decided yet (S1-03, part of the project proposal). The LICENSE file will be added after the decision.
+MIT, see [LICENSE](LICENSE). The choice is explained in the project proposal (S1-03).
