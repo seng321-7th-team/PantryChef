@@ -83,6 +83,6 @@ Each member's work can be checked through the linked issues, pull requests and c
 **Sprint 1 responsibilities:** Implementation and integration review of the Sprint 1 documents: vision, backlog and API from the UI and integration side.
 
 **Work done:**
-- Reviews: PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (MVP scope and business rules checked against the proposal and vision)
+- Reviews: PR [#16](https://github.com/seng321-7th-team/PantryChef/pull/16), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (MVP scope and business rules checked against the proposal and vision)
 
 **Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=tucevik
