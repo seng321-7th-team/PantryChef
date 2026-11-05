@@ -1,0 +1,2215 @@
+openapi: 3.1.0
+info:
+  title: PantryChef API
+  version: 0.1.0
+  summary: Restaurant order management with recipe-based ingredient reservation and exactly-once stock consumption.
+  description: |
+    PantryChef connects restaurant orders to ingredient inventory. This contract is the
+    Sprint 1 draft of the PantryChef REST API and follows the Project Proposal
+    (`docs/project-proposal.md`) and the System Vision (`docs/system-vision.md`).
+
+    ## Order lifecycle
+
+    | Transition | Who | Request | Inventory effect |
+    |---|---|---|---|
+    | (new) → `PENDING` | Waiter, Manager | `POST /orders` | One `ACTIVE` reservation per required ingredient. `onHand` unchanged. |
+    | `PENDING` → `PREPARING` | Chef | `PATCH /orders/{orderId}/status` with `PREPARING` | Reservations become `CONSUMED`; `onHand` is deducted **exactly once**, atomically. |
+    | `PREPARING` → `READY` | Chef | `PATCH /orders/{orderId}/status` with `READY` | None. |
+    | `PENDING` → `CANCELLED` | Waiter, Manager | `PATCH /orders/{orderId}/status` with `CANCELLED` | Reservations become `RELEASED`. `onHand` unchanged. |
+    | `PREPARING` / `READY` → `CANCELLED` | Manager, or Waiter with `ORDER_LATE_CANCEL` | `PATCH /orders/{orderId}/status` with `CANCELLED` and a `reason` | None. Consumed stock is **not** restored and reservations are not released again. An audit entry records who, when, why and the previous status. |
+
+    `READY` ends the normal workflow and `CANCELLED` is terminal. A separate `DELIVERED`
+    state is not part of the MVP. Any other transition returns `409` with code
+    `INVALID_STATUS_TRANSITION`.
+
+    ## Recipe versions
+
+    Every recipe change creates a new recipe `version`. Each order item stores the
+    `recipeVersion` used to calculate its reservations, so later recipe changes never
+    alter existing orders.
+
+    ## Inventory model
+
+    `available = onHand - reserved`. An order is accepted only if **every** required
+    ingredient has enough available stock (all-or-nothing). Otherwise the request fails
+    with `409 INSUFFICIENT_STOCK` and nothing changes.
+
+    ## Duplicate-request protection
+
+    `POST /orders` requires an `Idempotency-Key` header. Repeating a request with the same
+    key and the same body returns the original response (with `Idempotent-Replayed: true`)
+    and does not create a second order. `PATCH /orders/{orderId}/status` accepts the same
+    header; a repeated `PREPARING` request never deducts stock twice.
+
+    ## Errors
+
+    All errors use RFC 9457 Problem Details (`application/problem+json`) with an
+    additional machine-readable `code` field.
+  contact:
+    name: PantryChef Team 7
+  license:
+    name: MIT
+    identifier: MIT
+servers:
+  - url: /v1
+    description: Current host, API version 1 (for example http://localhost:8080/v1 during local development)
+security:
+  - bearerAuth: []
+tags:
+  - name: Health
+    description: Service health and readiness.
+  - name: Auth
+    description: Staff authentication and the current user profile.
+  - name: Users
+    description: Staff account management (Restaurant Manager only).
+  - name: Ingredients
+    description: Ingredient catalogue (name, unit of measure, low-stock threshold).
+  - name: Inventory
+    description: Physical, reserved and available stock levels, authorized adjustments, stock movement history and low-stock alerts.
+  - name: Menu Items
+    description: Dishes that can be ordered.
+  - name: Recipes
+    description: Versioned ingredient quantities required for one portion of a menu item.
+  - name: Orders
+    description: Order creation, kitchen status transitions and cancellation.
+  - name: Reservations
+    description: Read-only view of ingredient reservations created by orders.
+  - name: Audit
+    description: Traceability records of sensitive operations (Restaurant Manager only).
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      operationId: getHealth
+      summary: Check service health
+      description: Returns the health of the API and its database connection. No authentication required.
+      security: []
+      responses:
+        '200':
+          description: The service is healthy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '429':
+          description: Too many health checks from the same client; retry after the `Retry-After` delay.
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+                minimum: 1
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: The service or one of its dependencies is unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      operationId: login
+      summary: Log in with username and password
+      description: Exchanges staff credentials for a JWT access token.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              waiter:
+                summary: Waiter login
+                value:
+                  username: waiter01
+                  password: S3cure-Passw0rd
+      responses:
+        '200':
+          description: Authentication succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                waiter:
+                  summary: Token for a waiter
+                  value:
+                    accessToken: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWl0ZXIwMSJ9.signature
+                    tokenType: Bearer
+                    expiresIn: 3600
+                    user:
+                      id: 3f1c6a52-8d0e-4b8a-9c41-6f2b7e5d1a01
+                      username: waiter01
+                      fullName: Demo Waiter
+                      role: WAITER
+                      permissions: []
+                      active: true
+                      createdAt: '2026-11-01T09:00:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          description: Invalid username or password, or the account is inactive.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /auth/me:
+    get:
+      tags: [Auth]
+      operationId: getCurrentUser
+      summary: Get the authenticated user
+      description: Returns the profile, role and permissions of the user that owns the access token.
+      responses:
+        '200':
+          description: The current user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /users:
+    get:
+      tags: [Users]
+      operationId: listUsers
+      summary: List staff users
+      description: 'Roles: MANAGER.'
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - name: role
+          in: query
+          description: Filter by role.
+          required: false
+          schema:
+            $ref: '#/components/schemas/Role'
+        - name: active
+          in: query
+          description: Filter by active flag.
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A page of users.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags: [Users]
+      operationId: createUser
+      summary: Create a staff user
+      description: |
+        Roles: MANAGER. Grants a role and, optionally, the `ORDER_LATE_CANCEL` permission
+        (meaningful for waiters; managers can always late-cancel).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: The user was created.
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableContent'
+
+  /users/{userId}:
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+    get:
+      tags: [Users]
+      operationId: getUser
+      summary: Get a staff user
+      description: 'Roles: MANAGER.'
+      responses:
+        '200':
+          description: The user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Users]
+      operationId: updateUser
+      summary: Replace a staff user's profile, role and permissions
+      description: |
+        Roles: MANAGER. Setting `active` to `false` deactivates the account (users are never
+        hard-deleted so that audit history stays intact). Permission changes are audited.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: The updated user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableContent'
+
+  /ingredients:
+    get:
+      tags: [Ingredients]
+      operationId: listIngredients
+      summary: List ingredients
+      description: 'Roles: MANAGER, CHEF, WAITER. Stock levels are served by `GET /inventory`.'
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - $ref: '#/components/parameters/Search'
+      responses:
+        '200':
+          description: A page of ingredients.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngredientPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Ingredients]
+      operationId: createIngredient
+      summary: Create an ingredient
+      description: |
+        Roles: MANAGER. The ingredient starts with `onHand = 0`. Initial stock is entered
+        with `POST /inventory/adjustments` and reason `INITIAL_STOCK`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngredientInput'
+      responses:
+        '201':
+          description: The ingredient was created.
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableContent'
+
+  /ingredients/{ingredientId}:
+    parameters:
+      - $ref: '#/components/parameters/IngredientId'
+    get:
+      tags: [Ingredients]
+      operationId: getIngredient
+      summary: Get an ingredient
+      description: 'Roles: MANAGER, CHEF, WAITER.'
+      responses:
+        '200':
+          description: The ingredient.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Ingredients]
+      operationId: updateIngredient
+      summary: Replace an ingredient's name, unit and low-stock threshold
+      description: |
+        Roles: MANAGER. Stock quantities cannot be changed here; use
+        `POST /inventory/adjustments`. The unit cannot be changed while the ingredient
+        has stock or active reservations (`409 RESOURCE_IN_USE`).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngredientInput'
+      responses:
+        '200':
+          description: The updated ingredient.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableContent'
+    delete:
+      tags: [Ingredients]
+      operationId: deleteIngredient
+      summary: Delete an ingredient
+      description: |
+        Roles: MANAGER. Fails with `409 RESOURCE_IN_USE` if the ingredient is used in any
+        recipe or has active reservations.
+      responses:
+        '204':
+          description: The ingredient was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /inventory:
+    get:
+      tags: [Inventory]
+      operationId: listInventory
+      summary: List stock levels
+      description: |
+        Roles: MANAGER, CHEF, WAITER. Returns `onHand`, `reserved` and `available`
+        (`onHand - reserved`) for every ingredient.
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - $ref: '#/components/parameters/Search'
+        - name: lowStock
+          in: query
+          description: When `true`, return only ingredients whose available stock is at or below their low-stock threshold.
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A page of stock levels.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryItemPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /ingredients/{ingredientId}/stock:
+    parameters:
+      - $ref: '#/components/parameters/IngredientId'
+    get:
+      tags: [Inventory]
+      operationId: getInventoryItem
+      summary: Get the stock level of one ingredient
+      description: 'Roles: MANAGER, CHEF, WAITER.'
+      responses:
+        '200':
+          description: The stock level.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /inventory/adjustments:
+    post:
+      tags: [Inventory]
+      operationId: createStockAdjustment
+      summary: Record an authorized stock adjustment
+      description: |
+        Roles: MANAGER. Changes `onHand` by `quantityDelta` (positive or negative) and writes
+        an `ADJUSTMENT` stock movement and an audit entry. This is the only way to correct
+        stock, including after a late cancellation. Rejected with
+        `409 NEGATIVE_AVAILABLE_STOCK` if the result would make `onHand` lower than `reserved`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockAdjustmentInput'
+            examples:
+              initialStock:
+                summary: Enter initial stock
+                value:
+                  ingredientId: 9b2e4d10-1c3a-4f5e-8a7b-0c1d2e3f4a51
+                  quantityDelta: 5000
+                  reason: INITIAL_STOCK
+                  note: Opening stock count
+      responses:
+        '201':
+          description: The adjustment was recorded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockMovement'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableContent'
+
+  /inventory/movements:
+    get:
+      tags: [Inventory]
+      operationId: listStockMovements
+      summary: List stock movements
+      description: |
+        Roles: MANAGER. Immutable history of every reservation, release, consumption and
+        adjustment, newest first.
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - name: ingredientId
+          in: query
+          description: Filter by ingredient.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: orderId
+          in: query
+          description: Filter by order.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: type
+          in: query
+          description: Filter by movement type.
+          required: false
+          schema:
+            $ref: '#/components/schemas/StockMovementType'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: A page of stock movements.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockMovementPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /inventory/low-stock-alerts:
+    get:
+      tags: [Inventory]
+      operationId: listLowStockAlerts
+      summary: List current low-stock alerts
+      description: |
+        Roles: MANAGER. Returns every ingredient whose available stock is at or below its
+        `lowStockThreshold`, lowest first. Alerts are shown in-app; no email or SMS in the MVP.
+      responses:
+        '200':
+          description: The current low-stock alerts (may be empty).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LowStockAlertList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /menu-items:
+    get:
+      tags: [Menu Items]
+      operationId: listMenuItems
+      summary: List menu items
+      description: |
+        Roles: MANAGER, CHEF, WAITER. `availablePortions` shows how many portions can be
+        ordered right now based on available stock, so waiters avoid selling unavailable dishes.
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - name: active
+          in: query
+          description: Filter by active flag. Waiters normally request `true`.
+          required: false
+          schema:
+            type: boolean
+        - $ref: '#/components/parameters/Search'
+      responses:
+        '200':
+          description: A page of menu items.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItemPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Menu Items]
+      operationId: createMenuItem
+      summary: Create a menu item with its recipe
+      description: 'Roles: MANAGER. A menu item cannot be created without a recipe; the recipe starts at version 1.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItemCreate'
+      responses:
+        '201':
+          description: The menu item was created.
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableContent'
+
+  /menu-items/{menuItemId}:
+    parameters:
+      - $ref: '#/components/parameters/MenuItemId'
+    get:
+      tags: [Menu Items]
+      operationId: getMenuItem
+      summary: Get a menu item
+      description: 'Roles: MANAGER, CHEF, WAITER.'
+      responses:
+        '200':
+          description: The menu item.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Menu Items]
+      operationId: updateMenuItem
+      summary: Replace a menu item's name, price and active flag
+      description: 'Roles: MANAGER. The recipe is managed with `PUT /recipes/{menuItemId}`.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItemUpdate'
+      responses:
+        '200':
+          description: The updated menu item.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableContent'
+    delete:
+      tags: [Menu Items]
+      operationId: deleteMenuItem
+      summary: Archive a menu item
+      description: |
+        Roles: MANAGER. The menu item is archived and can no longer be ordered; historical
+        orders keep their references. Fails with `409 RESOURCE_IN_USE` while the item is in
+        a `PENDING` or `PREPARING` order.
+      responses:
+        '204':
+          description: The menu item was archived.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /recipes:
+    get:
+      tags: [Recipes]
+      operationId: listRecipes
+      summary: List current recipes
+      description: 'Roles: MANAGER, CHEF. Returns the current version of each menu item''s recipe.'
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - name: ingredientId
+          in: query
+          description: Return only recipes that use this ingredient.
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A page of recipes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipePage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /recipes/{menuItemId}/versions:
+    parameters:
+      - $ref: '#/components/parameters/MenuItemId'
+    get:
+      tags: [Recipes]
+      operationId: listRecipeVersions
+      summary: List all versions of a menu item's recipe
+      description: 'Roles: MANAGER, CHEF. Newest version first. Old versions are kept because existing orders refer to them.'
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+      responses:
+        '200':
+          description: A page of recipe versions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipePage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /recipes/{menuItemId}:
+    parameters:
+      - $ref: '#/components/parameters/MenuItemId'
+    get:
+      tags: [Recipes]
+      operationId: getRecipe
+      summary: Get the current recipe of a menu item
+      description: 'Roles: MANAGER, CHEF, WAITER.'
+      responses:
+        '200':
+          description: The recipe.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Recipes]
+      operationId: replaceRecipe
+      summary: Publish a new version of a menu item's recipe
+      description: |
+        Roles: MANAGER. Replaces all recipe lines and increments `version`. Only new orders
+        use the new version; existing orders keep their `recipeVersion` and reservations are
+        not recalculated. The change is audited (`RECIPE_UPDATED`).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeInput'
+      responses:
+        '200':
+          description: The updated recipe.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableContent'
+
+  /orders:
+    get:
+      tags: [Orders]
+      operationId: listOrders
+      summary: List orders
+      description: |
+        Roles: MANAGER, CHEF, WAITER. The kitchen screen uses `status=PENDING&sort=createdAt`
+        (oldest first).
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - name: status
+          in: query
+          description: Filter by order status.
+          required: false
+          schema:
+            $ref: '#/components/schemas/OrderStatus'
+        - name: sort
+          in: query
+          description: Sort by creation time. `createdAt` is oldest first; `-createdAt` is newest first.
+          required: false
+          schema:
+            type: string
+            enum: [createdAt, -createdAt]
+            default: -createdAt
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: A page of orders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Orders]
+      operationId: createOrder
+      summary: Create an order and reserve its ingredients
+      description: |
+        Roles: WAITER, MANAGER. In one transaction the system computes the required
+        ingredients from each menu item's recipe (recipe quantity x ordered quantity), checks
+        that every ingredient has enough available stock, and creates one `ACTIVE`
+        reservation per ingredient. The order starts in `PENDING`; `onHand` is not changed.
+
+        If any ingredient is short, nothing is reserved and `409 INSUFFICIENT_STOCK` is
+        returned with the list of shortages.
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderCreate'
+            examples:
+              twoPizzas:
+                summary: Two pizzas and a salad for table 12
+                value:
+                  tableLabel: T12
+                  items:
+                    - menuItemId: 5a6b7c8d-9e0f-4a1b-8c2d-3e4f5a6b7c01
+                      quantity: 2
+                      note: Extra crispy
+                    - menuItemId: 5a6b7c8d-9e0f-4a1b-8c2d-3e4f5a6b7c02
+                      quantity: 1
+      responses:
+        '201':
+          description: The order was created in `PENDING` and its ingredients reserved.
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+            Idempotent-Replayed:
+              $ref: '#/components/headers/IdempotentReplayed'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+              examples:
+                pending:
+                  summary: Newly created order
+                  value:
+                    id: 7d1f0c2e-5b7a-4c1e-9a3f-2f6b8f0d9a11
+                    orderNumber: 1042
+                    tableLabel: T12
+                    status: PENDING
+                    items:
+                      - id: 0e1f2a3b-4c5d-4e6f-8a7b-9c0d1e2f3a01
+                        menuItemId: 5a6b7c8d-9e0f-4a1b-8c2d-3e4f5a6b7c01
+                        menuItemName: Margherita Pizza
+                        quantity: 2
+                        unitPrice: 240
+                        recipeVersion: 3
+                        note: Extra crispy
+                      - id: 0e1f2a3b-4c5d-4e6f-8a7b-9c0d1e2f3a02
+                        menuItemId: 5a6b7c8d-9e0f-4a1b-8c2d-3e4f5a6b7c02
+                        menuItemName: Garden Salad
+                        quantity: 1
+                        unitPrice: 150
+                        recipeVersion: 1
+                    totalPrice: 630
+                    createdBy:
+                      id: 3f1c6a52-8d0e-4b8a-9c41-6f2b7e5d1a01
+                      username: waiter01
+                      fullName: Demo Waiter
+                    createdAt: '2026-11-05T18:30:00Z'
+                    updatedAt: '2026-11-05T18:30:00Z'
+                    statusHistory:
+                      - toStatus: PENDING
+                        changedBy:
+                          id: 3f1c6a52-8d0e-4b8a-9c41-6f2b7e5d1a01
+                          username: waiter01
+                          fullName: Demo Waiter
+                        changedAt: '2026-11-05T18:30:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          description: |
+            `INSUFFICIENT_STOCK`: at least one ingredient does not have enough available
+            stock; nothing was reserved.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                insufficientStock:
+                  summary: Not enough mozzarella
+                  value:
+                    type: /problems/insufficient-stock
+                    title: Insufficient stock
+                    status: 409
+                    code: INSUFFICIENT_STOCK
+                    detail: The order needs more of 1 ingredient than is currently available.
+                    instance: /v1/orders
+                    shortages:
+                      - ingredientId: 9b2e4d10-1c3a-4f5e-8a7b-0c1d2e3f4a51
+                        ingredientName: Mozzarella
+                        unit: g
+                        required: 500
+                        available: 320
+        '422':
+          description: |
+            `VALIDATION_FAILED`, `MENU_ITEM_UNAVAILABLE` (archived or inactive menu item) or
+            `IDEMPOTENCY_KEY_REUSED` (same key sent with a different body).
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /orders/{orderId}:
+    parameters:
+      - $ref: '#/components/parameters/OrderId'
+    get:
+      tags: [Orders]
+      operationId: getOrder
+      summary: Get an order with its status history
+      description: 'Roles: MANAGER, CHEF, WAITER.'
+      responses:
+        '200':
+          description: The order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /orders/{orderId}/status:
+    parameters:
+      - $ref: '#/components/parameters/OrderId'
+    patch:
+      tags: [Orders]
+      operationId: updateOrderStatus
+      summary: Change an order's status (prepare, mark ready or cancel)
+      description: |
+        Moves the order to the requested `status`. Allowed transitions, roles and effects:
+
+        | Target | From | Roles | Effect |
+        |---|---|---|---|
+        | `PREPARING` | `PENDING` | CHEF | One atomic transaction: `ACTIVE` reservations become `CONSUMED` and the same quantities are deducted from `onHand`. `available` does not decrease a second time. |
+        | `READY` | `PREPARING` | CHEF | No stock movement. |
+        | `CANCELLED` | `PENDING` | WAITER, MANAGER | `ACTIVE` reservations become `RELEASED`; `onHand` unchanged. `reason` optional. |
+        | `CANCELLED` | `PREPARING`, `READY` | MANAGER, or WAITER with `ORDER_LATE_CANCEL` | Late cancellation. `reason` is **required**. Consumed stock is **not** restored and reservations are not released again; corrections use `POST /inventory/adjustments`. An `ORDER_LATE_CANCELLED` audit entry records the user, time, reason and previous status. |
+
+        **Exactly-once deduction:** repeating a `PREPARING` request with the same
+        `Idempotency-Key` returns the original response (`Idempotent-Replayed: true`); any
+        other repeat returns `409 INVALID_STATUS_TRANSITION`. Neither case deducts stock again.
+
+        **Errors:** a transition not in the table returns `409 INVALID_STATUS_TRANSITION`.
+        A chef trying to cancel, or a waiter cancelling without the permission, gets `403`
+        (`FORBIDDEN` or `LATE_CANCEL_NOT_PERMITTED`). A late cancellation without a reason
+        returns `422 CANCELLATION_REASON_REQUIRED`.
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKeyOptional'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderStatusUpdate'
+            examples:
+              startPreparation:
+                summary: Chef starts preparation
+                value:
+                  status: PREPARING
+              markReady:
+                summary: Chef marks the order ready
+                value:
+                  status: READY
+              cancelPending:
+                summary: Waiter cancels a pending order
+                value:
+                  status: CANCELLED
+              lateCancel:
+                summary: Manager cancels an order that is already being prepared
+                value:
+                  status: CANCELLED
+                  reason: Customer left before the dish was served.
+      responses:
+        '200':
+          description: The order after the transition.
+          headers:
+            Idempotent-Replayed:
+              $ref: '#/components/headers/IdempotentReplayed'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: '`FORBIDDEN` (role may not perform this transition) or `LATE_CANCEL_NOT_PERMITTED` (waiter without `ORDER_LATE_CANCEL`).'
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                lateCancelNotPermitted:
+                  summary: Waiter without the late-cancel permission
+                  value:
+                    type: /problems/late-cancel-not-permitted
+                    title: Late cancellation not permitted
+                    status: 403
+                    code: LATE_CANCEL_NOT_PERMITTED
+                    detail: Only a manager or a waiter with ORDER_LATE_CANCEL may cancel an order in PREPARING or READY.
+                    instance: /v1/orders/7d1f0c2e-5b7a-4c1e-9a3f-2f6b8f0d9a11/status
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/InvalidTransition'
+        '422':
+          description: '`VALIDATION_FAILED`, `CANCELLATION_REASON_REQUIRED` or `IDEMPOTENCY_KEY_REUSED`.'
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                reasonRequired:
+                  summary: Late cancellation without a reason
+                  value:
+                    type: /problems/cancellation-reason-required
+                    title: Cancellation reason required
+                    status: 422
+                    code: CANCELLATION_REASON_REQUIRED
+                    detail: A reason is required to cancel an order in PREPARING or READY.
+                    instance: /v1/orders/7d1f0c2e-5b7a-4c1e-9a3f-2f6b8f0d9a11/status
+
+  /reservations:
+    get:
+      tags: [Reservations]
+      operationId: listReservations
+      summary: List ingredient reservations
+      description: 'Roles: MANAGER, CHEF.'
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - name: orderId
+          in: query
+          description: Filter by order.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: ingredientId
+          in: query
+          description: Filter by ingredient.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: status
+          in: query
+          description: Filter by reservation status.
+          required: false
+          schema:
+            $ref: '#/components/schemas/ReservationStatus'
+      responses:
+        '200':
+          description: A page of reservations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /reservations/{reservationId}:
+    parameters:
+      - $ref: '#/components/parameters/ReservationId'
+    get:
+      tags: [Reservations]
+      operationId: getReservation
+      summary: Get a reservation
+      description: 'Roles: MANAGER, CHEF.'
+      responses:
+        '200':
+          description: The reservation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /audit-logs:
+    get:
+      tags: [Audit]
+      operationId: listAuditLogs
+      summary: List audit log entries
+      description: 'Roles: MANAGER. Entries are immutable and returned newest first.'
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - name: action
+          in: query
+          description: Filter by action.
+          required: false
+          schema:
+            $ref: '#/components/schemas/AuditAction'
+        - name: entityId
+          in: query
+          description: Filter by the affected entity (order, ingredient, menu item or user).
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: A page of audit entries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT access token from `POST /auth/login`. The token carries the user's role and permissions.
+
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: User identifier.
+      schema:
+        type: string
+        format: uuid
+    IngredientId:
+      name: ingredientId
+      in: path
+      required: true
+      description: Ingredient identifier.
+      schema:
+        type: string
+        format: uuid
+    MenuItemId:
+      name: menuItemId
+      in: path
+      required: true
+      description: Menu item identifier.
+      schema:
+        type: string
+        format: uuid
+    OrderId:
+      name: orderId
+      in: path
+      required: true
+      description: Order identifier.
+      schema:
+        type: string
+        format: uuid
+    ReservationId:
+      name: reservationId
+      in: path
+      required: true
+      description: Reservation identifier.
+      schema:
+        type: string
+        format: uuid
+    Page:
+      name: page
+      in: query
+      required: false
+      description: Page number, starting at 1.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Size:
+      name: size
+      in: query
+      required: false
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    Search:
+      name: search
+      in: query
+      required: false
+      description: Case-insensitive match on the name.
+      schema:
+        type: string
+        maxLength: 100
+    From:
+      name: from
+      in: query
+      required: false
+      description: Include records created at or after this time.
+      schema:
+        type: string
+        format: date-time
+    To:
+      name: to
+      in: query
+      required: false
+      description: Include records created before this time.
+      schema:
+        type: string
+        format: date-time
+    IdempotencyKeyRequired:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: Client-generated unique key (UUID recommended). Keys are kept for 24 hours.
+      schema:
+        type: string
+        minLength: 8
+        maxLength: 64
+    IdempotencyKeyOptional:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: Optional client-generated unique key that makes retries safe.
+      schema:
+        type: string
+        minLength: 8
+        maxLength: 64
+
+  headers:
+    Location:
+      description: URL of the created resource.
+      schema:
+        type: string
+        format: uri-reference
+    IdempotentReplayed:
+      description: '`true` when the response is a replay of an earlier request with the same `Idempotency-Key`.'
+      schema:
+        type: boolean
+
+  responses:
+    BadRequest:
+      description: The request is malformed (invalid JSON, wrong parameter type or format).
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Unauthorized:
+      description: The access token is missing, invalid or expired.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Forbidden:
+      description: The user's role or permissions do not allow this operation.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFound:
+      description: The resource does not exist.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Conflict:
+      description: The request conflicts with the current state (for example `DUPLICATE_RESOURCE`, `RESOURCE_IN_USE` or `NEGATIVE_AVAILABLE_STOCK`).
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    InvalidTransition:
+      description: '`INVALID_STATUS_TRANSITION`: the order is not in a status that allows this transition.'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          examples:
+            alreadyPreparing:
+              summary: Start requested twice
+              value:
+                type: /problems/invalid-status-transition
+                title: Invalid status transition
+                status: 409
+                code: INVALID_STATUS_TRANSITION
+                detail: Order 1042 is already PREPARING; stock was not deducted again.
+                instance: /v1/orders/7d1f0c2e-5b7a-4c1e-9a3f-2f6b8f0d9a11/status
+    UnprocessableContent:
+      description: The request is well-formed but fails validation or a business rule.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+
+  schemas:
+    # ---------- Common ----------
+    Problem:
+      type: object
+      description: RFC 9457 Problem Details with PantryChef extensions.
+      required: [type, title, status, code]
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: URI identifying the problem type.
+        title:
+          type: string
+          description: Short human-readable summary.
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+          description: HTTP status code.
+        detail:
+          type: string
+          description: Human-readable explanation of this occurrence.
+        instance:
+          type: string
+          format: uri-reference
+          description: Request path of this occurrence.
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        traceId:
+          type: string
+          description: Correlation identifier for server logs.
+        errors:
+          type: array
+          description: Field-level validation errors.
+          items:
+            $ref: '#/components/schemas/FieldError'
+        shortages:
+          type: array
+          description: Present when `code` is `INSUFFICIENT_STOCK`.
+          items:
+            $ref: '#/components/schemas/StockShortage'
+    ErrorCode:
+      type: string
+      description: Machine-readable error code.
+      enum:
+        - VALIDATION_FAILED
+        - UNAUTHENTICATED
+        - INVALID_CREDENTIALS
+        - FORBIDDEN
+        - LATE_CANCEL_NOT_PERMITTED
+        - RESOURCE_NOT_FOUND
+        - DUPLICATE_RESOURCE
+        - RESOURCE_IN_USE
+        - INSUFFICIENT_STOCK
+        - NEGATIVE_AVAILABLE_STOCK
+        - INVALID_STATUS_TRANSITION
+        - CANCELLATION_REASON_REQUIRED
+        - MENU_ITEM_UNAVAILABLE
+        - IDEMPOTENCY_KEY_REUSED
+        - INTERNAL_ERROR
+    FieldError:
+      type: object
+      required: [field, message]
+      properties:
+        field:
+          type: string
+          description: JSON path of the invalid field.
+        message:
+          type: string
+          description: Why the value is invalid.
+    StockShortage:
+      type: object
+      required: [ingredientId, ingredientName, unit, required, available]
+      properties:
+        ingredientId:
+          type: string
+          format: uuid
+        ingredientName:
+          type: string
+        unit:
+          $ref: '#/components/schemas/Unit'
+        required:
+          type: number
+          description: Quantity the order needs.
+        available:
+          type: number
+          description: Quantity currently available.
+    PageMeta:
+      type: object
+      required: [number, size, totalItems, totalPages]
+      properties:
+        number:
+          type: integer
+          minimum: 1
+        size:
+          type: integer
+          minimum: 1
+        totalItems:
+          type: integer
+          minimum: 0
+        totalPages:
+          type: integer
+          minimum: 0
+    Health:
+      type: object
+      required: [status, checkedAt]
+      properties:
+        status:
+          type: string
+          enum: [UP, DOWN]
+        database:
+          type: string
+          enum: [UP, DOWN]
+        version:
+          type: string
+        checkedAt:
+          type: string
+          format: date-time
+
+    # ---------- Auth & Users ----------
+    Role:
+      type: string
+      description: Primary system actor.
+      enum: [WAITER, CHEF, MANAGER]
+    Permission:
+      type: string
+      description: |
+        Additional permission. `ORDER_LATE_CANCEL` lets a waiter cancel orders in
+        `PREPARING` or `READY`. It does not create a new role.
+      enum: [ORDER_LATE_CANCEL]
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+        password:
+          type: string
+          format: password
+          minLength: 8
+          maxLength: 128
+          writeOnly: true
+    TokenResponse:
+      type: object
+      required: [accessToken, tokenType, expiresIn, user]
+      properties:
+        accessToken:
+          type: string
+        tokenType:
+          type: string
+          enum: [Bearer]
+        expiresIn:
+          type: integer
+          description: Lifetime of the token in seconds.
+          minimum: 1
+        user:
+          $ref: '#/components/schemas/User'
+    UserSummary:
+      type: object
+      required: [id, username, fullName]
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        fullName:
+          type: string
+    User:
+      type: object
+      required: [id, username, fullName, role, permissions, active, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+        fullName:
+          type: string
+        role:
+          $ref: '#/components/schemas/Role'
+        permissions:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Permission'
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+    UserCreate:
+      type: object
+      required: [username, fullName, password, role]
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+          pattern: '^[a-z0-9._-]+$'
+        fullName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        password:
+          type: string
+          format: password
+          minLength: 8
+          maxLength: 128
+          writeOnly: true
+        role:
+          $ref: '#/components/schemas/Role'
+        permissions:
+          type: array
+          uniqueItems: true
+          default: []
+          items:
+            $ref: '#/components/schemas/Permission'
+    UserUpdate:
+      type: object
+      required: [fullName, role, permissions, active]
+      properties:
+        fullName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        role:
+          $ref: '#/components/schemas/Role'
+        permissions:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Permission'
+        active:
+          type: boolean
+    UserPage:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        page:
+          $ref: '#/components/schemas/PageMeta'
+
+    # ---------- Ingredients & Inventory ----------
+    Unit:
+      type: string
+      description: Base unit of measure. No unit conversion in the MVP.
+      enum: [g, ml, piece]
+    IngredientInput:
+      type: object
+      required: [name, unit, lowStockThreshold]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        unit:
+          $ref: '#/components/schemas/Unit'
+        lowStockThreshold:
+          type: number
+          minimum: 0
+          description: An alert is raised when `available` is at or below this value.
+    Ingredient:
+      type: object
+      required: [id, name, unit, lowStockThreshold, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        unit:
+          $ref: '#/components/schemas/Unit'
+        lowStockThreshold:
+          type: number
+          minimum: 0
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    InventoryItem:
+      type: object
+      description: Stock level of one ingredient.
+      required: [ingredientId, ingredientName, unit, onHand, reserved, available, lowStockThreshold, lowStock, updatedAt]
+      properties:
+        ingredientId:
+          type: string
+          format: uuid
+        ingredientName:
+          type: string
+        unit:
+          $ref: '#/components/schemas/Unit'
+        onHand:
+          type: number
+          minimum: 0
+          description: Physical stock.
+        reserved:
+          type: number
+          minimum: 0
+          description: Quantity held by `ACTIVE` reservations of `PENDING` orders.
+        available:
+          type: number
+          minimum: 0
+          description: '`onHand - reserved`.'
+        lowStockThreshold:
+          type: number
+          minimum: 0
+        lowStock:
+          type: boolean
+          description: '`true` when `available <= lowStockThreshold`.'
+        updatedAt:
+          type: string
+          format: date-time
+          description: Time of the last stock movement.
+    InventoryItemPage:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
+        page:
+          $ref: '#/components/schemas/PageMeta'
+    IngredientPage:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ingredient'
+        page:
+          $ref: '#/components/schemas/PageMeta'
+    StockAdjustmentReason:
+      type: string
+      enum: [INITIAL_STOCK, PURCHASE_RECEIVED, PHYSICAL_COUNT_CORRECTION, WASTE, LATE_CANCELLATION_CORRECTION, OTHER]
+    StockAdjustmentInput:
+      type: object
+      required: [ingredientId, quantityDelta, reason]
+      properties:
+        ingredientId:
+          type: string
+          format: uuid
+        quantityDelta:
+          type: number
+          not:
+            const: 0
+          description: Positive to add stock, negative to remove stock.
+        reason:
+          $ref: '#/components/schemas/StockAdjustmentReason'
+        note:
+          type: string
+          maxLength: 500
+    StockMovementType:
+      type: string
+      description: |
+        `RESERVE` (order created), `RELEASE` (PENDING order cancelled), `CONSUME`
+        (preparation started), `ADJUSTMENT` (manager correction).
+      enum: [RESERVE, RELEASE, CONSUME, ADJUSTMENT]
+    StockMovement:
+      type: object
+      required: [id, ingredientId, type, quantity, onHandAfter, reservedAfter, performedBy, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        ingredientId:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/StockMovementType'
+        quantity:
+          type: number
+          description: Signed change of `onHand` (CONSUME, ADJUSTMENT) or of `reserved` (RESERVE, RELEASE).
+        onHandAfter:
+          type: number
+          minimum: 0
+        reservedAfter:
+          type: number
+          minimum: 0
+        orderId:
+          type: string
+          format: uuid
+          description: Set for RESERVE, RELEASE and CONSUME.
+        reservationId:
+          type: string
+          format: uuid
+          description: Set for RESERVE, RELEASE and CONSUME.
+        reason:
+          $ref: '#/components/schemas/StockAdjustmentReason'
+        note:
+          type: string
+        performedBy:
+          $ref: '#/components/schemas/UserSummary'
+        createdAt:
+          type: string
+          format: date-time
+    StockMovementPage:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockMovement'
+        page:
+          $ref: '#/components/schemas/PageMeta'
+    LowStockAlertList:
+      type: object
+      required: [items, generatedAt]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
+        generatedAt:
+          type: string
+          format: date-time
+
+    # ---------- Menu Items & Recipes ----------
+    RecipeLineInput:
+      type: object
+      required: [ingredientId, quantity]
+      properties:
+        ingredientId:
+          type: string
+          format: uuid
+        quantity:
+          type: number
+          exclusiveMinimum: 0
+          description: Quantity per single portion, in the ingredient's unit.
+    RecipeInput:
+      type: object
+      required: [lines]
+      properties:
+        lines:
+          type: array
+          minItems: 1
+          description: Each ingredient may appear only once.
+          items:
+            $ref: '#/components/schemas/RecipeLineInput'
+    RecipeLine:
+      type: object
+      required: [ingredientId, ingredientName, unit, quantity]
+      properties:
+        ingredientId:
+          type: string
+          format: uuid
+        ingredientName:
+          type: string
+        unit:
+          $ref: '#/components/schemas/Unit'
+        quantity:
+          type: number
+          exclusiveMinimum: 0
+    Recipe:
+      type: object
+      required: [menuItemId, menuItemName, version, current, lines, updatedAt]
+      properties:
+        menuItemId:
+          type: string
+          format: uuid
+        menuItemName:
+          type: string
+        version:
+          type: integer
+          minimum: 1
+          description: Incremented on every recipe change.
+        current:
+          type: boolean
+          description: '`true` for the version used by new orders.'
+        updatedBy:
+          $ref: '#/components/schemas/UserSummary'
+        lines:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/RecipeLine'
+        updatedAt:
+          type: string
+          format: date-time
+    RecipePage:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipe'
+        page:
+          $ref: '#/components/schemas/PageMeta'
+    MenuItemUpdate:
+      type: object
+      required: [name, price, active]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+        price:
+          type: number
+          minimum: 0
+          multipleOf: 0.01
+          description: Price in Turkish lira (TRY).
+        active:
+          type: boolean
+    MenuItemCreate:
+      type: object
+      required: [name, price, recipe]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+        price:
+          type: number
+          minimum: 0
+          multipleOf: 0.01
+          description: Price in Turkish lira (TRY).
+        active:
+          type: boolean
+          default: true
+        recipe:
+          $ref: '#/components/schemas/RecipeInput'
+    MenuItem:
+      type: object
+      required: [id, name, price, active, availablePortions, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          minimum: 0
+        active:
+          type: boolean
+        availablePortions:
+          type: integer
+          minimum: 0
+          description: Portions that can be ordered now, computed from available stock and the recipe.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    MenuItemPage:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuItem'
+        page:
+          $ref: '#/components/schemas/PageMeta'
+
+    # ---------- Orders & Reservations ----------
+    OrderStatus:
+      type: string
+      enum: [PENDING, PREPARING, READY, CANCELLED]
+    OrderItemInput:
+      type: object
+      required: [menuItemId, quantity]
+      properties:
+        menuItemId:
+          type: string
+          format: uuid
+        quantity:
+          type: integer
+          minimum: 1
+          maximum: 50
+        note:
+          type: string
+          maxLength: 200
+          description: Free-text note for the kitchen. Does not change the recipe.
+    OrderCreate:
+      type: object
+      required: [items]
+      properties:
+        tableLabel:
+          type: string
+          maxLength: 20
+          description: Table or seat label, for example `T12`.
+        note:
+          type: string
+          maxLength: 500
+        items:
+          type: array
+          minItems: 1
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/OrderItemInput'
+    OrderItem:
+      type: object
+      required: [id, menuItemId, menuItemName, quantity, unitPrice, recipeVersion]
+      properties:
+        id:
+          type: string
+          format: uuid
+        menuItemId:
+          type: string
+          format: uuid
+        menuItemName:
+          type: string
+        quantity:
+          type: integer
+          minimum: 1
+        unitPrice:
+          type: number
+          minimum: 0
+          description: Price at the time of ordering.
+        recipeVersion:
+          type: integer
+          minimum: 1
+          description: Recipe version used to calculate this item's reservations. Never changes after creation.
+        note:
+          type: string
+    StatusChange:
+      type: object
+      required: [toStatus, changedBy, changedAt]
+      properties:
+        fromStatus:
+          $ref: '#/components/schemas/OrderStatus'
+        toStatus:
+          $ref: '#/components/schemas/OrderStatus'
+        changedBy:
+          $ref: '#/components/schemas/UserSummary'
+        changedAt:
+          type: string
+          format: date-time
+        reason:
+          type: string
+    Cancellation:
+      type: object
+      required: [previousStatus, late, cancelledBy, cancelledAt]
+      properties:
+        previousStatus:
+          $ref: '#/components/schemas/OrderStatus'
+        late:
+          type: boolean
+          description: '`true` when cancelled from `PREPARING` or `READY`.'
+        reason:
+          type: string
+        cancelledBy:
+          $ref: '#/components/schemas/UserSummary'
+        cancelledAt:
+          type: string
+          format: date-time
+    Order:
+      type: object
+      required: [id, orderNumber, status, items, totalPrice, createdBy, createdAt, updatedAt, statusHistory]
+      properties:
+        id:
+          type: string
+          format: uuid
+        orderNumber:
+          type: integer
+          minimum: 1
+          description: Human-friendly sequential number.
+        tableLabel:
+          type: string
+        note:
+          type: string
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        totalPrice:
+          type: number
+          minimum: 0
+        createdBy:
+          $ref: '#/components/schemas/UserSummary'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        preparationStartedAt:
+          type: string
+          format: date-time
+        readyAt:
+          type: string
+          format: date-time
+        cancellation:
+          $ref: '#/components/schemas/Cancellation'
+        statusHistory:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/StatusChange'
+    OrderPage:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        page:
+          $ref: '#/components/schemas/PageMeta'
+    OrderStatusUpdate:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          description: Target status. `PENDING` cannot be requested; it is set only on creation.
+          enum: [PREPARING, READY, CANCELLED]
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 500
+          description: Required when cancelling an order that is `PREPARING` or `READY`; optional otherwise.
+    ReservationStatus:
+      type: string
+      description: |
+        `ACTIVE` (held for a PENDING order), `RELEASED` (order cancelled while PENDING),
+        `CONSUMED` (preparation started; deducted from `onHand`).
+      enum: [ACTIVE, RELEASED, CONSUMED]
+    Reservation:
+      type: object
+      required: [id, orderId, orderItemId, ingredientId, ingredientName, unit, quantity, status, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        orderId:
+          type: string
+          format: uuid
+        orderItemId:
+          type: string
+          format: uuid
+        ingredientId:
+          type: string
+          format: uuid
+        ingredientName:
+          type: string
+        unit:
+          $ref: '#/components/schemas/Unit'
+        quantity:
+          type: number
+          exclusiveMinimum: 0
+        status:
+          $ref: '#/components/schemas/ReservationStatus'
+        createdAt:
+          type: string
+          format: date-time
+        resolvedAt:
+          type: string
+          format: date-time
+          description: When the reservation was released or consumed.
+    ReservationPage:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation'
+        page:
+          $ref: '#/components/schemas/PageMeta'
+
+    # ---------- Audit ----------
+    AuditAction:
+      type: string
+      enum:
+        - ORDER_CANCELLED
+        - ORDER_LATE_CANCELLED
+        - STOCK_ADJUSTED
+        - RECIPE_UPDATED
+        - USER_PERMISSIONS_CHANGED
+    AuditLogEntry:
+      type: object
+      required: [id, action, actor, entityType, entityId, occurredAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        action:
+          $ref: '#/components/schemas/AuditAction'
+        actor:
+          $ref: '#/components/schemas/UserSummary'
+        entityType:
+          type: string
+          enum: [ORDER, INGREDIENT, MENU_ITEM, USER]
+        entityId:
+          type: string
+          format: uuid
+        previousStatus:
+          $ref: '#/components/schemas/OrderStatus'
+        reason:
+          type: string
+        details:
+          type: object
+          description: Action-specific data (for example the adjustment delta).
+          additionalProperties: true
+        occurredAt:
+          type: string
+          format: date-time
+    AuditLogPage:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLogEntry'
+        page:
+          $ref: '#/components/schemas/PageMeta'
