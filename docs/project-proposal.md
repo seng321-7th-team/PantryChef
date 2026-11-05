@@ -6,25 +6,25 @@
 **Sprint:** Sprint 1 — Project Foundation  
 **Responsible:** Burcu Ücük  
 **Role:** Product Owner and Requirements Engineer  
-**Collaborators:** Beyzanur Alpay and Tuğçe Çevik  
-**Deliverable:** `docs/project-proposal.md`  
-**Document Status:** Updated — Pending Team Review
+**RACI:** Responsible (R) and Accountable (A)  
+**Document:** `docs/project-proposal.md`  
+**Status:** Updated — Pending Team Review
 
 ---
 
 ## 1. Project Overview
 
-PantryChef is a web-based restaurant order management and ingredient inventory tracking system designed to improve operational coordination between waiters, chefs, and restaurant managers.
+PantryChef is a web-based restaurant order management and ingredient inventory tracking system designed to improve coordination between waiters, chefs, and restaurant managers.
 
-The system connects customer orders with recipe-based ingredient reservations and physical inventory consumption. It provides a centralized platform for managing orders, tracking ingredient availability, monitoring stock levels, and coordinating kitchen activities.
+The system connects customer orders with recipe-based ingredient reservations and physical inventory consumption. It provides a centralized platform for creating and tracking orders, managing ingredients and recipes, monitoring inventory availability, and coordinating kitchen activities.
 
-PantryChef aims to reduce duplicate order entry, prevent inventory inconsistencies, improve stock visibility, and minimize manual inventory management.
+PantryChef aims to reduce duplicate order entry, prevent stock inconsistencies, improve ingredient availability visibility, and minimize manual inventory management.
 
-The initial Minimum Viable Product (MVP) focuses on reliable order processing, ingredient reservation, kitchen preparation tracking, and low-stock monitoring.
+The initial Minimum Viable Product (MVP) focuses on order management, atomic ingredient reservation, physical stock consumption, kitchen workflow tracking, and low-stock monitoring.
 
 ## 2. Problem Definition
 
-Restaurants may experience operational difficulties when customer orders and ingredient inventory are managed through separate or manual processes.
+Restaurants may experience operational difficulties when customer orders and ingredient inventory are managed manually or through disconnected systems.
 
 The main problems include:
 
@@ -33,11 +33,11 @@ The main problems include:
 - Poor communication between waiters and kitchen staff.
 - Acceptance of orders without sufficient available ingredients.
 - Inaccurate inventory records caused by manual stock updates.
-- Duplicate ingredient consumption during repeated order status updates.
+- Duplicate ingredient consumption during repeated status updates.
 - Delayed identification of low-stock ingredients.
 - Incorrect inventory restoration after order cancellation.
 
-These problems can result in order delays, unexpected ingredient shortages, operational inefficiency, and customer dissatisfaction.
+These problems may result in order delays, unexpected ingredient shortages, operational inefficiency, and customer dissatisfaction.
 
 PantryChef addresses these issues by integrating order management, ingredient reservation, physical stock consumption, and kitchen workflow tracking into a centralized system.
 
@@ -53,7 +53,7 @@ The main objectives of PantryChef are:
 6. Separate ingredient reservation from physical stock consumption.
 7. Deduct physical inventory exactly once when preparation begins.
 8. Prevent partial reservations and inconsistent inventory updates.
-9. Support controlled order cancellation and appropriate reservation release.
+9. Support controlled order cancellation and reservation release.
 10. Provide restaurant managers with inventory visibility and low-stock alerts.
 11. Maintain traceable order and inventory transactions.
 
@@ -79,16 +79,16 @@ The Waiter is responsible for:
 - Cancelling Pending orders when necessary.
 - Delivering completed orders to customers as an operational activity.
 
-A Waiter with explicitly granted additional authorization may cancel orders during Preparing or Ready, provided that the required reason and transaction record are maintained.
+A Waiter with explicitly granted additional authorization may cancel orders during Preparing or Ready, provided that a cancellation reason and transaction record are maintained.
 
-This is an additional permission within the Waiter role, not a separate primary system actor.
+This additional permission does not create a separate primary system actor.
 
 ### 4.3 Chef / Kitchen Staff
 
 The Chef is responsible for:
 
 - Viewing incoming Pending orders.
-- Confirming the start of order preparation.
+- Confirming the start of preparation.
 - Updating order status to Preparing.
 - Marking completed orders as Ready.
 
@@ -96,7 +96,7 @@ The Chef is responsible for:
 
 **Suppliers:** Provide ingredients to the restaurant. Direct supplier system integration is outside the initial MVP.
 
-**Restaurant Customers:** Receive the restaurant's services but do not directly interact with the initial system.
+**Restaurant Customers:** Receive restaurant services but do not directly interact with the initial system.
 
 ## 5. Proposed Solution
 
@@ -116,11 +116,11 @@ The system also supports controlled cancellation and low-stock monitoring.
 
 ### 5.1 Order Lifecycle
 
-The main order lifecycle consists of the following states:
+The approved order lifecycle consists of the following states:
 
 | Order Status | Description | Inventory Effect |
 |---|---|---|
-| Pending | Order accepted and waiting for kitchen preparation. | Required ingredients are reserved; physical stock remains unchanged. |
+| Pending | Order accepted and waiting for kitchen preparation. | Ingredients are reserved; physical stock remains unchanged. |
 | Preparing | Chef has started preparing the order. | Reserved quantities are consumed and physical stock is deducted exactly once. |
 | Ready | Kitchen preparation has been completed. | No additional stock deduction occurs. |
 | Cancelled | Order has been cancelled according to authorization rules. | Inventory handling depends on whether preparation has started. |
@@ -129,13 +129,13 @@ The normal workflow is:
 
 **Order Created → Pending → Preparing → Ready**
 
-An order may transition to Cancelled according to the cancellation rules.
+An order may transition to Cancelled according to the cancellation policy.
 
-Ready represents the final state of the normal MVP order workflow. No separate Delivered status is required in the approved workflow.
+Ready represents the final state of the normal MVP order workflow. A separate Delivered status is not included.
 
 ### 5.2 Ingredient Reservation and Physical Stock Consumption
 
-PantryChef distinguishes between three inventory quantities:
+PantryChef distinguishes between three inventory quantities.
 
 **Physical Stock:** The actual recorded quantity of an ingredient in the restaurant's inventory.
 
@@ -149,21 +149,23 @@ The relationship is:
 
 When an order enters Pending:
 
-- The system validates ingredient availability.
-- Required quantities are reserved atomically.
+- Required ingredient quantities are validated.
+- Ingredients are reserved atomically.
 - Reserved Stock increases.
 - Available Stock decreases.
 - Physical Stock remains unchanged.
 
 When an order enters Preparing:
 
-- The corresponding reservation is consumed.
+- The active reservation is consumed.
 - Reserved Stock decreases.
 - Physical Stock decreases by the required ingredient quantities.
-- The physical deduction is performed exactly once.
+- Physical stock deduction occurs exactly once.
 - Available Stock does not decrease a second time for the same ingredients.
 
 When an order enters Ready, no additional inventory deduction is performed.
+
+Ingredient reservation is maintained as a system record rather than a separate physical storage location.
 
 ### 5.3 Atomic Reservation and Inventory Consistency
 
@@ -174,17 +176,17 @@ If an order requires multiple ingredients, all required quantities must be avail
 If any required ingredient is insufficient:
 
 - The entire reservation operation is rejected.
-- No partial ingredient reservation is performed.
+- No partial reservation is performed.
 - Physical and reserved stock quantities remain unchanged.
 - The system reports the insufficient-stock condition.
 
 Concurrent order requests must not reserve more ingredients than are available.
 
-Repeated requests to start preparation must not cause duplicate physical inventory deductions.
+Repeated requests to start preparation must not cause duplicate physical stock deductions.
 
 ### 5.4 Order Cancellation Policy
 
-Cancellation behavior depends on the order's current status and the user's authorization.
+Cancellation behavior depends on the current order status and user authorization.
 
 **Cancellation During Pending**
 
@@ -211,14 +213,12 @@ The cancellation must include:
 Because preparation has already started:
 
 - Previously consumed ingredients are not automatically restored.
-- Physical inventory is not increased by the cancellation.
+- Physical inventory is not increased by cancellation.
 - Any necessary inventory correction must be performed through an authorized inventory adjustment.
 
 Cancelled is a terminal order state.
 
 ## 6. Minimum Viable Product (MVP) Scope
-
-The initial MVP includes the following features.
 
 ### 6.1 Order Management
 
@@ -242,7 +242,7 @@ The initial MVP includes the following features.
 - Ingredient record management.
 - Recipe creation and maintenance.
 - Definition of ingredient quantities required by recipes.
-- Physical Stock, Reserved Stock, and Available Stock tracking.
+- Physical, Reserved, and Available Stock tracking.
 - Atomic ingredient reservation.
 - Physical ingredient consumption when preparation begins.
 - Authorized inventory adjustments.
@@ -278,13 +278,11 @@ These features may be considered in future development stages.
 
 ## 7. Business Value
 
-PantryChef is expected to provide the following benefits:
-
 **Improved Order Accuracy:** Centralized order management reduces duplicate and inconsistent order records.
 
-**Reliable Ingredient Availability:** Reservation-based stock tracking prevents ingredients allocated to existing orders from being treated as available for new orders.
+**Reliable Ingredient Availability:** Reservation-based tracking prevents ingredients allocated to existing orders from being treated as available for new orders.
 
-**Improved Inventory Consistency:** Separating reservation from physical consumption reduces the risk of incorrect inventory deductions.
+**Improved Inventory Consistency:** Separating reservation from physical consumption reduces incorrect inventory deductions.
 
 **Better Kitchen Coordination:** Waiters and chefs can follow order progress through a shared workflow.
 
@@ -298,7 +296,7 @@ PantryChef is expected to provide the following benefits:
 
 PantryChef is planned as a web-based application using open-source development technologies.
 
-The project will follow established software engineering practices, including:
+The project will follow software engineering practices including:
 
 - GitHub-based version control.
 - Git-Flow branching and Pull Request reviews.
@@ -372,62 +370,95 @@ The MIT License is appropriate for PantryChef because:
 - It has relatively simple compliance requirements.
 - It is compatible with common open-source development workflows.
 
-The corresponding `LICENSE` file will be added to the repository using the standard MIT License text and the appropriate copyright information.
+The corresponding `LICENSE` file will be added to the repository using the standard MIT License text and appropriate copyright information.
 
 ## 12. Sprint 1 Responsibilities and Collaboration
 
-The Product Owner and Requirements Engineer is responsible for defining and maintaining the approved product scope and preparing the Project Proposal.
+The Sprint 1 responsibilities follow the updated PantryChef team responsibility distribution.
 
-### 12.1 Product Owner Responsibilities
+### 12.1 Product Owner and Requirements Engineer
 
-**Responsible: Burcu Ücük**
+**Responsible and Accountable: Burcu Ücük**
 
-- Prepare the Project Proposal.
-- Define the business problem and proposed solution.
+The Product Owner and Requirements Engineer is responsible for three main Sprint 1 documentation deliverables.
+
+**A. Project Proposal and Open-Source License**
+
+- Define the project problem, objectives, and proposed solution.
 - Identify stakeholders and primary system actors.
-- Explain the project's objectives and business value.
+- Explain the project's business value and technical feasibility.
 - Define MVP scope and excluded features.
-- Document feasibility, assumptions, and risks.
-- Select and justify an open-source license.
-- Review and approve backlog priorities and acceptance criteria with Beyzanur.
-- Approve the product scope.
+- Document assumptions, constraints, risks, and mitigation strategies.
+- Select and justify the MIT open-source license.
 
-**Primary Deliverable:** `docs/project-proposal.md`
+**Deliverable:** `docs/project-proposal.md`
+
+**B. System Vision and Boundary**
+
+- Define the overall system vision and objectives.
+- Identify primary actors and external stakeholders.
+- Specify the system boundary and external interactions.
+- Define in-scope and out-of-scope capabilities.
+- Document the approved order lifecycle: Pending, Preparing, Ready, and Cancelled.
+- Describe atomic ingredient reservation and physical stock consumption.
+- Define cancellation permissions and inventory restoration rules.
+- Prepare the system boundary diagram.
+- Ensure consistency with the Project Proposal and OpenAPI draft.
+
+**Collaborators:** Ayşe Dural and Tuğçe Çevik.
+
+**C. Initial Product Backlog**
+
+- Define the main product Epics and Features.
+- Prepare prioritized User Stories.
+- Define implementation Tasks and testable Acceptance Criteria.
+- Assign P0/P1 priorities and Story Point estimates.
+- Identify dependencies and responsible team members.
+- Include order management, ingredient inventory, recipe management, stock reservation, physical consumption, and low-stock alerts.
+- Ensure backlog items follow the approved order and cancellation workflow.
+- Review acceptance criteria with Beyzanur.
+- Verify API-related requirements with Ayşe.
+- Maintain consistency with the approved MVP scope.
+
+**Deliverable:** `docs/product-backlog.md`
 
 ### 12.2 Collaboration with Other Team Roles
 
 **Beyzanur Alpay — QA Engineer**
 
-Collaborates with the Product Owner to review backlog priorities, requirement clarity, testability, and acceptance criteria.
-
-**Tuğçe Çevik — System Vision and Boundary**
-
-Prepares the System Vision and Boundary documentation and related workflow diagrams, ensuring consistency with the approved Project Proposal.
+Reviews requirement testability, acceptance criteria, and early test scenarios. Provides QA feedback on the Initial Product Backlog.
 
 **Ayşe Dural — Software Architect and Technical Lead**
 
-Prepares the OpenAPI draft and verifies technical consistency between order operations, inventory behavior, authorization rules, and the approved workflow.
+Prepares the OpenAPI YAML draft and provides technical guidance for system interactions, order status transitions, inventory operations, and API consistency.
+
+**Tuğçe Çevik — Technical Consultation and Integration**
+
+Provides technical consultation on system scope, boundary definitions, feasibility, and integration considerations.
 
 **Bilgesu Nacak — Scrum Master and Agile Process Coach**
 
-Coordinates Sprint 1 planning, task tracking, RACI responsibilities, meeting decisions, and document review progress.
+Coordinates Sprint 1 planning, task tracking, the RACI Matrix, GitHub Projects Board, and meeting documentation.
 
 **Emre Boz — DevOps and CI/CD Infrastructure Engineer**
 
-Maintains repository infrastructure, Git workflow, and related development processes.
+Maintains repository infrastructure, Git-Flow documentation, branch protection, and development workflow configuration.
 
-### 12.3 Related Sprint 1 Artifacts
+### 12.3 Sprint 1 Documentation Consistency
 
-The Project Proposal must remain consistent with:
+The Project Proposal, System Vision and Boundary, Initial Product Backlog, and OpenAPI draft must follow the same approved PantryChef scenario.
 
-- System Vision and System Boundary Specification.
-- System context and order state diagrams.
-- Draft OpenAPI YAML contract.
-- Initial Product Backlog.
-- Team roles and RACI Matrix.
-- Sprint 1 task board and meeting decisions.
+The approved order lifecycle is:
 
-Each artifact remains under its assigned role owner according to the approved team responsibility distribution.
+**Order Created → Pending → Preparing → Ready**
+
+Cancellation follows the defined authorization and inventory rules.
+
+Ingredient reservation occurs during Pending, while physical stock consumption occurs exactly once when preparation begins.
+
+The Product Owner is responsible for maintaining consistency between product scope, requirements, and backlog priorities.
+
+Team responsibilities must remain aligned with the updated Sprint 1 responsibility distribution and RACI Matrix.
 
 ## 13. Success Criteria
 
