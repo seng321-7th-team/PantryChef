@@ -1,6 +1,4 @@
-# Redocly CLI configuration for the "OpenAPI lint" CI check (.github/workflows/ci.yml).
-# The "minimal" ruleset fails on structural problems, such as invalid OpenAPI fields
-# or broken $ref links, and reports style findings as warnings. That suits an early
-# draft contract. See docs/git-workflow.md, section 7.
+# Used by the OpenAPI lint job in .github/workflows/ci.yml
+# minimal = fail on real errors (invalid spec, broken $ref), only warn on style
 extends:
   - minimal
