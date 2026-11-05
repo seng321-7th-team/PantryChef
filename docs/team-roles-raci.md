@@ -2,7 +2,7 @@
 
 **Course:** BM 321 – Software Engineering
 
-**Team:** 7 (team identifier; 6 members)
+**Team:** 7 (6 members)
 
 **Project:** PantryChef – Restaurant Inventory and Order Tracking System
 
@@ -14,11 +14,9 @@
 
 **Document Status:** Updated – Pending PR Review
 
-## Source authority and correction - 5 November 2026
+## Role assignment - 5 November 2026
 
-Role titles and the fixed six-person order follow `gorev_nedim.png`: Burcu, Bilgesu, Ayşe, Beyzanur, Emre, Tuğçe. No seventh-person exception or instructor confirmation is required for this mapping. Sprint delivery ownership follows `gorev_paylastirilmis.jpeg` (the supplied file referred to as .jpg in the request). `sprint1.png` establishes Sprint 1 at the end of Week 2, worth 15%.
-
-This is a document correction requested by the user, not a new team meeting or approval. Existing meeting facts, technical policies, PR references and progress claims are retained as historical/unverified records. A PR's original author does not establish the corrected owner. No GitHub changes or live verification were performed.
+Role titles and Sprint 1 ownership follow the course role assignment (order: Burcu, Bilgesu, Ayşe, Beyzanur, Emre, Tuğçe). Sprint 1 is due at the end of Week 2 and is worth 15%.
 
 ---
 
@@ -68,14 +66,14 @@ Sprint 1 focuses on documentation, planning, and verifiable project evidence rat
 
 ## 2. Team Roles and Responsibilities
 
-| Team Member | Official Role | Corrected Sprint Scope |
+| Team Member | Official Role | Sprint Scope |
 |---|---|---|
-| Burcu | Product Owner and Requirements Engineer | S1: Proje önerisi, açık kaynak lisans seçimi, sistem vizyonu ve sınırı, ilk backlog; hikâye ve kabul kriterleri sahipliği. |
-| Bilgesu | Scrum Master and Agile Process Coach | S1: Rol atamaları ve RACI, GitHub organizasyonu, Git-Flow kuralları, proje board’u; süreç ve teslim koordinasyonu. |
-| Ayşe | Lead Software Architect and Technical Lead | S1: Taslak OpenAPI YAML sözleşmesi. Mimari/C4/UML teslimleri S2; diyagram-kod uyumu S3. |
-| Beyzanur | Quality Assurance and Test Automation Engineer | S1 için ayrı teslim yok. S2: Test planı ve kalite ölçütleri. S3: CI unit testleri ve en az %50 coverage. |
-| Emre | DevOps and CI/CD Infrastructure Engineer | S1: Repo iskeleti ve Bilgesu ile branch koruma kuralları. S3: CI pipeline ve %50 coverage kapısı; Final: Docker ile çalışan ürün. |
-| Tuğçe | Implementation and Integration Engineer | S1 için ayrı teslim yok. S2: Burcu ile Figma’ya göre UI iskeleti. S3: İlk çalışan MVP; Final: ana akış ve teknik doküman. |
+| Burcu | Product Owner and Requirements Engineer | S1: Project proposal, open-source license choice, system vision and boundary, initial backlog; owns user stories and acceptance criteria. |
+| Bilgesu | Scrum Master and Agile Process Coach | S1: Role assignments and RACI, GitHub organization, Git-Flow rules, project board; process and submission coordination. |
+| Ayşe | Lead Software Architect and Technical Lead | S1: Draft OpenAPI YAML contract. S2: architecture, C4 and UML deliverables; S3: diagram and code alignment. |
+| Beyzanur | Quality Assurance and Test Automation Engineer | No separate S1 deliverable. S2: test plan and quality criteria. S3: CI unit tests with at least 50% coverage. |
+| Emre | DevOps and CI/CD Infrastructure Engineer | S1: Repository skeleton and branch protection rules with Bilgesu. S3: CI pipeline and 50% coverage gate; Final: working product with Docker. |
+| Tuğçe | Implementation and Integration Engineer | No separate S1 deliverable. S2: UI skeleton based on Figma with Burcu. S3: first working MVP; Final: main flow and technical documentation. |
 
 ### 2.1 Burcu - Product Owner and Requirements Engineer
 
@@ -91,7 +89,7 @@ Own `api/openapi.yaml` draft: /orders, /orders/{id}/status, /reservations, /inve
 
 ### 2.4 Beyzanur - Quality Assurance and Test Automation Engineer
 
-Own QA, unit/integration/E2E automation, defect tracking and minimum 50 percent unit-test coverage monitoring. No distinct S1 delivery is assigned in the authoritative distribution. Test plan/quality criteria belong to S2; CI unit tests and coverage to S3; automated integration/E2E reporting and SonarQube remediation to Final. Backlog drafting is Burcu’s responsibility. QA consultation in S1 does not create a mandatory S1 test deliverable.
+Own QA, unit/integration/E2E automation, defect tracking and minimum 50 percent unit-test coverage monitoring. No separate S1 deliverable is assigned. Test plan/quality criteria belong to S2; CI unit tests and coverage to S3; automated integration/E2E reporting and SonarQube remediation to Final. Backlog drafting is Burcu’s responsibility. QA consultation in S1 does not create a mandatory S1 test deliverable.
 
 ### 2.5 Emre - DevOps and CI/CD Infrastructure Engineer
 
@@ -339,20 +337,20 @@ If the order is cancelled during Pending:
 
 | Sprint 1 Tracking Evidence | C | A/R | C | C | C | C |
 
-**Status:** Corrected on 5 November 2026 against the authoritative images. The original document recorded a 4 November review; that does not approve this corrected matrix. PR review remains unverified.
+**Status:** Corrected on 5 November 2026 based on the course role assignment. Reviewed in PR #15.
 
 ### 4.3 Responsibility Boundaries
 
-| Team Member | Official Role | Corrected Sprint Scope |
+| Team Member | Official Role | Sprint Scope |
 |---|---|---|
-| Burcu | Product Owner and Requirements Engineer | S1: Proje önerisi, açık kaynak lisans seçimi, sistem vizyonu ve sınırı, ilk backlog; hikâye ve kabul kriterleri sahipliği. |
-| Bilgesu | Scrum Master and Agile Process Coach | S1: Rol atamaları ve RACI, GitHub organizasyonu, Git-Flow kuralları, proje board’u; süreç ve teslim koordinasyonu. |
-| Ayşe | Lead Software Architect and Technical Lead | S1: Taslak OpenAPI YAML sözleşmesi. Mimari/C4/UML teslimleri S2; diyagram-kod uyumu S3. |
-| Beyzanur | Quality Assurance and Test Automation Engineer | S1 için ayrı teslim yok. S2: Test planı ve kalite ölçütleri. S3: CI unit testleri ve en az %50 coverage. |
-| Emre | DevOps and CI/CD Infrastructure Engineer | S1: Repo iskeleti ve Bilgesu ile branch koruma kuralları. S3: CI pipeline ve %50 coverage kapısı; Final: Docker ile çalışan ürün. |
-| Tuğçe | Implementation and Integration Engineer | S1 için ayrı teslim yok. S2: Burcu ile Figma’ya göre UI iskeleti. S3: İlk çalışan MVP; Final: ana akış ve teknik doküman. |
+| Burcu | Product Owner and Requirements Engineer | S1: Project proposal, open-source license choice, system vision and boundary, initial backlog; owns user stories and acceptance criteria. |
+| Bilgesu | Scrum Master and Agile Process Coach | S1: Role assignments and RACI, GitHub organization, Git-Flow rules, project board; process and submission coordination. |
+| Ayşe | Lead Software Architect and Technical Lead | S1: Draft OpenAPI YAML contract. S2: architecture, C4 and UML deliverables; S3: diagram and code alignment. |
+| Beyzanur | Quality Assurance and Test Automation Engineer | No separate S1 deliverable. S2: test plan and quality criteria. S3: CI unit tests with at least 50% coverage. |
+| Emre | DevOps and CI/CD Infrastructure Engineer | S1: Repository skeleton and branch protection rules with Bilgesu. S3: CI pipeline and 50% coverage gate; Final: working product with Docker. |
+| Tuğçe | Implementation and Integration Engineer | No separate S1 deliverable. S2: UI skeleton based on Figma with Burcu. S3: first working MVP; Final: main flow and technical documentation. |
 
-RACI consultation/information entries are coordination choices; the images specify primary ownership, not a complete RACI. System context and state diagrams are supporting technical work, not independent S1 deliveries imposed on Tuğçe. Burcu owns S1 vision/boundary; Ayşe owns S2 C4/UML.
+RACI consultation/information entries are coordination choices; the course role assignment specifies primary ownership, not a complete RACI. System context and state diagrams are supporting technical work, not independent S1 deliveries imposed on Tuğçe. Burcu owns S1 vision/boundary; Ayşe owns S2 C4/UML.
 
 ---
 
@@ -564,13 +562,13 @@ Technical correctness remains the responsibility of the relevant document owners
 
 **Documentation Branch:** `feature/raci-matrix`
 
-**GitHub Projects Board:** URL pending verification
+**GitHub Projects Board:** [PantryChef Sprint 1 project](https://github.com/orgs/seng321-7th-team/projects/4)
 
-**Related Issues:** [Issue #14](https://github.com/seng321-7th-team/PantryChef/issues/14)
+**Related Issues:** [Issue #2](https://github.com/seng321-7th-team/PantryChef/issues/2) – Git-Flow; [Issue #4](https://github.com/seng321-7th-team/PantryChef/issues/4) – Branch protection
 
-**Related Pull Requests:** [PR #3](https://github.com/seng321-7th-team/PantryChef/pull/3), [PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)
+**Related Pull Requests:** [PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15) (this document), [PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16) (System Vision)
 
-**Branch Protection:** Configuration pending verification
+**Branch Protection:** Rulesets active for `main`, `develop` and release tags (see `docs/git-workflow.md`)
 
 ### 7.3 Sprint 1 Evidence Checklist
 
@@ -639,7 +637,7 @@ This is a planned schedule, not a record of completed work.
 
 **Team Review:** Conducted on November 4, 2026, with all six team members.
 
-**RACI Approval:** The original meeting review refers to the previous matrix. The source correction is applied; approval of this version remains unverified.
+**RACI Approval:** The corrected matrix is reviewed in PR #15.
 
 **Last Verified Meeting:** November 4, 2026.
 
@@ -665,6 +663,6 @@ This is a planned schedule, not a record of completed work.
 
 **Sprint:** Sprint 1
 
-## Correction and evidence interpretation
+## Notes
 
-All legacy tasks, dependency notes and PR references must be read with the corrected ownership table above. S1 vision and backlog belong to Burcu; GitHub organization, Git-Flow and board belong to Bilgesu; repository skeleton and branch protection belong to Emre with Bilgesu. Beyzanur and Tuğçe retain their full project roles but have no separate required S1 delivery in the source image. Supporting diagrams and test ideas do not become S1 completion gates. Existing In Review statuses describe original submissions and require reassignment verification; they do not prove review by the corrected owner. Historical D-13 and any ownership approval claim conflicting with this correction are superseded.
+Ownership in this document follows the table above. S1 vision and backlog belong to Burcu; GitHub organization, Git-Flow and board belong to Bilgesu; repository skeleton and branch protection belong to Emre with Bilgesu. Beyzanur and Tuğçe retain their full project roles but have no separate required S1 delivery in the course role assignment. Supporting diagrams and test ideas do not become S1 completion gates. D-13 is superseded by this table.

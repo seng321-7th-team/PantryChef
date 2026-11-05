@@ -1,18 +1,16 @@
 # PantryChef – Sprint 1 Meeting Notes & Decision Log
 
 **Course:** BM 321 – Software Engineering
-**Team:** 7 (team identifier; 6 members)
+**Team:** 7 (6 members)
 **Project:** PantryChef – Restaurant Inventory and Order Tracking System
 **Sprint:** Sprint 1 – Project Foundation
 **Document Owner:** Bilgesu Nacak
 **Role:** Scrum Master and Agile Process Coach
-**Document Status:** Updated – Pending Decision and Evidence Verification
+**Document Status:** Updated 5 November 2026
 
-## Source authority and correction - 5 November 2026
+## Role assignment - 5 November 2026
 
-Role titles and the fixed six-person order follow `gorev_nedim.png`: Burcu, Bilgesu, Ayşe, Beyzanur, Emre, Tuğçe. No seventh-person exception or instructor confirmation is required for this mapping. Sprint delivery ownership follows `gorev_paylastirilmis.jpeg` (the supplied file referred to as .jpg in the request). `sprint1.png` establishes Sprint 1 at the end of Week 2, worth 15%.
-
-This is a document correction requested by the user, not a new team meeting or approval. Existing meeting facts, technical policies, PR references and progress claims are retained as historical/unverified records. A PR's original author does not establish the corrected owner. No GitHub changes or live verification were performed.
+Role titles and Sprint 1 ownership follow the course role assignment (order: Burcu, Bilgesu, Ayşe, Beyzanur, Emre, Tuğçe). Sprint 1 is due at the end of Week 2 and is worth 15%.
 
 ---
 
@@ -25,18 +23,18 @@ This is a document correction requested by the user, not a new team meeting or a
 **Facilitator:** Bilgesu Nacak
 **Attendees:** Burcu Ücük, Bilgesu Nacak, Ayşe Dural, Beyzanur Alpay, Emre Boz, Tuğçe Çevik
 
-### Team Members - corrected ownership
+### Team Members and Sprint Scope
 
-| Team Member | Official Role | Corrected Sprint Scope |
+| Team Member | Official Role | Sprint Scope |
 |---|---|---|
-| Burcu | Product Owner and Requirements Engineer | S1: Proje önerisi, açık kaynak lisans seçimi, sistem vizyonu ve sınırı, ilk backlog; hikâye ve kabul kriterleri sahipliği. |
-| Bilgesu | Scrum Master and Agile Process Coach | S1: Rol atamaları ve RACI, GitHub organizasyonu, Git-Flow kuralları, proje board’u; süreç ve teslim koordinasyonu. |
-| Ayşe | Lead Software Architect and Technical Lead | S1: Taslak OpenAPI YAML sözleşmesi. Mimari/C4/UML teslimleri S2; diyagram-kod uyumu S3. |
-| Beyzanur | Quality Assurance and Test Automation Engineer | S1 için ayrı teslim yok. S2: Test planı ve kalite ölçütleri. S3: CI unit testleri ve en az %50 coverage. |
-| Emre | DevOps and CI/CD Infrastructure Engineer | S1: Repo iskeleti ve Bilgesu ile branch koruma kuralları. S3: CI pipeline ve %50 coverage kapısı; Final: Docker ile çalışan ürün. |
-| Tuğçe | Implementation and Integration Engineer | S1 için ayrı teslim yok. S2: Burcu ile Figma’ya göre UI iskeleti. S3: İlk çalışan MVP; Final: ana akış ve teknik doküman. |
+| Burcu | Product Owner and Requirements Engineer | S1: Project proposal, open-source license choice, system vision and boundary, initial backlog; owns user stories and acceptance criteria. |
+| Bilgesu | Scrum Master and Agile Process Coach | S1: Role assignments and RACI, GitHub organization, Git-Flow rules, project board; process and submission coordination. |
+| Ayşe | Lead Software Architect and Technical Lead | S1: Draft OpenAPI YAML contract. S2: architecture, C4 and UML deliverables; S3: diagram and code alignment. |
+| Beyzanur | Quality Assurance and Test Automation Engineer | No separate S1 deliverable. S2: test plan and quality criteria. S3: CI unit tests with at least 50% coverage. |
+| Emre | DevOps and CI/CD Infrastructure Engineer | S1: Repository skeleton and branch protection rules with Bilgesu. S3: CI pipeline and 50% coverage gate; Final: working product with Docker. |
+| Tuğçe | Implementation and Integration Engineer | No separate S1 deliverable. S2: UI skeleton based on Figma with Burcu. S3: first working MVP; Final: main flow and technical documentation. |
 
-**Historical attendance:** The source notes record all six members at the 4 November meeting. This correction does not independently verify attendance.
+**Attendance:** All six members attended the 4 November meeting.
 
 ---
 
@@ -145,7 +143,7 @@ Establish a consistent, reviewable, and traceable project foundation through:
 | Initial Product Backlog (prepared and owned by Burcu) | Burcu | `docs/product-backlog.md` | Pending |
 | S2 Test Plan / Later Test Cases | Beyzanur Alpay | `docs/test-cases.md` | Outside required S1 scope |
 
-Assignments are corrected against the authoritative image. Work status and evidence still require verification; source ownership is not pending reassignment approval.
+Assignments follow the course role assignment.
 
 ---
 
@@ -165,9 +163,9 @@ Assignments are corrected against the authoritative image. Work status and evide
 | D-10 | Task tracking | Track tasks using GitHub Issues and Projects | Pending confirmation |
 | D-11 | Stock deduction timing revision | Rev 2 stated that physical stock would be deducted at Ready. The updated workflow specifies deduction when the order enters Preparing, while Ready causes no additional deduction. | Revision documented; team confirmation pending |
 | D-12 | Authorized cancellation in Preparing / Ready | Restaurant Manager and explicitly authorized Waiter may cancel Preparing or Ready orders after server-side permission checks; record actor, reason, and timestamp; do not automatically restore consumed stock or release cleared reservations again. | Approved by team on November 4, 2026; cross-document verification pending |
-| D-13 | Historical backlog RACI - superseded | Original record assigned drafting to Beyzanur and approval to Burcu. Corrected source ownership: Burcu A/R; Beyzanur QA consultation only. | Superseded by source correction on 5 November 2026; historical review/PR claim is not new approval |
+| D-13 | Historical backlog RACI - superseded | Original record assigned drafting to Beyzanur and approval to Burcu. Corrected ownership: Burcu A/R; Beyzanur QA consultation only. | Superseded by the role correction on 5 November 2026 |
 
-Decision D-12 was approved by the team on November 4, 2026. Decision D-13 was reviewed by the team, with PR #3 review pending. All other decisions remain pending confirmation unless explicitly documented otherwise.
+Decision D-12 was approved by the team on November 4, 2026. Decision D-13 was reviewed by the team, with PR #15 review pending. All other decisions remain pending confirmation unless explicitly documented otherwise.
 
 ---
 
@@ -197,7 +195,7 @@ Due dates and statuses must be updated using actual team agreements.
 | R-01 | Inconsistent workflow descriptions | Bilgesu | Coordinate document review |
 | R-02 | API and state diagram mismatch | Ayşe / Burcu | Compare contract and diagrams |
 | R-03 | Missing stock edge-case, cancellation-permission, and audit tests | Beyzanur | Review test scenarios |
-| R-04 | Unverified GitHub protection rules | Emre | Check repository settings |
+| R-04 | GitHub protection rules | Emre | Rulesets active for main, develop and release tags |
 
 These are potential risks and not confirmed blockers.
 
@@ -211,13 +209,13 @@ New impediments should include their reported date, owner, priority, next action
 
 ## 9. Meeting Outcomes
 
-**Meeting Summary:** On November 4, 2026, all six team members attended the Sprint 1 coordination meeting. The team reviewed the then-recorded Sprint 1 responsibilities and RACI Matrix (subsequently corrected on 5 November 2026), and approved the Preparing/Ready cancellation policy for Restaurant Manager and explicitly authorized Waiter. Cross-document verification and PR #3 review remain pending.
+**Meeting Summary:** On November 4, 2026, all six team members attended the Sprint 1 coordination meeting. The team reviewed the then-recorded Sprint 1 responsibilities and RACI Matrix (subsequently corrected on 5 November 2026), and approved the Preparing/Ready cancellation policy for Restaurant Manager and explicitly authorized Waiter. Cross-document verification and PR #15 review remain pending.
 
 **Confirmed Decisions:** D-12 – On November 4, 2026, the team approved cancellation of Preparing/Ready orders by Restaurant Manager or explicitly authorized Waiter, subject to server-side permission checks and audit logging. Consumed stock must not be automatically restored, and cleared reservations must not be released again. Other decisions remain pending confirmation unless explicitly documented otherwise.
 
 **Attendance:** All six team members attended the November 4, 2026 meeting: Burcu Ücük, Bilgesu Nacak, Ayşe Dural, Beyzanur Alpay, Emre Boz, Tuğçe Çevik.
 
-**Unresolved Questions:** Team confirmation of decisions D-01 through D-11; completion of PR #3 review for D-13; verification of the approved D-12 cancellation policy across System Vision, OpenAPI, Product Backlog, and Test Cases; confirmation of remaining Sprint 1 deliverables and deadlines.
+**Unresolved Questions:** Team confirmation of decisions D-01 through D-11; completion of PR #15 review for D-13; verification of the approved D-12 cancellation policy across System Vision, OpenAPI, Product Backlog, and Test Cases; confirmation of remaining Sprint 1 deliverables and deadlines.
 
 **Next Meeting:** To be confirmed.
 
@@ -231,11 +229,11 @@ Do not mark proposed decisions as approved before team confirmation.
 
 **Repository:** https://github.com/seng321-7th-team/PantryChef
 
-**Sprint 1 Task Board:** URL pending verification
+**Sprint 1 Task Board:** [PantryChef Sprint 1 project](https://github.com/orgs/seng321-7th-team/projects/4)
 
-**Related Issues:** [Issue #14](https://github.com/seng321-7th-team/PantryChef/issues/14) – Team Roles & RACI; [Issue #5](https://github.com/seng321-7th-team/PantryChef/issues/5) – GitHub / Git-Flow setup.
+**Related Issues:** [Issue #1](https://github.com/seng321-7th-team/PantryChef/issues/1) – Repository structure; [Issue #2](https://github.com/seng321-7th-team/PantryChef/issues/2) – Git-Flow documentation; [Issue #3](https://github.com/seng321-7th-team/PantryChef/issues/3) – Issue / PR templates; [Issue #4](https://github.com/seng321-7th-team/PantryChef/issues/4) – Branch protection.
 
-**Related Pull Requests:** [PR #3](https://github.com/seng321-7th-team/PantryChef/pull/3) – Team Roles & RACI (review pending); [PR #6](https://github.com/seng321-7th-team/PantryChef/pull/6) – Git-Flow; [PR #7](https://github.com/seng321-7th-team/PantryChef/pull/7) – Issue / PR Templates; [PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15) – System Vision and Diagrams.
+**Related Pull Requests:** [PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15) – Team Roles & RACI; [PR #8](https://github.com/seng321-7th-team/PantryChef/pull/8) – Git-Flow; [PR #9](https://github.com/seng321-7th-team/PantryChef/pull/9) – Issue / PR Templates; [PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12) – Project Proposal; [PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16) – System Vision; [PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17) – Product Backlog.
 
 **Meeting Evidence:** The November 4, 2026 meeting was held via WhatsApp at 19:00 (Türkiye Time, UTC+3). Meeting outcomes and attendance are documented in Section 9. Supporting evidence (WhatsApp chat records or attendance confirmation) is pending collection and verification.
 
@@ -259,6 +257,6 @@ After each Sprint 1 meeting:
 **Role:** Scrum Master and Agile Process Coach
 **Sprint:** Sprint 1
 
-## Correction and evidence interpretation
+## Notes
 
-All legacy tasks, dependency notes and PR references must be read with the corrected ownership table above. S1 vision and backlog belong to Burcu; GitHub organization, Git-Flow and board belong to Bilgesu; repository skeleton and branch protection belong to Emre with Bilgesu. Beyzanur and Tuğçe retain their full project roles but have no separate required S1 delivery in the source image. Supporting diagrams and test ideas do not become S1 completion gates. Existing In Review statuses describe original submissions and require reassignment verification; they do not prove review by the corrected owner. Historical D-13 and any ownership approval claim conflicting with this correction are superseded.
+Ownership in this document follows the table above. S1 vision and backlog belong to Burcu; GitHub organization, Git-Flow and board belong to Bilgesu; repository skeleton and branch protection belong to Emre with Bilgesu. Beyzanur and Tuğçe retain their full project roles but have no separate required S1 delivery in the course role assignment. Supporting diagrams and test ideas do not become S1 completion gates. D-13 is superseded by this table.

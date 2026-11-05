@@ -1,18 +1,16 @@
 # PantryChef – Sprint 1 Task Board & Progress Tracking
 
 **Course:** BM 321 – Software Engineering
-**Team:** 7 (team identifier; 6 members)
+**Team:** 7 (6 members)
 **Project:** PantryChef – Restaurant Inventory and Order Tracking System
 **Sprint:** Sprint 1 – Project Foundation
 **Document Owner:** Bilgesu Nacak
 **Role:** Scrum Master and Agile Process Coach
 **Document Status:** Draft – Pending Team Verification
 
-## Source authority and correction - 5 November 2026
+## Role assignment - 5 November 2026
 
-Role titles and the fixed six-person order follow `gorev_nedim.png`: Burcu, Bilgesu, Ayşe, Beyzanur, Emre, Tuğçe. No seventh-person exception or instructor confirmation is required for this mapping. Sprint delivery ownership follows `gorev_paylastirilmis.jpeg` (the supplied file referred to as .jpg in the request). `sprint1.png` establishes Sprint 1 at the end of Week 2, worth 15%.
-
-This is a document correction requested by the user, not a new team meeting or approval. Existing meeting facts, technical policies, PR references and progress claims are retained as historical/unverified records. A PR's original author does not establish the corrected owner. No GitHub changes or live verification were performed.
+Role titles and Sprint 1 ownership follow the course role assignment (order: Burcu, Bilgesu, Ayşe, Beyzanur, Emre, Tuğçe). Sprint 1 is due at the end of Week 2 and is worth 15%.
 
 ---
 
@@ -26,16 +24,16 @@ The Sprint 1 task board is maintained by the Scrum Master to monitor progress, o
 
 ---
 
-## 2. Corrected Team Responsibilities
+## 2. Team Responsibilities
 
-| Team Member | Official Role | Corrected Sprint Scope |
+| Team Member | Official Role | Sprint Scope |
 |---|---|---|
-| Burcu | Product Owner and Requirements Engineer | S1: Proje önerisi, açık kaynak lisans seçimi, sistem vizyonu ve sınırı, ilk backlog; hikâye ve kabul kriterleri sahipliği. |
-| Bilgesu | Scrum Master and Agile Process Coach | S1: Rol atamaları ve RACI, GitHub organizasyonu, Git-Flow kuralları, proje board’u; süreç ve teslim koordinasyonu. |
-| Ayşe | Lead Software Architect and Technical Lead | S1: Taslak OpenAPI YAML sözleşmesi. Mimari/C4/UML teslimleri S2; diyagram-kod uyumu S3. |
-| Beyzanur | Quality Assurance and Test Automation Engineer | S1 için ayrı teslim yok. S2: Test planı ve kalite ölçütleri. S3: CI unit testleri ve en az %50 coverage. |
-| Emre | DevOps and CI/CD Infrastructure Engineer | S1: Repo iskeleti ve Bilgesu ile branch koruma kuralları. S3: CI pipeline ve %50 coverage kapısı; Final: Docker ile çalışan ürün. |
-| Tuğçe | Implementation and Integration Engineer | S1 için ayrı teslim yok. S2: Burcu ile Figma’ya göre UI iskeleti. S3: İlk çalışan MVP; Final: ana akış ve teknik doküman. |
+| Burcu | Product Owner and Requirements Engineer | S1: Project proposal, open-source license choice, system vision and boundary, initial backlog; owns user stories and acceptance criteria. |
+| Bilgesu | Scrum Master and Agile Process Coach | S1: Role assignments and RACI, GitHub organization, Git-Flow rules, project board; process and submission coordination. |
+| Ayşe | Lead Software Architect and Technical Lead | S1: Draft OpenAPI YAML contract. S2: architecture, C4 and UML deliverables; S3: diagram and code alignment. |
+| Beyzanur | Quality Assurance and Test Automation Engineer | No separate S1 deliverable. S2: test plan and quality criteria. S3: CI unit tests with at least 50% coverage. |
+| Emre | DevOps and CI/CD Infrastructure Engineer | S1: Repository skeleton and branch protection rules with Bilgesu. S3: CI pipeline and 50% coverage gate; Final: working product with Docker. |
+| Tuğçe | Implementation and Integration Engineer | No separate S1 deliverable. S2: UI skeleton based on Figma with Burcu. S3: first working MVP; Final: main flow and technical documentation. |
 
 ---
 
@@ -59,35 +57,35 @@ The following tasks are planned according to the Sprint 1 team responsibility di
 
 | Task ID | Task | Owner | Expected Deliverable | Status |
 |---|---|---|---|---|
-| S1-01 | Prepare Project Proposal | Burcu | `docs/project-proposal.md` | To Do |
-| S1-02 | Define MVP scope, stakeholders, and risks | Burcu | Project Proposal sections | To Do |
-| S1-03 | Select and justify open-source license | Burcu | License decision | To Do |
-| S1-04 | Prepare System Vision & Boundary | Burcu | `docs/system-vision.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | In Review |
-| S1-05 | Supporting diagram work - not an independent required S1 delivery | Burcu (vision); Ayşe (technical consultation) | System context diagram ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | Optional supporting work; existing PR reference unverified |
-| S1-06 | Supporting diagram work - not an independent required S1 delivery | Burcu (vision); Ayşe (technical consultation) | Order lifecycle diagram ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | Optional supporting work; existing PR reference unverified |
-| S1-07 | Document reservation and approved cancellation rules, including Manager / authorized Waiter permission | Burcu | System Vision workflow and state diagram ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | In Review |
+| S1-01 | Prepare Project Proposal | Burcu | `docs/project-proposal.md` ([PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12)) | In Review |
+| S1-02 | Define MVP scope, stakeholders, and risks | Burcu | Project Proposal sections ([PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12)) | In Review |
+| S1-03 | Select and justify open-source license | Burcu | License decision ([PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12), [PR #14](https://github.com/seng321-7th-team/PantryChef/pull/14)) | Done |
+| S1-04 | Prepare System Vision & Boundary | Burcu | `docs/system-vision.md` ([PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16)) | In Review |
+| S1-05 | Supporting diagram work - not an independent required S1 delivery | Burcu (vision); Ayşe (technical consultation) | System context diagram ([PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16)) | Optional supporting work; diagrams are in the vision document |
+| S1-06 | Supporting diagram work - not an independent required S1 delivery | Burcu (vision); Ayşe (technical consultation) | Order lifecycle diagram ([PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16)) | Optional supporting work; diagrams are in the vision document |
+| S1-07 | Document reservation and approved cancellation rules, including Manager / authorized Waiter permission | Burcu | System Vision workflow and state diagram ([PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16)) | In Review |
 | S1-08 | Prepare initial OpenAPI YAML | Ayşe | `api/openapi.yaml` | To Do |
 | S1-09 | Define order, inventory, and recipe API operations | Ayşe | API paths and schemas | To Do |
 | S1-10 | Define API errors, idempotency, and approved Manager / authorized Waiter cancellation checks (403/409) | Ayşe | API responses, permissions, and rules | To Do |
-| S1-11 | Prepare team roles and RACI Matrix | Bilgesu | `docs/team-roles-raci.md` ([PR #3](https://github.com/seng321-7th-team/PantryChef/pull/3)) | In Review |
-| S1-12 | Maintain meeting notes and decisions | Bilgesu | `docs/sprint1-meeting-notes.md` | In Progress |
-| S1-13 | Track Sprint 1 tasks and impediments | Bilgesu | `docs/sprint1-task-board.md` | In Progress |
+| S1-11 | Prepare team roles and RACI Matrix | Bilgesu | `docs/team-roles-raci.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | In Review |
+| S1-12 | Maintain meeting notes and decisions | Bilgesu | `docs/sprint1-meeting-notes.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | In Review |
+| S1-13 | Track Sprint 1 tasks and impediments | Bilgesu | `docs/sprint1-task-board.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | In Review |
 | S1-14 | Coordinate workflow consistency review | Bilgesu | Review records | To Do |
-| S1-15 | Configure GitHub repository structure | Emre | GitHub repository | To Do |
-| S1-16 | Prepare Git-Flow documentation; under review in [PR #6](https://github.com/seng321-7th-team/PantryChef/pull/6), linked to [Issue #5](https://github.com/seng321-7th-team/PantryChef/issues/5) | Bilgesu | `docs/git-workflow.md` | In Review |
-| S1-17 | Prepare Issue/PR templates (under review in [PR #7](https://github.com/seng321-7th-team/PantryChef/pull/7)); final branch protection verification pending | Bilgesu (process); Emre (settings/implementation) | GitHub settings and templates | In Review |
-| S1-18 | Prepare initial Product Backlog and priorities | Burcu | `docs/product-backlog.md` | To Do |
-| S1-19 | Draft user stories, story points, and measurable acceptance criteria | Burcu | `docs/product-backlog.md` | To Do |
+| S1-15 | Configure GitHub repository structure | Emre | GitHub repository ([PR #7](https://github.com/seng321-7th-team/PantryChef/pull/7)) | Done |
+| S1-16 | Prepare Git-Flow documentation ([PR #8](https://github.com/seng321-7th-team/PantryChef/pull/8), [Issue #2](https://github.com/seng321-7th-team/PantryChef/issues/2)) | Bilgesu | `docs/git-workflow.md` | Done |
+| S1-17 | Prepare Issue/PR templates ([PR #9](https://github.com/seng321-7th-team/PantryChef/pull/9)) and branch protection ([Issue #4](https://github.com/seng321-7th-team/PantryChef/issues/4)) | Bilgesu (process); Emre (settings/implementation) | GitHub settings and templates | Done |
+| S1-18 | Prepare initial Product Backlog and priorities | Burcu | `docs/product-backlog.md` ([PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17)) | In Review |
+| S1-19 | Draft user stories, story points, and measurable acceptance criteria | Burcu | `docs/product-backlog.md` ([PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17)) | In Review |
 | S1-20 (deferred) | Later QA scope: Prepare later-sprint test cases | Beyzanur | `docs/test-cases.md` | Outside required S1 scope; S2 plan / later tests |
 | S1-21 (deferred) | Later QA scope: Review recipe-version, concurrency, and authorized cancellation test scenarios | Beyzanur | `docs/test-cases.md` | Outside required S1 scope; S2 plan / later tests |
-| S1-22 | Review Sprint 1 deliverables | All team members | Review evidence | To Do |
+| S1-22 | Review Sprint 1 deliverables | All team members | Review evidence | In Progress |
 | S1-23 | Collect Sprint 1 submission evidence | Bilgesu | Issue, PR, and document links | To Do |
-| S1-24 | Review and approve Product Backlog priorities and acceptance criteria | Burcu (A/R); Beyzanur (C) | Review record / approved backlog | To Do |
+| S1-24 | Review and approve Product Backlog priorities and acceptance criteria | Burcu (A/R); Beyzanur (C) | Review record / approved backlog ([PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17)) | In Review |
 | S1-25 | Specify approved Manager / authorized Waiter cancellation policy, actor, reason, timestamp, and server-side checks | Ayşe (API); Burcu (vision) | `api/openapi.yaml`; `docs/system-vision.md` | To Do |
 | S1-26 (deferred) | Later QA scope: Define test cases for approved Restaurant Manager / authorized Waiter cancellation, including unauthorized access, duplicate cancellation, and no automatic stock restoration | Beyzanur | `docs/test-cases.md` | Outside required S1 scope; S2 plan / later tests |
 
-| S1-27 | Set up GitHub organization and project board | Bilgesu | Organization and Projects/Jira board | To verify |
-| S1-28 | Configure branch protection with Scrum Master | Emre (A/R); Bilgesu (R) | Repository branch rules | To verify |
+| S1-27 | Set up GitHub organization and project board | Bilgesu | Organization and [project board](https://github.com/orgs/seng321-7th-team/projects/4) | Done |
+| S1-28 | Configure branch protection with Scrum Master | Emre (A/R); Bilgesu (R) | Repository branch rules ([Issue #4](https://github.com/seng321-7th-team/PantryChef/issues/4)) | Done |
 
 **RACI clarification:** Burcu is A/R for backlog, stories, story points and acceptance criteria. Bilgesu owns GitHub organization/Git-Flow/board; Emre owns repo skeleton and branch protection with Bilgesu. QA and implementation deliveries follow S2/S3/Final timing.
 
@@ -146,9 +144,9 @@ All relevant project documents should follow the same workflow:
 
 **Scrum Documentation Branch:** `feature/raci-matrix`
 
-**GitHub Projects Board:** URL pending verification
+**GitHub Projects Board:** [PantryChef Sprint 1 project](https://github.com/orgs/seng321-7th-team/projects/4)
 
-**Sprint 1 Milestone:** Pending verification
+**Sprint 1 Milestone:** [Sprint 1](https://github.com/seng321-7th-team/PantryChef/milestone/1)
 
 ### 7.1 Issue Tracking Template
 
@@ -168,12 +166,12 @@ Each GitHub Issue should contain:
 
 | Evidence | Reference | Verification |
 |---|---|---|
-| GitHub Projects Board | URL pending | Pending |
-| Sprint 1 Issues | [Issue #5](https://github.com/seng321-7th-team/PantryChef/issues/5); [Issue #14](https://github.com/seng321-7th-team/PantryChef/issues/14) | Linked; completion pending verification |
-| Pull Requests | [PR #3](https://github.com/seng321-7th-team/PantryChef/pull/3); [PR #6](https://github.com/seng321-7th-team/PantryChef/pull/6); [PR #7](https://github.com/seng321-7th-team/PantryChef/pull/7); [PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15) | Linked; reviews pending |
+| GitHub Projects Board | [PantryChef Sprint 1 project](https://github.com/orgs/seng321-7th-team/projects/4) | Linked |
+| Sprint 1 Issues | [Issue #1](https://github.com/seng321-7th-team/PantryChef/issues/1); [Issue #2](https://github.com/seng321-7th-team/PantryChef/issues/2); [Issue #3](https://github.com/seng321-7th-team/PantryChef/issues/3); [Issue #4](https://github.com/seng321-7th-team/PantryChef/issues/4); [Issue #5](https://github.com/seng321-7th-team/PantryChef/issues/5); [Issue #13](https://github.com/seng321-7th-team/PantryChef/issues/13); [Issue #18](https://github.com/seng321-7th-team/PantryChef/issues/18) | Linked |
+| Pull Requests | [PR #6](https://github.com/seng321-7th-team/PantryChef/pull/6); [PR #7](https://github.com/seng321-7th-team/PantryChef/pull/7); [PR #8](https://github.com/seng321-7th-team/PantryChef/pull/8); [PR #9](https://github.com/seng321-7th-team/PantryChef/pull/9); [PR #12](https://github.com/seng321-7th-team/PantryChef/pull/12); [PR #14](https://github.com/seng321-7th-team/PantryChef/pull/14); [PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15); [PR #16](https://github.com/seng321-7th-team/PantryChef/pull/16); [PR #17](https://github.com/seng321-7th-team/PantryChef/pull/17); [PR #19](https://github.com/seng321-7th-team/PantryChef/pull/19) | Linked |
 | Team document reviews | Records pending | Pending |
 | Sprint 1 meeting notes | `docs/sprint1-meeting-notes.md` | Draft |
-| Sprint 1 RACI Matrix | `docs/team-roles-raci.md` ([PR #3](https://github.com/seng321-7th-team/PantryChef/pull/3)) | In Review |
+| Sprint 1 RACI Matrix | `docs/team-roles-raci.md` ([PR #15](https://github.com/seng321-7th-team/PantryChef/pull/15)) | In Review |
 
 ---
 
@@ -184,7 +182,7 @@ Each GitHub Issue should contain:
 | R-01 | Differences between workflow descriptions across documents | Bilgesu coordinates review | Monitoring |
 | R-02 | API contract may not fully match system states | Ayşe and Burcu | To verify |
 | R-03 | Backlog acceptance criteria may not cover stock edge cases or authorized cancellation | Burcu | To verify |
-| R-04 | GitHub branch protection may not be fully configured | Emre | To verify |
+| R-04 | GitHub branch protection | Emre | Done: rulesets active for main, develop and release tags |
 
 These entries are potential risks, not confirmed active blockers.
 
@@ -226,6 +224,6 @@ The Scrum Master should:
 **Role:** Scrum Master and Agile Process Coach
 **Sprint:** Sprint 1
 
-## Correction and evidence interpretation
+## Notes
 
-All legacy tasks, dependency notes and PR references must be read with the corrected ownership table above. S1 vision and backlog belong to Burcu; GitHub organization, Git-Flow and board belong to Bilgesu; repository skeleton and branch protection belong to Emre with Bilgesu. Beyzanur and Tuğçe retain their full project roles but have no separate required S1 delivery in the source image. Supporting diagrams and test ideas do not become S1 completion gates. Existing In Review statuses describe original submissions and require reassignment verification; they do not prove review by the corrected owner. Historical D-13 and any ownership approval claim conflicting with this correction are superseded.
+Ownership in this document follows the table above. S1 vision and backlog belong to Burcu; GitHub organization, Git-Flow and board belong to Bilgesu; repository skeleton and branch protection belong to Emre with Bilgesu. Beyzanur and Tuğçe retain their full project roles but have no separate required S1 delivery in the course role assignment. Supporting diagrams and test ideas do not become S1 completion gates. D-13 is superseded by this table.
