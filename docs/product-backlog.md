@@ -623,7 +623,7 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 | US-15 | Create Purchase Orders | P1 | 5 | US-02 |
 | US-16 | Receive Goods Without Duplicate Stock Updates | P1 | 8 | US-02, US-15 |
 
-**Estimated P0 Total:** 63 Story Points  
+**Estimated P0 Total:** 68 Story Points  
 **Estimated P1 Total:** 13 Story Points  
 **Estimated Overall Total:** 76 Story Points
 
