@@ -25,7 +25,7 @@ Each member's work can be checked through the linked issues, pull requests and c
 **Sprint 1 responsibilities:** Project proposal, MVP scope, stakeholders and risks, open-source license decision, approval of backlog priorities and acceptance criteria.
 
 **Work done:**
-- 
+- Project proposal (`docs/project-proposal.md`) and MIT license decision: PR [#12](https://github.com/seng321-7th-team/PantryChef/pull/12)
 
 **Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=burcucuk5
 
@@ -66,6 +66,7 @@ Each member's work can be checked through the linked issues, pull requests and c
 - Issue and pull request templates: [#3](https://github.com/seng321-7th-team/PantryChef/issues/3), PR [#9](https://github.com/seng321-7th-team/PantryChef/pull/9)
 - Rulesets for `main`, `develop` and release tags: [#4](https://github.com/seng321-7th-team/PantryChef/issues/4)
 - CI check that validates the OpenAPI contract: [#5](https://github.com/seng321-7th-team/PantryChef/issues/5), PR [#6](https://github.com/seng321-7th-team/PantryChef/pull/6)
+- MIT LICENSE file: [#13](https://github.com/seng321-7th-team/PantryChef/issues/13), PR [#14](https://github.com/seng321-7th-team/PantryChef/pull/14)
 - This contributions file: [#10](https://github.com/seng321-7th-team/PantryChef/issues/10)
 - Repository settings: `develop` as default branch, merge options, labels, Sprint 1 milestone, secret scanning
 
@@ -73,7 +74,7 @@ Each member's work can be checked through the linked issues, pull requests and c
 
 ## Tuğçe Çevik
 
-**Sprint 1 responsibilities:** System vision and boundary, system context diagram, order state diagram, API–UI alignment review.
+**Sprint 1 responsibilities:** System vision and boundary, system context diagram, order state diagram, API and UI alignment review.
 
 **Work done:**
 - 
