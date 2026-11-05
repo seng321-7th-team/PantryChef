@@ -1,0 +1,4 @@
+# Used by the OpenAPI lint job in .github/workflows/ci.yml
+# minimal = fail on real errors (invalid spec, broken $ref), only warn on style
+extends:
+  - minimal
