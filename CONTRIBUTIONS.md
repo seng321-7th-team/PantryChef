@@ -47,7 +47,7 @@ Each member's work can be checked through the linked issues, pull requests and c
 **Sprint 1 responsibilities:** Initial OpenAPI contract (`api/openapi.yaml`): order, inventory and recipe operations, schemas, error responses and cancellation rules.
 
 **Work done:**
-- Reviews: PR [#6](https://github.com/seng321-7th-team/PantryChef/pull/6), PR [#12](https://github.com/seng321-7th-team/PantryChef/pull/12), PR [#16](https://github.com/seng321-7th-team/PantryChef/pull/16)
+- Reviews: PR [#6](https://github.com/seng321-7th-team/PantryChef/pull/6), PR [#7](https://github.com/seng321-7th-team/PantryChef/pull/7), PR [#12](https://github.com/seng321-7th-team/PantryChef/pull/12), PR [#16](https://github.com/seng321-7th-team/PantryChef/pull/16), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17)
 
 **Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=ayseddurall
 
@@ -56,7 +56,7 @@ Each member's work can be checked through the linked issues, pull requests and c
 **Sprint 1 responsibilities:** QA review of Sprint 1 deliverables: testability of acceptance criteria and consistency of the order workflow.
 
 **Work done:**
-- Reviews: PR [#9](https://github.com/seng321-7th-team/PantryChef/pull/9) (order workflow fix in the PR template), PR [#12](https://github.com/seng321-7th-team/PantryChef/pull/12), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (story point totals)
+- Reviews: PR [#9](https://github.com/seng321-7th-team/PantryChef/pull/9) (order workflow fix in the PR template), PR [#12](https://github.com/seng321-7th-team/PantryChef/pull/12), PR [#14](https://github.com/seng321-7th-team/PantryChef/pull/14), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (story point totals)
 
 **Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=beyzanuralpayy
 
@@ -71,7 +71,7 @@ Each member's work can be checked through the linked issues, pull requests and c
 - Rulesets for `main`, `develop` and release tags: [#4](https://github.com/seng321-7th-team/PantryChef/issues/4)
 - CI check that validates the OpenAPI contract: [#5](https://github.com/seng321-7th-team/PantryChef/issues/5), PR [#6](https://github.com/seng321-7th-team/PantryChef/pull/6)
 - MIT LICENSE file: [#13](https://github.com/seng321-7th-team/PantryChef/issues/13), PR [#14](https://github.com/seng321-7th-team/PantryChef/pull/14)
-- Reviews: PR [#15](https://github.com/seng321-7th-team/PantryChef/pull/15)
+- Reviews: PR [#15](https://github.com/seng321-7th-team/PantryChef/pull/15), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17)
 - This contributions file: [#10](https://github.com/seng321-7th-team/PantryChef/issues/10)
 - Repository settings: `develop` as default branch, merge options, labels, Sprint 1 milestone, secret scanning
 
