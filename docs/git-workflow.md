@@ -59,7 +59,7 @@ Labels:
 - PRs go into `develop`. Only release and hotfix PRs go into `main`.
 - Link the issue (`Closes #...`) and add some evidence: validation output, test results or screenshots.
 - At least one other team member has to approve. You can't approve your own PR.
-- The reviewer checks that the change is correct and clear, and that it still matches the API contract and the order workflow (Pending → Preparing → Ready → Delivered).
+- The reviewer checks that the change is correct and clear, and that it still matches the API contract and the order workflow (Pending → Preparing → Ready, or Cancelled).
 
 Merging:
 - `feature/*` → `develop`: **Squash and merge**

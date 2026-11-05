@@ -21,16 +21,18 @@ Individual contributions are listed in [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md).
 
 | Deliverable | Owner | Location |
 |---|---|---|
-| Project proposal and license decision | Burcu Ücük | `docs/project-proposal.md` |
-| System vision and boundary | Tuğçe Çevik | `docs/system-vision.md` |
-| System context and order state diagrams | Tuğçe Çevik | `docs/diagrams/` |
+| Project proposal and license decision | Burcu Ücük | `docs/project-proposal.md`, `LICENSE` |
+| System vision and boundary, with context and order state diagrams | Burcu Ücük | `docs/system-vision.md` |
+| Initial product backlog | Burcu Ücük | `docs/product-backlog.md` |
 | OpenAPI draft | Ayşe Dural | `api/openapi.yaml` |
 | Team roles and RACI matrix | Bilgesu Nacak | `docs/team-roles-raci.md` |
 | Meeting notes and decision log | Bilgesu Nacak | `docs/sprint1-meeting-notes.md` |
 | Sprint 1 task board | Bilgesu Nacak | `docs/sprint1-task-board.md` |
-| Repository workflow (Git-Flow) | Emre Boz | `docs/git-workflow.md` |
-| Initial product backlog | Beyzanur Alpay (R), Burcu Ücük (A) | `docs/product-backlog.md` |
-| Initial test cases | Beyzanur Alpay | `docs/test-cases.md` |
+| Repository workflow (Git-Flow) | Bilgesu Nacak, Emre Boz | `docs/git-workflow.md` |
+| Repository setup, branch protection and CI | Emre Boz | `.github/`, repo rulesets |
+| Individual contributions | All members | `CONTRIBUTIONS.md` |
+
+Beyzanur Alpay (QA) and Tuğçe Çevik (implementation and integration) review the Sprint 1 documents. Test cases are planned for Sprint 2.
 
 Each deliverable is added through its own issue and pull request.
 
@@ -39,7 +41,7 @@ Each deliverable is added through its own issue and pull request.
 ```text
 api/              OpenAPI contract (api/openapi.yaml)
 docs/             Project documents
-docs/diagrams/    System context and order state diagrams
+docs/diagrams/    Diagram files (Sprint 1 diagrams are in docs/system-vision.md)
 .github/          Issue and pull request templates, CI workflows
 ```
 
