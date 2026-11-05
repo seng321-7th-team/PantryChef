@@ -57,7 +57,7 @@ Each member's work can be checked through the linked issues, pull requests and c
 **Sprint 1 responsibilities:** QA review of Sprint 1 deliverables: testability of acceptance criteria and consistency of the order workflow.
 
 **Work done:**
-- Reviews: PR [#9](https://github.com/seng321-7th-team/PantryChef/pull/9) (order workflow fix in the PR template), PR [#8](https://github.com/seng321-7th-team/PantryChef/pull/8) (order workflow in the Git-Flow doc), PR [#12](https://github.com/seng321-7th-team/PantryChef/pull/12), PR [#14](https://github.com/seng321-7th-team/PantryChef/pull/14), PR [#15](https://github.com/seng321-7th-team/PantryChef/pull/15), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (story point totals), PR [#19](https://github.com/seng321-7th-team/PantryChef/pull/19)
+- Reviews: PR [#9](https://github.com/seng321-7th-team/PantryChef/pull/9) (order workflow fix in the PR template), PR [#8](https://github.com/seng321-7th-team/PantryChef/pull/8) (order workflow in the Git-Flow doc), PR [#12](https://github.com/seng321-7th-team/PantryChef/pull/12), PR [#14](https://github.com/seng321-7th-team/PantryChef/pull/14), PR [#15](https://github.com/seng321-7th-team/PantryChef/pull/15), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (story point totals), PR [#19](https://github.com/seng321-7th-team/PantryChef/pull/19), PR [#21](https://github.com/seng321-7th-team/PantryChef/pull/21), PR [#25](https://github.com/seng321-7th-team/PantryChef/pull/25) (ingredient deactivation vs. delete)
 
 **Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=beyzanuralpayy
 
@@ -77,6 +77,7 @@ Each member's work can be checked through the linked issues, pull requests and c
 - Link and status fixes in PR [#15](https://github.com/seng321-7th-team/PantryChef/pull/15) while Bilgesu was away
 - This contributions file: [#10](https://github.com/seng321-7th-team/PantryChef/issues/10), PR [#11](https://github.com/seng321-7th-team/PantryChef/pull/11)
 - Sprint 1 release (`develop` → `main`, tag `sprint-1`): PR [#21](https://github.com/seng321-7th-team/PantryChef/pull/21)
+- Final fixes before release: [#26](https://github.com/seng321-7th-team/PantryChef/issues/26)
 - Repository settings: `develop` as default branch, merge options, labels, Sprint 1 milestone, secret scanning
 
 **Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=emrboz
@@ -86,6 +87,6 @@ Each member's work can be checked through the linked issues, pull requests and c
 **Sprint 1 responsibilities:** Implementation and integration review of the Sprint 1 documents: vision, backlog and API from the UI and integration side.
 
 **Work done:**
-- Reviews: PR [#11](https://github.com/seng321-7th-team/PantryChef/pull/11), PR [#16](https://github.com/seng321-7th-team/PantryChef/pull/16), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (MVP scope and business rules checked against the proposal and vision)
+- Reviews: PR [#11](https://github.com/seng321-7th-team/PantryChef/pull/11), PR [#16](https://github.com/seng321-7th-team/PantryChef/pull/16), PR [#17](https://github.com/seng321-7th-team/PantryChef/pull/17) (MVP scope and business rules checked against the proposal and vision), PR [#25](https://github.com/seng321-7th-team/PantryChef/pull/25) (API and UI integration), PR [#21](https://github.com/seng321-7th-team/PantryChef/pull/21) (release readiness)
 
 **Commits:** https://github.com/seng321-7th-team/PantryChef/commits?author=tucevik
