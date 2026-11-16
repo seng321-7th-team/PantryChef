@@ -29,8 +29,8 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 | S2-03 | Functional & Non-functional Requirements | Burcu Ücük | Beyzanur | `docs/non-functional-requirements.md` | TBD – verify first | To Do (provisional) |
 | S2-04 | Figma tasarımlarının gereksinimlerle uyumunu inceleme | Burcu Ücük | Tuğçe | `Figma prototype review` | TBD – verify first | To Do (provisional) |
 | S2-05 | MVP Scope & Out-of-Scope Definition | Burcu Ücük | Bilgesu | `docs/srs.md (scope section)` | TBD – verify first | To Do (provisional) |
-| S2-06 | Sprint 2 Task Board oluşturma ve yönetme | Bilgesu Nacak | Burcu | `docs/sprint2-task-board.md` | #38 | In Progress |
-| S2-07 | Sprint 2 RACI Matrix | Bilgesu Nacak | Tuğçe | `docs/sprint2-raci.md` | TBD – verify first | To Do (provisional) |
+| S2-06 | Sprint 2 Task Board oluşturma ve yönetme | Bilgesu Nacak | Burcu | `docs/sprint2-task-board.md` | #38 / PR #39 | Done |
+| S2-07 | Sprint 2 RACI Matrix | Bilgesu Nacak | Tuğçe | `docs/sprint2-raci.md` | #40 / PR #41 | Done |
 | S2-08 | Sprint Planning, Stand-up, Review, Retrospective kayıtları | Bilgesu Nacak | Tuğçe | `docs/sprint2-meeting-notes.md` | TBD – verify first | To Do (provisional) |
 | S2-09 | GitHub Issues, PR Tracking & Impediment Log | Bilgesu Nacak | Emre | `GitHub Project #4 / PR & impediment records` | TBD – verify first | To Do (provisional) |
 | S2-10 | Sprint 2 Deliverables Consistency Review | Bilgesu Nacak | Beyzanur | `Cross-document review evidence` | TBD – verify first | To Do (provisional) |
