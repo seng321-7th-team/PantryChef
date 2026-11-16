@@ -75,7 +75,7 @@ For this sprint, the agreed task owner is **R/A** for each row and the agreed pe
 | S2-34 | C4 Component Diagram | — | I | R/A | — | C | — | Emre |
 | S2-35 | UML State Diagram | — | I | R/A | C | — | — | Beyzanur |
 | S2-36 | Sprint 2 Git Tag, GitHub Release and README Links | — | C | — | — | R/A | — | Bilgesu |
-| S2-37 | Sprint 2 Peer Evaluation and Contribution Assessment | I | R/A | I | I | I | I | All team members |
+| S2-37 | Sprint 2 Peer Evaluation and Contribution Assessment | R | R/A | R | R | R | R | All team members |
 
 ## 5. Coordination and approval
 
