@@ -16,9 +16,9 @@ Compared in this review:
 | `api/openapi.yaml` | `develop` at `0c3e244` (historical source; the file is identical at `5dd8253`, checked 18 Nov), API version 0.1.0 (draft) |
 | `docs/sprint2-task-board.md`, `docs/sprint2-raci.md` | `develop` at `0c3e244` (historical source; the file is identical at `5dd8253`, checked 18 Nov) |
 | `docs/srs.md` | PR #45 draft (d34389a), not merged; FR numbers may change. |
-| `api/openapi.yaml` in PR #62 | Head `dbb06be` (API version 0.2.0 draft, **not merged**). Used only for the ingredient and order-creation items marked "API draft #62". |
+| `api/openapi.yaml` in PR #62 | Head `866122e` (API version 0.2.0 draft, **not merged**; checked 18 Nov). Head `dbb06be` still had an optional `initialQuantity`; `866122e` removed it. Used only for the ingredient and order-creation items marked "API draft #62". |
 | `docs/srs.md` in PR #54 and `docs/product-backlog.md` in PR #55 | Heads `0ad80b3` and `ec1911a` (drafts, **not merged**). Used for the initial-stock item (F-05). |
-| `docs/architecture/architecture-decisions.md` in PR #64 | Head `e304bbf` (**not merged**). Only the ADR index was read (ADR-006, -008, -009, -010); no ADR is treated as team-approved unless its status says "Accepted". |
+| `docs/architecture/architecture-decisions.md` in PR #64 | Head `07fd074` (**not merged**; earlier head `e304bbf`). Only the ADR index and the ADR-009 status were read (ADR-006, -008, -009, -010); no ADR is treated as team-approved unless its status says "Accepted". |
 | Figma prototype, **31 frames** | Page "03 Screens v2", checked against the live file on 18 Nov 2026 (frame count, frame names, prototype links). Frame list and PNG/PDF export: `docs/ui-ux/figma-links.md`. The reviewer (Burcu) has not checked it yet. |
 
 Rules followed:
@@ -28,7 +28,7 @@ Rules followed:
 
 Limits of the evidence:
 
-- On `develop` (`5dd8253`, checked 18 Nov) `docs/diagrams/` and `docs/architecture/` contain only `.gitkeep`. The C4, UML and ER diagrams are in open PR #62 (head `dbb06be`), the ADRs (S2-16) in open PR #64 (head `e304bbf`) and the database schema (S2-15) in open PR #66 (head `c691206`); none of them is merged. They are mentioned only where they help a question for Ayşe (C-01, O-01) and are not used as evidence for any finding.
+- On `develop` (`5dd8253`, checked 18 Nov) `docs/diagrams/` and `docs/architecture/` contain only `.gitkeep`. The C4, UML and ER diagrams are in open PR #62 (head `866122e`), the ADRs (S2-16) in open PR #64 (head `07fd074`) and the database schema (S2-15) in open PR #66 (head `5475872`); none of them is merged. They are mentioned only where they help a question for Ayşe (C-01, O-01) and are not used as evidence for any finding.
 - As of 17 Nov, before issue #48 was opened, no issues or pull requests for S2-28 to S2-33 were found (PR #45 and Issue #44 were read as the SRS source). On 18 Nov, the repository branches and pull request heads still hold no branch for S2-28 to S2-30 or S2-33 apart from PR #50. Issue and pull request comments could not be read for the 18 Nov update, so no team confirmation of API draft #62 is recorded here.
 
 ## 2. What matches
@@ -103,7 +103,7 @@ Each finding lists the User Story, the OpenAPI endpoint, the Figma frame, the ga
 |---|---|
 | User Story | US-02 AC6 "Deactivation does not invalidate historical order records" |
 | OpenAPI | `DELETE /ingredients/{ingredientId}` (`deleteIngredient`) is a delete, not a deactivation. It returns `409 RESOURCE_IN_USE` if the ingredient is in any recipe or has active reservations. The ingredient schema in `IngredientInput` has no `active` field. (Users do have `active`.) |
-| Figma | **Updated 18 Nov:** `scr-04g` (Status Active, "Deactivate ingredient"), `scr-04h-deactivate-confirm`, `scr-04i-inventory-inactive-ingredient` (Inactive badge, "Reactivate ingredient"). Follows API draft #62 (head `dbb06be`): `DELETE` is a soft delete returning `200`, `PUT` with `active: true` reactivates, `INGREDIENT_DEACTIVATED` / `INGREDIENT_REACTIVATED` audit actions. Also ADR-008 in PR #64 (Proposed). |
+| Figma | **Updated 18 Nov:** `scr-04g` (Status Active, "Deactivate ingredient"), `scr-04h-deactivate-confirm`, `scr-04i-inventory-inactive-ingredient` (Inactive badge, "Reactivate ingredient"). Follows API draft #62 (head `866122e`; the deactivation part is unchanged since `dbb06be`): `DELETE` is a soft delete returning `200`, `PUT` with `active: true` reactivates, `INGREDIENT_DEACTIVATED` / `INGREDIENT_REACTIVATED` audit actions. Also ADR-008 in PR #64 (Proposed). |
 | Gap | (1) `develop` (0.1.0) still offers "delete only if unused"; the draft in PR #62 and the SRS/backlog drafts say "deactivate". Not merged, **decision pending**. (2) The screens now exist in Figma. Deactivate and Reactivate are separate actions from "Save changes" (see `ui-prototype.md`). |
 | Options | A) Burcu and Ayşe confirm deactivation (D-9a). B) Otherwise the three frames must be reverted to "delete if unused" with a `RESOURCE_IN_USE` state (see D-2). |
 
@@ -134,8 +134,8 @@ Each finding lists the User Story, the OpenAPI endpoint, the Figma frame, the ga
 | User Story | US-02 AC1 "A manager can create an ingredient with a name, unit, quantity, and low-stock threshold" |
 | OpenAPI | `IngredientInput` requires only `name`, `unit`, `lowStockThreshold`. Initial stock is entered with `POST /inventory/adjustments` and reason `INITIAL_STOCK`. |
 | Figma | **Updated 18 Nov:** `scr-04d`, `scr-04e` and `scr-04f` have an optional "Initial stock" field (blank = 0; helper text "Leave blank to start at 0. You can add stock later."). The old hint "Starts with 0 on hand…" was removed. |
-| Gap | **Open.** SRS FR-02 (PR #54) and backlog US-02 AC1 (PR #55) describe only one way: create with zero stock, then record stock through a separate adjustment. In API draft #62, `initialQuantity` is optional (default 0; recorded as an `INITIAL_STOCK` adjustment when above 0; ADR-009 in PR #64, Proposed), so creating with zero and adjusting later is still possible there. The difference is that the API draft and the frame also offer entering stock at creation. The frame follows the API draft. This is not a Figma defect. |
-| Options | **Proposed solution for D-9b (Tuğçe; not a team decision):** follow the SRS and backlog drafts – an ingredient is always created with zero stock, and stock is entered through a separate adjustment. If the team accepts this, `initialQuantity` is removed from the API draft, and Figma `scr-04d` to `scr-04f`, the related documents, the PNGs and the PDF are updated together. Until then the frames and exports still show the optional Initial stock field. Neither document is changed by this review. (See D-5.) |
+| Gap | **Open (Figma only).** SRS FR-02 (PR #54) and backlog US-02 AC1 (PR #55) describe one way: create with zero stock, then record stock through a separate adjustment. API draft #62 now follows the same rule: `866122e` removed the optional `initialQuantity` that `dbb06be` had; ADR-009 is "Rejected" in PR #64 (`07fd074`) and the schema in PR #66 (`5475872`) says the same. None of these is merged. The frames `scr-04d` to `scr-04f`, their PNGs and the PDF still show the optional Initial stock field; removing it and re-exporting is still open. |
+| Options | Remove the Initial stock field from `scr-04d` to `scr-04f`, re-export the PNGs and the PDF, and update the related documents together. Until then the frames and exports still show the field. (See D-5, D-9b.) |
 
 ### F-06 – No screen to grant the late-cancel permission to a waiter
 
@@ -176,7 +176,7 @@ Evidence:
 
 Therefore this review **cannot check ADR requirements**: there are none written in the repository and no ADR to compare against.
 
-Update 18 Nov: PR #64 (head `e304bbf`, not merged) adds `docs/architecture/architecture-decisions.md`. Its index lists ADR-006 (roles and late cancellation; order creation by WAITER only is "Proposed (PR #62)"), ADR-008 (no hard deletes, Proposed), ADR-009 (initial stock at creation, Proposed) and ADR-010 (polling, Accepted). This review has not checked the ADR texts against the screens or against the cancellation requirements; that check is still open.
+Update 18 Nov: PR #64 (head `07fd074`, not merged) adds `docs/architecture/architecture-decisions.md`. Its index lists ADR-006 (roles and late cancellation; order creation by WAITER only is "Proposed (PR #62)"), ADR-008 (no hard deletes, Proposed), ADR-009 (initial stock at creation, Rejected since `07fd074`) and ADR-010 (polling, Accepted). This review has not checked the ADR texts against the screens or against the cancellation requirements; that check is still open.
 
 Decisions that are already in the OpenAPI draft and could be recorded as ADRs (candidates for Ayşe to accept or reject, not decisions):
 
@@ -201,14 +201,14 @@ Decisions that are already in the OpenAPI draft and could be recorded as ADRs (c
 | D-2 | `develop` (0.1.0) has no `active` field on ingredients and only offers `DELETE` (`409 RESOURCE_IN_USE`). Backlog US-02 AC6 and API draft #62 say deactivation. **Open:** confirm deactivation and merge PR #62, or revert the three Figma frames. (Needs Ayşe for the API side.) | F-02 |
 | D-3 | FR-022 and FR-023 exist as API requirements; SRS §5.1 does not list them as UI. Must the UI show reservations and stock movements, or is API access enough for the MVP? | F-03 |
 | D-4 | FR-009 includes creating and archiving menu items; SRS §5.1 does not list a menu-management screen. Is it part of the MVP UI? | F-04 |
-| D-5 | **Open (reopened 18 Nov):** SRS FR-02 and backlog US-02 AC1 describe only "start at zero, then adjust"; API draft #62 and `scr-04d` also offer an optional initial quantity (blank = 0). Proposed solution: see D-9b. | F-05 |
+| D-5 | **Open (Figma only):** SRS FR-02, backlog US-02 AC1 and API draft #62 (`866122e`) now all describe "start at zero, then adjust" (none merged); `scr-04d` to `scr-04f` still show an optional initial quantity. See D-9b. | F-05 |
 | D-6 | FR-004 includes staff administration and the `ORDER_LATE_CANCEL` permission; SRS §5.1 does not list a staff screen. Is it part of the MVP UI? | F-06 |
 | D-7 | (For Ayşe, with S2-15/S2-16) Which records and tables back `Order.statusHistory`, `Order.cancellation` and the audit log, and are `cancellation_audit` and `order_status_history` the intended names? **Open:** Ayşe to confirm against her ER draft (see C-01). | C-01 |
 | D-8 | (For Ayşe) Reflect the team's 15–30 s polling decision in the architecture documents. | O-01 |
 
 Until these are answered, none of the screens above is declared out of scope, and no P0 item is changed.
 
-Added 18 Nov: **D-9** (for Ayşe and the team) – three separate decisions on API draft #62, each accepted or rejected on its own: **D-9a** ingredient deactivation (soft delete; F-02, D-2), **D-9b** optional `initialQuantity` at creation (F-05, D-5; proposed solution, not a team decision: always create with zero stock and use a separate adjustment), **D-9c** order creation by WAITER only (O-04).
+Added 18 Nov: **D-9** (for Ayşe and the team) – three separate decisions on API draft #62, each accepted or rejected on its own: **D-9a** ingredient deactivation (soft delete; F-02, D-2), **D-9b** initial stock at creation (F-05, D-5): API draft #62 removed `initialQuantity` in `866122e` and ADR-009 is Rejected in PR #64 (`07fd074`), both not merged; the frames `scr-04d` to `scr-04f`, their PNGs and the PDF still show the optional Initial stock field; removing it and re-exporting is still open, **D-9c** order creation by WAITER only (O-04).
 
 ## 7a. Closed findings and update log (18 Nov 2026)
 
@@ -229,5 +229,5 @@ Status words: **Matches API draft** (follows PR #62, not merged), **Decision pen
 
 1. Burcu answers D-2, D-3, D-4 and D-6; Ayşe answers D-2, D-7 and D-8.
 2. Tuğçe updates the frames for F-03, F-04 and F-06 as decided. The Edit ingredient screen (D-1) is done.
-3. The team decides D-9a, D-9b and D-9c separately. If D-9a is rejected, the deactivation frames (`scr-04g` to `scr-04i`) are revised. If the proposed solution for D-9b is accepted, `initialQuantity` is removed from the API draft and the Initial stock field (`scr-04d` to `scr-04f`), the related documents, the PNGs and the PDF are updated together. D-9c relates to O-04.
+3. The team decides D-9a, D-9b and D-9c separately. If D-9a is rejected, the deactivation frames (`scr-04g` to `scr-04i`) are revised. For D-9b, the Initial stock field is removed from `scr-04d` to `scr-04f`, and the PNGs, the PDF and the related documents are updated together (the API draft already removed `initialQuantity` in `866122e`). D-9c relates to O-04.
 4. This record is updated with the decisions and re-reviewed against the refined backlog (S2-02).
