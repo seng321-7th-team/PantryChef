@@ -39,10 +39,14 @@ Each deliverable is added through its own issue and pull request.
 ## Repository layout
 
 ```text
-api/              OpenAPI contract (api/openapi.yaml)
-docs/             Project documents
-docs/diagrams/    Diagram files (Sprint 1 diagrams are in docs/system-vision.md)
-.github/          Issue and pull request templates, CI workflows
+api/                OpenAPI contract (api/openapi.yaml)
+docs/               Project documents
+docs/diagrams/      Diagram files (Sprint 1 diagrams are in docs/system-vision.md)
+docs/architecture/  C4, UML, database schema, ADRs and infrastructure requirements (Sprint 2)
+docs/testing/       Test plan, test cases and quality metrics (Sprint 2)
+docs/ui-ux/         Figma links, user flows and screen exports (Sprint 2)
+docs/devops/        DevOps notes, e.g. Sprint 3 CI/CD and Docker readiness
+.github/            Issue and pull request templates, CI workflows
 ```
 
 ## How to contribute
