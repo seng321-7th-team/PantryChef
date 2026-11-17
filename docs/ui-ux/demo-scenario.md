@@ -10,7 +10,7 @@ This is a click-through script for the Figma prototype. It uses only clicks that
 
 **General demo start:** open the *General demo prototype* link in `figma-links.md`. It starts at `scr-01-login`. Choose a role with the prototype-only buttons (Waiter, Chef, Manager). The two Flow 8 / Flow 9 links start directly at their frames and are for short side demos.
 
-Where a step follows the API draft in PR #62 (head `dbb06be`, not merged), it is marked **(API draft #62)**.
+Where a step follows the API draft in PR #62 (head `866122e`, not merged), it is marked **(API draft #62)**.
 
 ## Part 1 – Waiter (about 3 minutes)
 
@@ -35,7 +35,7 @@ Where a step follows the API draft in PR #62 (head `dbb06be`, not merged), it is
 
 1. `scr-01-login`: click **Manager** → `scr-04a-inventory`. Show the low-stock banner. Say: stock **Out** (Chicken breast) is a stock level, not a deactivated ingredient.
 2. Click **Adjust** on Tomatoes → `scr-04b-inventory-adjust-dialog` (reason required) → Save → back to the list. Click **Adjust** on Chicken breast → `scr-04c-inventory-adjust-error` (`NEGATIVE_AVAILABLE_STOCK`).
-3. Click **+ New ingredient** → `scr-04d-inventory-new-ingredient`. Show "Initial stock (g, optional)": blank starts at 0, later changes use Adjust. **(API draft #62: `initialQuantity`.)** Cancel.
+3. Click **+ New ingredient** → `scr-04d-inventory-new-ingredient`. The frame still shows "Initial stock (g, optional)"; API draft #62 at `866122e` removed this field (stock starts at 0, the opening stock is entered with Adjust). Say that the field is being removed. Cancel.
    Side frames: `scr-04e-new-ingredient-validation` and `scr-04f-new-ingredient-duplicate` (Flow 7) from the design file.
 4. Ingredient lifecycle (Flow 9), **(API draft #62)**: click **Edit** on Rice → `scr-04g-inventory-edit-ingredient`. Say: the unit is locked while the ingredient has stock or reservations; stock changes only through Adjust.
 5. Click **Deactivate ingredient** → `scr-04h-deactivate-confirm`. Click **Cancel** → back to `scr-04g`. Click **Deactivate ingredient** again, then **Deactivate** → `scr-04i-inventory-inactive-ingredient`: Rice shows an **Inactive** badge. Say: deactivation is separate from "Save changes" and takes effect at once in the prototype.
@@ -52,7 +52,7 @@ Open the Flow 8 link (`scr-07a-states`): loading, empty states, `INTERNAL_ERROR`
 
 - The prototype does not call a backend. Do not say that stock, reservations or the audit log were really changed.
 - Deactivate and Reactivate are prototype transitions between frames.
-- PR #62 is a draft API version and is not merged. Initial stock, soft delete and waiter-only order creation are decisions that are still pending in the team.
+- PR #62 is a draft API version and is not merged. Soft delete and waiter-only order creation are still pending in the team. For initial stock the drafts now say "start at zero, then adjust"; the field in `scr-04d` to `scr-04f` is still to be removed.
 - Not shown: stock movements and reservation views, new menu item, staff and permission management, delivery (not a feature).
 
 ## Checklist before the demo

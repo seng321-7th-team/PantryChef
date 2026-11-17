@@ -90,7 +90,7 @@ Live check on the page "03 Screens v2": 31 frames, each 1280 × 800. The names b
 - Prototype description: [`ui-prototype.md`](ui-prototype.md)
 - Demo script: [`demo-scenario.md`](demo-scenario.md)
 - Consistency review of the screens against the User Stories: [`ui-user-story-review.md`](ui-user-story-review.md) (S2-31)
-- API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop` at `0c3e244`, identical at `5dd8253`, version 0.1.0). The latest ingredient and order-creation behavior shown in the frames follows the API draft in **PR #62**, head `dbb06be` (version 0.2.0, **not merged**).
+- API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop` at `0c3e244`, identical at `5dd8253`, version 0.1.0). The latest ingredient and order-creation behavior shown in the frames follows the API draft in **PR #62**, head `866122e` (version 0.2.0, **not merged**), except the optional Initial stock field in `scr-04d` to `scr-04f`: it came from head `dbb06be`, and `866122e` removed `initialQuantity`.
 
 ## 6. Status and open items
 
@@ -102,7 +102,7 @@ Live check on the page "03 Screens v2": 31 frames, each 1280 × 800. The names b
 | File sharing "anyone with the link can view" | Not checked yet |
 | Repository location of the PNG and PDF files | `docs/ui-ux/screens/` and `docs/ui-ux/exports/` |
 | PR #62 (API 0.2.0 draft) merged | No. Frames that depend on it are marked in `ui-prototype.md`. |
-| SRS #54 FR-02 and backlog US-02 AC1 on initial stock | **Open.** Both say stock starts at zero and initial stock is a separate adjustment. API draft #62 and frame `scr-04d` allow an optional initial quantity. Decision pending (section 4 of `ui-prototype.md`). |
+| Initial stock (D-9b) | **Open (Figma only).** SRS #54 FR-02, backlog #55 US-02 AC1 and API draft #62 (`866122e`) say stock starts at zero and the opening stock is a separate adjustment (none merged). The frames `scr-04d` to `scr-04f`, their PNGs and the PDF still show the optional Initial stock field; removing it and re-exporting is still open (section 4 of `ui-prototype.md`). |
 
 ## 7. Known limits of the prototype
 

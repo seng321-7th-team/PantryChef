@@ -10,7 +10,7 @@ Frame names (`scr-…`) are the Figma frame names listed in [`figma-links.md`](f
 
 Status words used in this file:
 
-- **Matches API draft** – the frame agrees with the API draft in PR #62 (head `dbb06be`, version 0.2.0, not merged). `develop` still has version 0.1.0.
+- **Matches API draft** – the frame agrees with the API draft in PR #62 (head `866122e`, version 0.2.0, not merged). `develop` still has version 0.1.0.
 - **Decision pending** – the team has not confirmed it. Pull request comments were not available for this check, so no team confirmation is recorded.
 - **Applied in Figma** – the change exists in the live file and was checked on a screenshot. This is not a test of any backend.
 
@@ -33,7 +33,7 @@ Prototype-only aids: the Waiter / Chef / Manager buttons on the login frames and
 
 | Frame | What it shows | API field or rule | Status |
 |---|---|---|---|
-| `scr-04d-inventory-new-ingredient` | Name, Unit, Low-stock threshold, **Initial stock (optional)**. Unit shown in the label (for example "Initial stock (g, optional)"). Helper text: "Leave blank to start at 0. You can add stock later." | `IngredientCreate.initialQuantity`: minimum 0, default 0. A value above 0 is recorded together with the ingredient as an `INITIAL_STOCK` adjustment. The client sends a positive quantity as `initialQuantity` and does not send a separate adjustment for the same quantity. | Applied in Figma. Matches API draft. **Decision pending** (see section 4). |
+| `scr-04d-inventory-new-ingredient` | Name, Unit, Low-stock threshold, **Initial stock (optional)**. Unit shown in the label (for example "Initial stock (g, optional)"). Helper text: "Leave blank to start at 0. You can add stock later." | API draft #62 at `866122e` has no `initialQuantity`: the ingredient starts at zero and the opening stock is a separate `INITIAL_STOCK` adjustment. (Head `dbb06be` had an optional `initialQuantity`.) | Applied in Figma. **Does not match** API draft `866122e`; field removal and re-export pending (see section 4). |
 | `scr-04e-new-ingredient-validation` | "Name is required." Same Initial stock field | Client validation | Applied in Figma |
 | `scr-04f-new-ingredient-duplicate` | `409 DUPLICATE_RESOURCE`. Same Initial stock field | Names are unique, **including inactive ingredients**; reactivate an inactive one with `PUT` instead of creating it again | Applied in Figma. Matches API draft. |
 | `scr-04g-inventory-edit-ingredient` | Edit: name, low-stock threshold, Unit locked ("Locked while the ingredient has stock or reservations."), Status **Active**, "Deactivate ingredient". Note: "Stock on hand changes only through an adjustment." | `PUT /ingredients/{id}` with `name`, `unit`, `lowStockThreshold`, `active` (all required). Unit change with stock or active reservations: `409 RESOURCE_IN_USE`. Stock changes only through Adjust. | Applied in Figma. Matches API draft. |
@@ -74,10 +74,10 @@ Permissions for `ORDER_LATE_CANCEL` and the chef role are not changed by this pr
 |---|---|
 | SRS draft (PR #54, head `0ad80b3`), FR-02 | "Upon creation, its physical stock shall be initialized to zero. Initial stock shall be recorded through a separate authorized inventory adjustment." |
 | Backlog draft (PR #55, head `ec1911a`), US-02 AC1 | A manager can create an ingredient with name, unit and threshold. "Initial physical stock is recorded separately through an authorized inventory adjustment." |
-| API draft (PR #62, head `dbb06be`) | Optional `initialQuantity` at creation (default 0). The same transaction records an `INITIAL_STOCK` adjustment when it is above 0. |
+| API draft (PR #62, head `866122e`) | No `initialQuantity`; the ingredient starts at zero and the opening stock is entered with `POST /inventory/adjustments`, reason `INITIAL_STOCK`. (Head `dbb06be` had an optional `initialQuantity`; ADR-009 is Rejected in PR #64, head `07fd074`.) |
 | Figma `scr-04d` | Optional "Initial stock" field. Leaving it blank gives 0. |
 
-Difference: the SRS and backlog describe only "start at zero, then adjust". The API draft and the frame also allow "create with a quantity". Once the team confirms the API draft, FR-02 and US-02 AC1 should allow both (create with a quantity, or create with zero and adjust later). Until then the frame stays as it is and the item stays **open**. Neither document is changed by this task.
+Difference: the SRS, backlog and API drafts (none merged) now all describe "start at zero, then adjust". Only the frames `scr-04d` to `scr-04f`, their PNGs and the PDF still show the optional field. Removing it and re-exporting is pending; the item stays **open** until then. Neither document is changed by this task.
 
 ## 5. States shown in `scr-07a-states`
 
