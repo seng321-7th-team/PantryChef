@@ -6,13 +6,13 @@
 **Owner:** Tuğçe Çevik · **Reviewer:** Ayşe Dural
 **Status:** Draft
 
-Frame names (`scr-…`) are the Figma frame names listed in [`figma-links.md`](figma-links.md). Rules and error codes come from [`api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.1.0) and [`docs/product-backlog.md`](../product-backlog.md). Where a flow follows the API draft in PR #62 (head `dbb06be`, version 0.2.0, **not merged**), the text says so. Order flow: `PENDING` → `PREPARING` → `READY`. `CANCELLED` is terminal. There is no delivery feature.
+Frame names (`scr-…`) are the Figma frame names listed in `docs/ui-ux/figma-links.md` (S2-33, not on GitHub yet; see [issue #53](https://github.com/seng321-7th-team/PantryChef/issues/53)). Rules and error codes come from [`api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.1.0) and [`docs/product-backlog.md`](../product-backlog.md). Where a flow follows the API draft in PR #62 (head `cb634c3`, version 0.2.0, **not merged**; checked at `866122e`, and `api/openapi.yaml` is identical in `cb634c3`), the text says so. Order flow: `PENDING` → `PREPARING` → `READY`. `CANCELLED` is terminal. There is no delivery feature.
 
-Flows only cover what the 31 frames show. Features that the User Stories require but the frames do not show are listed in [`ui-user-story-review.md`](ui-user-story-review.md) and are **not** drawn here.
+Flows only cover what the 31 frames show. Features that the User Stories require but the frames do not show are listed in [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/da7208d8605ebbaa9481cf147d152b36b5c7c5be/docs/ui-ux/ui-user-story-review.md) (PR #50, commit `da7208d`) and are **not** drawn here.
 
 ## Flow list and Figma starting points
 
-The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in `figma-links.md`.
+The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in `docs/ui-ux/figma-links.md` ([issue #53](https://github.com/seng321-7th-team/PantryChef/issues/53)).
 
 | Section | Flow | Figma flow starting point |
 |---|---|---|
@@ -32,7 +32,7 @@ For the general demo, start at `scr-01-login` (Flow 1) and choose a role.
 
 ## U1 – Waiter creates an order (US-06, US-07)
 
-Only the waiter creates orders in the prototype. There is no manager screen for this. API draft #62 restricts `createOrder` to WAITER; `develop` (0.1.0) still lists WAITER and MANAGER (open item, see `ui-prototype.md`).
+Only the waiter creates orders in the prototype. There is no manager screen for this. API draft #62 restricts `createOrder` to WAITER; `develop` (0.1.0) still lists WAITER and MANAGER (open item, see `docs/ui-ux/ui-prototype.md`, [issue #53](https://github.com/seng321-7th-team/PantryChef/issues/53)).
 
 ```mermaid
 flowchart TD
