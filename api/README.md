@@ -86,7 +86,7 @@ stateDiagram-v2
 
 | Request | From | Allowed roles | Success | Typical errors |
 |---|---|---|---|---|
-| `POST /orders` | — | WAITER, MANAGER | `201` order in `PENDING` | `409 INSUFFICIENT_STOCK`, `422 MENU_ITEM_UNAVAILABLE`, `422 IDEMPOTENCY_KEY_REUSED` |
+| `POST /orders` | — | WAITER | `201` order in `PENDING` | `409 INSUFFICIENT_STOCK`, `422 MENU_ITEM_UNAVAILABLE`, `422 IDEMPOTENCY_KEY_REUSED` |
 | `PATCH …/status` `PREPARING` | `PENDING` | CHEF | `200` | `409 INVALID_STATUS_TRANSITION` (also on a repeated start) |
 | `PATCH …/status` `READY` | `PREPARING` | CHEF | `200` | `409 INVALID_STATUS_TRANSITION` |
 | `PATCH …/status` `CANCELLED` | `PENDING` | WAITER, MANAGER | `200` | `403 FORBIDDEN` (chef) |
@@ -178,4 +178,4 @@ stateDiagram-v2
 | Version | Date | Author | Change |
 |---|---|---|---|
 | 0.1.0 | 2026-11-05 | Ayşe Dural | Initial Sprint 1 draft; aligned with Proposal, Vision, RACI and D-12 |
-| 0.2.0 | 2026-11-17 | Ayşe Dural | Ingredient soft delete (`deactivateIngredient`, `Ingredient.active`, `INGREDIENT_INACTIVE`, `INGREDIENT_DEACTIVATED`/`INGREDIENT_REACTIVATED` audit actions); optional `initialQuantity` on ingredient creation (A-7, A-8) |
+| 0.2.0 | 2026-11-17 | Ayşe Dural | Ingredient soft delete (`deactivateIngredient`, `Ingredient.active`, `INGREDIENT_INACTIVE`, `INGREDIENT_DEACTIVATED`/`INGREDIENT_REACTIVATED` audit actions); optional `initialQuantity` on ingredient creation (A-7, A-8); `POST /orders` restricted to WAITER |

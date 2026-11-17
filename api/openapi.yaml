@@ -12,7 +12,7 @@ info:
 
     | Transition | Who | Request | Inventory effect |
     |---|---|---|---|
-    | (new) → `PENDING` | Waiter, Manager | `POST /orders` | One `ACTIVE` reservation per required ingredient. `onHand` unchanged. |
+    | (new) → `PENDING` | Waiter | `POST /orders` | One `ACTIVE` reservation per required ingredient. `onHand` unchanged. |
     | `PENDING` → `PREPARING` | Chef | `PATCH /orders/{orderId}/status` with `PREPARING` | Reservations become `CONSUMED`; `onHand` is deducted **exactly once**, atomically. |
     | `PREPARING` → `READY` | Chef | `PATCH /orders/{orderId}/status` with `READY` | None. |
     | `PENDING` → `CANCELLED` | Waiter, Manager | `PATCH /orders/{orderId}/status` with `CANCELLED` | Reservations become `RELEASED`. `onHand` unchanged. |
@@ -953,7 +953,7 @@ paths:
       operationId: createOrder
       summary: Create an order and reserve its ingredients
       description: |
-        Roles: WAITER, MANAGER. In one transaction the system computes the required
+        Roles: WAITER. In one transaction the system computes the required
         ingredients from each menu item's recipe (recipe quantity x ordered quantity), checks
         that every ingredient has enough available stock, and creates one `ACTIVE`
         reservation per ingredient. The order starts in `PENDING`; `onHand` is not changed.

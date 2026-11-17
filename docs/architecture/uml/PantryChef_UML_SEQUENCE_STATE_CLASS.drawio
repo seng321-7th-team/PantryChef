@@ -181,12 +181,6 @@
             <mxPoint x="700" y="230" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="mBranchcreate" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#7c3aed;strokeWidth=2.5;jumpStyle=arc;jumpSize=10;">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="800" y="330" as="sourcePoint" />
-            <mxPoint x="700" y="330" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="mBranchtrack" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#7c3aed;strokeWidth=2.5;jumpStyle=arc;jumpSize=10;">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="800" y="430" as="sourcePoint" />
@@ -843,7 +837,7 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <UserObject label="" mermaidData="{&#10;  &quot;data&quot;: &quot;stateDiagram-v2\n direction TB\n [*] --&gt; PENDING: Create / reserve\n PENDING --&gt; PREPARING: Start / consume once\n PREPARING --&gt; READY: Mark ready\n PENDING --&gt; CANCELLED: Cancel / release\n PREPARING --&gt; CANCELLED: Late cancel\n READY --&gt; CANCELLED: Late cancel\n READY --&gt; [*]\n CANCELLED --&gt; [*]\n note left of PENDING\n WAITER or MANAGER creates\n ACTIVE reservations\n onHand unchanged\n reserved increases\n available = onHand - reserved\n Shortage: reject entire order\n end note\n note right of PREPARING\n CHEF starts preparation\n ACTIVE becomes CONSUMED\n onHand and reserved decrease equally\n Atomic transaction; no double deduction\n end note\n note left of READY\n CHEF marks ready\n No stock movement\n Normal workflow complete\n Late cancel still possible\n No DELIVERED state\n end note\n note right of CANCELLED\n Pending cancel: WAITER or MANAGER\n ACTIVE becomes RELEASED\n Late cancel: MANAGER or authorized WAITER\n Permission: ORDER_LATE_CANCEL\n Reason required; actor and time recorded\n CONSUMED unchanged; no stock restore\n Invalid transition: HTTP 409\n end note&quot;,&#10;  &quot;config&quot;: null,&#10;  &quot;version&quot;: &quot;12&quot;&#10;}" id="0XNByobysh_8F_x3JazS-1">
+        <UserObject label="" mermaidData="{&#10;  &quot;data&quot;: &quot;stateDiagram-v2\n direction TB\n [*] --&gt; PENDING: Create / reserve\n PENDING --&gt; PREPARING: Start / consume once\n PREPARING --&gt; READY: Mark ready\n PENDING --&gt; CANCELLED: Cancel / release\n PREPARING --&gt; CANCELLED: Late cancel\n READY --&gt; CANCELLED: Late cancel\n READY --&gt; [*]\n CANCELLED --&gt; [*]\n note left of PENDING\n WAITER creates\n ACTIVE reservations\n onHand unchanged\n reserved increases\n available = onHand - reserved\n Shortage: reject entire order\n end note\n note right of PREPARING\n CHEF starts preparation\n ACTIVE becomes CONSUMED\n onHand and reserved decrease equally\n Atomic transaction; no double deduction\n end note\n note left of READY\n CHEF marks ready\n No stock movement\n Normal workflow complete\n Late cancel still possible\n No DELIVERED state\n end note\n note right of CANCELLED\n Pending cancel: WAITER or MANAGER\n ACTIVE becomes RELEASED\n Late cancel: MANAGER or authorized WAITER\n Permission: ORDER_LATE_CANCEL\n Reason required; actor and time recorded\n CONSUMED unchanged; no stock restore\n Invalid transition: HTTP 409\n end note&quot;,&#10;  &quot;config&quot;: null,&#10;  &quot;version&quot;: &quot;12&quot;&#10;}" id="0XNByobysh_8F_x3JazS-1">
           <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=10;" vertex="1">
             <mxGeometry as="geometry" />
           </mxCell>
@@ -858,7 +852,7 @@
             <mxGeometry height="372" width="198" x="516" y="84" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="WAITER or MANAGER creates&lt;br&gt;ACTIVE reservations&lt;br&gt;onHand unchanged&lt;br&gt;reserved increases&lt;br&gt;available = onHand - reserved&lt;br&gt;Shortage: reject entire order" mermaidId="n:_note_0" mermaidBaseStyle="rounded=0;whiteSpace=wrap;html=1;align=center;spacingLeft=8;spacingRight=8;fillColor=#fff5ad;strokeColor=#28253D;strokeWidth=2;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="WAITER or MANAGER creates&lt;br&gt;ACTIVE reservations&lt;br&gt;onHand unchanged&lt;br&gt;reserved increases&lt;br&gt;available = onHand - reserved&lt;br&gt;Shortage: reject entire order" id="p6A17Am_MZyQMP-wZCS5-3">
+        <UserObject label="WAITER creates&lt;br&gt;ACTIVE reservations&lt;br&gt;onHand unchanged&lt;br&gt;reserved increases&lt;br&gt;available = onHand - reserved&lt;br&gt;Shortage: reject entire order" mermaidId="n:_note_0" mermaidBaseStyle="rounded=0;whiteSpace=wrap;html=1;align=center;spacingLeft=8;spacingRight=8;fillColor=#fff5ad;strokeColor=#28253D;strokeWidth=2;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="WAITER creates&lt;br&gt;ACTIVE reservations&lt;br&gt;onHand unchanged&lt;br&gt;reserved increases&lt;br&gt;available = onHand - reserved&lt;br&gt;Shortage: reject entire order" id="p6A17Am_MZyQMP-wZCS5-3">
           <mxCell parent="p6A17Am_MZyQMP-wZCS5-2" style="rounded=0;whiteSpace=wrap;html=1;align=center;spacingLeft=8;spacingRight=8;fillColor=#fff5ad;strokeColor=#28253D;strokeWidth=2;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;labelWidth=120;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
             <mxGeometry height="324" width="166" x="24" y="24" as="geometry" />
           </mxCell>
