@@ -106,10 +106,10 @@ flowchart TD
     B --> I[New ingredient<br/>name, unit, threshold, optional initial stock<br/>scr-04d-inventory-new-ingredient]
     I -->|name empty| J[Name is required<br/>scr-04e-new-ingredient-validation]
     I -->|name already exists, also inactive| K[409 DUPLICATE_RESOURCE<br/>scr-04f-new-ingredient-duplicate]
-    I -->|Create| L([Ingredient created<br/>stock = initial quantity, or 0 if blank])
+    I -->|Create| L([Ingredient created<br/>stock starts at 0<br/>opening stock via Adjust, reason INITIAL_STOCK])
 ```
 
-Initial stock follows API draft #62 (`initialQuantity`, optional, default 0). A positive quantity is sent with the create request, with no separate adjustment for the same quantity. Later stock changes use Adjust. The SRS and backlog still say "start at zero, then adjust"; this is an open item (section 4 of `ui-prototype.md`).
+The frame `scr-04d` still shows an optional Initial stock field from the earlier API draft (`dbb06be`). API draft #62 at `866122e` (not merged) removed `initialQuantity`: an ingredient is created with zero stock and the opening stock is entered with Adjust (reason `INITIAL_STOCK`), as in the SRS and backlog drafts. Removing the field from `scr-04d` to `scr-04f` and re-exporting the PNGs and the PDF is still open (D-9b in `ui-user-story-review.md`).
 
 ## U6 – Manager: ingredient lifecycle (Figma Flow 9)
 
