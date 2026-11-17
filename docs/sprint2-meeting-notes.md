@@ -106,6 +106,22 @@ The Scrum Master reviewed assigned Pull Requests, provided documented feedback t
 
 **Follow-up:** Monitor responses from Burcu Ücük, Emre Boz, and Ayşe Dural; verify requested changes before proceeding with final reviews.
 
+### 4.2 Additional coordination updates — November 17, 2026
+
+**Format:** Asynchronous GitHub coordination  
+**Coordinator:** Bilgesu Nacak  
+**Status:** Follow-up activities recorded; outstanding reviews remain open
+
+| PR | Activity | Verified Outcome |
+|---|---|---|
+| #32 | S2-26 repository setup follow-up | Emre synchronized the feature branch with `develop`. Both CI checks passed, and Bilgesu approved the PR. Ayşe's review remained pending at the last check. |
+| #54 | S2-05 MVP scope review | Burcu addressed the requested SRS corrections in commit `fd29a71`. Bilgesu formally approved the scope review. Ayşe's technical review remained pending at the last check. |
+| #58 | S2-09 progress and impediment tracking | Initial documentation was submitted for Emre's review. Subsequent progress updates were pushed to the existing PR. |
+| #60 | S2-10 Review and Retrospective preparation | Preparation documentation was submitted for Beyzanur's review. |
+| #56 | Team Roles/RACI documentation corrections | Ayşe's approval remained pending at the last check. |
+
+**Follow-up:** Continue monitoring pending technical and peer reviews. Record approvals and merges only after they are confirmed in GitHub.
+
 ## 5. Impediment log
 
 **Status:** Open for updates; no specific impediment has yet been confirmed for entry.
@@ -149,7 +165,7 @@ Record the actual SRS, backlog, NFR, Figma, C4/UML outputs reviewed, any feedbac
 | Date / time (Türkiye) | Type | Participants | Key decision or outcome | Evidence |
 | --- | --- | --- | --- | --- |
 | Nov 16, 2026 — 21:11 | Asynchronous Sprint Planning decision (WhatsApp) | All six team members | Final Sprint 2 task distribution PDF approved unanimously | Approved PDF; private WhatsApp confirmation record |
-| Nov 17, 2026 — time not recorded | Asynchronous PR review and Scrum Master coordination | Bilgesu Nacak; feedback shared with relevant PR owners | Reviewed PR #54 (SRS/MVP scope) and PR #32 (repository setup); requested follow-up corrections and branch synchronization. Checked PR #56 approval status. No PR approvals or merges recorded. | GitHub PRs #54, #32, and #56; see Section 4.1 |
+| Nov 17, 2026 — time not recorded | Asynchronous GitHub PR reviews and Scrum Master coordination | Bilgesu Nacak; feedback exchanged with relevant PR owners | S2-05 scope review (PR #54) and S2-26 repository review (PR #32) approved by Bilgesu; PR #58 and PR #60 opened for peer review; PR #56 monitored. Technical and peer reviews remain pending where applicable. | PRs #32, #54, #56, #58, #60; see Sections 4.1 and 4.2 |
 
 Append each additional confirmed meeting or team decision to this log, including its actual date, attendees, owner, and outcome.
 
