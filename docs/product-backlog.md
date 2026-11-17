@@ -1,25 +1,29 @@
-# PantryChef — Initial Product Backlog
+# PantryChef — Product Backlog (Sprint 2 Refinement)
 
 **Project:** PantryChef — Restaurant Order and Inventory Management System  
 **Course:** BM 321 / SENG 321 — Software Engineering  
-**Sprint:** Sprint 1 — Project Foundation  
-**Document:** Initial Product Backlog  
+**Baseline:** Sprint 1 — Project Foundation  
+**Current Sprint:** Sprint 2 — Requirements & Architecture  
+**Document:** Product Backlog — Sprint 2 Refinement  
 **File:** `docs/product-backlog.md`  
 **Responsible:** Burcu Ücük — Product Owner / Requirements Engineer  
 **QA Reviewer:** Beyzanur Alpay  
 **API Reviewer:** Ayşe  
 **Scope Reviewer:** Tuğçe  
-**Status:** Draft — Pending Team Review
+**Version:** 2.0 — Proposed refinement  
+**Date:** 17 November 2026  
+**Tracking:** [S2-02 — Issue #46](https://github.com/seng321-7th-team/PantryChef/issues/46)  
+**Status:** Draft — Pending QA, API, scope, and team review
 
 ---
 
 ## 1. Purpose
 
-This document defines the initial product backlog for PantryChef, including Epics, Features, User Stories, implementation Tasks, Acceptance Criteria, priorities, Story Points, dependencies, and proposed responsible roles.
+This document refines the Sprint 1 product backlog for Sprint 2 (Requirements & Architecture). It retains the agreed Epics, Features, User Stories, implementation Tasks, Acceptance Criteria, priorities, Story Points, dependencies, and proposed responsible roles, while improving testability and traceability. It is a requirements-planning artifact, not evidence that the features have been implemented.
 
-The backlog is aligned with the Project Proposal and System Vision & Boundary documents and reflects the agreed restaurant order and ingredient inventory workflow.
+The Sprint 1 Project Proposal and System Vision & Boundary are the scope baseline. The Sprint 2 SRS (`docs/srs.md`) and OpenAPI draft (`api/openapi.yaml`) are cross-check references; discrepancies must be resolved through team review rather than silently changing the approved behavior.
 
-The backlog represents product requirements and planned implementation work. Story Points are preliminary estimates and may be revised by the development team.
+The backlog represents product requirements and planned implementation work. Story Points and proposed owners are preliminary and may be revised by the development team. No team approval or implementation completion is implied by this draft.
 
 ## 2. Product Overview
 
@@ -58,7 +62,7 @@ The following features are deferred:
 - Goods receipt processing.
 - Advanced analytics and demand forecasting.
 
-The `Delivered` order status is not part of the MVP.
+The `Delivered` order status is not part of the MVP. The Supplier is an external stakeholder, not an MVP application actor.
 
 ## 3. Core Business Rules
 
@@ -352,7 +356,7 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 - **Priority:** P0
 - **Story Points:** 3
 - **Proposed Owner:** Kitchen / API Team
-- **Dependencies:** US-06
+- **Dependencies:** US-06, US-07
 
 **Acceptance Criteria**
 
@@ -613,7 +617,7 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 | US-05 | Manage Recipes | P0 | 5 | US-02 |
 | US-06 | Create an Order | P0 | 5 | US-01, US-05 |
 | US-07 | Reserve Ingredients Atomically | P0 | 8 | US-03, US-05, US-06 |
-| US-08 | View Pending Orders | P0 | 3 | US-06 |
+| US-08 | View Pending Orders | P0 | 3 | US-06, US-07 |
 | US-09 | Start Preparation and Consume Stock | P0 | 8 | US-03, US-07, US-08 |
 | US-10 | Mark an Order as Ready | P0 | 3 | US-09 |
 | US-11 | Cancel an Order Before Preparation | P0 | 5 | US-07 |
@@ -627,7 +631,7 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 **Estimated P1 Total:** 13 Story Points  
 **Estimated Overall Total:** 81 Story Points
 
-These estimates are preliminary and require team review. They do not represent a commitment to implement all backlog items during Sprint 1.
+These estimates are preliminary and require team review. They represent the full planned product backlog, **not** the Sprint 2 implementation commitment. Sprint 2 focuses on requirements and architecture deliverables.
 
 ## 8. Suggested Implementation Order
 
@@ -644,11 +648,11 @@ The recommended order of implementation is:
 
 Dependencies may be refined during sprint planning.
 
-## 9. Sprint 1 Documentation Deliverables
+## 9. Sprint Baseline and Sprint 2 Refinement Deliverables
 
-Sprint 1 focuses on establishing the project foundation rather than implementing the entire product backlog.
+Sprint 1 established the project foundation rather than implementing the entire product backlog. Its approved scope and business rules remain the baseline for Sprint 2.
 
-The expected documentation activities include:
+Sprint 1 baseline documentation activities included:
 
 - Preparing and reviewing the Project Proposal.
 - Preparing the System Vision & Boundary specification.
@@ -658,7 +662,17 @@ The expected documentation activities include:
 - Checking consistency with the approved RACI Matrix and Sprint Task Board.
 - Reviewing priorities, dependencies, and estimates with the team.
 
-## 10. Review and Validation Checklist
+Sprint 2 backlog refinement deliverables for Issue #46 are:
+
+1. Review each existing story against `docs/project-proposal.md`, `docs/system-vision.md`, `docs/srs.md`, and `api/openapi.yaml`.
+2. Confirm each story has a clear actor, goal, business value, unique ID, priority, estimate, dependencies, and testable acceptance criteria.
+3. Check all state transitions and inventory effects against BR-01 through BR-10.
+4. Record unresolved scope, permission, API, or terminology differences for review; do not assume they are approved.
+5. Submit changes in a feature branch, link the pull request to Issue #46, obtain peer review, and merge into `develop` only after approval.
+
+**Completion evidence:** A reviewed and merged update to `docs/product-backlog.md` on `develop`. This draft alone does not satisfy that evidence requirement.
+
+## 10. Sprint 2 Review and Validation Checklist
 
 - [ ] Product scope verified with Tuğçe.
 - [ ] Acceptance Criteria reviewed with Beyzanur (QA).
@@ -667,7 +681,10 @@ The expected documentation activities include:
 - [ ] Backlog verified against the latest Project Proposal.
 - [ ] Backlog verified against the latest System Vision & Boundary.
 - [ ] RACI and task ownership confirmed.
-- [ ] Product Backlog Pull Request reviewed and approved.
+- [ ] Every P0 story checked for unique ID, actor, goal, value, priority, dependencies, and testable acceptance criteria.
+- [ ] Requirements traceability and API operation mappings confirmed with SRS and API owners.
+- [ ] Any unresolved questions recorded and assigned for review.
+- [ ] Product Backlog Pull Request reviewed, approved, and merged into `develop`.
 
 ## 11. Definition of Ready
 
@@ -681,7 +698,32 @@ A User Story is ready for implementation when:
 6. Required API or data model considerations are understood.
 7. No unresolved contradiction exists with the approved product scope.
 
-## 12. Final Scope Confirmation
+## 12. Sprint 2 Traceability and Review Matrix
+
+The following is a **proposed topic-level mapping**, not a verified mapping to specific SRS requirement IDs or OpenAPI operation IDs. Exact identifiers must be checked in the latest SRS and API draft before the related acceptance criteria are marked complete.
+
+| Story IDs | Business Rules / Scope | SRS / API Verification Topic | Review Focus |
+|---|---|---|---|
+| US-01 | BR-08, BR-10 | Roles and authorization | Waiter, Chef, Manager permissions; privileged cancellation |
+| US-02, US-03, US-04 | BR-03, BR-09, BR-10 | Ingredients, inventory quantities, adjustments | Available = physical − reserved; audit and quantity invariants |
+| US-05 | Recipe and order snapshots | Recipes and recipe versioning | Existing orders retain original ingredient requirements |
+| US-06, US-07 | BR-02, BR-04, BR-09 | Order creation and atomic reservation | All-or-nothing validation, concurrency, duplicate requests |
+| US-08, US-09, US-10 | BR-01, BR-05, BR-06 | Kitchen queue and order status changes | Pending → Preparing → Ready; exactly-once consumption |
+| US-11, US-12 | BR-07, BR-08, BR-10 | Cancellation and authorization | Pending releases reservations; post-start cancellation never restores consumed stock |
+| US-13 | BR-10 | Audit trail and history | Actor, timestamp, event and related entity IDs |
+| US-14 | MVP low-stock monitoring | Low-stock threshold and alert retrieval | Available-stock threshold, no automatic purchase order |
+| US-15, US-16 | P1, post-MVP | Future procurement and goods receipt | Not a Sprint 2 or MVP delivery commitment |
+
+### 12.1 Open Questions for Team Review
+
+- Confirm exact SRS requirement IDs and API paths/operation IDs for each applicable story; do not invent missing identifiers.
+- Confirm whether the API draft supports idempotency for order creation and preparation transitions as required by US-07 and US-09.
+- Confirm how authorized waiter cancellation after preparation starts is represented and audited.
+- Confirm how recipe snapshots/versioning and low-stock thresholds are represented in the data model.
+- Confirm story points, proposed owners, priorities, and dependencies with the development team.
+- Keep P1 procurement explicitly outside the MVP unless a formally approved scope change is recorded.
+
+## 13. Final Scope Confirmation
 
 The agreed MVP order workflow is:
 
@@ -696,4 +738,5 @@ Purchase orders and goods receipt are included in the initial backlog for future
 
 **Document Owner:** Burcu Ücük  
 **Deliverable:** `docs/product-backlog.md`  
-**Review Status:** Pending QA, API, scope, and team approval.
+**Review Status:** Pending QA, API, scope, and team approval.  
+**Change Tracking:** [Issue #46](https://github.com/seng321-7th-team/PantryChef/issues/46); update and PR merge still required.
