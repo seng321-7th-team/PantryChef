@@ -17,6 +17,7 @@ The numbers in this document (U1 to U9) are section numbers of this file. They a
 | Section | Flow | Figma flow starting point |
 |---|---|---|
 | U1 | Waiter creates an order | Flow 1 (login, role button Waiter) |
+| U1a | Sign-in errors | Flow 1 starts at `scr-01-login`; `scr-01b` and `scr-01c` are drawn states (see U1a) |
 | U2 | Waiter cancels, and late cancel | Flow 1 (login, role button Waiter), then Orders |
 | U3 | Chef prepares an order | Flow 2 (`scr-03a-kitchen-board`) |
 | U4 | Chef: order already started | Flow 6: kitchen conflict (`scr-03d-kitchen-conflict`) |
@@ -46,6 +47,22 @@ flowchart TD
 
 A dish that was closed to orders returns `422 MENU_ITEM_UNAVAILABLE` (state card in `scr-07a-states`).
 
+**Retry after a network error:** "Send to kitchen" sends `POST /orders` with a required `Idempotency-Key`. If the request fails because of a network error and the waiter sends the same order again, the client reuses the same key with the same body. The server then returns the saved result of the first request (`Idempotent-Replayed: true`) instead of creating a second order; the same key with a different body returns `422 IDEMPOTENCY_KEY_REUSED`. A new order always uses a new key. Keys are kept for 24 hours (`api/openapi.yaml`; ADR-005 in PR #64, Proposed). The connection-error card in `scr-07a-states` (U9) is the drawn state for this case; the retry itself is not drawn.
+
+## U1a – Sign-in errors (US-01)
+
+```mermaid
+flowchart TD
+    A([Sign-in screen<br/>scr-01-login]) -->|Sign in, POST /auth/login| B{Credentials valid<br/>and account active?}
+    B -->|Yes| C([Start screen of the role<br/>for example scr-02a-waiter-default])
+    B -.->|No, 401 INVALID_CREDENTIALS| D[Sign-in failed<br/>scr-01b-login-error]
+    D -.->|Retry| A
+    E[Any signed-in screen] -.->|Token missing or expired, 401 UNAUTHENTICATED| F[Your session has expired<br/>scr-01c-session-expired]
+    F -.->|Sign in again| A
+```
+
+`scr-01b-login-error` ("Sign-in failed", `INVALID_CREDENTIALS`) and `scr-01c-session-expired` ("Your session has expired", `UNAUTHENTICATED`) are drawn states. The dashed arrows show API behaviour (`POST /auth/login` returns `401` for wrong credentials or an inactive account; any protected request returns `401` when the token is missing, invalid or expired). This document does not rely on a clickable prototype link to or from these two frames. In the prototype, the role buttons on `scr-01-login` open the role screens without checking credentials.
+
 ## U2 – Waiter cancels, and late cancel (US-11, US-12, US-01)
 
 ```mermaid
@@ -54,15 +71,17 @@ flowchart TD
     B -->|PENDING| C[Cancel order #1042<br/>scr-02d-waiter-cancel-dialog]
     C -->|Cancel order| D([Order CANCELLED<br/>reservations released, physical stock unchanged<br/>back to scr-02a-waiter-default])
     C -->|Keep order| A
-    B -->|PREPARING| E[Text: Ask a manager to cancel<br/>scr-02a-waiter-default]
-    A --> F[Orders tab, waiter without permission<br/>403 LATE_CANCEL_NOT_PERMITTED<br/>scr-05c-not-permitted-403]
+    B -->|PREPARING or READY| E[Late cancel needs ORDER_LATE_CANCEL<br/>without it: Ask a manager to cancel<br/>scr-02a-waiter-default]
+    A -.->|Late-cancel attempt on a PREPARING or READY order, waiter without ORDER_LATE_CANCEL| F[403 LATE_CANCEL_NOT_PERMITTED, order unchanged<br/>server-side check, also when the button is disabled<br/>scr-05c-not-permitted-403]
     F --> G([Manager cancels - U7])
     E --> G
-    F -->|Preview as Authorized waiter| H[Orders, waiter with ORDER_LATE_CANCEL<br/>scr-05g-authorized-waiter-orders]
+    F -->|Prototype only: Preview as Authorized waiter| H[Orders, waiter with ORDER_LATE_CANCEL<br/>scr-05g-authorized-waiter-orders]
     H --> I[Late cancel #1041, reason required 3-500 characters<br/>scr-05f-authorized-waiter-late-cancel]
     I -->|Cancel order| J([#1041 Cancelled, stock not restored<br/>scr-05h-authorized-waiter-late-cancelled])
     I -->|Keep order| H
 ```
+
+Opening the Orders tab is allowed for waiters (`GET /orders`, roles MANAGER, CHEF, WAITER). `403 LATE_CANCEL_NOT_PERMITTED` comes only from a late-cancel request (`PATCH /orders/{orderId}/status` to `CANCELLED`) on a `PREPARING` or `READY` order by a waiter without `ORDER_LATE_CANCEL`. The same rule applies to both statuses: in `scr-05c-not-permitted-403` the Late cancel buttons of #1041 (Preparing) and #1039 (Ready) are disabled, and the banner shows the server's answer to such a request. The server checks the permission even if the request is sent anyway. In the prototype the Orders tab opens `scr-05c` directly; the diagram does not show a click on the disabled button (dashed arrow). A `PENDING` cancellation releases the reservations and leaves physical stock unchanged.
 
 "Preview as" exists only in the prototype; in the real application the permission comes from the account.
 
@@ -132,6 +151,7 @@ Notes:
 - Edit never changes stock. Unit cannot be changed while the ingredient has stock or active reservations (`409 RESOURCE_IN_USE`).
 - An inactive ingredient keeps history and existing pending orders, cannot be used in new recipes (`422 INGREDIENT_INACTIVE`), closes menu items that use it to new orders (`422 MENU_ITEM_UNAVAILABLE`, `availablePortions` 0), and raises no low-stock alert. Its stock stays visible and adjustable.
 - Stock **Out** (available 0) and ingredient **Inactive** are different states.
+- Audit (API draft #62): deactivation is recorded as `INGREDIENT_DEACTIVATED` and reactivation as `INGREDIENT_REACTIVATED`. No frame shows these audit entries (not drawn; API behaviour).
 
 ## U7 – Manager cancels orders and reads the audit log (US-11, US-12, US-13)
 
@@ -155,9 +175,11 @@ flowchart TD
     D --> E([RECIPE_UPDATED in audit log<br/>new orders use the new version<br/>existing orders keep theirs])
 ```
 
+Not drawn (API behaviour, draft #62): publishing a recipe version that uses an inactive ingredient is rejected with `422 INGREDIENT_INACTIVE`. No frame shows this error.
+
 ## U9 – Common states (Figma Flow 8)
 
-`scr-07a-states` is one static frame with six cards: loading, empty waiter orders, empty kitchen board, `500 INTERNAL_ERROR`, connection error and `422 MENU_ITEM_UNAVAILABLE`. It has no clickable path.
+`scr-07a-states` is one static frame with six cards: loading, empty waiter orders, empty kitchen board, `500 INTERNAL_ERROR`, connection error and `422 MENU_ITEM_UNAVAILABLE`. It has no clickable path. For the retry rule behind the connection-error card, see U1.
 
 ## Role and screen overview
 
