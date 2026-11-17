@@ -57,9 +57,10 @@ This snapshot records selected activities that were directly reviewed or verifie
 | S2-06 — Sprint 2 Task Board | Bilgesu Nacak | Issue #38 / PR #39 | PR merged; Issue closed | Maintain task tracking |
 | S2-07 — Sprint 2 RACI Matrix | Bilgesu Nacak | Issue #40 / PR #41 | PR merged; Issue closed | Maintain responsibility alignment |
 | S2-08 — Meeting Notes | Bilgesu Nacak | Issue #42 | Living document updated and pushed to feature branch | Continue recording confirmed activities |
-| S2-09 — Progress & Impediments | Bilgesu Nacak | Issue #57 | Issue created; document preparation started | Complete initial tracking document |
-| S2-01 — Detailed SRS | Burcu Ücük | Issue #44 / PR #54 | S2-05 scope review approved; technical review pending at last check | Await technical review |
-| S2-26 — Repository Setup | Emre Boz | Issue #28 / PR #32 | Documentation and CI changes reviewed; branch update requested | Owner to verify branch synchronization |
+| S2-09 — Progress & Impediments | Bilgesu Nacak | Issue #57 / PR #58 | Initial tracking document created and pushed; PR opened with Emre Boz as reviewer | Await peer review and merge into `develop` |
+| S2-10 — Sprint Review & Retrospective Preparation | Bilgesu Nacak | Issue #59 / PR #60 | Preparation document created and pushed; PR opened; Beyzanur Alpay requested as reviewer | Await peer review and merge into `develop` |
+| S2-01 — Detailed SRS | Burcu Ücük | Issue #44 / PR #54 | S2-05 scope review approved by Bilgesu; CI passed | Await Ayşe's technical review before merge |
+| S2-26 — Repository Setup | Emre Boz | Issue #28 / PR #32 | Branch synchronized with `develop`; both CI checks passed; Bilgesu's review approved; Ayşe's review pending at last verification | Await remaining reviewer feedback before merge |
 | Team Roles/RACI reference update | Bilgesu Nacak | PR #56 | Documentation corrections submitted | Await Ayşe's review |
 | S2-33 — Figma Links & UI Documentation | Tuğçe Çevik | Issue #53 | Issue created; documentation PR not verified | Await deliverable and review request |
 
@@ -71,12 +72,15 @@ This snapshot records selected activities that were directly reviewed or verifie
 
 | ID | Task / PR | Responsible | Follow-up Action | Status |
 |---|---|---|---|---|
-| FU-01 | S2-01 / PR #54 | Ayşe Dural | Complete technical and API review of the SRS | Pending |
-| FU-02 | S2-26 / PR #32 | Emre Boz | Synchronize the feature branch with `develop` and verify CI results | Awaiting owner update |
+| FU-01 | S2-01 / PR #54 | Ayşe Dural | Complete technical and API review of the SRS before merge | Pending |
+| FU-02 | S2-26 / PR #32 | Ayşe Dural / Emre Boz | Branch synchronization and CI verification completed; Bilgesu approved the review. Await remaining reviewer feedback and merge coordination | Pending final review |
 | FU-03 | Team Roles/RACI / PR #56 | Ayşe Dural | Review updated documentation references and approval status | Pending |
 | FU-04 | S2-08 / Issue #42 | Bilgesu Nacak | Continue maintaining verified meeting and coordination records | Ongoing |
 | FU-05 | S2-33 / Issue #53 | Tuğçe Çevik | Publish Figma documentation and request review when ready | Pending |
-| FU-06 | S2-09 / Issue #57 | Bilgesu Nacak | Complete progress documentation and request Emre's review | In Progress |
+| FU-06 | S2-09 / Issue #57 / PR #58 | Emre Boz | Review Sprint 2 progress and impediment tracking documentation | Pending peer review |
+| FU-07 | S2-10 / Issue #59 / PR #60 | Beyzanur Alpay | Review Sprint Review and Retrospective preparation documentation | Pending peer review |
+| FU-08 | S2-05 / PR #54 | Bilgesu Nacak | MVP scope review completed and approved; monitor any scope changes arising from technical review | Completed — monitoring |
+
 
 **Follow-up rule:** Each action remains open until its completion is verified through the relevant GitHub Issue, PR, or documented team confirmation.
 
@@ -98,20 +102,22 @@ When an impediment is confirmed, add its description, impact, owner, mitigation 
 |---|---|---|---|
 | Nov 16, 2026 | Sprint 2 task distribution approved by all six team members | Approved task distribution PDF; private team confirmation | Ownership and reviewer assignments established |
 | Nov 17, 2026 | S2-06 and S2-07 completion verified | PR #39, PR #41; Issues #38, #40 | Both deliverables merged and Issues closed |
-| Nov 17, 2026 | S2-05 MVP scope review completed | PR #54; Issue #44 | Scope review approved; technical review remains separate |
-| Nov 17, 2026 | Repository setup reviewed | PR #32 | Branch synchronization requested |
-| Nov 17, 2026 | Team Roles/RACI correction status checked | PR #56 | Awaiting technical reviewer approval |
-| Nov 17, 2026 | S2-09 tracking initiated | Issue #57 | Progress tracking document started |
+| Nov 17, 2026 | S2-05 MVP scope review completed | PR #54; Issue #44; commit fd29a71 | Requested corrections verified; scope review formally approved; technical review pending |
+| Nov 17, 2026 | S2-26 repository setup reviewed | PR #32 | Emre synchronized the branch with `develop`; CI checks passed; Scrum Master review approved |
+| Nov 17, 2026 | Team Roles/RACI documentation update tracked | PR #56 | Awaiting Ayşe's review |
+| Nov 17, 2026 | S2-09 progress tracking documentation submitted for review | Issue #57 / PR #58 | Emre assigned as reviewer; approval pending |
+| Nov 17, 2026 | S2-10 review and retrospective preparation submitted for review | Issue #59 / PR #60 | Beyzanur assigned as reviewer; approval pending |
+
 
 ## 8. Review and Completion Checklist
 
-- [x] S2-09 Issue created and assigned to the Scrum Master.
+- [x] S2-09 Issue #57 created and assigned to the Scrum Master.
 - [x] Initial progress snapshot documented.
 - [x] Pending reviews and follow-up owners identified.
 - [x] Impediment tracking structure established.
 - [ ] Progress records checked against the latest GitHub Project Board.
 - [ ] Confirmed impediments updated as new evidence becomes available.
-- [ ] Documentation reviewed by Emre Boz through a Pull Request.
+- [ ] Documentation reviewed and approved by Emre Boz through PR #58.
 - [ ] Approved changes merged into `develop`.
 - [ ] Issue #57 closed after acceptance criteria are satisfied.
 
