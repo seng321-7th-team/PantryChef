@@ -133,9 +133,9 @@ Each finding lists the User Story, the OpenAPI endpoint, the Figma frame, the ga
 |---|---|
 | User Story | US-02 AC1 "A manager can create an ingredient with a name, unit, quantity, and low-stock threshold" |
 | OpenAPI | `IngredientInput` requires only `name`, `unit`, `lowStockThreshold`. Initial stock is entered with `POST /inventory/adjustments` and reason `INITIAL_STOCK`. |
-| Figma | **Updated 18 Nov:** `scr-04d`, `scr-04e` and `scr-04f` have an optional "Initial stock" field (blank = 0; helper text "Leave blank to start at 0. You can add stock later."). The old hint "Starts with 0 on hand…" was removed. |
-| Gap | **Open (Figma only).** SRS FR-02 (PR #54) and backlog US-02 AC1 (PR #55) describe one way: create with zero stock, then record stock through a separate adjustment. API draft #62 now follows the same rule: `866122e` removed the optional `initialQuantity` that `dbb06be` had; ADR-009 is "Rejected" in PR #64 (`07fd074`) and the schema in PR #66 (`5475872`) says the same. None of these is merged. The frames `scr-04d` to `scr-04f`, their PNGs and the PDF still show the optional Initial stock field; removing it and re-exporting is still open. |
-| Options | Remove the Initial stock field from `scr-04d` to `scr-04f`, re-export the PNGs and the PDF, and update the related documents together. Until then the frames and exports still show the field. (See D-5, D-9b.) |
+| Figma | **Updated 18 Nov (re-export at about 01:35):** `scr-04d`, `scr-04e` and `scr-04f` have no Initial stock field; helper text "Starts with 0 stock. Add stock using Adjust." The earlier 18 Nov export had an optional "Initial stock" field (helper "Leave blank to start at 0. You can add stock later."). |
+| Gap | **Closed in Figma.** SRS FR-02 (PR #54), backlog US-02 AC1 (PR #55), API draft #62 (`866122e` removed the optional `initialQuantity` that `dbb06be` had; `api/openapi.yaml` is unchanged in `cb634c3`), ADR-009 "Rejected" in PR #64 (since `07fd074`) and the schema in PR #66 (`5475872`) all describe "create with zero stock, then enter the opening stock with an `INITIAL_STOCK` adjustment". The re-exported frames follow the same rule. None of these PRs is merged. |
+| Options | No Figma change is left. The rule takes effect in the repository only when PRs #54, #55, #62, #64 and #66 are merged. (See D-5, D-9b.) |
 
 ### F-06 – No screen to grant the late-cancel permission to a waiter
 
@@ -201,14 +201,14 @@ Decisions that are already in the OpenAPI draft and could be recorded as ADRs (c
 | D-2 | `develop` (0.1.0) has no `active` field on ingredients and only offers `DELETE` (`409 RESOURCE_IN_USE`). Backlog US-02 AC6 and API draft #62 say deactivation. **Open:** confirm deactivation and merge PR #62, or revert the three Figma frames. (Needs Ayşe for the API side.) | F-02 |
 | D-3 | FR-022 and FR-023 exist as API requirements; SRS §5.1 does not list them as UI. Must the UI show reservations and stock movements, or is API access enough for the MVP? | F-03 |
 | D-4 | FR-009 includes creating and archiving menu items; SRS §5.1 does not list a menu-management screen. Is it part of the MVP UI? | F-04 |
-| D-5 | **Open (Figma only):** SRS FR-02, backlog US-02 AC1 and API draft #62 (`866122e`) now all describe "start at zero, then adjust" (none merged); `scr-04d` to `scr-04f` still show an optional initial quantity. See D-9b. | F-05 |
+| D-5 | **Closed in Figma (18 Nov re-export):** `scr-04d` to `scr-04f` follow "start at zero, then adjust", like SRS FR-02, backlog US-02 AC1 and API draft #62 (`866122e`); none of these is merged. See D-9b. | F-05 |
 | D-6 | FR-004 includes staff administration and the `ORDER_LATE_CANCEL` permission; SRS §5.1 does not list a staff screen. Is it part of the MVP UI? | F-06 |
 | D-7 | (For Ayşe, with S2-15/S2-16) Which records and tables back `Order.statusHistory`, `Order.cancellation` and the audit log, and are `cancellation_audit` and `order_status_history` the intended names? **Open:** Ayşe to confirm against her ER draft (see C-01). | C-01 |
 | D-8 | (For Ayşe) Reflect the team's 15–30 s polling decision in the architecture documents. | O-01 |
 
 Until these are answered, none of the screens above is declared out of scope, and no P0 item is changed.
 
-Added 18 Nov: **D-9** (for Ayşe and the team) – three separate decisions on API draft #62, each accepted or rejected on its own: **D-9a** ingredient deactivation (soft delete; F-02, D-2), **D-9b** initial stock at creation (F-05, D-5): API draft #62 removed `initialQuantity` in `866122e` and ADR-009 is Rejected in PR #64 (`07fd074`), both not merged; the frames `scr-04d` to `scr-04f`, their PNGs and the PDF still show the optional Initial stock field; removing it and re-exporting is still open, **D-9c** order creation by WAITER only (O-04).
+Added 18 Nov: **D-9** (for Ayşe and the team) – three separate decisions on API draft #62, each accepted or rejected on its own: **D-9a** ingredient deactivation (soft delete; F-02, D-2), **D-9b** initial stock at creation (F-05, D-5): API draft #62 removed `initialQuantity` in `866122e` and ADR-009 is Rejected in PR #64 (`07fd074`), both not merged; the frames `scr-04d` to `scr-04f`, the PNGs and the PDF follow the same rule since the 18 Nov re-export, **D-9c** order creation by WAITER only (O-04).
 
 ## 7a. Closed findings and update log (18 Nov 2026)
 
@@ -221,6 +221,7 @@ Added 18 Nov: **D-9** (for Ayşe and the team) – three separate decisions on A
 | General error text in `scr-07a-states` ("Nothing was changed") | **Closed.** The 500 card now reads "We couldn't confirm the result. Refresh to check the latest status." Checked on a screenshot on 18 Nov. |
 | Frame count "18" | Replaced by 31 (live check, 18 Nov). |
 | `MENU_ITEM_UNAVAILABLE` shown as 409 | Corrected to 422 in `scr-07a-states` (matches the OpenAPI file). |
+| Optional Initial stock field in `scr-04d` to `scr-04f` (F-05, D-9b) | **Closed in Figma.** Removed in the 18 Nov re-export (about 01:35); the three PNGs and the PDF were re-exported. |
 | Flow 9 transitions (04g → 04h → 04g, 04h → 04i, 04i → 04g) | Verified in the live prototype in a browser by Codex on 18 Nov. Prototype only; no backend involved. Not recorded as broken or missing. |
 
 Status words: **Matches API draft** (follows PR #62, not merged), **Decision pending** (no team confirmation recorded), **Applied in Figma** (exists in the live file and was checked on a screenshot).
@@ -229,5 +230,5 @@ Status words: **Matches API draft** (follows PR #62, not merged), **Decision pen
 
 1. Burcu answers D-2, D-3, D-4 and D-6; Ayşe answers D-2, D-7 and D-8.
 2. Tuğçe updates the frames for F-03, F-04 and F-06 as decided. The Edit ingredient screen (D-1) is done.
-3. The team decides D-9a, D-9b and D-9c separately. If D-9a is rejected, the deactivation frames (`scr-04g` to `scr-04i`) are revised. For D-9b, the Initial stock field is removed from `scr-04d` to `scr-04f`, and the PNGs, the PDF and the related documents are updated together (the API draft already removed `initialQuantity` in `866122e`). D-9c relates to O-04.
+3. The team decides D-9a, D-9b and D-9c separately. If D-9a is rejected, the deactivation frames (`scr-04g` to `scr-04i`) are revised. For D-9b, the Figma frames `scr-04d` to `scr-04f`, the PNGs and the PDF were updated on 18 Nov; what remains is merging the drafts (PRs #54, #55, #62, #64, #66). D-9c relates to O-04.
 4. This record is updated with the decisions and re-reviewed against the refined backlog (S2-02).
