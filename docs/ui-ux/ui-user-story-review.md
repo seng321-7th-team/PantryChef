@@ -134,8 +134,8 @@ Each finding lists the User Story, the OpenAPI endpoint, the Figma frame, the ga
 | User Story | US-02 AC1 "A manager can create an ingredient with a name, unit, quantity, and low-stock threshold" |
 | OpenAPI | `IngredientInput` requires only `name`, `unit`, `lowStockThreshold`. Initial stock is entered with `POST /inventory/adjustments` and reason `INITIAL_STOCK`. |
 | Figma | **Updated 18 Nov:** `scr-04d`, `scr-04e` and `scr-04f` have an optional "Initial stock" field (blank = 0; helper text "Leave blank to start at 0. You can add stock later."). The old hint "Starts with 0 on hand…" was removed. |
-| Gap | **Open.** SRS FR-02 (PR #54) and backlog US-02 AC1 (PR #55) say stock starts at zero and initial stock is a separate adjustment. API draft #62 allows an optional `initialQuantity` at creation (default 0; recorded as an `INITIAL_STOCK` adjustment when above 0; ADR-009 in PR #64, Proposed). The frame follows the API draft. This is not a Figma defect. |
-| Options | Once the team confirms the API draft, FR-02 and US-02 AC1 should allow both: create with a quantity, or create with zero and adjust later. Until then it stays an open item. Neither document is changed by this review. (See D-5.) |
+| Gap | **Open.** SRS FR-02 (PR #54) and backlog US-02 AC1 (PR #55) describe only one way: create with zero stock, then record stock through a separate adjustment. In API draft #62, `initialQuantity` is optional (default 0; recorded as an `INITIAL_STOCK` adjustment when above 0; ADR-009 in PR #64, Proposed), so creating with zero and adjusting later is still possible there. The difference is that the API draft and the frame also offer entering stock at creation. The frame follows the API draft. This is not a Figma defect. |
+| Options | **Proposed solution for D-9b (Tuğçe; not a team decision):** follow the SRS and backlog drafts – an ingredient is always created with zero stock, and stock is entered through a separate adjustment. If the team accepts this, `initialQuantity` is removed from the API draft, and Figma `scr-04d` to `scr-04f`, the related documents, the PNGs and the PDF are updated together. Until then the frames and exports still show the optional Initial stock field. Neither document is changed by this review. (See D-5.) |
 
 ### F-06 – No screen to grant the late-cancel permission to a waiter
 
@@ -201,14 +201,14 @@ Decisions that are already in the OpenAPI draft and could be recorded as ADRs (c
 | D-2 | `develop` (0.1.0) has no `active` field on ingredients and only offers `DELETE` (`409 RESOURCE_IN_USE`). Backlog US-02 AC6 and API draft #62 say deactivation. **Open:** confirm deactivation and merge PR #62, or revert the three Figma frames. (Needs Ayşe for the API side.) | F-02 |
 | D-3 | FR-022 and FR-023 exist as API requirements; SRS §5.1 does not list them as UI. Must the UI show reservations and stock movements, or is API access enough for the MVP? | F-03 |
 | D-4 | FR-009 includes creating and archiving menu items; SRS §5.1 does not list a menu-management screen. Is it part of the MVP UI? | F-04 |
-| D-5 | **Open (reopened 18 Nov):** SRS FR-02 and backlog US-02 AC1 say "start at zero, then adjust"; API draft #62 and `scr-04d` allow an optional initial quantity. Should FR-02 and US-02 AC1 allow both? | F-05 |
+| D-5 | **Open (reopened 18 Nov):** SRS FR-02 and backlog US-02 AC1 describe only "start at zero, then adjust"; API draft #62 and `scr-04d` also offer an optional initial quantity (blank = 0). Proposed solution: see D-9b. | F-05 |
 | D-6 | FR-004 includes staff administration and the `ORDER_LATE_CANCEL` permission; SRS §5.1 does not list a staff screen. Is it part of the MVP UI? | F-06 |
 | D-7 | (For Ayşe, with S2-15/S2-16) Which records and tables back `Order.statusHistory`, `Order.cancellation` and the audit log, and are `cancellation_audit` and `order_status_history` the intended names? **Open:** Ayşe to confirm against her ER draft (see C-01). | C-01 |
 | D-8 | (For Ayşe) Reflect the team's 15–30 s polling decision in the architecture documents. | O-01 |
 
 Until these are answered, none of the screens above is declared out of scope, and no P0 item is changed.
 
-Added 18 Nov: **D-9** (for Ayşe and the team) – three separate decisions on API draft #62, each accepted or rejected on its own: **D-9a** ingredient deactivation (soft delete; F-02, D-2), **D-9b** optional `initialQuantity` at creation (F-05, D-5), **D-9c** order creation by WAITER only (O-04).
+Added 18 Nov: **D-9** (for Ayşe and the team) – three separate decisions on API draft #62, each accepted or rejected on its own: **D-9a** ingredient deactivation (soft delete; F-02, D-2), **D-9b** optional `initialQuantity` at creation (F-05, D-5; proposed solution, not a team decision: always create with zero stock and use a separate adjustment), **D-9c** order creation by WAITER only (O-04).
 
 ## 7a. Closed findings and update log (18 Nov 2026)
 
@@ -229,5 +229,5 @@ Status words: **Matches API draft** (follows PR #62, not merged), **Decision pen
 
 1. Burcu answers D-2, D-3, D-4 and D-6; Ayşe answers D-2, D-7 and D-8.
 2. Tuğçe updates the frames for F-03, F-04 and F-06 as decided. The Edit ingredient screen (D-1) is done.
-3. The team decides D-9a, D-9b and D-9c separately. If D-9a is rejected, the deactivation frames (`scr-04g` to `scr-04i`) are revised. If D-9b is rejected, the Initial stock field (`scr-04d` to `scr-04f`) is revised. D-9c relates to O-04.
+3. The team decides D-9a, D-9b and D-9c separately. If D-9a is rejected, the deactivation frames (`scr-04g` to `scr-04i`) are revised. If the proposed solution for D-9b is accepted, `initialQuantity` is removed from the API draft and the Initial stock field (`scr-04d` to `scr-04f`), the related documents, the PNGs and the PDF are updated together. D-9c relates to O-04.
 4. This record is updated with the decisions and re-reviewed against the refined backlog (S2-02).
