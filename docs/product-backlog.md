@@ -87,7 +87,7 @@ When an order is successfully created, its required ingredients are reserved and
 
 **BR-05 — Start Preparation**
 
-When the chef starts preparation, the order changes from `Pending` to `Preparing`. Reserved ingredients are consumed, reservations are released, and physical inventory is deducted exactly once.
+When the chef starts preparation, the order changes from `Pending` to `Preparing`. Active ingredient reservations transition to `CONSUMED`, reserved quantities decrease, and physical inventory is deducted exactly once in the same atomic transaction.
 
 **BR-06 — Ready Order**
 
@@ -388,7 +388,7 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 1. Only an authorized chef can start preparation.
 2. The operation is valid only for an order in `Pending`.
 3. The order transitions to `Preparing`.
-4. Reserved quantities for the order are released.
+4. The order's active ingredient reservations transition to `CONSUMED`, and the corresponding reserved quantities decrease.
 5. Corresponding physical quantities are deducted exactly once.
 6. Status transition and inventory changes are atomic.
 7. Repeated requests cannot deduct physical inventory again.
