@@ -103,13 +103,13 @@ flowchart TD
     F -->|on hand stays at or above reserved| G([STOCK_ADJUSTED recorded])
     F -->|on hand would drop below reserved| H[NEGATIVE_AVAILABLE_STOCK<br/>scr-04c-inventory-adjust-error]
     H --> E
-    B --> I[New ingredient<br/>name, unit, threshold, optional initial stock<br/>scr-04d-inventory-new-ingredient]
+    B --> I[New ingredient<br/>name, unit, threshold, starts with 0 stock<br/>scr-04d-inventory-new-ingredient]
     I -->|name empty| J[Name is required<br/>scr-04e-new-ingredient-validation]
     I -->|name already exists, also inactive| K[409 DUPLICATE_RESOURCE<br/>scr-04f-new-ingredient-duplicate]
     I -->|Create| L([Ingredient created<br/>stock starts at 0<br/>opening stock via Adjust, reason INITIAL_STOCK])
 ```
 
-The frame `scr-04d` still shows an optional Initial stock field from the earlier API draft (`dbb06be`). API draft #62 at `866122e` (not merged) removed `initialQuantity`: an ingredient is created with zero stock and the opening stock is entered with Adjust (reason `INITIAL_STOCK`), as in the SRS and backlog drafts. Removing the field from `scr-04d` to `scr-04f` and re-exporting the PNGs and the PDF is still open (D-9b in `ui-user-story-review.md`).
+Since the 18 Nov re-export, `scr-04d` to `scr-04f` have no Initial stock field (helper text "Starts with 0 stock. Add stock using Adjust."). An ingredient is created with zero stock and the opening stock is entered with Adjust (reason `INITIAL_STOCK`), as in the SRS and backlog drafts and API draft #62 (`initialQuantity` removed in `866122e`; `api/openapi.yaml` unchanged in `cb634c3`). None of these drafts is merged (D-9b in `ui-user-story-review.md`).
 
 ## U6 – Manager: ingredient lifecycle (Figma Flow 9)
 
