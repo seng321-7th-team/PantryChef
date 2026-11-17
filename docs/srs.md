@@ -145,7 +145,7 @@ The system shall recognize the Waiter, Chef/Kitchen Staff, and Restaurant Manage
 
 The system shall allow authorized Restaurant Managers to create, view, update, and deactivate ingredient records.
 
-Each ingredient shall have a name, measurement unit, physical quantity, and low-stock threshold.
+Each ingredient shall have a name, measurement unit, and low-stock threshold. Upon creation, its physical stock shall be initialized to zero. Initial stock shall be recorded through a separate authorized inventory adjustment.
 
 **Related Story:** US-02
 
