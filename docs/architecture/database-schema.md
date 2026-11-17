@@ -12,8 +12,8 @@
 
 This document is the textual companion of the ER diagram. It lists every table, the keys and
 constraints, the rules that the database enforces and the rules that the service must enforce, and a
-proposed PostgreSQL DDL. It follows the API contract v0.2.0 (ingredient soft delete, initial stock at
-creation, order creation by WAITER).
+proposed PostgreSQL DDL. It follows the API contract v0.2.0 (ingredient soft delete, opening stock
+through a separate `INITIAL_STOCK` adjustment, order creation by WAITER).
 
 > This is a proposed schema. No migration has been run against a database yet; the DDL is checked
 > for consistency in this document only (see [section 10](#10-validation-and-open-points)).
@@ -417,9 +417,9 @@ transaction.
 
 **Create ingredient (`POST /ingredients`)**
 1. `INSERT INTO ingredients` (`active = true`).
-2. `INSERT INTO inventory (ingredient_id, on_hand)` with `on_hand = initialQuantity` (default `0`).
-3. If `initialQuantity > 0`: `INSERT INTO stock_movements` (`ADJUSTMENT`, reason `INITIAL_STOCK`,
-   `quantity = initialQuantity`) and `INSERT INTO audit_logs` (`STOCK_ADJUSTED`).
+2. `INSERT INTO inventory (ingredient_id)`; `on_hand` and `reserved` start at their default `0`.
+3. The opening stock is a separate request: the stock adjustment below with reason `INITIAL_STOCK`
+   (SRS FR-02, backlog US-02 AC 1, consistency review CR-01).
 
 **Create order (`POST /orders`, WAITER)**
 1. Claim the idempotency key (`INSERT ... ON CONFLICT DO NOTHING`); replay or reject if it exists.
@@ -509,3 +509,4 @@ Columns map one-to-one to the camelCase API fields (for example `on_hand` ↔ `o
 | Version | Date | Author | Change |
 |---|---|---|---|
 | 0.1 | 2026-11-18 | Ayşe Dural | First schema document for S2-15, aligned with the ER diagram and API v0.2.0 (PR #62) |
+| 0.2 | 2026-11-18 | Ayşe Dural | Ingredient creation starts at `on_hand = 0`; opening stock through a separate `INITIAL_STOCK` adjustment (consistency review CR-01, PR #68) |
