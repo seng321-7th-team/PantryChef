@@ -19,6 +19,7 @@ trade-offs so that later changes can be judged against the original reasons.
 |---|---|
 | **Accepted** | Approved by the team or already part of a merged, reviewed artifact. |
 | **Proposed** | Recommended by the technical lead; waits for team review or for the linked pull request to be merged. |
+| **Rejected** | Considered and not adopted. The record stays so the reasoning is not repeated. |
 | **Superseded** | Replaced by a newer record. The old record stays for traceability. |
 
 A record is never edited to say something different after it is accepted. A change of mind is a new
@@ -39,7 +40,7 @@ architecture sprint; verification happens when the backend is built (Sprint 3 on
 | [ADR-006](#adr-006-roles-permissions-and-late-cancellation) | Three roles plus one permission; server-side checks; audited late cancellation | Accepted (D-12); order creation by WAITER only is Proposed (PR #62) | D-12, NFR-06, NFR-08 |
 | [ADR-007](#adr-007-immutable-recipe-versions-and-order-snapshots) | Immutable recipe versions and order snapshots | Proposed | D-07 |
 | [ADR-008](#adr-008-no-hard-deletes-for-referenced-data) | No hard deletes for referenced data | Proposed | Backlog US-02, PR #62 |
-| [ADR-009](#adr-009-initial-stock-entered-at-ingredient-creation) | Initial stock entered at ingredient creation as an `INITIAL_STOCK` movement | Proposed | Backlog US-02, US-04, PR #62 |
+| [ADR-009](#adr-009-initial-stock-entered-at-ingredient-creation) | Initial stock entered at ingredient creation | Rejected – opening stock is a separate `INITIAL_STOCK` adjustment | SRS FR-02, US-02, CR-01 (PR #68) |
 | [ADR-010](#adr-010-kitchen-board-refresh-by-polling) | Kitchen board refreshes by polling, not WebSockets | Accepted (team decision recorded in S2-23) | `infrastructure-requirements.md` |
 | [ADR-011](#adr-011-container-based-deployment-and-version-pinning) | Docker Compose deployment; runtime and database versions pinned in Sprint 3 | Proposed | S2-23, S2-27 |
 
@@ -318,28 +319,28 @@ ingredients to be deactivated, and AC 6 says deactivation must not invalidate hi
 
 ## ADR-009: Initial stock entered at ingredient creation
 
-**Status:** Proposed – part of PR #62 (API v0.2.0).
+**Status:** Rejected – consistency review CR-01 (PR #68). The proposal is kept for traceability.
 
 ### Context
-Backlog US-02 AC 1 lets the manager enter a quantity when creating an ingredient. The Sprint 1 contract
-required a separate `POST /inventory/adjustments` call. Every stock change must also stay traceable
-(US-04, NFR-08).
+The Sprint 1 backlog (US-02 AC 1) let the manager enter a quantity when creating an ingredient, while
+the Sprint 1 contract required a separate `POST /inventory/adjustments` call. Every stock change must
+stay traceable (US-04, NFR-08).
 
-### Decision
-`POST /ingredients` accepts an optional `initialQuantity` (default `0`). The ingredient, its stock row
-and, when the quantity is positive, an `ADJUSTMENT` stock movement with reason `INITIAL_STOCK` plus a
-`STOCK_ADJUSTED` audit entry are written in one transaction. All later changes use
-`POST /inventory/adjustments`.
+### Proposed decision (rejected)
+`POST /ingredients` would accept an optional `initialQuantity` and write the ingredient, its stock row
+and an `ADJUSTMENT` / `INITIAL_STOCK` movement in one transaction.
 
-### Alternatives considered
-- **Two calls (create, then adjust):** one rule for every stock change, but the manager screen needs
-  two requests and an ingredient can exist without its intended opening stock.
-- **Writing `onHand` directly without a movement:** simplest, but leaves a stock change without a
-  history entry.
+### Why it was rejected
+The Sprint 2 requirements resolved the same gap the other way: SRS FR-02 (PR #54), the refined backlog
+US-02 AC 1 (PR #55) and Figma frame 04d all start a new ingredient at zero stock and record the opening
+stock through a separate adjustment. Following the requirements baseline keeps one rule for every stock
+change.
 
-### Consequences
-- The movement history always explains the current `onHand`, including the opening stock.
-- The create endpoint now touches three tables; it follows the same transaction rules as ADR-004.
+### Outcome
+- `POST /ingredients` creates the ingredient and its stock row with `onHand = 0` (PR #62).
+- The opening stock is entered with `POST /inventory/adjustments` and reason `INITIAL_STOCK`, which
+  writes the `ADJUSTMENT` movement and the `STOCK_ADJUSTED` audit entry like any other adjustment.
+- The manager screen needs two steps (create, then adjust); Figma 04d already shows this.
 
 ---
 
@@ -398,7 +399,7 @@ PostgreSQL version and container image open and point to this ADR.
 | Question | Owner | Needed for |
 |---|---|---|
 | Team confirmation of D-01 to D-11 (affects ADR-004 and ADR-007) | Bilgesu (meeting record), whole team | Changing those records to Accepted |
-| Review and merge of PR #62 (affects ADR-006, ADR-008, ADR-009) | Emre, Tuğçe, Beyzanur, Burcu | Changing those records to Accepted |
+| Review and merge of PR #62 (affects ADR-006 and ADR-008) | Emre, Tuğçe, Beyzanur, Burcu | Changing those records to Accepted |
 | Final demo host: team laptop or cloud VM | Emre, Bilgesu | ADR-011 |
 
 ## Change log
@@ -406,3 +407,4 @@ PostgreSQL version and container image open and point to this ADR.
 | Version | Date | Author | Change |
 |---|---|---|---|
 | 0.1 | 2026-11-18 | Ayşe Dural | First ADR set for S2-16 (ADR-001 to ADR-011) |
+| 0.2 | 2026-11-18 | Ayşe Dural | ADR-009 rejected after consistency review CR-01 (PR #68); added the Rejected status |
