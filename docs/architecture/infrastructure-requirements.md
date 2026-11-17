@@ -4,7 +4,7 @@
 **Task:** S2-23 ([Issue #29](https://github.com/seng321-7th-team/PantryChef/issues/29))
 **Owner:** Emre Boz (DevOps and CI/CD)
 **Reviewer:** Ayşe Dural
-**Status:** Draft. Parts that depend on the tech stack decision (ADR, S2-16, `docs/architecture/architecture-decisions.md`) are marked **TBD (ADR)**.
+**Status:** Ready for review. The stack and versions follow the architecture decisions (S2-16, `docs/architecture/architecture-decisions.md`, PR #64).
 
 ## 1. Purpose
 
@@ -14,10 +14,12 @@ This document describes where and how PantryChef runs: the runtime parts, the en
 
 | Component | What it does | Notes |
 |---|---|---|
-| Web frontend | Browser app for Waiter, Chef and Restaurant Manager | Built to static files and served by the `web` container. Framework: TBD (ADR). |
-| Backend API | Implements [`api/openapi.yaml`](../../api/openapi.yaml) under `/v1`, checks JWT tokens and roles | Listens on port 8080 in local development (see `servers` in the OpenAPI file). Language and framework: TBD (ADR). |
-| Database | Stores orders, reservations, stock, recipes, users and audit records | PostgreSQL, as planned in the RACI. Version is fixed in Sprint 3. |
-| Reverse proxy | Serves the frontend and forwards `/v1` requests to the backend | Runs in the `web` container, so the browser only talks to one address. Plain HTTP forwarding is enough: the kitchen board polls `GET /v1/orders` every 15 to 30 seconds (team decision), so no WebSocket settings are needed. |
+| Web frontend | Browser app for Waiter, Chef and Restaurant Manager | React with TypeScript (ADR-001). Built to static files and served by the `web` container. |
+| Backend API | Implements [`api/openapi.yaml`](../../api/openapi.yaml) under `/v1`, checks JWT tokens and roles | NestJS with TypeScript on Node.js LTS (ADR-001), one process organised as a modular monolith (ADR-002). Listens on port 8080 in local development (see `servers` in the OpenAPI file). |
+| Database | Stores orders, reservations, stock, recipes, users and audit records | PostgreSQL (ADR-001). A supported major version is pinned in Sprint 3 (ADR-011). |
+| Reverse proxy | Serves the frontend and forwards `/v1` requests to the backend | nginx in the `web` container, so the browser only talks to one address. Plain HTTP forwarding is enough: the kitchen board polls `GET /v1/orders` every 15 to 30 seconds (team decision, ADR-010), so no WebSocket settings are needed. |
+
+The three containers `web`, `api` and `db` are the same as the containers in the C4 container diagram (S2-13): Web Application, REST API and Database.
 
 ## 3. Environments
 
@@ -31,16 +33,16 @@ Hosting for the final demo (team laptop or a cloud VM) is an open decision, see 
 
 ## 4. Deployment view
 
-Draft UML-style deployment view. It will be updated after the ADR and checked against Ayşe's container diagram (S2-24).
+UML deployment view of the planned setup (ADR-011). The Mermaid source below renders on GitHub; a PNG copy for the submission is in [`deployment-view.png`](deployment-view.png).
 
 ```mermaid
 flowchart LR
-    user["Browser<br/>(Waiter, Chef, Manager)"]
-    subgraph host["Docker host (laptop or demo VM)"]
-        web["web container<br/>static frontend + reverse proxy<br/>port 80"]
-        api["backend container<br/>REST API /v1<br/>port 8080"]
-        db[("db container<br/>PostgreSQL<br/>port 5432")]
-        vol[("pgdata volume")]
+    user["«device»<br/>Browser<br/>(Waiter, Chef, Manager)"]
+    subgraph host["«execution environment» Docker host (laptop or demo VM)"]
+        web["«container» web<br/>nginx: React build + reverse proxy<br/>port 80"]
+        api["«container» api<br/>Node.js LTS: NestJS REST API /v1<br/>port 8080"]
+        db[("«container» db<br/>PostgreSQL<br/>port 5432")]
+        vol[("«volume» pgdata")]
     end
     gha["GitHub Actions<br/>lint, test, build"]
 
@@ -85,13 +87,13 @@ Performance, security and backup targets will be measurable NFRs. They are agree
 
 | Decision | Depends on | Owner |
 |---|---|---|
-| Frontend framework and backend language | ADR (S2-16) | Ayşe |
 | Final demo host: team laptop or cloud VM | Team decision | Emre, Bilgesu |
-| PostgreSQL version and container image | ADR (S2-16) | Emre, Ayşe |
+| Exact Node.js and PostgreSQL versions | Sprint 3 project skeleton (ADR-011) | Emre, Ayşe |
 
 ## 8. Related work
 
-- S2-16 Architecture decisions (Ayşe)
+- S2-16 Architecture decisions (Ayşe, PR #64)
+- S2-13 C4 container diagram (Ayşe, PR #62)
 - S2-24 Technical review of the C4 container diagram ([Issue #33](https://github.com/seng321-7th-team/PantryChef/issues/33))
 - S2-25 Performance, security and backup NFR support ([Issue #34](https://github.com/seng321-7th-team/PantryChef/issues/34))
 - S2-27 Sprint 3 CI/CD and Docker readiness ([Issue #35](https://github.com/seng321-7th-team/PantryChef/issues/35))
