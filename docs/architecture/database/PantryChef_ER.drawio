@@ -1,0 +1,228 @@
+<mxfile host="app.diagrams.net" pages="3">
+  <diagram name="1 - Core Database ER" id="zn7IXyhiu7p0k-HCyioK">
+    <mxGraphModel dx="2210" dy="1863" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=30;fontStyle=1;fontColor=#123047;" value="PantryChef | Core Database ER | PostgreSQL" vertex="1">
+          <mxGeometry height="65" width="1710" as="geometry" />
+        </mxCell>
+        <mxCell id="menu" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="menu_items" vertex="1">
+          <mxGeometry height="237" width="350" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="menubody" parent="menu" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK id : uuid&#10;name : varchar(100)&#10;description : varchar(500) ?&#10;price : numeric(12,2)&#10;active : boolean&#10;created_at : timestamptz&#10;updated_at : timestamptz" vertex="1">
+          <mxGeometry height="194" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="recipes" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="recipes" vertex="1">
+          <mxGeometry height="210" width="350" x="450" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="recipesbody" parent="recipes" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK, FK menu_item_id : uuid&#10;PK version : integer&#10;is_current : boolean&#10;FK updated_by : uuid&#10;updated_at : timestamptz&#10;PK (menu_item_id, version)" vertex="1">
+          <mxGeometry height="167" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="lines" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="recipe_lines" vertex="1">
+          <mxGeometry height="210" width="350" x="900" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="linesbody" parent="lines" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK, FK menu_item_id : uuid&#10;PK, FK recipe_version : integer&#10;PK, FK ingredient_id : uuid&#10;quantity : numeric&#10;FK (menu_item_id, recipe_version)&#10;  -&gt; recipes(menu_item_id, version)" vertex="1">
+          <mxGeometry height="167" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="ingredients" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="ingredients" vertex="1">
+          <mxGeometry height="237" width="350" x="1350" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="ingredientsbody" parent="ingredients" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK id : uuid&#10;UK name : varchar(100)&#10;unit : text [g | ml | piece]&#10;low_stock_threshold : numeric&#10;active : boolean DEFAULT true&#10;created_at : timestamptz&#10;updated_at : timestamptz" vertex="1">
+          <mxGeometry height="194" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="orders" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="orders" vertex="1">
+          <mxGeometry height="453" width="350" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="ordersbody" parent="orders" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK id : uuid&#10;UK order_number : bigint identity&#10;status : text&#10;table_label : varchar(20) ?&#10;note : varchar(500) ?&#10;total_price : numeric(12,2)&#10;FK created_by : uuid&#10;created_at, updated_at : timestamptz&#10;preparation_started_at : timestamptz ?&#10;ready_at : timestamptz ?&#10;FK cancelled_by : uuid ?&#10;cancelled_at : timestamptz ?&#10;cancel_reason : varchar(500) ?&#10;previous_status : text ?&#10;late_cancellation : boolean ?" vertex="1">
+          <mxGeometry height="410" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="items" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="order_items" vertex="1">
+          <mxGeometry height="345" width="350" x="450" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="itemsbody" parent="items" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK id : uuid&#10;FK order_id : uuid&#10;FK menu_item_id : uuid&#10;FK recipe_version : integer&#10;menu_item_name_snapshot : text&#10;quantity : integer&#10;unit_price : numeric(12,2)&#10;note : varchar(200) ?&#10;UK (order_id, id)&#10;FK (menu_item_id, recipe_version)&#10;  -&gt; recipes(menu_item_id, version)" vertex="1">
+          <mxGeometry height="302" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="reservations" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="reservations" vertex="1">
+          <mxGeometry height="426" width="350" x="900" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="reservationsbody" parent="reservations" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK id : uuid&#10;FK order_id : uuid&#10;FK order_item_id : uuid&#10;FK ingredient_id : uuid&#10;ingredient_name_snapshot : text&#10;unit_snapshot : text&#10;quantity : numeric&#10;status : text&#10;created_at : timestamptz&#10;resolved_at : timestamptz ?&#10;UK (order_item_id, ingredient_id)&#10;FK (order_id, order_item_id)&#10;  -&gt; order_items(order_id, id)&#10;UK (id, order_id, ingredient_id)" vertex="1">
+          <mxGeometry height="383" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="inventory" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="inventory" vertex="1">
+          <mxGeometry height="264" width="350" x="1350" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="inventorybody" parent="inventory" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK, FK ingredient_id : uuid&#10;on_hand : numeric DEFAULT 0&#10;reserved : numeric DEFAULT 0&#10;available : numeric GENERATED&#10;  AS (on_hand - reserved) STORED&#10;updated_at : timestamptz&#10;CHECK on_hand &gt;= reserved&#10;CHECK reserved &gt;= 0" vertex="1">
+          <mxGeometry height="221" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="edge0" edge="1" parent="1" source="menu" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="recipes" value="versions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" edge="1" parent="1" source="recipes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="lines" value="recipe lines">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" edge="1" parent="1" source="ingredients" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=0;exitY=0.8;entryX=1;entryY=0.8;" target="lines" value="ingredient usage">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" edge="1" parent="1" source="orders" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=1;exitY=0.3;entryX=0;entryY=0.4;" target="items" value="order items">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge4" edge="1" parent="1" source="items" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=1;exitY=0.6;entryX=0;entryY=0.5;" target="reservations" value="item reservations">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge5" edge="1" parent="1" source="recipes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="items" value="fixed recipe version">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge6" edge="1" parent="1" source="ingredients" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERone;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="inventory" value="stock row">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge7" edge="1" parent="1" source="ingredients" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=0;exitY=1;entryX=1;entryY=0.2;" target="reservations" value="reserved ingredient">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1295" y="540" />
+              <mxPoint x="1295" y="760" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note0" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="Legend: PK = primary key; FK = foreign key; UK = unique key; ? = nullable. Other fields are NOT NULL. Composite keys are grouped, not independent unique fields. Crow-foot links show 1 to 0..many; the stock-row link is 1 to 1. Create each ingredient and its inventory row atomically; a positive initial quantity is written in the same transaction as an ADJUSTMENT movement with reason INITIAL_STOCK. Ingredients are deactivated (active = false), never hard-deleted." vertex="1">
+          <mxGeometry height="100" width="1710" y="1170" as="geometry" />
+        </mxCell>
+        <mxCell id="note1" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="Cross-page references: created_by, updated_by and cancelled_by reference users.id (Support ER). Reservations inherit order membership through FK (order_id, order_item_id). Derived available is not independently updated. Decimal precision and table layout are proposed physical design choices, not mandates of OpenAPI." vertex="1">
+          <mxGeometry height="110" width="1710" y="1290" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="f8EVJvFU5rH56Fo4nDRj" name="2 - Support ER">
+    <mxGraphModel dx="943" dy="559" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=30;fontStyle=1;fontColor=#123047;" value="PantryChef | Support ER | Identity, History and Reliability" vertex="1">
+          <mxGeometry height="65" width="1710" as="geometry" />
+        </mxCell>
+        <mxCell id="ordersref" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#e2e8f0;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="orders [Core ER reference]" vertex="1">
+          <mxGeometry height="129" width="350" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="ordersrefbody" parent="ordersref" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK id : uuid&#10;FK created_by : uuid&#10;FK cancelled_by : uuid ?" vertex="1">
+          <mxGeometry height="86" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="users" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="users" vertex="1">
+          <mxGeometry height="237" width="350" x="450" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="usersbody" parent="users" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK id : uuid&#10;UK username : varchar(50)&#10;full_name : varchar(100)&#10;password_hash : text&#10;role : text&#10;active : boolean DEFAULT true&#10;created_at : timestamptz" vertex="1">
+          <mxGeometry height="194" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="perms" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="user_permissions" vertex="1">
+          <mxGeometry height="129" width="350" x="900" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="permsbody" parent="perms" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK, FK user_id : uuid&#10;PK permission : text&#10;Allowed: ORDER_LATE_CANCEL" vertex="1">
+          <mxGeometry height="86" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="resref" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#e2e8f0;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="reservations [Core ER reference]" vertex="1">
+          <mxGeometry height="129" width="350" x="1350" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="resrefbody" parent="resref" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK id : uuid&#10;FK order_id : uuid&#10;FK ingredient_id : uuid" vertex="1">
+          <mxGeometry height="86" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="history" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="order_status_history" vertex="1">
+          <mxGeometry height="237" width="350" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="historybody" parent="history" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK id : uuid&#10;FK order_id : uuid&#10;from_status : text ?&#10;to_status : text&#10;FK changed_by : uuid&#10;changed_at : timestamptz&#10;reason : varchar(500) ?" vertex="1">
+          <mxGeometry height="194" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="audit" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="audit_logs" vertex="1">
+          <mxGeometry height="291" width="350" x="450" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="auditbody" parent="audit" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK id : uuid&#10;action : text&#10;FK actor_id : uuid&#10;entity_type : text&#10;entity_id : uuid&#10;previous_status : text ?&#10;reason : text ?&#10;details : jsonb DEFAULT {}&#10;occurred_at : timestamptz" vertex="1">
+          <mxGeometry height="248" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="idem" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="idempotency_records" vertex="1">
+          <mxGeometry height="372" width="350" x="900" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="idembody" parent="idem" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK, FK user_id : uuid&#10;PK operation_scope : text&#10;PK idempotency_key : text&#10;request_hash : bytea&#10;state : text&#10;response_status : smallint ?&#10;response_body : jsonb ?&#10;response_headers : jsonb ?&#10;created_at : timestamptz&#10;completed_at : timestamptz ?&#10;PK (user_id, operation_scope,&#10;    idempotency_key)" vertex="1">
+          <mxGeometry height="329" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="moves" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#dbeafe;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="stock_movements" vertex="1">
+          <mxGeometry height="372" width="350" x="1350" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="movesbody" parent="moves" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK id : uuid&#10;FK ingredient_id : uuid&#10;FK order_id : uuid ?&#10;FK reservation_id : uuid ?&#10;type : text&#10;quantity : numeric&#10;on_hand_after : numeric&#10;reserved_after : numeric&#10;reason : text ?&#10;note : varchar(500) ?&#10;FK performed_by : uuid&#10;created_at : timestamptz" vertex="1">
+          <mxGeometry height="329" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="invref" parent="1" style="swimlane;html=1;startSize=42;horizontal=1;fillColor=#e2e8f0;swimlaneFillColor=#ffffff;strokeColor=#44627a;strokeWidth=2;fontSize=19;fontStyle=1;align=left;spacingLeft=12;" value="inventory [Core ER reference]" vertex="1">
+          <mxGeometry height="75" width="350" x="1350" y="1220" as="geometry" />
+        </mxCell>
+        <mxCell id="invrefbody" parent="invref" style="text;whiteSpace=wrap;html=0;align=left;verticalAlign=top;fontFamily=Helvetica;fontSize=16;spacingLeft=12;spacingTop=7;fontColor=#243746;" value="PK, FK ingredient_id : uuid" vertex="1">
+          <mxGeometry height="32" width="350" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="edge0" edge="1" parent="1" source="users" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=1;exitY=0.3;entryX=0;entryY=0.5;" target="perms" value="extra permissions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" edge="1" parent="1" source="users" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=0;exitY=0.3;entryX=1;entryY=0.3;" target="ordersref" value="created_by">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" edge="1" parent="1" source="ordersref" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="history" value="status history">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" edge="1" parent="1" source="users" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="audit" value="actor">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge4" edge="1" parent="1" source="users" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=1;exitY=0.85;entryX=0.5;entryY=0;" target="idem" value="request owner">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="850" y="500" />
+              <mxPoint x="1075" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge5" edge="1" parent="1" source="resref" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=0.5;exitY=1;entryX=0.5;entryY=0;startArrow=ERzeroToOne;" target="moves" value="optional reservation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge6" edge="1" parent="1" source="invref" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;strokeColor=#526d82;strokeWidth=2.5;fontSize=14;labelBackgroundColor=#ffffff;jumpStyle=arc;jumpSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="moves" value="stock movement history">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="note0" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="Additional FKs (not repeated as crossing lines): orders.cancelled_by, recipes.updated_by, order_status_history.changed_by and stock_movements.performed_by -&gt; users.id; stock_movements.order_id -&gt; orders.id; stock_movements.ingredient_id -&gt; inventory.ingredient_id. Cancellation users are nullable until cancellation." vertex="1">
+          <mxGeometry height="120" width="1710" y="1400" as="geometry" />
+        </mxCell>
+        <mxCell id="note1" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="Audit entity_id is a polymorphic logical reference qualified by entity_type, not a SQL FK to multiple tables. ADJUSTMENT movements may omit order_id and reservation_id. For order movements, enforce that reservation_id, order_id and ingredient_id identify the same reservation. password_hash stores a secure password hash, never plaintext." vertex="1">
+          <mxGeometry height="130" width="1710" y="1540" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="fhg05j3Fa-NikHzjmxu3" name="3 - Constraints and Rules">
+    <mxGraphModel dx="543" dy="559" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=30;fontStyle=1;fontColor=#123047;" value="PantryChef | Database Constraints and Transaction Rules" vertex="1">
+          <mxGeometry height="65" width="1710" as="geometry" />
+        </mxCell>
+        <mxCell id="note0" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="01 | Keys and referential integrity&#10;recipes: PK(menu_item_id, version).&#10;recipe_lines: PK(menu_item_id, recipe_version, ingredient_id); composite FK to recipes.&#10;order_items: composite FK(menu_item_id, recipe_version) to recipes; UK(order_id, id).&#10;reservations: composite FK(order_id, order_item_id) to order_items; UK(order_item_id, ingredient_id).&#10;All other *_id foreign keys target the named parent PK; stock_movements.ingredient_id targets inventory.ingredient_id, the 1:1 stock row of ingredients.id. Retain historical references with ON DELETE RESTRICT." vertex="1">
+          <mxGeometry height="330" width="820" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="note1" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="02 | Row-level CHECK constraints&#10;Stock: on_hand &gt;= reserved AND reserved &gt;= 0.&#10;Recipe version &gt;= 1; recipe/reservation quantity &gt; 0.&#10;Order item quantity BETWEEN 1 AND 50.&#10;Prices, order total and low_stock_threshold &gt;= 0. ingredients.name is UNIQUE.&#10;Unit IN (g, ml, piece); no conversion in the MVP.&#10;resolved_at IS NULL for ACTIVE; required for CONSUMED or RELEASED.&#10;Validate finite numeric input and field lengths before writes." vertex="1">
+          <mxGeometry height="330" width="820" x="890" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="note2" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="03 | Valid states and cancellation data&#10;orders.status IN (PENDING, PREPARING, READY, CANCELLED).&#10;reservations.status IN (ACTIVE, CONSUMED, RELEASED).&#10;users.role IN (WAITER, CHEF, MANAGER).&#10;Cancellation requires cancelled_by, cancelled_at, previous_status and late_cancellation; pending cancellation may omit a reason.&#10;Late cancellation additionally requires a 3-500 character reason. Server checks MANAGER or WAITER + ORDER_LATE_CANCEL.&#10;Legal transitions and user permissions are enforced by the service." vertex="1">
+          <mxGeometry height="340" width="820" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="note3" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="04 | Recipe versions and snapshots&#10;Partial UNIQUE(menu_item_id) WHERE is_current = true ensures at most one current version. Service ensures one current recipe per orderable menu item.&#10;Each change inserts a new immutable recipe version; new versions may reference only active ingredients (service check, 422 INGREDIENT_INACTIVE).&#10;Order items preserve menu_item_name_snapshot, unit_price and recipe_version; reservations preserve ingredient name/unit and quantity.&#10;Recipe and order minimum line counts are enforced within their transaction; a normal FK cannot enforce at least one child." vertex="1">
+          <mxGeometry height="340" width="820" x="890" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="note4" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="05 | Atomic stock invariants&#10;Create order: lock inventory rows in stable ingredient order, check all available quantities, then save PENDING order + ACTIVE reservations and increase reserved.&#10;Start preparation: lock order and stock rows; change ACTIVE to CONSUMED; decrease on_hand and reserved equally, once.&#10;Pending cancel: ACTIVE to RELEASED; decrease reserved only. Late cancel: no stock restore. READY: no stock movement.&#10;reserved = SUM(ACTIVE reservations) is cross-table: maintain in the same transaction, not a row CHECK." vertex="1">
+          <mxGeometry height="340" width="820" y="860" as="geometry" />
+        </mxCell>
+        <mxCell id="note5" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="06 | Idempotency and stock movement consistency&#10;UNIQUE scope is the composite PK(user_id, operation_scope, idempotency_key). Include order ID in status operation_scope.&#10;Atomically claim key and fingerprint; same body replays saved status/body/headers; a different body is rejected.&#10;Claim and successful response commit with business effects; rollback must not leave a permanently locked IN_PROGRESS claim.&#10;Partial UNIQUE(reservation_id) WHERE type = CONSUME prevents a second consumption movement. Service also serializes reservation state changes." vertex="1">
+          <mxGeometry height="340" width="820" x="890" y="860" as="geometry" />
+        </mxCell>
+        <mxCell id="note6" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="07 | Movement and audit rules&#10;stock_movements.type IN (RESERVE, RELEASE, CONSUME, ADJUSTMENT). RESERVE quantity &gt; 0; RELEASE and CONSUME &lt; 0; ADJUSTMENT != 0. After-values satisfy on_hand_after &gt;= reserved_after &gt;= 0.&#10;Order movements require order_id and reservation_id; enforce FK(reservation_id, order_id, ingredient_id) to a matching UNIQUE(id, order_id, ingredient_id) on reservations.&#10;Adjustment reason: INITIAL_STOCK, PURCHASE_RECEIVED, PHYSICAL_COUNT_CORRECTION, WASTE, LATE_CANCELLATION_CORRECTION or OTHER.&#10;Audit actions: ORDER_CANCELLED, ORDER_LATE_CANCELLED, STOCK_ADJUSTED, RECIPE_UPDATED, USER_PERMISSIONS_CHANGED, INGREDIENT_DEACTIVATED, INGREDIENT_REACTIVATED. Entity types: ORDER, INGREDIENT, MENU_ITEM, USER." vertex="1">
+          <mxGeometry height="370" width="820" y="1240" as="geometry" />
+        </mxCell>
+        <mxCell id="note7" parent="1" style="shape=note;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=15;fillColor=#fef3c7;strokeColor=#d49a20;fontSize=17;" value="08 | Indexes, retention and scope&#10;Suggested indexes: orders(status, created_at); order_items(order_id); reservations(ingredient_id) WHERE status = ACTIVE; recipe_lines(ingredient_id); stock_movements(ingredient_id, created_at); order_status_history(order_id, changed_at); audit_logs(occurred_at).&#10;Also index other referencing FK columns where query/deletion patterns need it; PostgreSQL does not create all FK indexes automatically.&#10;Users are deactivated; menu items archived. Ingredients are deactivated (active = false), never hard-deleted; existing PENDING reservations still complete. Preserve recipe, reservation and audit history.&#10;This is a proposed schema, not a deployed database. No SQL migration or runtime test has been executed." vertex="1">
+          <mxGeometry height="370" width="820" x="890" y="1240" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
