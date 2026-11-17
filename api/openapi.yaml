@@ -37,9 +37,9 @@ info:
     ## Ingredient lifecycle
 
     Ingredients are never hard-deleted. `POST /ingredients` creates an ingredient together
-    with its stock record; an optional `initialQuantity` is booked in the same transaction
-    as an `ADJUSTMENT` stock movement with reason `INITIAL_STOCK`. Later stock changes use
-    `POST /inventory/adjustments`.
+    with its stock record, which starts at `onHand = 0`. The opening stock, like every
+    later stock change, is entered with `POST /inventory/adjustments` (reason
+    `INITIAL_STOCK` for the opening stock).
 
     `DELETE /ingredients/{ingredientId}` is a **soft delete**: it sets `active` to `false`
     (Restaurant Manager only). Recipes, orders, reservations, stock movements and audit
@@ -346,12 +346,11 @@ paths:
       summary: Create an ingredient
       description: |
         Roles: MANAGER. Creates an active ingredient and its stock record in one transaction.
+        If any step fails, nothing is created.
 
-        **Initial stock:** the optional `initialQuantity` (default `0`) becomes the starting
-        `onHand`. When it is greater than `0`, the same transaction writes an `ADJUSTMENT`
-        stock movement with reason `INITIAL_STOCK` and a `STOCK_ADJUSTED` audit entry, exactly
-        as `POST /inventory/adjustments` would. Every later stock change uses
-        `POST /inventory/adjustments`. If any step fails, nothing is created.
+        **Initial stock:** the stock record starts with `onHand = 0` and `reserved = 0`. The
+        opening stock is entered afterwards with `POST /inventory/adjustments` and reason
+        `INITIAL_STOCK`, so every stock change has an `ADJUSTMENT` movement and an audit entry.
 
         Ingredient names are unique, including inactive ingredients (`409 DUPLICATE_RESOURCE`);
         reactivate an inactive ingredient with `PUT /ingredients/{ingredientId}` instead of
@@ -363,16 +362,15 @@ paths:
             schema:
               $ref: '#/components/schemas/IngredientCreate'
             examples:
-              withInitialStock:
-                summary: Create mozzarella with an opening stock of 5 kg
+              mozzarella:
+                summary: Create mozzarella (stock is added with an INITIAL_STOCK adjustment)
                 value:
                   name: Mozzarella
                   unit: g
                   lowStockThreshold: 1000
-                  initialQuantity: 5000
       responses:
         '201':
-          description: The ingredient was created; its stock record holds `onHand = initialQuantity` and `reserved = 0`.
+          description: The ingredient was created; its stock record holds `onHand = 0` and `reserved = 0`.
           headers:
             Location:
               $ref: '#/components/headers/Location'
@@ -561,9 +559,9 @@ paths:
       description: |
         Roles: MANAGER. Changes `onHand` by `quantityDelta` (positive or negative) and writes
         an `ADJUSTMENT` stock movement and an audit entry. This is the only way to change
-        stock after an ingredient is created, including corrections after a late
-        cancellation; the opening stock can instead be given as `initialQuantity` in
-        `POST /ingredients`. Adjustments are also allowed for inactive ingredients. Rejected with
+        stock, including the opening stock of a new ingredient (reason `INITIAL_STOCK`) and
+        corrections after a late cancellation. Adjustments are also allowed for inactive
+        ingredients. Rejected with
         `409 NEGATIVE_AVAILABLE_STOCK` if the result would make `onHand` lower than `reserved`.
       requestBody:
         required: true
@@ -573,7 +571,7 @@ paths:
               $ref: '#/components/schemas/StockAdjustmentInput'
             examples:
               initialStock:
-                summary: Enter opening stock for an ingredient created with initialQuantity 0
+                summary: Enter initial stock
                 value:
                   ingredientId: 9b2e4d10-1c3a-4f5e-8a7b-0c1d2e3f4a51
                   quantityDelta: 5000
@@ -1738,14 +1736,6 @@ components:
           type: number
           minimum: 0
           description: An alert is raised when `available` is at or below this value.
-        initialQuantity:
-          type: number
-          minimum: 0
-          default: 0
-          description: |
-            Opening physical stock (`onHand`) in the ingredient's unit. A value greater than
-            `0` is recorded as an `ADJUSTMENT` stock movement with reason `INITIAL_STOCK`.
-            Not stored on the ingredient; read stock with `GET /ingredients/{ingredientId}/stock`.
     IngredientUpdate:
       type: object
       required: [name, unit, lowStockThreshold, active]

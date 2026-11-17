@@ -65,7 +65,7 @@ npx --yes @redocly/cli@2.64.1 build-docs api/openapi.yaml -o pantrychef-api.html
 | Pagination | `page` (from 1) and `size` (1–100, default 20); responses return `{ items, page }` |
 | Time | ISO 8601 `date-time` in UTC |
 | Units | `g`, `ml`, `piece`; no unit conversion in the MVP |
-| Initial stock | Optional `initialQuantity` in `POST /ingredients`, booked as an `ADJUSTMENT` / `INITIAL_STOCK` stock movement; later changes use `POST /inventory/adjustments` |
+| Initial stock | New ingredients start with `onHand = 0`; the opening stock is entered with `POST /inventory/adjustments` and reason `INITIAL_STOCK` |
 | Deletion | Users are deactivated (`active: false`); menu items are archived; ingredients are deactivated with `DELETE /ingredients/{ingredientId}` (soft delete, `active: false`) and never hard-deleted |
 
 ---
@@ -123,7 +123,7 @@ stateDiagram-v2
 | FR-09 | Release reservations on Pending cancel | `updateOrderStatus` (`CANCELLED` from `PENDING`) |
 | FR-10 | Elevated authorization for late cancel | `updateOrderStatus` → `403 LATE_CANCEL_NOT_PERMITTED` |
 | FR-11 | No automatic stock restore after late cancel | `updateOrderStatus` (documented), `createStockAdjustment` for corrections |
-| FR-12 | Managers maintain ingredients and recipes | `createIngredient` (with `initialQuantity`), `updateIngredient`, `deactivateIngredient`, `createMenuItem`, `replaceRecipe` |
+| FR-12 | Managers maintain ingredients and recipes | `createIngredient`, `updateIngredient`, `deactivateIngredient`, `createMenuItem`, `replaceRecipe` |
 | FR-13 | Low-stock monitoring and alerts | `listLowStockAlerts`, `listInventory?lowStock=true`, `InventoryItem.lowStock` |
 | FR-14 | Record significant operations | `listStockMovements`, `listAuditLogs`, `Order.statusHistory` |
 | FR-15 | Prevent duplicate order submissions | `Idempotency-Key` (required) on `createOrder` |
@@ -169,7 +169,7 @@ stateDiagram-v2
 | A-5 | Units are `g`, `ml` and `piece`; no unit conversion. | Proposal §9.1, recipe quantities per portion |
 | A-6 | Each order item keeps the recipe version used for its reservations. | Decision D-07, RACI §3.9 |
 | A-7 | Ingredients are soft-deleted: `DELETE /ingredients/{ingredientId}` (MANAGER only) sets `active: false`. History (recipe versions, orders, reservations, stock movements, audit) is kept; inactive ingredients cannot be used in new recipe versions (`422 INGREDIENT_INACTIVE`) and menu items whose current recipe uses one cannot be ordered (`422 MENU_ITEM_UNAVAILABLE`). Existing `PENDING` orders continue normally. `PUT` with `active: true` reactivates. | Backlog US-02 (AC 6), US-05 (AC 4) |
-| A-8 | The opening stock is entered when the ingredient is created (`initialQuantity`, default `0`) and recorded as an `ADJUSTMENT` movement with reason `INITIAL_STOCK` in the same transaction; all later stock changes use `POST /inventory/adjustments`. | Backlog US-02 (AC 1, AC 3), US-04 |
+| A-8 | New ingredients start with `onHand = 0`. The opening stock is entered with `POST /inventory/adjustments` and reason `INITIAL_STOCK`, like every other stock change, so it always has an `ADJUSTMENT` movement and an audit entry. | SRS FR-02 (PR #54), backlog US-02 AC 1 (PR #55), Figma 04d; consistency review CR-01 (PR #68) |
 
 ---
 
@@ -178,4 +178,4 @@ stateDiagram-v2
 | Version | Date | Author | Change |
 |---|---|---|---|
 | 0.1.0 | 2026-11-05 | Ayşe Dural | Initial Sprint 1 draft; aligned with Proposal, Vision, RACI and D-12 |
-| 0.2.0 | 2026-11-17 | Ayşe Dural | Ingredient soft delete (`deactivateIngredient`, `Ingredient.active`, `INGREDIENT_INACTIVE`, `INGREDIENT_DEACTIVATED`/`INGREDIENT_REACTIVATED` audit actions); optional `initialQuantity` on ingredient creation (A-7, A-8); `POST /orders` restricted to WAITER |
+| 0.2.0 | 2026-11-17 | Ayşe Dural | Ingredient soft delete (`deactivateIngredient`, `Ingredient.active`, `INGREDIENT_INACTIVE`, `INGREDIENT_DEACTIVATED`/`INGREDIENT_REACTIVATED` audit actions); initial stock entered through a separate `INITIAL_STOCK` adjustment (A-7, A-8); `POST /orders` restricted to WAITER |
