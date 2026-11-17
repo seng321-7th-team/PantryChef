@@ -502,7 +502,7 @@ Columns map one-to-one to the camelCase API fields (for example `on_hand` ↔ `o
 |---|---|
 | PostgreSQL version (ADR-011); the DDL needs 13 or later | Emre, Ayşe |
 | Case-insensitive ingredient names (`UNIQUE (lower(name))`) instead of exact match | Burcu (requirement), Ayşe |
-| Migration tool (plain SQL files or ORM migrations) | Backend team, Sprint 3 |
+| ORM and migration tool; migrations run when the `api` container starts (S2-27, PR #37) | Ayşe, in the Sprint 3 skeleton |
 
 ## Change log
 
@@ -510,3 +510,4 @@ Columns map one-to-one to the camelCase API fields (for example `on_hand` ↔ `o
 |---|---|---|---|
 | 0.1 | 2026-11-18 | Ayşe Dural | First schema document for S2-15, aligned with the ER diagram and API v0.2.0 (PR #62) |
 | 0.2 | 2026-11-18 | Ayşe Dural | Ingredient creation starts at `on_hand = 0`; opening stock through a separate `INITIAL_STOCK` adjustment (consistency review CR-01, PR #68) |
+| 0.3 | 2026-11-18 | Ayşe Dural | ORM and migration tool owner aligned with S2-27 (PR #37) |
