@@ -48,7 +48,9 @@ architecture sprint; verification happens when the backend is built (Sprint 3 on
 
 ## ADR-001: Technology stack
 
-**Status:** Accepted – team technology choice. Exact versions are open (see ADR-011).
+**Status:** Accepted – team technology choice, reported by the technical lead. The choice is not yet
+written in a meeting record; it is to be added to `docs/sprint2-meeting-notes.md` (S2-08). Exact versions
+are open (see ADR-011).
 
 ### Context
 Six students build a web MVP with three role-based screens (waiter, chef, restaurant manager). Orders,
@@ -136,7 +138,8 @@ shared description of operations, payloads, errors and permissions.
 ### Decision
 - `api/openapi.yaml` (OpenAPI 3.1) is the single source of truth for the HTTP interface. Behaviour
   changes are made in the contract first and reviewed in a pull request.
-- REST over HTTPS/JSON under `/v1`; plural kebab-case resources; one status endpoint,
+- REST with JSON under `/v1`, over HTTPS on any public host; local and demo runs may use plain HTTP
+  (S2-23, IR-10); plural kebab-case resources; one status endpoint,
   `PATCH /orders/{orderId}/status`.
 - JWT bearer authentication; only `GET /health` and `POST /auth/login` are public.
 - Errors use RFC 9457 Problem Details (`application/problem+json`) with a machine-readable `code`.
@@ -196,6 +199,8 @@ press "start preparation" twice. Partial updates would leave stock wrong (NFR-03
   once the backend exists; lock contention is the main risk.
 - Required tests: concurrent last-portion orders, double "start preparation", start/cancel race,
   rollback on shortage (S2-21).
+- These rules can only be verified on a real PostgreSQL server; S2-27 (PR #37) plans an integration
+  test job with a PostgreSQL service container for this.
 
 ---
 
@@ -217,7 +222,7 @@ the header on `POST /orders`, makes it optional on `PATCH /orders/{orderId}/stat
 - Same key and same body: the saved response is returned with `Idempotent-Replayed: true`.
   Same key and different body: `422 IDEMPOTENCY_KEY_REUSED`.
 - A rollback also removes the claim, so a failed request never leaves a permanently locked key.
-- Records older than 24 hours are removed by a scheduled cleanup.
+- Records older than 24 hours are removed by a scheduled task in the `api` container (S2-23, S2-27).
 
 ### Alternatives considered
 - **In-memory cache (for example Redis):** fast, but adds a component and loses keys on restart; it
@@ -227,7 +232,7 @@ the header on `POST /orders`, makes it optional on `PATCH /orders/{orderId}/stat
 
 ### Consequences
 - Every write that uses a key costs one extra row in the same transaction.
-- The cleanup job must exist before production-like demos (S2-27).
+- The cleanup task must exist before production-like demos; S2-27 (PR #37) plans it.
 
 ---
 
@@ -390,7 +395,8 @@ PostgreSQL version and container image open and point to this ADR.
 - **A managed cloud database:** less setup, but adds cost and network dependency for the demo.
 
 ### Consequences
-- S2-27 must record the chosen versions; this ADR is then updated by a new record that names them.
+- S2-27 (PR #37) has a versions table that is filled with the Sprint 3 skeleton; this ADR is then
+  followed by a new record that names the versions.
 
 ---
 
@@ -401,6 +407,7 @@ PostgreSQL version and container image open and point to this ADR.
 | Team confirmation of D-01 to D-11 (affects ADR-004 and ADR-007) | Bilgesu (meeting record), whole team | Changing those records to Accepted |
 | Review and merge of PR #62 (affects ADR-006 and ADR-008) | Emre, Tuğçe, Beyzanur, Burcu | Changing those records to Accepted |
 | Final demo host: team laptop or cloud VM | Emre, Bilgesu | ADR-011 |
+| Written record of the React + NestJS + PostgreSQL choice (ADR-001) | Bilgesu (S2-08), Ayşe | Source for ADR-001 |
 
 ## Change log
 
@@ -408,3 +415,4 @@ PostgreSQL version and container image open and point to this ADR.
 |---|---|---|---|
 | 0.1 | 2026-11-18 | Ayşe Dural | First ADR set for S2-16 (ADR-001 to ADR-011) |
 | 0.2 | 2026-11-18 | Ayşe Dural | ADR-009 rejected after consistency review CR-01 (PR #68); added the Rejected status |
+| 0.3 | 2026-11-18 | Ayşe Dural | Emre's review: ADR-001 source note, HTTP/HTTPS per IR-10 (ADR-003), PostgreSQL integration tests (ADR-004), cleanup task and versions table in S2-27 (ADR-005, ADR-011) |
