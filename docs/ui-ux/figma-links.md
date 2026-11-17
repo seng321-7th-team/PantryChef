@@ -61,7 +61,7 @@ Live check on the page "03 Screens v2": 31 frames, each 1280 × 800. The names b
 | 12 | `scr-04a-inventory` | Manager | Inventory: on hand, reserved, available, threshold, status; Edit and Adjust per row |
 | 13 | `scr-04b-inventory-adjust-dialog` | Manager | Stock adjustment with required reason |
 | 14 | `scr-04c-inventory-adjust-error` | Manager | `NEGATIVE_AVAILABLE_STOCK` |
-| 15 | `scr-04d-inventory-new-ingredient` | Manager | New ingredient: name, unit, low-stock threshold, optional initial stock |
+| 15 | `scr-04d-inventory-new-ingredient` | Manager | New ingredient: name, unit, low-stock threshold; starts with 0 stock |
 | 16 | `scr-04e-new-ingredient-validation` | Manager | "Name is required." |
 | 17 | `scr-04f-new-ingredient-duplicate` | Manager | `409 DUPLICATE_RESOURCE` |
 | 18 | `scr-04g-inventory-edit-ingredient` | Manager | Edit ingredient: unit locked, status Active, Deactivate |
@@ -81,16 +81,16 @@ Live check on the page "03 Screens v2": 31 frames, each 1280 × 800. The names b
 
 ## 4. Export package
 
-- `docs/ui-ux/screens/`: 31 PNG files named `<frame name>.png` (1280 × 800), exported from the live file on 18 Nov 2026. Check performed: 31 files, 31 different contents, every frame name above present.
-- `docs/ui-ux/exports/PantryChef_Prototip_v2.pdf`: 31 pages, one per frame, in the order of the table above (the page bar shows the frame name).
+- `docs/ui-ux/screens/`: 31 PNG files named `<frame name>.png` (1280 × 800), exported from the live file on 18 Nov 2026; `scr-04d`, `scr-04e` and `scr-04f` were re-exported at about 01:35 after the Initial stock field was removed. Check performed: 31 files, 31 different contents, every frame name above present.
+- `docs/ui-ux/exports/PantryChef_Prototip_v2.pdf`: 31 pages, one per frame, exported again from Figma at about 01:35 on 18 Nov. The pages follow Figma's page order, not the order of the table above; `scr-04d`, `scr-04e` and `scr-04f` are on pages 9, 17 and 25.
 
 ## 5. Related documents
 
-- User flows: [`user-flows.md`](user-flows.md) (S2-30)
+- User flows: [`user-flows.md`](https://github.com/seng321-7th-team/PantryChef/blob/9677f37d71c6c587a030b9e1ef294020331fc749/docs/ui-ux/user-flows.md) (S2-30, PR #70, commit `9677f37`; not on `develop` yet)
 - Prototype description: [`ui-prototype.md`](ui-prototype.md)
 - Demo script: [`demo-scenario.md`](demo-scenario.md)
-- Consistency review of the screens against the User Stories: [`ui-user-story-review.md`](ui-user-story-review.md) (S2-31)
-- API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop` at `0c3e244`, identical at `5dd8253`, version 0.1.0). The latest ingredient and order-creation behavior shown in the frames follows the API draft in **PR #62**, head `866122e` (version 0.2.0, **not merged**), except the optional Initial stock field in `scr-04d` to `scr-04f`: it came from head `dbb06be`, and `866122e` removed `initialQuantity`.
+- Consistency review of the screens against the User Stories: [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/7e4fbde08b14ae2198cc1b865dffe9ec5afe78b4/docs/ui-ux/ui-user-story-review.md) (S2-31, PR #50, commit `7e4fbde`; not on `develop` yet)
+- API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop` at `0c3e244`, identical at `5dd8253`, version 0.1.0). The latest ingredient and order-creation behavior shown in the frames follows the API draft in **PR #62**, head `866122e` (version 0.2.0, **not merged**); `api/openapi.yaml` is unchanged in `cb634c3`. Since the 18 Nov re-export, `scr-04d` to `scr-04f` follow the same zero-stock rule (`866122e` removed the optional `initialQuantity` that head `dbb06be` had).
 
 ## 6. Status and open items
 
@@ -102,7 +102,7 @@ Live check on the page "03 Screens v2": 31 frames, each 1280 × 800. The names b
 | File sharing "anyone with the link can view" | Not checked yet |
 | Repository location of the PNG and PDF files | `docs/ui-ux/screens/` and `docs/ui-ux/exports/` |
 | PR #62 (API 0.2.0 draft) merged | No. Frames that depend on it are marked in `ui-prototype.md`. |
-| Initial stock (D-9b) | **Open (Figma only).** SRS #54 FR-02, backlog #55 US-02 AC1 and API draft #62 (`866122e`) say stock starts at zero and the opening stock is a separate adjustment (none merged). The frames `scr-04d` to `scr-04f`, their PNGs and the PDF still show the optional Initial stock field; removing it and re-exporting is still open (section 4 of `ui-prototype.md`). |
+| Initial stock (D-9b) | **Done in Figma (18 Nov re-export).** `scr-04d` to `scr-04f`, their PNGs and the PDF have no Initial stock field ("Starts with 0 stock. Add stock using Adjust."), as in SRS #54 FR-02, backlog #55 US-02 AC1 and API draft #62 (`866122e`). None of these PRs is merged (section 4 of `ui-prototype.md`). |
 
 ## 7. Known limits of the prototype
 

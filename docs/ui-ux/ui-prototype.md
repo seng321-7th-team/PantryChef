@@ -33,9 +33,9 @@ Prototype-only aids: the Waiter / Chef / Manager buttons on the login frames and
 
 | Frame | What it shows | API field or rule | Status |
 |---|---|---|---|
-| `scr-04d-inventory-new-ingredient` | Name, Unit, Low-stock threshold, **Initial stock (optional)**. Unit shown in the label (for example "Initial stock (g, optional)"). Helper text: "Leave blank to start at 0. You can add stock later." | API draft #62 at `866122e` has no `initialQuantity`: the ingredient starts at zero and the opening stock is a separate `INITIAL_STOCK` adjustment. (Head `dbb06be` had an optional `initialQuantity`.) | Applied in Figma. **Does not match** API draft `866122e`; field removal and re-export pending (see section 4). |
-| `scr-04e-new-ingredient-validation` | "Name is required." Same Initial stock field | Client validation | Applied in Figma |
-| `scr-04f-new-ingredient-duplicate` | `409 DUPLICATE_RESOURCE`. Same Initial stock field | Names are unique, **including inactive ingredients**; reactivate an inactive one with `PUT` instead of creating it again | Applied in Figma. Matches API draft. |
+| `scr-04d-inventory-new-ingredient` | Name, Unit, Low-stock threshold. Helper text below the threshold: "Starts with 0 stock. Add stock using Adjust." | API draft #62 at `866122e` (unchanged in `cb634c3`) has no `initialQuantity`: the ingredient starts at zero and the opening stock is a separate `INITIAL_STOCK` adjustment. (Head `dbb06be` had an optional `initialQuantity`.) | Applied in Figma (18 Nov re-export). Matches API draft. |
+| `scr-04e-new-ingredient-validation` | "Name is required." Same helper text; no Initial stock field | Client validation | Applied in Figma |
+| `scr-04f-new-ingredient-duplicate` | `409 DUPLICATE_RESOURCE` ("An ingredient with this name already exists."). Same helper text; no Initial stock field | Names are unique, **including inactive ingredients**; reactivate an inactive one with `PUT` instead of creating it again | Applied in Figma. Matches API draft. |
 | `scr-04g-inventory-edit-ingredient` | Edit: name, low-stock threshold, Unit locked ("Locked while the ingredient has stock or reservations."), Status **Active**, "Deactivate ingredient". Note: "Stock on hand changes only through an adjustment." | `PUT /ingredients/{id}` with `name`, `unit`, `lowStockThreshold`, `active` (all required). Unit change with stock or active reservations: `409 RESOURCE_IN_USE`. Stock changes only through Adjust. | Applied in Figma. Matches API draft. |
 | `scr-04h-deactivate-confirm` | Confirmation text: history, stock records and existing pending orders are kept; no new recipes; menu items using it are closed to new orders; no low-stock alerts; can be reactivated | `DELETE /ingredients/{id}` is a **soft delete** and returns `200` with the ingredient (`active: false`); a repeat call changes nothing. Audit action `INGREDIENT_DEACTIVATED`. | Applied in Figma. Matches API draft. **Decision pending.** |
 | `scr-04i-inventory-inactive-ingredient` | Ingredient Inactive: grey "Inactive" badge in the list and in the dialog, "Reactivate ingredient" | `PUT` with `active: true`. Audit action `INGREDIENT_REACTIVATED`. | Applied in Figma. Matches API draft. **Decision pending.** |
@@ -68,16 +68,16 @@ In the prototype, **Deactivate ingredient** (04g → 04h → 04i) and **Reactiva
 
 Permissions for `ORDER_LATE_CANCEL` and the chef role are not changed by this prototype.
 
-## 4. Open item: initial stock in SRS and backlog
+## 4. Initial stock in SRS, backlog, API and Figma
 
 | Source | What it says about initial stock |
 |---|---|
 | SRS draft (PR #54, head `0ad80b3`), FR-02 | "Upon creation, its physical stock shall be initialized to zero. Initial stock shall be recorded through a separate authorized inventory adjustment." |
 | Backlog draft (PR #55, head `ec1911a`), US-02 AC1 | A manager can create an ingredient with name, unit and threshold. "Initial physical stock is recorded separately through an authorized inventory adjustment." |
 | API draft (PR #62, head `866122e`) | No `initialQuantity`; the ingredient starts at zero and the opening stock is entered with `POST /inventory/adjustments`, reason `INITIAL_STOCK`. (Head `dbb06be` had an optional `initialQuantity`; ADR-009 is Rejected in PR #64, head `07fd074`.) |
-| Figma `scr-04d` | Optional "Initial stock" field. Leaving it blank gives 0. |
+| Figma `scr-04d` to `scr-04f` | No Initial stock field since the 18 Nov re-export (about 01:35); helper "Starts with 0 stock. Add stock using Adjust." The earlier 18 Nov export had an optional field. |
 
-Difference: the SRS, backlog and API drafts (none merged) now all describe "start at zero, then adjust". Only the frames `scr-04d` to `scr-04f`, their PNGs and the PDF still show the optional field. Removing it and re-exporting is pending; the item stays **open** until then. Neither document is changed by this task.
+All four sources now describe "start at zero, then adjust". The SRS, backlog and API drafts are not merged yet, so the item is closed in Figma only. Neither document is changed by this task.
 
 ## 5. States shown in `scr-07a-states`
 
@@ -85,4 +85,4 @@ Loading; empty waiter orders; empty kitchen board; server error 500 `INTERNAL_ER
 
 ## 6. Not shown in the prototype
 
-Stock movements and reservation views, new menu item with its first recipe, staff and permission management, "Show inactive" filter for the inventory list. They depend on decisions listed in [`ui-user-story-review.md`](ui-user-story-review.md) and are not drawn.
+Stock movements and reservation views, new menu item with its first recipe, staff and permission management, "Show inactive" filter for the inventory list. They depend on decisions listed in [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/7e4fbde08b14ae2198cc1b865dffe9ec5afe78b4/docs/ui-ux/ui-user-story-review.md) (PR #50, commit `7e4fbde`) and are not drawn.
