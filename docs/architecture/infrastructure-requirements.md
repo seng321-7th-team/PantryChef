@@ -4,7 +4,7 @@
 **Task:** S2-23 ([Issue #29](https://github.com/seng321-7th-team/PantryChef/issues/29))
 **Owner:** Emre Boz (DevOps and CI/CD)
 **Reviewer:** Ayşe Dural
-**Status:** Draft. Parts that depend on the tech stack decision (ADR, S2-16) are marked **TBD (ADR)**.
+**Status:** Draft. Parts that depend on the tech stack decision (ADR, S2-16, `docs/architecture/architecture-decisions.md`) are marked **TBD (ADR)**.
 
 ## 1. Purpose
 
@@ -17,7 +17,7 @@ This document describes where and how PantryChef runs: the runtime parts, the en
 | Web frontend | Browser app for Waiter, Chef and Restaurant Manager | Built to static files and served by the `web` container. Framework: TBD (ADR). |
 | Backend API | Implements [`api/openapi.yaml`](../../api/openapi.yaml) under `/v1`, checks JWT tokens and roles | Listens on port 8080 in local development (see `servers` in the OpenAPI file). Language and framework: TBD (ADR). |
 | Database | Stores orders, reservations, stock, recipes, users and audit records | PostgreSQL, as planned in the RACI. Version is fixed in Sprint 3. |
-| Reverse proxy | Serves the frontend and forwards `/v1` requests to the backend | Runs in the `web` container, so the browser only talks to one address. |
+| Reverse proxy | Serves the frontend and forwards `/v1` requests to the backend | Runs in the `web` container, so the browser only talks to one address. Plain HTTP forwarding is enough: the kitchen board polls `GET /v1/orders` every 15 to 30 seconds (team decision), so no WebSocket settings are needed. |
 
 ## 3. Environments
 
@@ -86,7 +86,6 @@ Performance, security and backup targets will be measurable NFRs. They are agree
 | Decision | Depends on | Owner |
 |---|---|---|
 | Frontend framework and backend language | ADR (S2-16) | Ayşe |
-| Real-time kitchen updates: polling or WebSocket (WebSocket needs extra proxy settings) | ADR (S2-16) | Ayşe, Tuğçe |
 | Final demo host: team laptop or cloud VM | Team decision | Emre, Bilgesu |
 | PostgreSQL version and container image | ADR (S2-16) | Emre, Ayşe |
 
