@@ -213,7 +213,7 @@ Cancelled orders shall not appear as active preparation tasks.
 
 The system shall allow authorized Chefs to change an order from `Pending` to `Preparing`.
 
-During this transition, the system shall atomically release the order's ingredient reservations and deduct the corresponding physical stock exactly once.
+During this transition, the system shall atomically transition the order's active ingredient reservations to `CONSUMED`, decrease the corresponding reserved quantities, and deduct the corresponding physical stock exactly once.
 
 Repeated requests shall not cause duplicate deductions.
 
