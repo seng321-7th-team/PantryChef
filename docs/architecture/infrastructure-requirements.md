@@ -61,7 +61,7 @@ flowchart LR
 | IR-04 | All configuration comes from environment variables. The repo has a `.env.example` with every variable and no real values. `.env` is already ignored by `.gitignore`. | Security |
 | IR-05 | Secrets (database password, JWT signing key) are never committed. In CI they come from GitHub Secrets. Secret scanning and push protection are enabled on the repo. | Security |
 | IR-06 | Only the `web` port is published on the demo machine. The backend and database ports are published only in local development. | Security |
-| IR-07 | Each container has a Docker health check, so CI and `docker compose` can wait until the system is ready. The backend needs a simple health endpoint for this; to be agreed with Ayşe and added to `api/openapi.yaml`. | Availability |
+| IR-07 | Each container has a Docker health check, so CI and `docker compose` can wait until the system is ready. The backend check uses the existing `GET /v1/health` endpoint from `api/openapi.yaml`, which also reports the database connection. | Availability |
 | IR-08 | A backup script dumps the database with `pg_dump`. The restore steps are written down and tried at least once before the final demo. A backup is taken before every demo. | Backup |
 | IR-09 | Containers write logs to standard output. Business audit records (late cancellations, stock adjustments) stay in the database, as defined in the API. | Traceability |
 | IR-10 | Local and demo runs may use HTTP. If the system is put on a public host, HTTPS is required, because JWT tokens are sent in request headers. | Security |
