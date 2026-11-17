@@ -74,7 +74,7 @@ A specially authorized Waiter is **not** a fourth primary actor. Customers and s
 
 ### 2.3 Exclusions
 
-Customer self-ordering, payments and billing, table reservations, delivery/courier tracking, a `Delivered` state, third-party delivery integrations, supplier API integration, automated purchasing, goods receipt processing, advanced analytics, multi-branch management, hardware stock sensing, and automatic restoration of physically consumed ingredients after late cancellation are outside this MVP.
+Customer self-ordering, payments and billing, table reservations, delivery/courier tracking, a `Delivered` state, third-party delivery integrations, supplier API integration, automated purchasing, goods receipt processing, advanced analytics, advanced accounting and financial modules, multi-branch management, hardware stock sensing, and automatic restoration of physically consumed ingredients after late cancellation are outside this MVP.
 
 ### 2.4 Assumptions and constraints
 
@@ -122,11 +122,11 @@ Each accepted order retains the recipe version and ingredient quantities used fo
 
 The following requirement identifiers and definitions are preserved from the Sprint 2 functional/non-functional requirements deliverable so that cross-document traceability remains stable. The proposed numeric NFR targets remain **pending technical and QA agreement**.
 
-#### 4.2.1 Functional Requirements
+### 4.1 Functional Requirements
 
 Functional requirements describe the operations that the system must perform.
 
-##### 4.2.1.1 Access Control
+#### 4.1.1 Access Control
 
 **FR-01 — Role-Based Authorization**
 
@@ -139,7 +139,7 @@ The system shall recognize the Waiter, Chef/Kitchen Staff, and Restaurant Manage
 
 **Related Story:** US-01
 
-##### 4.2.1.2 Ingredient and Recipe Management
+#### 4.1.2 Ingredient and Recipe Management
 
 **FR-02 — Ingredient Management**
 
@@ -175,7 +175,7 @@ Existing orders shall preserve their original ingredient requirements after reci
 
 **Related Story:** US-05
 
-##### 4.2.1.3 Order Creation and Reservation
+#### 4.1.3 Order Creation and Reservation
 
 **FR-06 — Order Creation**
 
@@ -199,7 +199,7 @@ Concurrent requests shall not over-reserve available inventory, and repeated log
 
 **Related Story:** US-07
 
-##### 4.2.1.4 Kitchen Operations
+#### 4.1.4 Kitchen Operations
 
 **FR-08 — Kitchen Order Visibility**
 
@@ -227,7 +227,7 @@ This transition shall not change physical or reserved inventory quantities.
 
 **Related Story:** US-10
 
-##### 4.2.1.5 Cancellation and Auditability
+#### 4.1.5 Cancellation and Auditability
 
 **FR-11 — Pending Order Cancellation**
 
@@ -257,7 +257,7 @@ Authorized managers shall be able to review these records.
 
 **Related Story:** US-13
 
-##### 4.2.1.6 Low-Stock Monitoring
+#### 4.1.6 Low-Stock Monitoring
 
 **FR-14 — Low-Stock Alerts**
 
@@ -273,7 +273,7 @@ The MVP shall not automatically create purchase orders.
 
 **Related Story:** US-14
 
-#### 4.2.2 Non-Functional Requirements
+### 4.2 Non-Functional Requirements
 
 Non-functional requirements describe quality attributes and constraints.
 
@@ -483,53 +483,6 @@ The following scenarios shall guide requirements validation:
 11. **Invalid transition:** An unsupported order state transition is rejected.
 12. **Transaction failure:** A failed operation leaves no partial inventory or order updates.
 
-## 8. Dependencies and Assumptions
-
-- The system initially supports one restaurant.
-- Ingredient quantities and recipes are maintained by authorized staff.
-- Restaurant employees are responsible for physical inventory verification.
-- Reservations are logical allocations rather than separate physical storage.
-- Detailed API paths and schemas are maintained in `api/openapi.yaml`.
-- The SRS document and architecture artifacts must follow the same approved business rules.
-- Proposed quantitative quality targets require technical and QA approval before being treated as baselines.
-- Procurement and goods-receipt stories US-15 and US-16 are P1 post-MVP features and are excluded from these MVP requirements.
-
-## 9. Review and Completion Checklist
-
-- [ ] Functional requirements reviewed against the Project Proposal.
-- [ ] Requirements verified against the System Vision.
-- [ ] Backlog story references reviewed.
-- [ ] Functional requirements checked against the SRS.
-- [ ] API-related requirements reviewed against the OpenAPI draft.
-- [ ] Proposed performance targets reviewed by the technical lead.
-- [ ] Testability and verification scenarios reviewed by Beyzanur.
-- [ ] MVP scope and business rules confirmed.
-- [ ] Pull request linked to Issue #49.
-- [ ] Changes reviewed and merged into `develop`.
-
-## 10. Related Documents
-
-- `docs/project-proposal.md`
-- `docs/system-vision.md`
-- `docs/product-backlog.md`
-- `docs/srs.md` — referenced by the Sprint 2 requirements task; availability to be confirmed
-- `api/openapi.yaml`
-- `docs/sprint2-task-board.md`
-- `docs/sprint2-raci.md`
-
-## 11. Conclusion
-
-This document establishes a structured and testable requirements baseline for the PantryChef MVP.
-
-It preserves the approved order lifecycle, atomic ingredient reservation, exactly-once physical stock consumption, controlled cancellation, role-based authorization, and low-stock monitoring rules.
-
-The requirements will support Sprint 2 SRS refinement, architecture design, API consistency review, and future implementation and testing.
-
-**Document Owner:** Burcu Ücük  
-**Review Status:** Pending Technical and QA Review  
-**Related Issue:** #49 — S2-03
-
-
 ### 6.4 Additional acceptance examples
 
 | Scenario | Preconditions | Expected result |
@@ -559,7 +512,53 @@ The requirements will support Sprint 2 SRS refinement, architecture design, API 
 6. **Testing:** Add real test-case IDs and verification evidence when Beyzanur's test artifacts are ready.
 7. **Document status:** Update the SRS status only after Ayşe's PR review and merge into `develop`.
 
-## 9. Definition of Done for S2-01 / Issue #44
+## 9. Dependencies and Assumptions
+
+- The system initially supports one restaurant.
+- Ingredient quantities and recipes are maintained by authorized staff.
+- Restaurant employees are responsible for physical inventory verification.
+- Reservations are logical allocations rather than separate physical storage.
+- Detailed API paths and schemas are maintained in `api/openapi.yaml`.
+- The SRS document and architecture artifacts must follow the same approved business rules.
+- Proposed quantitative quality targets require technical and QA approval before being treated as baselines.
+- Procurement and goods-receipt stories US-15 and US-16 are P1 post-MVP features and are excluded from these MVP requirements.
+
+## 10. Review and Completion Checklist
+
+- [ ] Functional requirements reviewed against the Project Proposal.
+- [ ] Requirements verified against the System Vision.
+- [ ] Backlog story references reviewed.
+- [ ] Functional requirements checked against the SRS.
+- [ ] API-related requirements reviewed against the OpenAPI draft.
+- [ ] Proposed performance targets reviewed by the technical lead.
+- [ ] Testability and verification scenarios reviewed by Beyzanur.
+- [ ] MVP scope and business rules confirmed.
+- [ ] Pull request linked to Issue #44 (S2-01).
+- [ ] Changes reviewed and merged into `develop`.
+
+## 11. Related Documents
+
+- `docs/project-proposal.md`
+- `docs/system-vision.md`
+- `docs/product-backlog.md`
+- `api/openapi.yaml`
+- `docs/sprint2-task-board.md`
+- `docs/sprint2-raci.md`
+
+## 12. Conclusion
+
+This document establishes a structured and testable requirements baseline for the PantryChef MVP.
+
+It preserves the approved order lifecycle, atomic ingredient reservation, exactly-once physical stock consumption, controlled cancellation, role-based authorization, and low-stock monitoring rules.
+
+The requirements will support Sprint 2 SRS refinement, architecture design, API consistency review, and future implementation and testing.
+
+**Document Owner:** Burcu Ücük  
+**Review Status:** Pending Technical and QA Review  
+**Related Issue:** #44 — S2-01
+
+
+## 13. Definition of Done for S2-01 / Issue #44
 
 - [x] System purpose, boundaries, stakeholders, and primary roles documented.
 - [x] Functional requirements use stable identifiers and acceptance criteria.
