@@ -58,6 +58,6 @@ Open the Flow 8 link (`scr-07a-states`): loading, empty states, `INTERNAL_ERROR`
 ## Checklist before the demo
 
 - [ ] The general demo link opens in a private window without signing in to Figma.
-- [ ] The Flow 8 and Flow 9 links open at the right frame.
+- [x] The Flow 8 and Flow 9 links open at the right frame (checked by Codex on 18 Nov in a signed-in Figma session).
 - [ ] Flow 9: 04g → 04h → 04g, then 04g → 04h → 04i → 04g (verified in the live prototype in a browser by Codex on 18 Nov).
-- [ ] The file is shared as "anyone with the link can view".
+- [x] The file is shared as "Anyone can view" (checked by Codex on 18 Nov in a signed-in Figma session; opening without signing in was not tested).
