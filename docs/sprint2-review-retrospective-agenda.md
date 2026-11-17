@@ -6,8 +6,8 @@
 **Sprint:** Sprint 2 — Requirements & Architecture  
 **Deadline:** November 24, 2026, 23:59 (Türkiye time)  
 **Document Owner:** Bilgesu Nacak — Scrum Master & Agile Process Coach  
-**Reviewer:** Beyzanur Alpay — QA & Test Automation Engineer  
-**Related Issue:** #59 — S2-10  
+**Reviewer:** Tuğçe Çevik — Implementation & Integration Engineer
+**Related Task:** S2-08 — Sprint Meeting Records (supporting agenda) 
 **Document Status:** Preparation Draft  
 **Prepared On:** November 17, 2026
 
