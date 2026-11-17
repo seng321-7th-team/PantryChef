@@ -87,6 +87,24 @@ The initial planning states were recorded on November 16, 2026. The S2-06 and S2
 | Pending | Pending | Pending | Pending | Pending | Pending |
 
 For every actual stand-up or asynchronous check-in, add one row per reporting member and note whether the update was verbal, written, or asynchronous. If there was no blocker, record “None reported” rather than leaving an ambiguous blank.
+### 4.1 Scrum Master coordination and PR reviews — November 17, 2026
+
+**Date:** November 17, 2026  
+**Format:** Asynchronous GitHub Pull Request reviews and coordination  
+**Coordinator:** Bilgesu Nacak — Scrum Master  
+**Status:** In progress — follow-up actions pending
+
+The Scrum Master reviewed assigned Pull Requests, provided documented feedback to relevant task owners, and monitored outstanding approvals.
+
+| PR | Task / Owner | Review activity | Outcome / Next action |
+|---|---|---|---|
+| [#54](https://github.com/seng321-7th-team/PantryChef/pull/54) | S2-01 / S2-05 — Burcu Ücük | Reviewed MVP Scope and Out-of-Scope against the System Vision and Product Backlog. | Scope generally aligned; documentation corrections requested. Awaiting updates and technical review. |
+| [#32](https://github.com/seng321-7th-team/PantryChef/pull/32) | S2-26 — Emre Boz | Reviewed repository folders, README updates, issue template, and documentation link-check CI workflow. | No major issues identified in the reviewed changes. Requested branch synchronization with `develop` before final approval. |
+| [#56](https://github.com/seng321-7th-team/PantryChef/pull/56) | Team Roles and RACI documentation update — Bilgesu Nacak | Checked the Pull Request review status. | Awaiting Ayşe Dural's review and approval. |
+
+**Coordination outcome:** Review feedback was communicated through GitHub. The referenced Pull Requests remain subject to their respective review and merge requirements. No approval or merge is claimed in this record.
+
+**Follow-up:** Monitor responses from Burcu Ücük, Emre Boz, and Ayşe Dural; verify requested changes before proceeding with final reviews.
 
 ## 5. Impediment log
 
@@ -131,6 +149,7 @@ Record the actual SRS, backlog, NFR, Figma, C4/UML outputs reviewed, any feedbac
 | Date / time (Türkiye) | Type | Participants | Key decision or outcome | Evidence |
 | --- | --- | --- | --- | --- |
 | Nov 16, 2026 — 21:11 | Asynchronous Sprint Planning decision (WhatsApp) | All six team members | Final Sprint 2 task distribution PDF approved unanimously | Approved PDF; private WhatsApp confirmation record |
+| Nov 17, 2026 — time not recorded | Asynchronous PR review and Scrum Master coordination | Bilgesu Nacak; feedback shared with relevant PR owners | Reviewed PR #54 (SRS/MVP scope) and PR #32 (repository setup); requested follow-up corrections and branch synchronization. Checked PR #56 approval status. No PR approvals or merges recorded. | GitHub PRs #54, #32, and #56; see Section 4.1 |
 
 Append each additional confirmed meeting or team decision to this log, including its actual date, attendees, owner, and outcome.
 
