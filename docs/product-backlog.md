@@ -1,3 +1,4 @@
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/841ec732-603f-48b0-9918-5813a7f769a3" />
 # PantryChef — Product Backlog (Sprint 2 Refinement)
 
 **Project:** PantryChef — Restaurant Order and Inventory Management System  
@@ -184,7 +185,7 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. A manager can create an ingredient with a name, unit, quantity, and low-stock threshold.
+1. A manager can create an ingredient with a name, unit, and low-stock threshold. Initial physical stock is recorded separately through an authorized inventory adjustment.
 2. Required fields are validated.
 3. Physical quantity cannot be negative.
 4. Unauthorized users cannot modify ingredients.
