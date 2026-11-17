@@ -70,13 +70,13 @@ Evidence will be organized through task IDs, GitHub Issues, Pull Requests, revie
 
 | Action | Owner | State |
 | --- | --- | --- |
-| Maintain Sprint 2 Task Board | Bilgesu Nacak | In progress; PR review pending |
-| Prepare Sprint 2 RACI Matrix | Bilgesu Nacak | In progress; PR review pending |
+| Maintain Sprint 2 Task Board | Bilgesu Nacak | Done - Issue #38 closed; PR #39 merged into develop |
+| Prepare Sprint 2 RACI Matrix | Bilgesu Nacak | Done - Issue #40 closed; PR #41 merged into develop |
 | Maintain Sprint 2 meeting records | Bilgesu Nacak | In progress |
 | Confirm progress and blockers with task owners | All task owners; coordinated by Bilgesu | Ongoing |
 | Validate final deliverables and gather PR evidence | Relevant owners and reviewers | Pending |
 
-The listed states are planning notes from November 16 and must be revised as evidence changes.
+The initial planning states were recorded on November 16, 2026. The S2-06 and S2-07 statuses were updated on November 17, 2026, following the approved and merged Pull Requests #39 and #41. Remaining activities will be updated as new evidence becomes available.
 
 ## 4. Stand-up and progress updates
 
