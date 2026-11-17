@@ -19,8 +19,8 @@ The design link and the prototype links are separate. The design link opens the 
 
 Notes:
 
-- The general demo link and the design link were copied from the Figma share dialog, with the personal tracking parameter (`t=`) removed. The Flow 8 and Flow 9 links use the same pattern with the node ID of their start frame. They open at their start frames (checked by Codex on 18 Nov in a signed-in Figma session; opening without signing in was not tested).
-- Sharing is set to "Anyone can view" (checked by Codex on 18 Nov in a signed-in Figma session; opening without signing in was not tested).
+- The general demo link and the design link were copied from the Figma share dialog, with the personal tracking parameter (`t=`) removed. The Flow 8 and Flow 9 links use the same pattern with the node ID of their start frame. They open at their start frames (checked by Codex on 18 Nov in a signed-in Figma session). Separately, both links were opened in a private window without signing in to Figma (verified manually by Tuğçe on 18 November 2026). The general demo link and the design link were not tested without signing in.
+- Sharing is set to "Anyone can view" (checked by Codex on 18 Nov in a signed-in Figma session). Opening without signing in was verified manually by Tuğçe on 18 November 2026 for the Flow 8 and Flow 9 links only.
 - Use the general demo link for the sprint demonstration: it starts at login and reaches every role (see [`demo-scenario.md`](demo-scenario.md)).
 
 ## 2. Prototype flow starting points
@@ -99,8 +99,9 @@ Live check on the page "03 Screens v2": 31 frames, each 1280 × 800. The names b
 | 31 frames on the live page | Verified (18 Nov) |
 | Flow 9 transitions (04g Deactivate → 04h, 04h Cancel → 04g, 04h Deactivate → 04i, 04i Reactivate → 04g) | Verified in the live prototype in a browser by Codex (18 Nov). Only the prototype was checked; no backend call is involved. |
 | Flow 8 and Flow 9 URLs open at their start frames (`scr-07a-states`, `scr-04g-inventory-edit-ingredient`) | Verified (checked by Codex on 18 Nov in a signed-in Figma session) |
+| Flow 8 and Flow 9 URLs open without signing in (private window) | Verified (verified manually by Tuğçe on 18 November 2026). Flow 8 opens "Common states" (`scr-07a-states`), a static frame; no clickable navigation is expected. Flow 9 opens its start frame; this does not mean the Deactivate/Reactivate transitions were re-tested. |
 | Other prototype links open without error | Not checked yet |
-| File sharing | "Anyone can view" (checked by Codex on 18 Nov in a signed-in Figma session). Opening without signing in: not tested |
+| File sharing | "Anyone can view" (checked by Codex on 18 Nov in a signed-in Figma session). Opening without signing in: verified for the Flow 8 and Flow 9 links only (verified manually by Tuğçe on 18 November 2026); the general demo link and the design link not tested |
 | Repository location of the PNG and PDF files | `docs/ui-ux/screens/` and `docs/ui-ux/exports/` |
 | PR #62 (API 0.2.0 draft) merged | No. Frames that depend on it are marked in `ui-prototype.md`. |
 | Initial stock (D-9b) | **Done in Figma (18 Nov re-export).** `scr-04d` to `scr-04f`, their PNGs and the PDF have no Initial stock field ("Starts with 0 stock. Add stock using Adjust."), as in SRS #54 FR-02, backlog #55 US-02 AC1 and API draft #62 (`866122e`). None of these PRs is merged (section 4 of `ui-prototype.md`). |
