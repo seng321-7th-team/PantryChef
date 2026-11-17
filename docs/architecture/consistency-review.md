@@ -6,7 +6,7 @@
 | Owner | Ayşe Dural – Lead Software Architect and Technical Lead |
 | Reviewer | Burcu Ücük (Sprint 2 final task table v2.0) |
 | Date | 2026-11-18 |
-| Status | Draft – one high-priority conflict (CR-01) needs a decision |
+| Status | Draft – CR-01 fix applied, waiting for Burcu's confirmation |
 
 This record compares the Sprint 2 requirements (SRS, functional and non-functional requirements,
 refined backlog) with the API contract and the architecture deliverables (C4, UML, ER, ADR, database
@@ -35,7 +35,7 @@ The review has to be repeated once they are merged (section 7).
 | Result | Count |
 |---|---|
 | Rules that agree across all sources | 13 (section 3) |
-| Open findings | 7 (section 4): 1 high, 1 medium, 4 low, 1 process |
+| Findings | 7 (section 4): 1 applied and waiting for confirmation (CR-01), 2 resolved (CR-04, CR-05), 4 open (CR-02, CR-03, CR-06, CR-07) |
 | Questions resolved during Sprint 2 | 8 (section 5) |
 
 The order lifecycle, the stock model, cancellation rules, recipe versioning and idempotency agree
@@ -59,17 +59,17 @@ everywhere. The one real conflict is how the opening stock of a new ingredient i
 | 12 | Ingredients are deactivated, not deleted; history stays valid | FR-02, US-02 AC 6 | `deactivateIngredient`, `Ingredient.active` | ER, ADR-008, schema |
 | 13 | Low stock when `available <= threshold`; no automatic purchase orders | FR-14 | `listLowStockAlerts` | — |
 
-## 4. Open findings
+## 4. Findings
 
-| ID | Priority | Finding | Owner / decides |
-|---|---|---|---|
-| CR-01 | High | Initial stock at ingredient creation | Burcu decides; Ayşe updates |
-| CR-02 | Medium | Three different FR numbering schemes | Burcu; Ayşe and Tuğçe update |
-| CR-03 | Low | Low-stock alerts for inactive ingredients not stated in the SRS | Burcu |
-| CR-04 | Low | No UI action for ingredient deactivation | Tuğçe |
-| CR-05 | Low | C4 Context omits Customer and Supplier | Ayşe; Emre reviews |
-| CR-06 | Low | ADR statuses wait for confirmation of D-01 to D-11 | Bilgesu, team |
-| CR-07 | Process | Two open PRs each for S2-01 and S2-02 | Burcu, Bilgesu |
+| ID | Priority | Finding | Owner / decides | Status |
+|---|---|---|---|---|
+| CR-01 | High | Initial stock at ingredient creation | Burcu decides; Ayşe updates | Applied in PR #62, #64, #66; waiting for Burcu's confirmation |
+| CR-02 | Medium | Three different FR numbering schemes | Burcu; Ayşe and Tuğçe update | Open |
+| CR-03 | Low | Low-stock alerts for inactive ingredients not stated in the SRS | Burcu | Open |
+| CR-04 | Low | No UI action for ingredient deactivation | Tuğçe | Resolved (Figma frames in PR #71) |
+| CR-05 | Low | C4 Context omits Customer and Supplier | Ayşe; Emre reviews | Resolved (PR #62, `cb634c3`) |
+| CR-06 | Low | ADR statuses wait for confirmation of D-01 to D-11 | Bilgesu, team | Open |
+| CR-07 | Process | Two open PRs each for S2-01 and S2-02 | Burcu, Bilgesu | Open |
 
 ### CR-01 – Initial stock at ingredient creation (High)
 
@@ -90,6 +90,11 @@ agree: remove `initialQuantity` from PR #62, mark ADR-009 as rejected in PR #64 
 PR #66. Ingredient creation then starts with `on_hand = 0`, and the opening stock is entered with
 `POST /inventory/adjustments` and reason `INITIAL_STOCK`, which the Sprint 1 API already supported. If
 Burcu instead wants the quantity at creation, FR-02, US-02 AC 1 and Figma 04d must change.
+
+**Applied (18 Nov).** The recommendation is applied so the three PRs no longer conflict with the
+requirements: `initialQuantity` removed from the API in PR #62 (`866122e`), ADR-009 marked Rejected in
+PR #64 (`07fd074`), and schema §7 updated in PR #66 (`5475872`). The user flows in PR #70 and the Figma
+frames in PR #71 follow the same rule. The finding is closed once Burcu confirms it.
 
 ### CR-02 – Three different FR numbering schemes (Medium)
 
@@ -112,15 +117,17 @@ rule exists only in the API. **Recommendation:** add one sentence to FR-14 or FR
 
 ### CR-04 – No UI action for ingredient deactivation (Low)
 
-The API side of UI review F-02 / D-2 is resolved (section 5, R-01). Figma 04a–04d still have no
-deactivate or reactivate action. **Recommendation:** add the action and its confirmation to the
-inventory screen.
+The API side of UI review F-02 / D-2 is resolved (section 5, R-01). Figma 04a–04d had no deactivate or
+reactivate action. **Resolved:** frames `scr-04g` (edit ingredient), `scr-04h` (deactivate confirmation)
+and `scr-04i` (inactive ingredient with Reactivate) in PR #71 add both actions; the user flow is U6 in
+PR #70.
 
 ### CR-05 – C4 Context omits Customer and Supplier (Low)
 
 System Vision §6.1 and SRS §2.1 name Customer and Supplier as external stakeholders. The C4 Context
-diagram (PR #62) shows only the three staff roles. **Recommendation:** add both as external persons
-without a direct link to the system, or state in the diagram that they are left out on purpose.
+diagram (PR #62) showed only the three staff roles. **Resolved:** the C4 Context page now has a note that
+Customer and Supplier only deal with restaurant staff and have no access to PantryChef (PR #62,
+`cb634c3`, following Emre's review).
 
 ### CR-06 – ADR statuses wait for decision confirmation (Low)
 
@@ -159,15 +166,16 @@ superseded PRs (#45, #47) so that reviews use one version.
 
 ## 7. Next steps and re-review
 
-1. Burcu decides CR-01; Ayşe applies the result to PR #62, #64 and #66 before they are merged.
+1. Burcu confirms CR-01; the fix is already applied to PR #62, #64 and #66.
 2. Burcu and Bilgesu close the superseded PRs (CR-07).
 3. After the SRS (#54), requirements (#51), backlog (#55) and PR #62 are merged, the FR numbers are
    aligned (CR-02) and this review is repeated against `develop`.
-4. The remaining low findings (CR-03 to CR-06) are fixed by their owners; each fix is recorded here
-   with its PR number.
+4. The remaining low findings (CR-03, CR-06) are fixed by their owners; each fix is recorded here with
+   its PR number.
 
 ## Change log
 
 | Version | Date | Author | Change |
 |---|---|---|---|
 | 0.1 | 2026-11-18 | Ayşe Dural | First consistency review for S2-17 |
+| 0.2 | 2026-11-18 | Ayşe Dural | Status column; CR-01 applied, CR-04 and CR-05 resolved |
