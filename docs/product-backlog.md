@@ -185,12 +185,14 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. A manager can create an ingredient with a name, unit, and low-stock threshold. Initial physical stock is recorded separately through an authorized inventory adjustment.
-2. Required fields are validated.
-3. Physical quantity cannot be negative.
-4. Unauthorized users cannot modify ingredients.
-5. Existing ingredient records can be updated.
-6. Deactivation does not invalidate historical order records.
+1. A manager can create an ingredient with a name, unit, and low-stock threshold.
+2. Newly created ingredients have onHand = 0 and reserved = 0.
+3. Initial physical stock is recorded separately through an authorized INITIAL_STOCK inventory adjustment.
+4. The initial stock adjustment records the responsible actor, timestamp, and reason.
+5. Required fields are validated.
+6. Physical quantity cannot be negative.
+7. Existing ingredient records can be updated by authorized managers; unauthorized users cannot modify ingredients.
+8. Deactivation does not invalidate historical order records.
 
 **Implementation Tasks**
 
@@ -198,6 +200,8 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 - Implement ingredient management operations.
 - Validate input fields.
 - Implement authorization and tests.
+- Initialize new ingredients with zero physical and reserved stock.
+- Record initial stock through an audited INITIAL_STOCK adjustment.
 
 #### US-03 — View Available Stock
 
