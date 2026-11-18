@@ -3,7 +3,7 @@
 **Task:** S2-22 · **Owner:** Beyzanur Alpay · **Reviewer:** Burcu Ücük  
 **Status:** Planned coverage. Test execution pending.
 
-The mapping uses the current pull request drafts for [SRS PR #54](https://github.com/seng321-7th-team/PantryChef/pull/54), [Backlog PR #55](https://github.com/seng321-7th-team/PantryChef/pull/55), [FR/NFR PR #51](https://github.com/seng321-7th-team/PantryChef/pull/51) and [API PR #62](https://github.com/seng321-7th-team/PantryChef/pull/62). Functional rows summarize coverage. The acceptance-criterion table below show individual test links and decision gates. For quality coverage, the [NFR verification table](quality-metrics.md) maps NFR-01 through NFR-15 to execution or review evidence.
+The mapping uses the current pull request drafts for [SRS PR #54](https://github.com/seng321-7th-team/PantryChef/pull/54), [Backlog PR #55](https://github.com/seng321-7th-team/PantryChef/pull/55), [FR/NFR PR #51](https://github.com/seng321-7th-team/PantryChef/pull/51) and [API PR #62](https://github.com/seng321-7th-team/PantryChef/pull/62). Functional rows summarize coverage. The acceptance-criterion table below shows individual test links and decision gates. For quality coverage, the [NFR verification table](quality-metrics.md) maps NFR-01 through NFR-15 to execution or review evidence.
 
 | FR | Backlog story | Acceptance area | Planned test cases |
 |---|---|---|---|
@@ -38,6 +38,7 @@ US-15 and US-16 are tracked by the backlog as post-MVP. See [test definitions](t
 | D-08 | OpenAPI v0.2.0 excludes inactive ingredients from alerts. SRS FR-14 does not state that exception (architecture review #68 CR-03). | Burcu to confirm backlog/SRS scope. TC-31 documents the API baseline separately. |
 | D-09 | ADR-005 and the schema draft scope keys by actor and operation; ADR-005 is proposed. | Ayşe and the team to confirm the final scope. TC-33 remains planned against the design baseline. |
 | D-10 | Architecture review #68 CR-02 records conflicting FR numbering in System Vision, the earlier SRS and the Sprint 2 SRS. | Burcu to confirm the canonical numbering. This matrix uses PR #54/#51 identifiers only. CR-01 opening stock follows the consistent current drafts, with Burcu’s final confirmation tracked by #68. |
+| D-11 | OpenAPI and ADR-004 describe one active reservation per ingredient. The database schema ties reservations to order items and enforces uniqueness per order item and ingredient. Shared ingredients across order items need a confirmed persistence model. | Ayşe to confirm reservation and movement granularity. TC-01 checks aggregate quantity. TC-06 and TC-26 do not establish row counts for a shared ingredient across multiple order items. |
 
 ## Acceptance-criterion coverage
 
@@ -51,11 +52,11 @@ Numbers follow the acceptance criteria order in backlog PR #55. Planned refers t
 | US-04 | 1 → TC-03/05; 2/3/4/5 → TC-05 | Planned |
 | US-05 | 1–6 → TC-14, with TC-01 for quantities | Planned |
 | US-06 | 1 → TC-03/06; 2 → TC-10; 3/4/5 → TC-06; 6 → TC-06/07/15 | AC1 Manager variant blocked by D-01; AC2 exact error mapping partly blocked by D-06 |
-| US-07 | 1 → TC-01/06; 2–4 → TC-06/07; 5/6 → TC-07/15; 7 → TC-08; 8 → TC-09/26/33 | AC8 in-flight response blocked by D-04; actor scoping pending D-09 |
+| US-07 | 1 → TC-01/06; 2–4 → TC-06/07; 5/6 → TC-07/15; 7 → TC-08; 8 → TC-09/26/33 | AC8 in-flight response blocked by D-04; actor scoping pending D-09. Shared-ingredient row counts pending D-11 |
 | US-08 | 1/2/3 → TC-11/21; 4 → TC-03/28 | Planned |
 | US-09 | 1 → TC-03/24; 2 → TC-12/13/24; 3–5 → TC-12/27; 6/8 → TC-15; 7 → TC-12/27 | AC7 in-flight response blocked by D-04; persisted effects covered |
 | US-10 | 1 → TC-28; 2 → TC-11/13/24; 3 → TC-11/21/28; 4 → TC-13/29; 5 → TC-21 | TC-29 UI feedback path depends on D-07 |
 | US-11 | 1–4 → TC-16; 3 → TC-15 as well; 5 → TC-16 retry variants; 6 → TC-13/24 | AC5 response details blocked by D-05; stock effects covered |
 | US-12 | 1/2/3 → TC-17/18/25; 4/5/6/7 → TC-17; 3 also → TC-32; 8 → TC-18 | AC7 response details blocked by D-05; stock and audit effects covered |
-| US-13 | 1/2/3/4/5 → TC-19; 2/3 → TC-05/17 as well | Planned |
+| US-13 | 1/2/3 → TC-19 (2/3 also TC-05/17); 4 → TC-19 audit read access; 5 → TC-19 immutability evidence | Access checks planned. Contract evidence is separate from pending implementation verification for AC5 |
 | US-14 | 1 → TC-04/20; 2 → TC-02/20; 3/4/5 → TC-20; inactive case → TC-31 | Inactive-ingredient acceptance pending D-08 |
