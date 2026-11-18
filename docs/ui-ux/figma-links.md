@@ -98,7 +98,7 @@ Earlier exports (superseded): 18 Nov, about 01:35 – 31 frames, `scr-04d` to `s
 
 ## 5. Related documents
 
-- User flows: [`user-flows.md`](https://github.com/seng321-7th-team/PantryChef/blob/4d0f8bc79f677885727dd281504de50e83d5738a/docs/ui-ux/user-flows.md) (S2-30, PR #70, commit `4d0f8bc`; not on `develop` yet)
+- User flows: [`user-flows.md`](https://github.com/seng321-7th-team/PantryChef/blob/e1f93142c10e4f4d3ff90103a476f917fbf0030f/docs/ui-ux/user-flows.md) (S2-30, PR #70, commit `e1f9314`; not on `develop` yet)
 - Prototype description: [`ui-prototype.md`](ui-prototype.md)
 - Demo script: [`demo-scenario.md`](demo-scenario.md)
 - Consistency review of the screens against the User Stories: [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/432cc0866262441f749c544ed245be0ad192afff/docs/ui-ux/ui-user-story-review.md) (S2-31, PR #50, commit `432cc08`; not on `develop` yet)
