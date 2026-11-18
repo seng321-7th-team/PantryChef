@@ -4,7 +4,7 @@
 **Sprint:** Sprint 2
 **Task:** S2-31 – UI Design–User Story Consistency Review
 **Owner:** Tuğçe Çevik · **Reviewer:** Burcu Ücük
-**Status:** Draft – aligned on 18 Nov 2026 with the current SRS/backlog drafts and Ayşe's architecture sources. The 32-frame prototype (Figma export of 18 Nov, 23:47) is reviewed as a design, not as a working backend. UI scope decisions D-3, D-4 and D-6 remain open. D-2/D-9a and D-5/D-9b are aligned across the cited drafts, and Burcu confirmed CR-01 (zero-stock creation). D-9c is open: backlog #55 US-06 AC1 now differs from SRS FR-06 and API draft #62 (F-07). Review and merge are separate pending steps. No requirement or MVP scope is changed by this review.
+**Status:** Draft. Reviews the 32-frame prototype (Figma export of 18 Nov 2026, 23:47) as a design against the current SRS, backlog and architecture drafts. Open: UI scope decisions D-3, D-4, D-6; order creation role F-07 / D-9c; CR-03. CR-01 (zero-stock creation) is confirmed. No requirement or MVP scope is changed by this review.
 
 ## 1. Scope, sources and limits
 
@@ -19,7 +19,7 @@ Compared in this review:
 | ADRs | [PR #64, `60d1a8b`](https://github.com/seng321-7th-team/PantryChef/blob/60d1a8ba08c21d8e07f873a4fe218c15c36dfae7/docs/architecture/architecture-decisions.md); ADR-004 to ADR-010 read for the rules relevant to the UI. **Merged** into `develop` on 18 Nov (`3688747`; the file is identical to `60d1a8b`). The merge does not change any record's status: Proposed records stay Proposed. |
 | Database schema | [PR #66, `fa446c1`](https://github.com/seng321-7th-team/PantryChef/blob/fa446c1eb6ad0d075c8fbd85e9b7974021bee9d1/docs/architecture/database-schema.md); cancellation/history mapping and transaction outlines. Proposed DDL, not runtime evidence. Not merged. |
 | Architecture consistency review | [PR #68, `46e8d1c`](https://github.com/seng321-7th-team/PantryChef/blob/46e8d1c944e7dc524f9266bdbe2197bbcd428e3c/docs/architecture/consistency-review.md); CR-01 confirmed by Burcu in [her review of #68](https://github.com/seng321-7th-team/PantryChef/pull/68#pullrequestreview-5957095073) on 18 Nov; CR-04/CR-05 resolved in drafts. Not merged. |
-| UI deliverables | PR #70 (flows); PR #71 at `d0e2e35` (three documents, 32 PNGs and the 32-page Figma PDF export of 18 Nov, 23:47). Figma page "03 Screens v2". Not merged. |
+| UI deliverables | PR #70 (flows); PR #71 at `5bdd2ba` (three documents, 32 PNGs and the 32-page Figma PDF export of 18 Nov, 23:47). Figma page "03 Screens v2". Not merged. |
 | Merged historical baseline | `develop` at `5dd8253`: API 0.1.0, Sprint 1 backlog, task board and RACI. The files used from `0c3e244` are identical at `5dd8253`. The older contract is not confused with the API 0.2.0 draft. |
 | Historical SRS | PR #45 at `d34389a`, FR-001 to FR-027. Retained only in section 2b for traceability to the original review. #45 and #54 both remain open; Burcu must identify the superseded PR. |
 
@@ -31,8 +31,8 @@ Rules followed:
 Limits of the evidence:
 
 - No runtime authentication, transactions, inventory effects, concurrency, performance or browser-compatibility tests are claimed from Figma. Role selection and "Preview as" are demo aids.
-- The architecture sources and the UI deliveries above exist in open PRs; they are not merged into `develop`. The current UI PRs are #50, #70 and #71. An earlier observation that those deliverables/PRs did not exist is historical and no longer describes the repository.
-- Source documents and diagram notes were compared. The earlier S2-14 COMMENT review concerns UML Use Case, Sequence and Class only; it does not approve the whole mixed-scope PR #62. Class enum header spacing was reported separately to Ayşe.
+- Except ADR #64, the architecture sources and the UI deliveries (#50, #70, #71) are in open PRs, not merged into `develop`.
+- Source documents and diagram notes were compared. This review does not approve PR #62.
 - Missing views remain coverage gaps until the product owner decides how the Sprint 2 prototype and MVP UI cover them. They are not silently removed from P0 requirements.
 
 ## 2. What matches
@@ -65,7 +65,7 @@ This matrix uses SRS FR-01 to FR-14 and the corresponding US-01 to US-14. Covera
 | FR-07 / US-07 | Atomic reservation and duplicate protection | `scr-02b`, `scr-02c`; U1 | Shortage and accepted-order states drawn; retry key rule described. Concurrency, all-or-nothing behavior and replay need backend tests. |
 | FR-08 / US-08 | Kitchen queue | `scr-03a`–`scr-03e`; U3/U4 | Order identifiers/items/quantities/statuses visible. Polling behavior described from ADR-010, not executed by Figma. |
 | FR-09 / US-09 | Start preparation and consume once | `scr-03a` → `scr-03b` → `scr-03c`; U3 | Preparation states shown. `ACTIVE → CONSUMED`, equal reduction of onHand/reserved; no runtime proof of exactly-once deduction. |
-| FR-10 / US-10 | Mark Ready | `scr-03c` → `scr-03e`, `scr-03d` → `scr-03e`; U3/U4 | Mark as ready on #1042 leads to `scr-03e-kitchen-ready` (#1042 `Ready`, counters 2 / 1 / 2, "No additional stock was deducted"). Demo interactions cover #1042 only; the faded buttons on other orders are a prototype limit, not a product rule. A click-through of these transitions is not recorded yet; no runtime proof. |
+| FR-10 / US-10 | Mark Ready | `scr-03c` → `scr-03e`, `scr-03d` → `scr-03e`; U3/U4 | Mark as ready on #1042 leads to `scr-03e-kitchen-ready` (#1042 `Ready`, counters 2 / 1 / 2, "No additional stock was deducted"). Demo interactions cover #1042 only; the faded buttons on other orders are a prototype limit, not a product rule. Prototype navigation and displayed counters verified on 18 November 2026; no runtime proof. |
 | FR-11 / US-11 | Pending cancellation | `scr-02d`, `scr-05d`; U2/U7 | Dialogs describe `ACTIVE → RELEASED`, onHand unchanged. Return to a reused list frame is not proof of a persisted Cancelled result. |
 | FR-12 / US-12 | Exceptional cancellation | `scr-05b`, `scr-05c`, `scr-05e`–`scr-05h`; U2/U7 | Manager/authorized waiter, 3–500-character reason, rejection and result/audit states drawn; no automatic stock restore. |
 | FR-13 / US-13 | Traceable order/inventory history | `scr-05a`, `scr-05e`; U7 | **Partial:** audit log shown; reservation/consumption movements and reservation inspection have no view (F-03/D-3). |
@@ -241,7 +241,7 @@ No new architecture decision is approved by this UI comparison. ADR-001's writte
 ## 6. Other observations
 
 - **O-01. "Updates automatically" (kitchen board).** ADR-010 and C4 Container #62 now document polling every 15–30 seconds. OpenAPI describes the request, not a push channel. The UI and architecture descriptions align; live background refresh still needs implementation testing. D-8 is answered at documentation level.
-- **O-02. Login placeholder contrast.** Checked; no contrast fix needed. The username placeholder ("e.g. waiter01") in `scr-01-login` is `#6B7280` on `#FFFFFF`, both at 100% opacity. The calculated contrast ratio is 4.83:1, above the WCAG 2.1 AA minimum of 4.5:1 for normal text (verified manually by Tuğçe on 18 November 2026). The frame was not changed.
+- **O-02. Login placeholder contrast.** Checked; no contrast fix needed. The username placeholder ("e.g. waiter01") in `scr-01-login` is `#6B7280` on `#FFFFFF`, both at 100% opacity. The calculated contrast ratio is 4.83:1, above the WCAG 2.1 AA minimum of 4.5:1 for normal text (checked on 18 November 2026). The frame was not changed.
 - **O-03. Backlog version.** The current matrix and gaps have been re-checked against refined backlog #55 at `beba8c6` (18 Nov). Changes since `ec1911a`: US-02 acceptance criteria (zero stock at creation and a separate `INITIAL_STOCK` adjustment; matches F-05) and US-06 AC1 (Waiter or Manager; F-07). The backlog is in an open PR with changes requested. The Sprint 1 backlog remains only a historical baseline.
 - **O-04. Manager creating orders.** Merged API 0.1.0 allows WAITER and MANAGER on createOrder. Current draft #62 restricts creation to WAITER in OpenAPI, README and UML; Ayşe confirmed this in her #62 response and #68 R-02. SRS FR-06 and the waiter-only Figma agree with #62, but backlog US-06 AC1 at `beba8c6` says Waiter or Manager. This is recorded as open finding F-07. GET /orders remains available to MANAGER, CHEF and WAITER.
 
@@ -265,26 +265,20 @@ Until the open UI scope questions are answered, no missing P0 capability is decl
 
 **D-9 remains three separate dispositions:** D-9a soft delete matches the current SRS/backlog/API/UI drafts but needs team review/merge. D-9b zero-stock creation is applied across drafts and Figma, and Burcu confirmed CR-01. D-9c WAITER-only creation is **open**: SRS FR-06, API draft #62 and Figma say WAITER, backlog US-06 AC1 says Waiter or Manager (F-07); the requirement and API owners decide. "Aligned in drafts", "approved" and "merged" are different states.
 
-## 7a. Closed findings and update log (18 Nov 2026)
+## 7a. Closed findings and changes (18 Nov 2026)
 
 | Item | Status |
 |---|---|
-| "Edit ingredient missing" (F-01) | **Closed in Figma.** Edit on every row of `scr-04a`, dialog `scr-04g`. |
-| "Login error and session-expired states missing" | **Closed in Figma.** `scr-01b-login-error`, `scr-01c-session-expired`. |
-| "Kitchen conflict error missing" (FR-019) | **Closed in Figma.** `scr-03d-kitchen-conflict`. |
-| Waiter cancel dialog and authorized-waiter late cancel had no frames | **Closed in Figma.** `scr-02d`, `scr-05f`, `scr-05g`, `scr-05h`. |
-| General error text in `scr-07a-states` ("Nothing was changed") | **Closed.** The 500 card now reads "We couldn't confirm the result. Refresh to check the latest status." Checked on a screenshot on 18 Nov. |
-| Frame count "18" | Replaced by 31 (live check, 18 Nov), then by 32 (Figma export of 18 Nov, 23:47, adds `scr-03e-kitchen-ready`). |
-| Mark as ready had no prototype target (FR-10/US-10) | **Updated in Figma.** Mark as ready on #1042 leads to `scr-03e-kitchen-ready` from `scr-03c` and from `scr-03d` (Flow 6). Demo interactions cover #1042 only. A click-through of these transitions is not recorded yet. |
-| CR-01 (zero stock at creation) confirmation | **Confirmed** by Burcu on 18 Nov in her review of #68. |
+| Missing frames from the first review: edit ingredient (F-01), login error and session expired, kitchen conflict (FR-019), waiter cancel dialog, authorized-waiter late cancel | **Closed in Figma:** `scr-04g`, `scr-01b`, `scr-01c`, `scr-03d`, `scr-02d`, `scr-05f` to `scr-05h`. |
+| Frame count | 18 → 31 → 32 (Figma export of 18 Nov, 23:47, adds `scr-03e-kitchen-ready`). |
+| Mark as ready had no prototype target (FR-10/US-10) | **Closed in Figma** for the #1042 demo: `scr-03c` → `scr-03e` and `scr-03d` → `scr-03e`. Prototype navigation and displayed counters verified on 18 November 2026; result screenshots recorded. |
+| Optional Initial stock field in `scr-04d` to `scr-04f` (F-05, D-9b) | **Closed in Figma** (re-export of 18 Nov, about 01:35). CR-01 confirmed in the #68 review. |
+| Error texts in `scr-07a-states` | 500 card reads "We couldn't confirm the result. Refresh to check the latest status."; `MENU_ITEM_UNAVAILABLE` shown as 422 (matches the OpenAPI file). |
+| Login placeholder contrast (O-02) | Checked; no fix needed (4.83:1, see O-02). |
+| Flow 9 transitions (04g → 04h → 04g, 04h → 04i, 04i → 04g) | Verified in the live prototype on 18 Nov. Prototype only. |
+| Requirement baseline | FR-01–FR-14 / US-01–US-14 matrix from #54/#55; the #45 matrix is kept as history only. |
+| Architecture questions D-7/D-8 | Answered by #66/#68 and ADR-010/C4. Review/merge and implementation checks remain separate. |
 | Order creation role (D-9c) | **Open** as F-07 since backlog #55 `beba8c6` changed US-06 AC1. |
-| Login placeholder contrast (O-02) | **Checked; no contrast fix needed.** `#6B7280` on `#FFFFFF` (100% opacity) gives 4.83:1, above 4.5:1 (WCAG 2.1 AA, normal text); verified manually by Tuğçe on 18 November 2026. No Figma change. |
-| Current requirement baseline | Added FR-01–FR-14 / US-01–US-14 matrix from #54/#55; old #45 matrix retained as historical only. |
-| Architecture questions D-7/D-8 | Answered by #66/#68 and ADR-010/C4 respectively; review/merge and implementation checks remain separate. |
-| New comparison on 18 Nov | NFR evidence limits, optional status replay, network retry qualification and remaining owner questions recorded without changing scope. |
-| `MENU_ITEM_UNAVAILABLE` shown as 409 | Corrected to 422 in `scr-07a-states` (matches the OpenAPI file). |
-| Optional Initial stock field in `scr-04d` to `scr-04f` (F-05, D-9b) | **Closed in Figma.** Removed in the 18 Nov re-export (about 01:35); the three PNGs and the PDF were re-exported. |
-| Flow 9 transitions (04g → 04h → 04g, 04h → 04i, 04i → 04g) | Verified in the live prototype in a browser on 18 Nov. Prototype only; no backend involved. Not recorded as broken or missing. |
 
 Status words: **Matches API draft** (follows PR #62, not merged), **Decision pending** (no team confirmation recorded), **Applied in Figma** (exists in the live file and was checked on a screenshot).
 
