@@ -6,11 +6,15 @@
 **Owner:** Tuğçe Çevik · **Reviewer:** Bilgesu Nacak
 **Status:** Draft
 
-This is a click-through script for the Figma prototype. It uses only clicks that exist in the prototype (checked in the Figma file's prototype settings on 18 Nov 2026). It does not call any backend; errors and states are drawn frames. Frame names are listed in [`figma-links.md`](figma-links.md).
+This is a click-through script for the Figma prototype. It describes the intended prototype click path. Earlier prototype-setting checks were recorded on 18 Nov 2026; the Chef interaction issue reported during review remains open (see below). It does not call any backend; errors and states are drawn frames. Frame names are listed in [`figma-links.md`](figma-links.md).
 
 **General demo start:** open the *General demo prototype* link in `figma-links.md`. It starts at `scr-01-login`. Choose a role with the prototype-only buttons (Waiter, Chef, Manager). The two Flow 8 / Flow 9 links start directly at their frames and are for short side demos.
 
 Where a step follows API draft #62, it is marked **(API draft #62)**. The current checked head is `f061da2` (not merged); OpenAPI content is unchanged from `866122e`/`cb634c3`. Current cross-check sources: SRS #54 `0ad80b3`, backlog #55 `ec1911a`, ADR #64 `60d1a8b` and schema #66 `fa446c1`. Draft agreement is not an implementation or merge claim.
+
+**Scenario states:** The Waiter, Chef and Manager sections use independent, predefined Figma frames. Order IDs may be reused, but actions in one section do not update the other sections. The demo is not one continuous order lifecycle.
+
+**Open review items (18 Nov):** The reviewer reported that the Pending orders #1040 and #1043 did not respond to Start preparing, while #1042 was already Preparing. This differs from the exported `scr-03a` → `scr-03b` → `scr-03c` example, which starts #1042 as Pending. Part 2 step 2 is a documented scenario awaiting live connection/start-frame verification, not a confirmed working path after review. Design-link access without sign-in and standalone Flow 2–7 access also remain pending. [Review details](https://github.com/seng321-7th-team/PantryChef/pull/71#pullrequestreview-5952870880).
 
 ## Part 1 – Waiter (about 3 minutes)
 
@@ -58,7 +62,8 @@ Open the Flow 8 link (`scr-07a-states`): loading, empty states, `INTERNAL_ERROR`
 ## Checklist before the demo
 
 - [x] The general demo link opens in a private window without signing in to Figma, and the demo scenario was rehearsed from Flow 1 (verified manually by Tuğçe on 18 November 2026).
-- [x] The Flow 8 and Flow 9 links open at the right frame (checked by Codex on 18 Nov in a signed-in Figma session).
+- [x] The Flow 8 and Flow 9 links open at the right frame (checked on 18 Nov in a signed-in Figma session).
 - [x] The Flow 8 and Flow 9 links open in a private window without signing in to Figma (verified manually by Tuğçe on 18 November 2026). Flow 8 is static. Flow 9: The standalone-link check covered only the start frame. Deactivate/Reactivate transitions were subsequently tested during the demo rehearsal; see the item below.
-- [x] Flow 9: 04g → 04h → 04i → 04g (Deactivate, then Reactivate) – verified manually by Tuğçe on 18 November 2026 during the demo rehearsal. The 04h Cancel → 04g step is not counted as verified by this check. Earlier, Codex verified 04g → 04h → 04g and 04g → 04h → 04i → 04g in the live prototype in a browser on 18 Nov (historical evidence).
-- [x] The file is shared as "Anyone can view" (checked by Codex on 18 Nov in a signed-in Figma session; opening without signing in was verified manually by Tuğçe on 18 November 2026 for the general demo link and the Flow 8 and Flow 9 links).
+- [x] Flow 9: 04g → 04h → 04i → 04g (Deactivate, then Reactivate) – verified manually by Tuğçe on 18 November 2026 during the demo rehearsal. The 04h Cancel → 04g step is not counted as verified by this check. Earlier checks verified 04g → 04h → 04g and 04g → 04h → 04i → 04g in the live prototype in a browser on 18 Nov (historical evidence).
+- [x] The file is shared as "Anyone can view" (checked on 18 Nov in a signed-in Figma session; opening without signing in was verified manually by Tuğçe on 18 November 2026 for the general demo link and the Flow 8 and Flow 9 links).
+

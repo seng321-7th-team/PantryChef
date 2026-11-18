@@ -19,8 +19,8 @@ The design link and the prototype links are separate. The design link opens the 
 
 Notes:
 
-- The general demo link and the design link were copied from the Figma share dialog, with the personal tracking parameter (`t=`) removed. The Flow 8 and Flow 9 links use the same pattern with the node ID of their start frame. They open at their start frames (checked by Codex on 18 Nov in a signed-in Figma session). Separately, both links were opened in a private window without signing in to Figma (verified manually by Tuğçe on 18 November 2026). The general demo link was also opened in a private window without signing in, and the demo scenario was rehearsed from Flow 1 (verified manually by Tuğçe on 18 November 2026). The design link was not tested without signing in.
-- Sharing is set to "Anyone can view" (checked by Codex on 18 Nov in a signed-in Figma session). Opening without signing in was verified manually by Tuğçe on 18 November 2026 for the general demo link and the Flow 8 and Flow 9 links.
+- The general demo link and the design link were copied from the Figma share dialog, with the personal tracking parameter (`t=`) removed. The Flow 8 and Flow 9 links use the same pattern with the node ID of their start frame. They open at their start frames (checked on 18 Nov in a signed-in Figma session). Separately, both links were opened in a private window without signing in to Figma (verified manually by Tuğçe on 18 November 2026). The general demo link was also opened in a private window without signing in, and the demo scenario was rehearsed from Flow 1 (verified manually by Tuğçe on 18 November 2026). The design link was not tested without signing in.
+- Sharing is set to "Anyone can view" (checked on 18 Nov in a signed-in Figma session). Opening without signing in was verified manually by Tuğçe on 18 November 2026 for the general demo link and the Flow 8 and Flow 9 links.
 - Use the general demo link for the sprint demonstration: it starts at login and reaches every role (see [`demo-scenario.md`](demo-scenario.md)).
 
 ## 2. Prototype flow starting points
@@ -97,12 +97,12 @@ Live check on the page "03 Screens v2": 31 frames, each 1280 × 800. The names b
 | Item | Status |
 |---|---|
 | 31 frames on the live page | Verified (18 Nov) |
-| Flow 9 transitions (04g Deactivate → 04h, 04h Cancel → 04g, 04h Deactivate → 04i, 04i Reactivate → 04g) | Verified in the live prototype in a browser by Codex (18 Nov). Only the prototype was checked; no backend call is involved. |
-| Flow 8 and Flow 9 URLs open at their start frames (`scr-07a-states`, `scr-04g-inventory-edit-ingredient`) | Verified (checked by Codex on 18 Nov in a signed-in Figma session) |
+| Flow 9 transitions (04g Deactivate → 04h, 04h Cancel → 04g, 04h Deactivate → 04i, 04i Reactivate → 04g) | Verified in the live prototype in a browser (18 Nov). Only the prototype was checked; no backend call is involved. |
+| Flow 8 and Flow 9 URLs open at their start frames (`scr-07a-states`, `scr-04g-inventory-edit-ingredient`) | Verified (checked on 18 Nov in a signed-in Figma session) |
 | Flow 8 and Flow 9 URLs open without signing in (private window) | Verified (verified manually by Tuğçe on 18 November 2026). Flow 8 opens "Common states" (`scr-07a-states`), a static frame; no clickable navigation is expected. Flow 9 opens its start frame; this does not mean the Deactivate/Reactivate transitions were re-tested. |
 | General demo link opens without signing in (private window); demo scenario rehearsed from Flow 1 | Verified (verified manually by Tuğçe on 18 November 2026). This does not cover the other flow starting points on their own or the design link. |
 | Prototype links outside the demo scenario, and Flow 2 to Flow 7 opened on their own | Not checked yet |
-| File sharing | "Anyone can view" (checked by Codex on 18 Nov in a signed-in Figma session). Opening without signing in: verified for the general demo link and the Flow 8 and Flow 9 links (verified manually by Tuğçe on 18 November 2026); the design link not tested |
+| File sharing | "Anyone can view" (checked on 18 Nov in a signed-in Figma session). Opening without signing in: verified for the general demo link and the Flow 8 and Flow 9 links (verified manually by Tuğçe on 18 November 2026); the design link not tested |
 | Repository location of the PNG and PDF files | `docs/ui-ux/screens/` and `docs/ui-ux/exports/` |
 | PR #62 (API 0.2.0 draft) merged | No. Frames that depend on it are marked in `ui-prototype.md`. |
 | Initial stock (D-9b) | **Done in Figma (18 Nov re-export).** `scr-04d` to `scr-04f`, their PNGs and the PDF have no Initial stock field ("Starts with 0 stock. Add stock using Adjust."), as in SRS #54 FR-02, backlog #55 US-02 AC1 and API draft #62 (`866122e`). None of these PRs is merged (section 4 of `ui-prototype.md`). |
@@ -118,3 +118,4 @@ Live check on the page "03 Screens v2": 31 frames, each 1280 × 800. The names b
 Current reviewed drafts (18 Nov, none merged): SRS #54 `0ad80b3`, backlog #55 `ec1911a`, FR/NFR #51 `fc70b81`, API/diagrams #62 `f061da2`, ADRs #64 `60d1a8b`, schema #66 `fa446c1`, consistency review #68 `46e8d1c`. PR #50's current mapping uses FR-01–FR-14; the older FR-001–FR-027 mapping is historical. Existing commit-pinned links above remain valid snapshots and need not track every new commit.
 
 The deactivation screen gap is resolved (#68 CR-04). Recipe creation, reservation/consumption-history views and staff/permission-management UI remain product-owner scope questions, not new screens added by this checkpoint. No PNG/PDF or Figma content is changed. Flow 9's later demo rehearsal is recorded in demo-scenario.md separately from the earlier standalone-link test; Tuğçe's check does not include the confirmation dialog's Cancel branch.
+
