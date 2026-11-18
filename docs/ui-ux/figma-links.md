@@ -87,20 +87,14 @@ The 18 Nov 2026 export (23:47) contains 32 frames, each 1280 × 800. The names b
 
 ## 4. Export package
 
-Current delivery (18 Nov 2026, Figma export at 23:47):
+| File | Content |
+|---|---|
+| `docs/ui-ux/exports/PantryChef_Prototip_v2.pdf` | Figma PDF export of 18 Nov 2026 (23:47). 32 pages, 1280 × 800, one frame per page. Page numbers are in section 3. |
+| `docs/ui-ux/screens/` | 32 PNG files, `<frame name>.png`, 1280 × 800. `scr-03a` to `scr-03e` come from the Figma PNG export of 18 Nov (23:47); the other 27 files are unchanged from the previous export. |
 
-- `docs/ui-ux/exports/PantryChef_Prototip_v2.pdf`: 32 pages, 1280 × 800 each, one page per frame (PDF metadata: creator and producer Figma). Page numbers are listed in section 3.
-- `docs/ui-ux/screens/`: 32 PNG files named `<frame name>.png` (1280 × 800). `scr-03a` to `scr-03d` were replaced and `scr-03e-kitchen-ready` was added from the Figma PNG export ZIP of the same time (PNG metadata: software Figma). The other 27 PNG files are kept from the earlier export.
-- Checks performed for this delivery:
-  - The PNG ZIP contained 31 files: the 5 kitchen frames and 26 other frames. `scr-07a-states` was not in the ZIP; the file in the repository was kept.
-  - The 26 other PNG files in the ZIP were compared with the files in the repository: no pixel differs by more than 16 of 255 per channel (export anti-aliasing only), so they were not replaced.
-  - Each of the 32 PDF pages was rendered at 1280 × 800 and matched to exactly one of the 32 PNG files in this folder (at most 0.001% of pixels differ by more than 32 of 255; no PNG matched twice, none unmatched).
-  - 32 PNG files, 32 table rows and 32 PDF pages carry the same frame names.
+Checks: frame names, file count and export dimensions checked. Each PDF page matches exactly one PNG (pixel comparison at 1280 × 800). The PNG export did not include `scr-07a-states`; the repository file matches PDF page 30 and was kept. The other PNG files in that export differ from the repository files only by anti-aliasing and were not replaced.
 
-Earlier exports (historical record, superseded by the delivery above):
-
-- 18 Nov, about 01:35: 31 frames and a 31-page PDF. `scr-04d`, `scr-04e` and `scr-04f` were re-exported after the Initial stock field was removed (PDF pages 9, 17 and 25 in that file). In that export, `scr-03a` showed #1042 under `Pending` next to #1040 and #1043, there was no `scr-03e-kitchen-ready`, and Mark as ready had no prototype target.
-- 18 Nov, before 01:35: 31 frames with an optional Initial stock field in `scr-04d` to `scr-04f`.
+Earlier exports (superseded): 18 Nov, about 01:35 – 31 frames, `scr-04d` to `scr-04f` without the Initial stock field, #1042 shown under `Pending` beside #1040 and #1043, no `scr-03e`, no Mark as ready target. Before 01:35 – 31 frames with an optional Initial stock field.
 
 ## 5. Related documents
 
@@ -108,38 +102,29 @@ Earlier exports (historical record, superseded by the delivery above):
 - Prototype description: [`ui-prototype.md`](ui-prototype.md)
 - Demo script: [`demo-scenario.md`](demo-scenario.md)
 - Consistency review of the screens against the User Stories: [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/be77d62d40d1aaa226c6079db3b50821a94442d5/docs/ui-ux/ui-user-story-review.md) (S2-31, PR #50, commit `be77d62`; not on `develop` yet)
-- API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.1.0). The ingredient and order-creation behavior shown in the frames follows API draft **PR #62**, current checked head `f061da2` (version 0.2.0, **not merged**); its OpenAPI content is unchanged from `866122e`/`cb634c3`. `scr-04d` to `scr-04f` follow the same zero-stock rule (`866122e` removed the optional `initialQuantity` that head `dbb06be` had).
+- API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.1.0). Ingredient and order-creation behavior in the frames follows API draft **PR #62** at `f061da2` (version 0.2.0, **not merged**; OpenAPI content unchanged since `866122e`). `scr-04d` to `scr-04f` follow its zero-stock rule.
 
-## 6. Status and verification
+## 6. Verification
 
-Access checks of 18 November 2026 (private window, not signed in to Figma). Tuğçe opened each link and shared screenshots of the result. Each row covers only the screen that opened; it does not cover every button on that screen, other transitions or any backend.
+All checks below are prototype checks of 18 November 2026. They cover screen navigation and displayed content only, not backend behavior, stock changes, concurrency or idempotency.
 
-| Link or flow start | Result |
+| Item | Result |
 |---|---|
-| Design file | Verified: the design canvas opens. |
-| General demo (Flow 1) | Verified earlier on 18 Nov: opens at `scr-01-login`; the demo scenario was rehearsed from Flow 1 with the 31-frame version. The current kitchen path was not part of that rehearsal. |
-| Flow 2 | Verified: opens at the Kitchen board with #1042 under `Pending`, counters 3 / 1 / 1. |
-| Flow 3 | Verified: opens at Inventory. |
-| Flow 4 | Verified: opens at Orders & audit. |
-| Flow 5 | Verified: opens at Recipes. |
-| Flow 6 | Verified: opens at "Order #1042 was already started" (`INVALID_STATUS_TRANSITION`). |
-| Flow 7 | Verified: opens at New ingredient with the duplicate-name warning. |
-| Flow 8 | Verified earlier on 18 Nov (private window): opens at "Common states" (`scr-07a-states`), a static frame. |
-| Flow 9 | Verified earlier on 18 Nov (private window): opens at `scr-04g-inventory-edit-ingredient`. |
+| Design file, Flow 2 to Flow 7 opened without sign-in (private window) | Verified; result screenshots recorded. Design canvas opens. Flow 2: Kitchen board, #1042 `Pending`, 3 / 1 / 1. Flow 3: Inventory. Flow 4: Orders & audit. Flow 5: Recipes. Flow 6: "Order #1042 was already started" (`INVALID_STATUS_TRANSITION`). Flow 7: New ingredient with the duplicate-name warning. |
+| General demo link (Flow 1) without sign-in; demo rehearsal from Flow 1 | Verified with the 31-frame version, before the kitchen change. |
+| Flow 8 and Flow 9 without sign-in | Verified at their start frames (`scr-07a-states`, static; `scr-04g-inventory-edit-ingredient`). |
+| #1042 path `scr-03a` → `scr-03b` → `scr-03c` → `scr-03e` | Prototype navigation and displayed counters verified; result screenshots recorded. Ready result: 2 / 1 / 2. |
+| #1042 path `scr-03d` → `scr-03e` (Flow 6) | Prototype navigation and displayed counters verified; result screenshots recorded. Ready result: 2 / 1 / 2. |
+| Kitchen buttons outside the #1042 demo | No prototype connection (checked in Figma). The exported buttons match the full-colour button at 40% opacity. |
+| Flow 9 transitions 04g → 04h → 04i → 04g | Verified during the demo rehearsal. An earlier browser check also covered 04h Cancel → 04g. |
+| File sharing | "Anyone can view" (checked in a signed-in Figma session). |
+| Prototype links outside the demo scenario | Pending |
+| Independent reviewer re-check of the Chef path | Pending |
 
-Other items:
+Related status:
 
-| Item | Status |
-|---|---|
-| 32 frames in the export; 32 PNG files; 32-page PDF | Checked (18 Nov, see section 4) |
-| Kitchen buttons outside the #1042 demo (#1040 and #1043 Start preparing, #1041 Mark as ready): no prototype connection | Checked by Tuğçe in Figma (18 Nov). The 40% opacity was also checked on the exported PNG (button colour equals the full-colour button at 40% over white). |
-| #1042 click-through in the prototype (`scr-03a` → `scr-03b` → `scr-03c` → `scr-03e`, and `scr-03d` → `scr-03e`) | Pending: no click-through of these transitions is recorded yet. Flow 2 and Flow 6 were checked only at their start frames. |
-| Flow 9 transitions (04g → 04h → 04i → 04g) | Verified manually by Tuğçe on 18 November 2026 during the demo rehearsal. An earlier browser check (18 Nov) also covered 04h Cancel → 04g. Prototype only; no backend call is involved. |
-| Prototype links outside the demo scenario | Not checked |
-| File sharing | "Anyone can view" (checked on 18 Nov in a signed-in Figma session) |
-| Repository location of the PNG and PDF files | `docs/ui-ux/screens/` and `docs/ui-ux/exports/` |
-| PR #62 (API 0.2.0 draft) merged | No. Frames that depend on it are marked in `ui-prototype.md`. |
-| Initial stock (D-9b) | **Done in Figma.** `scr-04d` to `scr-04f`, their PNGs and the PDF have no Initial stock field ("Starts with 0 stock. Add stock using Adjust."), as in SRS #54 FR-02, backlog #55 US-02 and API draft #62. Burcu confirmed CR-01 in [her PR #68 review](https://github.com/seng321-7th-team/PantryChef/pull/68#pullrequestreview-5957095073). SRS #54, backlog #55 and API #62 are not merged. |
+- PR #62 (API 0.2.0 draft) is not merged. Frames that depend on it are marked in `ui-prototype.md`.
+- Initial stock (D-9b) is done in Figma: no Initial stock field; helper "Starts with 0 stock. Add stock using Adjust." CR-01 is confirmed in the [PR #68 review](https://github.com/seng321-7th-team/PantryChef/pull/68#pullrequestreview-5957095073). SRS #54, backlog #55 and API #62 are not merged.
 
 ## 7. Known limits of the prototype
 
@@ -153,5 +138,5 @@ Other items:
 
 Current reviewed sources (18 Nov): SRS #54 `0ad80b3`, backlog #55 `beba8c6`, FR/NFR #51 `fc70b81`, API/diagrams #62 `f061da2`, schema #66 `fa446c1` and consistency review #68 `46e8d1c` are open. ADR PR #64 (`60d1a8b`) is merged into `develop` (`3688747`); its records keep their own Accepted, Proposed or Rejected status. PR #50's current mapping uses FR-01–FR-14; the older FR-001–FR-027 mapping is historical. Commit-pinned links above are snapshots.
 
-- Waiter-only order creation: SRS #54 FR-06 and API draft #62 say WAITER; backlog #55 US-06 AC1 at `beba8c6` says "Waiter or Manager". This is an open conflict ([Beyzanur's review on #55](https://github.com/seng321-7th-team/PantryChef/pull/55#pullrequestreview-5960692446)). The Figma design keeps order creation on the waiter screen. This UI task does not change the backlog or the API.
+- Waiter-only order creation: SRS #54 FR-06 and API draft #62 say WAITER; backlog #55 US-06 AC1 at `beba8c6` says "Waiter or Manager". Open conflict, F-07 in PR #50 ([#55 review](https://github.com/seng321-7th-team/PantryChef/pull/55#pullrequestreview-5960692446)). The Figma design keeps order creation on the waiter screen. This UI task does not change the backlog or the API.
 - The deactivation screen gap is resolved (#68 CR-04). Recipe creation (D-4), reservation/consumption-history views (D-3) and staff/permission-management UI (D-6) remain product-owner scope questions, not new screens.

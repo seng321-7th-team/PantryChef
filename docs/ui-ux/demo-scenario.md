@@ -16,7 +16,7 @@ Where a step follows API draft #62, it is marked **(API draft #62)**. The curren
 
 **Kitchen demo scope:** Demo interactions cover order #1042 only. On the kitchen frames, Start preparing on #1040 and #1043 and Mark as ready on #1041 are drawn at 40% opacity and have no prototype connection. This limit belongs to the prototype demo only; the application lets the chef start or complete any order in a valid state.
 
-**Review follow-up (18 Nov):** The reviewer reported that the Pending orders #1040 and #1043 did not respond to Start preparing, while #1042 was already Preparing ([review](https://github.com/seng321-7th-team/PantryChef/pull/71#pullrequestreview-5952870880)). The kitchen frames were changed in Figma after that review: `scr-03a` now starts #1042 as Pending, the buttons outside the #1042 demo are faded, and `scr-03e-kitchen-ready` was added. The reviewer's re-check of the Chef path is pending.
+**Review follow-up (18 Nov):** The [PR #71 review](https://github.com/seng321-7th-team/PantryChef/pull/71#pullrequestreview-5952870880) reported that Start preparing on the Pending orders #1040 and #1043 did not respond while #1042 was already Preparing. The kitchen frames were changed in Figma: `scr-03a` starts #1042 as Pending, the buttons outside the #1042 demo are faded, and `scr-03e-kitchen-ready` was added. Independent reviewer re-check pending.
 
 ## Part 1 – Waiter (about 3 minutes)
 
@@ -67,10 +67,13 @@ Open the Flow 8 link (`scr-07a-states`): loading, empty states, `INTERNAL_ERROR`
 
 ## Checklist before the demo
 
-- [x] Design file, Flow 2, Flow 3, Flow 4, Flow 5, Flow 6 and Flow 7 open in a private window without signing in to Figma, each at its expected start screen (verified manually by Tuğçe on 18 November 2026; screenshots shared). Flow 2 shows #1042 under `Pending` with counters 3 / 1 / 1. Only the start screens were checked.
-- [x] The general demo link opens in a private window without signing in to Figma, and the demo scenario was rehearsed from Flow 1 (verified manually by Tuğçe on 18 November 2026). That rehearsal used the 31-frame version, before the kitchen frames were changed.
-- [x] The Flow 8 and Flow 9 links open at the right frame (checked on 18 Nov in a signed-in Figma session) and in a private window without signing in (verified manually by Tuğçe on 18 November 2026). Flow 8 is static. Flow 9: the standalone-link check covered only the start frame; see the item below.
-- [x] Flow 9: 04g → 04h → 04i → 04g (Deactivate, then Reactivate) – verified manually by Tuğçe on 18 November 2026 during the demo rehearsal. The 04h Cancel → 04g step is not counted as verified by this check. Earlier checks verified 04g → 04h → 04g and 04g → 04h → 04i → 04g in the live prototype in a browser on 18 Nov (historical evidence).
-- [x] Kitchen buttons outside the #1042 demo have no prototype connection (checked by Tuğçe in Figma on 18 Nov).
-- [ ] Chef path for #1042: `scr-03a` → `scr-03b` → `scr-03c` → `scr-03e`, and `scr-03d` → `scr-03e` (Flow 6). Pending: click-through not recorded yet.
-- [x] The file is shared as "Anyone can view" (checked on 18 Nov in a signed-in Figma session).
+Prototype checks of 18 November 2026 (navigation and displayed content only; no backend):
+
+- [x] Design file and Flow 2 to Flow 7 open without sign-in (private window) at their start screens; result screenshots recorded.
+- [x] General demo link opens without sign-in; demo rehearsed from Flow 1 (31-frame version, before the kitchen change).
+- [x] Flow 8 and Flow 9 links open at their start frames, signed in and without sign-in.
+- [x] Chef path for #1042: `scr-03a` → `scr-03b` → `scr-03c` → `scr-03e`, and `scr-03d` → `scr-03e` (Flow 6). Prototype navigation and displayed counters verified; result screenshots recorded. Ready result: 2 / 1 / 2.
+- [x] Kitchen buttons outside the #1042 demo have no prototype connection (checked in Figma).
+- [x] Flow 9: 04g → 04h → 04i → 04g verified during the demo rehearsal. An earlier browser check also covered 04h Cancel → 04g.
+- [x] File shared as "Anyone can view".
+- [ ] Independent reviewer re-check of the Chef path: pending.

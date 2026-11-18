@@ -41,7 +41,7 @@ The Waiter, Chef and Manager sections are independent, predefined Figma scenario
 | `scr-03d-kitchen-conflict` | "Order #1042 was already started" (`INVALID_STATUS_TRANSITION`), board refreshed; "Mark as ready" on #1042 | 2 / 2 / 1 |
 | `scr-03e-kitchen-ready` | #1042 under `Ready`, "No additional stock was deducted" | 2 / 1 / 2 |
 
-Prototype path: `scr-03a` → Start preparing on #1042 → `scr-03b` → `scr-03c` → Mark as ready on #1042 → `scr-03e`. Flow 6 starts at `scr-03d`; Mark as ready on #1042 leads to `scr-03e`.
+Prototype path: `scr-03a` → Start preparing on #1042 → `scr-03b` → `scr-03c` → Mark as ready on #1042 → `scr-03e`. Flow 6 starts at `scr-03d`; Mark as ready on #1042 leads to `scr-03e`. Prototype navigation and displayed counters verified on 18 November 2026 for both paths; result screenshots recorded. This covers the prototype only, not stock changes or backend behavior.
 
 Demo interactions cover order #1042 only. Start preparing on #1040 and #1043 and Mark as ready on #1041 are drawn at 40% opacity and have no prototype connection. This is a limit of the prototype demo. In the application, any `PENDING` order can be started and any `PREPARING` order can be marked as ready by an authorized user (`PATCH /orders/{orderId}/status`; an invalid transition returns `409 INVALID_STATUS_TRANSITION`).
 
@@ -76,7 +76,7 @@ In the prototype, **Deactivate ingredient** (04g → 04h → 04i) and **Reactiva
 
 | Topic | Frames | Status |
 |---|---|---|
-| Only the waiter creates orders | `scr-02a`, `scr-02b`, `scr-02c`; no manager order screen | Applied in Figma. Matches SRS #54 FR-06 and API draft #62 (`createOrder` roles: WAITER). **Not yet true in `develop`:** `api/openapi.yaml` 0.1.0 still lists WAITER and MANAGER. API, API README and UML already agree in draft #62, as Ayşe confirmed in her PR response. **Open conflict:** backlog #55 US-06 AC1 at `beba8c6` says "An authorized Waiter or Manager can create an order"; Beyzanur requested changes on #55 for this ([review](https://github.com/seng321-7th-team/PantryChef/pull/55#pullrequestreview-5960692446)). The Figma design stays waiter-only until the owners resolve it. Formal review/merge remains pending; hiding a UI action is not server-side authorization. |
+| Only the waiter creates orders | `scr-02a`, `scr-02b`, `scr-02c`; no manager order screen | Applied in Figma. Matches SRS #54 FR-06 and API draft #62 (`createOrder` roles: WAITER; API, API README and UML agree). `develop` 0.1.0 still lists WAITER and MANAGER. **Open conflict (F-07 in PR #50):** backlog #55 US-06 AC1 at `beba8c6` says "Waiter or Manager"; changes requested in the [#55 review](https://github.com/seng321-7th-team/PantryChef/pull/55#pullrequestreview-5960692446). The design stays waiter-only until the requirement and API owners decide. Hiding a UI action is not server-side authorization. |
 | Waiter cancels a `PENDING` order | `scr-02a` → `scr-02d` → `scr-02a` | Applied in Figma |
 | Manager cancels a `PENDING` order | `scr-05d` | Applied in Figma |
 | Late cancel (`PREPARING` / `READY`): manager or waiter with `ORDER_LATE_CANCEL`; reason required, 3–500 characters (`422 CANCELLATION_REASON_REQUIRED`); stock is not restored | `scr-05b`, `scr-05f`, `scr-05e`, `scr-05h` | Applied in Figma. Matches API 0.1.0. |
