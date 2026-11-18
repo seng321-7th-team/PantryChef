@@ -25,7 +25,7 @@ Verify MVP roles, ingredient administration, stock and adjustments, recipes, ord
 ## Review responsibilities
 
 - QA maintains the test cases, results and traceability. Burcu reviews scope and acceptance criteria, Emre reviews the quality measurements and deployment evidence, and Ayşe reviews the API, state and stock assertions.
-- Run unit and integration cases before E2E. Rerun the stock and cancellation cases after changes to order state, reservation handling or permissions. Use the agreed test build when comparing browser and API evidence.
+- Run unit and integration cases before E2E. Use the case variants and decision gates in the matrix to track partial coverage. Run same-key races on isolated fixtures and collect both responses and persisted-state evidence. Rerun the stock and cancellation cases after changes to order state, reservation handling or permissions. Use the agreed test build when comparing browser and API evidence.
 - Treat duplicate physical deductions, unauthorized mutations and partial commits as blocking defects. Treat unconfirmed expected results as blocked and record the decision owner in the traceability matrix.
 
 ## References
@@ -34,4 +34,6 @@ Verify MVP roles, ingredient administration, stock and adjustments, recipes, ord
 - [Backlog PR #55](https://github.com/seng321-7th-team/PantryChef/pull/55)
 - [FR/NFR PR #51](https://github.com/seng321-7th-team/PantryChef/pull/51)
 - [OpenAPI and UML PR #62](https://github.com/seng321-7th-team/PantryChef/pull/62)
+- [Architecture decisions PR #64](https://github.com/seng321-7th-team/PantryChef/pull/64) · [Database schema PR #66](https://github.com/seng321-7th-team/PantryChef/pull/66) · [Consistency review PR #68](https://github.com/seng321-7th-team/PantryChef/pull/68)
+- [UI flows PR #70](https://github.com/seng321-7th-team/PantryChef/pull/70) · [Prototype PR #71](https://github.com/seng321-7th-team/PantryChef/pull/71)
 - [Test cases](test-cases.md) · [Traceability](traceability-matrix.md)
