@@ -12,7 +12,7 @@ Flows only cover what the 31 frames show. Features that the User Stories require
 
 ## Flow list and Figma starting points
 
-The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/1a9b1baae5627d7d6cfb16df42bd9b014a1cd916/docs/ui-ux/figma-links.md) (PR #71, commit `1a9b1ba`). The eight Mermaid diagrams of the earlier version render on GitHub (checked by Codex on 18 Nov). U1a and the revised U2 (added in commit `0e57700`, unchanged since) also render on GitHub with their boxes and arrows (verified manually by Tuğçe on 18 November 2026).
+The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/1a9b1baae5627d7d6cfb16df42bd9b014a1cd916/docs/ui-ux/figma-links.md) (PR #71, commit `1a9b1ba`). The eight Mermaid diagrams of the earlier version render on GitHub (checked on 18 Nov). U1a and the revised U2 (added in commit `0e57700`, unchanged since) also render on GitHub with their boxes and arrows (verified manually by Tuğçe on 18 November 2026).
 
 | Section | Flow | Figma flow starting point |
 |---|---|---|
@@ -198,3 +198,4 @@ The current FR/NFR mapping and open scope decisions are maintained by PR #50; it
 ## Not drawn (no frame)
 
 Stock movements and reservations view, new menu item with its first recipe, staff and permission management (granting the late-cancel permission), "Show inactive" filter. These depend on Burcu's decisions listed in `ui-user-story-review.md`. A manager order-creation screen is not drawn on purpose (waiter-only order creation).
+
