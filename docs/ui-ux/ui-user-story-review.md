@@ -4,7 +4,7 @@
 **Sprint:** Sprint 2
 **Task:** S2-31 – UI Design–User Story Consistency Review
 **Owner:** Tuğçe Çevik · **Reviewer:** Burcu Ücük
-**Status:** Draft – aligned on 18 Nov 2026 with the current SRS/backlog drafts and Ayşe's architecture sources. The 31-frame prototype is reviewed as a design, not as a working backend. UI scope decisions D-3, D-4 and D-6 remain open. D-2/D-9a, D-5/D-9b and O-04/D-9c are aligned across the cited drafts; team confirmation/review and merge are separate pending steps. No requirement or MVP scope is changed by this review.
+**Status:** Draft – aligned on 18 Nov 2026 with the current SRS/backlog drafts and Ayşe's architecture sources. The 32-frame prototype (Figma export of 18 Nov, 23:47) is reviewed as a design, not as a working backend. UI scope decisions D-3, D-4 and D-6 remain open. D-2/D-9a and D-5/D-9b are aligned across the cited drafts, and Burcu confirmed CR-01 (zero-stock creation). D-9c is open: backlog #55 US-06 AC1 now differs from SRS FR-06 and API draft #62 (F-07). Review and merge are separate pending steps. No requirement or MVP scope is changed by this review.
 
 ## 1. Scope, sources and limits
 
@@ -13,13 +13,13 @@ Compared in this review:
 | Source | Version used and purpose |
 |---|---|
 | Current SRS draft, `docs/srs.md` | [PR #54, `0ad80b3`](https://github.com/seng321-7th-team/PantryChef/blob/0ad80b38ee696db5e7d8ffc47ef00eebad8a4b12/docs/srs.md); FR-01 to FR-14, used for the current coverage matrix below. Not merged. |
-| Current refined backlog draft | [PR #55, `ec1911a`](https://github.com/seng321-7th-team/PantryChef/blob/ec1911a24554d8cfafa3330c80a5bd1bc8080329/docs/product-backlog.md); US-01 to US-14 and their acceptance criteria. Not merged. |
+| Current refined backlog draft | [PR #55, `beba8c6`](https://github.com/seng321-7th-team/PantryChef/blob/beba8c6baf1e49c98773262237645063d60d46db/docs/product-backlog.md); US-01 to US-14 and their acceptance criteria. Re-read on 18 Nov; changes since `ec1911a` are in O-03. Changes requested on #55. Not merged. |
 | FR/NFR draft | [PR #51, `fc70b81`](https://github.com/seng321-7th-team/PantryChef/blob/fc70b81c0ebfaf23da5b1a90015b475bcaaa31a0/docs/non-functional-requirements.md); NFR-01 to NFR-15, plus wording differences recorded below. Not merged. |
 | API contract and C4/UML/ER diagrams | [PR #62, `f061da2`](https://github.com/seng321-7th-team/PantryChef/blob/f061da27501bf7fc62b39aa278aeb7693259864e/api/openapi.yaml); API 0.2.0 draft. OpenAPI content is unchanged from `866122e`/`cb634c3`; `f061da2` changes the State notes/export. Not merged. |
-| ADRs | [PR #64, `60d1a8b`](https://github.com/seng321-7th-team/PantryChef/blob/60d1a8ba08c21d8e07f873a4fe218c15c36dfae7/docs/architecture/architecture-decisions.md); ADR-004 to ADR-010 read for the rules relevant to the UI; preserve each record's Accepted/Proposed/Rejected status. Not merged. |
+| ADRs | [PR #64, `60d1a8b`](https://github.com/seng321-7th-team/PantryChef/blob/60d1a8ba08c21d8e07f873a4fe218c15c36dfae7/docs/architecture/architecture-decisions.md); ADR-004 to ADR-010 read for the rules relevant to the UI. **Merged** into `develop` on 18 Nov (`3688747`; the file is identical to `60d1a8b`). The merge does not change any record's status: Proposed records stay Proposed. |
 | Database schema | [PR #66, `fa446c1`](https://github.com/seng321-7th-team/PantryChef/blob/fa446c1eb6ad0d075c8fbd85e9b7974021bee9d1/docs/architecture/database-schema.md); cancellation/history mapping and transaction outlines. Proposed DDL, not runtime evidence. Not merged. |
-| Architecture consistency review | [PR #68, `46e8d1c`](https://github.com/seng321-7th-team/PantryChef/blob/46e8d1c944e7dc524f9266bdbe2197bbcd428e3c/docs/architecture/consistency-review.md); CR-01 applied awaiting Burcu's confirmation; CR-04/CR-05 resolved in drafts. Not merged. |
-| UI deliverables | PR #70 at `0e57700` (flows); PR #71 at `475c804` (three documents, 31 PNGs and native 31-page PDF). Figma page "03 Screens v2". Not merged. |
+| Architecture consistency review | [PR #68, `46e8d1c`](https://github.com/seng321-7th-team/PantryChef/blob/46e8d1c944e7dc524f9266bdbe2197bbcd428e3c/docs/architecture/consistency-review.md); CR-01 confirmed by Burcu in [her review of #68](https://github.com/seng321-7th-team/PantryChef/pull/68#pullrequestreview-5957095073) on 18 Nov; CR-04/CR-05 resolved in drafts. Not merged. |
+| UI deliverables | PR #70 (flows); PR #71 at `d0e2e35` (three documents, 32 PNGs and the 32-page Figma PDF export of 18 Nov, 23:47). Figma page "03 Screens v2". Not merged. |
 | Merged historical baseline | `develop` at `5dd8253`: API 0.1.0, Sprint 1 backlog, task board and RACI. The files used from `0c3e244` are identical at `5dd8253`. The older contract is not confused with the API 0.2.0 draft. |
 | Historical SRS | PR #45 at `d34389a`, FR-001 to FR-027. Retained only in section 2b for traceability to the original review. #45 and #54 both remain open; Burcu must identify the superseded PR. |
 
@@ -41,6 +41,7 @@ Limits of the evidence:
 |---|---|---|
 | `PENDING` reserves, does not deduct | Kitchen board: "Reserved · stock not deducted yet" | US-07, OpenAPI `/orders/{orderId}/status` |
 | `PREPARING` deducts once | Kitchen board: "Stock deducted once"; 03b "Deducting stock…" with a lock on one order | US-09, OpenAPI (`Idempotency-Key`, `409 INVALID_STATUS_TRANSITION`) |
+| `READY` does not move stock | 03e: "Order #1042 is now Ready. No additional stock was deducted." | US-10 AC3, OpenAPI transition table |
 | `PENDING` cancel releases reservations, physical stock unchanged | 05d dialog | US-11 AC3–4, OpenAPI transition table |
 | Late cancel: manager or waiter with permission, reason required, stock not restored | 05b dialog, 05c 403, 05e result | US-12 AC1–3, 6, OpenAPI (`LATE_CANCEL_NOT_PERMITTED`, `CANCELLATION_REASON_REQUIRED`) |
 | `NEGATIVE_AVAILABLE_STOCK` on adjustment | 04c | OpenAPI `/inventory/adjustments` |
@@ -60,11 +61,11 @@ This matrix uses SRS FR-01 to FR-14 and the corresponding US-01 to US-14. Covera
 | FR-03 / US-03 | Physical, reserved and available quantities | `scr-04a`; U5 | Quantities are visible; `available = onHand - reserved` is the rule. Static values do not verify runtime invariants. |
 | FR-04 / US-04 | Authorized adjustments with reason | `scr-04b`, `scr-04c`; U5 | Adjustment dialog and negative-available error drawn. Opening stock uses a separate `INITIAL_STOCK` adjustment. No real mutation is performed. |
 | FR-05 / US-05 | Recipes and preserved requirements | `scr-06a`, `scr-06b`; U8 | Edit/version history shown; existing orders keep their version. Creating a menu item with its first recipe is not drawn (F-04/D-4). |
-| FR-06 / US-06 | Waiter order creation | `scr-02a`–`scr-02c`; U1 | Waiter-only creation, Pending result and rejection states drawn. Matches current SRS/backlog and draft #62; merged API 0.1.0 still differs. |
+| FR-06 / US-06 | Waiter order creation | `scr-02a`–`scr-02c`; U1 | Waiter-only creation, Pending result and rejection states drawn. Matches SRS FR-06 and draft #62. **Open conflict:** backlog US-06 AC1 at `beba8c6` says "Waiter or Manager" (F-07); merged API 0.1.0 also allows MANAGER. |
 | FR-07 / US-07 | Atomic reservation and duplicate protection | `scr-02b`, `scr-02c`; U1 | Shortage and accepted-order states drawn; retry key rule described. Concurrency, all-or-nothing behavior and replay need backend tests. |
-| FR-08 / US-08 | Kitchen queue | `scr-03a`–`scr-03d`; U3/U4 | Order identifiers/items/quantities/statuses visible. Polling behavior described from ADR-010, not executed by Figma. |
+| FR-08 / US-08 | Kitchen queue | `scr-03a`–`scr-03e`; U3/U4 | Order identifiers/items/quantities/statuses visible. Polling behavior described from ADR-010, not executed by Figma. |
 | FR-09 / US-09 | Start preparation and consume once | `scr-03a` → `scr-03b` → `scr-03c`; U3 | Preparation states shown. `ACTIVE → CONSUMED`, equal reduction of onHand/reserved; no runtime proof of exactly-once deduction. |
-| FR-10 / US-10 | Mark Ready | Ready column in `scr-03a`/`scr-03c`; U3 | **Partial interaction:** Ready cards and button exist, but Mark as ready has no prototype target. Expected API transition is described separately; no second deduction. |
+| FR-10 / US-10 | Mark Ready | `scr-03c` → `scr-03e`, `scr-03d` → `scr-03e`; U3/U4 | Mark as ready on #1042 leads to `scr-03e-kitchen-ready` (#1042 `Ready`, counters 2 / 1 / 2, "No additional stock was deducted"). Demo interactions cover #1042 only; the faded buttons on other orders are a prototype limit, not a product rule. A click-through of these transitions is not recorded yet; no runtime proof. |
 | FR-11 / US-11 | Pending cancellation | `scr-02d`, `scr-05d`; U2/U7 | Dialogs describe `ACTIVE → RELEASED`, onHand unchanged. Return to a reused list frame is not proof of a persisted Cancelled result. |
 | FR-12 / US-12 | Exceptional cancellation | `scr-05b`, `scr-05c`, `scr-05e`–`scr-05h`; U2/U7 | Manager/authorized waiter, 3–500-character reason, rejection and result/audit states drawn; no automatic stock restore. |
 | FR-13 / US-13 | Traceable order/inventory history | `scr-05a`, `scr-05e`; U7 | **Partial:** audit log shown; reservation/consumption movements and reservation inspection have no view (F-03/D-3). |
@@ -179,8 +180,8 @@ Each finding lists the User Story, the OpenAPI endpoint, the Figma frame, the ga
 | User Story | Historical Sprint 1 AC1 included quantity at creation. Current backlog #55 US-02 AC1 separates the initial authorized adjustment; SRS #54 FR-02 explicitly starts physical stock at zero. |
 | Current API draft #62 | `IngredientCreate` requires `name`, `unit`, `lowStockThreshold`; onHand/reserved start at zero. Opening stock is a separate `POST /inventory/adjustments` with reason `INITIAL_STOCK`. Historical API 0.1.0 named the input `IngredientInput`. |
 | Figma | **Updated 18 Nov (re-export at about 01:35):** `scr-04d`, `scr-04e` and `scr-04f` have no Initial stock field; helper text "Starts with 0 stock. Add stock using Adjust." The earlier 18 Nov export had an optional "Initial stock" field (helper "Leave blank to start at 0. You can add stock later."). |
-| Gap | **Closed in Figma.** SRS FR-02 (PR #54), backlog US-02 AC1 (PR #55), API draft #62 (`866122e` removed the optional `initialQuantity` that `dbb06be` had; `api/openapi.yaml` is unchanged in `cb634c3`), ADR-009 "Rejected" in PR #64 (since `07fd074`) and the schema in PR #66 (`5475872`) all describe "create with zero stock, then enter the opening stock with an `INITIAL_STOCK` adjustment". The re-exported frames follow the same rule. None of these PRs is merged. |
-| Options | No Figma change is left. The rule takes effect in the repository only when PRs #54, #55, #62, #64 and #66 are merged. (See D-5, D-9b.) |
+| Gap | **Closed in Figma.** SRS FR-02 (PR #54), backlog US-02 AC1–AC3 (PR #55 at `beba8c6`: "Newly created ingredients have onHand = 0 and reserved = 0"; initial stock through a separate `INITIAL_STOCK` adjustment), API draft #62 (`866122e` removed the optional `initialQuantity` that `dbb06be` had; `api/openapi.yaml` is unchanged in `cb634c3`), ADR-009 "Rejected" in PR #64 (since `07fd074`) and the schema in PR #66 (`5475872`) all describe "create with zero stock, then enter the opening stock with an `INITIAL_STOCK` adjustment". The re-exported frames follow the same rule. None of these PRs is merged. |
+| Options | No Figma change is left. Burcu confirmed CR-01 on 18 Nov ([review](https://github.com/seng321-7th-team/PantryChef/pull/68#pullrequestreview-5957095073)). ADR #64 is merged; the rule takes effect in the other sources when PRs #54, #55, #62 and #66 are merged. (See D-5, D-9b.) |
 
 ### F-06 – No screen to grant the late-cancel permission to a waiter
 
@@ -191,6 +192,16 @@ Each finding lists the User Story, the OpenAPI endpoint, the Figma frame, the ga
 | Figma | 05a–05e have a "Preview as: Manager / Authorized waiter / Waiter" switch. The switch is a prototype aid only (the login frame says so for roles); no frame lets a manager grant or remove the permission. |
 | Gap | The permission can be exercised in the UI but not assigned. No User Story explicitly requires a user-management screen. |
 | Options | A) Add a staff-permissions screen. B) Treat it as outside the UI for the MVP and say so in the SRS (see D-6). |
+
+### F-07 – Order creation role: backlog differs from SRS and API draft (open)
+
+| | |
+|---|---|
+| User Story | Backlog #55 US-06 AC1 at `beba8c6`: "An authorized Waiter or Manager can create an order by selecting valid menu items and positive portion quantities." At `ec1911a` it read: "A waiter can select menu items and positive portion quantities." |
+| SRS / OpenAPI | SRS #54 FR-06: "The system shall allow authorized Waiters to create orders". API draft #62 `createOrder`: "Roles: WAITER". Merged API 0.1.0 still allows WAITER and MANAGER. |
+| Figma | Order creation exists only on the waiter screen (`scr-02a`–`scr-02c`); there is no manager order screen. |
+| Gap | Two current drafts disagree on whether a manager may create orders. Beyzanur requested changes on #55 for this ([review](https://github.com/seng321-7th-team/PantryChef/pull/55#pullrequestreview-5960692446)) so that the QA authorization case has one expected result. |
+| Options | The requirement and API owners decide the role and align US-06 AC1, FR-06 and the API. The Figma design stays waiter-only until then. This review does not change the backlog or the API. (See D-9c.) |
 
 ## 4. Cancellation records
 
@@ -216,14 +227,14 @@ An **audit log** is a runtime record of what users did (`/audit-logs`). An **ADR
 
 Evidence:
 
-- [ADR document #64 at `60d1a8b`](https://github.com/seng321-7th-team/PantryChef/blob/60d1a8ba08c21d8e07f873a4fe218c15c36dfae7/docs/architecture/architecture-decisions.md) exists and has been read for the UI-related rules. It is an architecture record, not runtime audit evidence.
+- [ADR document #64 at `60d1a8b`](https://github.com/seng321-7th-team/PantryChef/blob/60d1a8ba08c21d8e07f873a4fe218c15c36dfae7/docs/architecture/architecture-decisions.md) has been read for the UI-related rules and is merged into `develop` (`3688747`). It is an architecture record, not runtime audit evidence. The merge does not make Proposed records Accepted.
 - ADR-004 (Proposed): Pending reserves, Preparing consumes once, Ready does not move stock, Pending cancellation releases. Matches the UI descriptions.
 - ADR-005 (Proposed): keys are user/operation-scoped, claimed in the business transaction; a completed matching request replays. Network retries do not imply the first request committed. Matches the qualified retry rule in U1.
-- ADR-006: cancellation policy Accepted (D-12); WAITER-only creation Proposed in #62. The design matches both, without treating Proposed as merged/approved.
+- ADR-006: cancellation policy Accepted (D-12); WAITER-only creation Proposed in #62. The design matches both, without treating Proposed as approved. Backlog US-06 AC1 now differs (F-07).
 - ADR-007 (Proposed): immutable recipe versions and order snapshots. Matches 06a/06b; initial recipe creation remains a UI gap, not a versioning contradiction.
 - ADR-008 (Proposed): ingredient soft delete, retained history and existing Pending orders; matches 04g/04h/04i.
 - ADR-009 (Rejected): optional stock-at-creation proposal retained as history. Current design starts at zero then adjusts.
-- ADR-010 (Accepted within the draft ADR document): kitchen polling every 15–30 seconds. C4 Container #62 also records it. D-8's architecture-document update is complete; Figma itself does not poll.
+- ADR-010 (Accepted in the ADR document): kitchen polling every 15–30 seconds. C4 Container #62 also records it. D-8's architecture-document update is complete; Figma itself does not poll.
 
 No new architecture decision is approved by this UI comparison. ADR-001's written team-choice record and other Proposed decisions remain with their owners. The open UI coverage decisions below are preserved.
 
@@ -231,8 +242,8 @@ No new architecture decision is approved by this UI comparison. ADR-001's writte
 
 - **O-01. "Updates automatically" (kitchen board).** ADR-010 and C4 Container #62 now document polling every 15–30 seconds. OpenAPI describes the request, not a push channel. The UI and architecture descriptions align; live background refresh still needs implementation testing. D-8 is answered at documentation level.
 - **O-02. Login placeholder contrast.** Checked; no contrast fix needed. The username placeholder ("e.g. waiter01") in `scr-01-login` is `#6B7280` on `#FFFFFF`, both at 100% opacity. The calculated contrast ratio is 4.83:1, above the WCAG 2.1 AA minimum of 4.5:1 for normal text (verified manually by Tuğçe on 18 November 2026). The frame was not changed.
-- **O-03. Backlog version.** The current matrix and gaps have been checked against refined backlog #55 at `ec1911a`. It is delivered in a PR but not merged. The Sprint 1 backlog remains only a historical baseline.
-- **O-04. Manager creating orders.** Merged API 0.1.0 allows WAITER and MANAGER on createOrder. Current draft #62 restricts creation to WAITER in OpenAPI, README and UML; Ayşe confirmed this in her #62 response and #68 R-02. The current SRS/backlog and waiter-only Figma agree. Draft alignment is complete; formal review/merge remains pending. GET /orders remains available to MANAGER, CHEF and WAITER.
+- **O-03. Backlog version.** The current matrix and gaps have been re-checked against refined backlog #55 at `beba8c6` (18 Nov). Changes since `ec1911a`: US-02 acceptance criteria (zero stock at creation and a separate `INITIAL_STOCK` adjustment; matches F-05) and US-06 AC1 (Waiter or Manager; F-07). The backlog is in an open PR with changes requested. The Sprint 1 backlog remains only a historical baseline.
+- **O-04. Manager creating orders.** Merged API 0.1.0 allows WAITER and MANAGER on createOrder. Current draft #62 restricts creation to WAITER in OpenAPI, README and UML; Ayşe confirmed this in her #62 response and #68 R-02. SRS FR-06 and the waiter-only Figma agree with #62, but backlog US-06 AC1 at `beba8c6` says Waiter or Manager. This is recorded as open finding F-07. GET /orders remains available to MANAGER, CHEF and WAITER.
 
 - **O-06. Burcu's consumption terminology is not fully synchronized.** SRS #54 FR-09 and backlog #55 US-09 AC4 say `ACTIVE → CONSUMED`, matching the UI/API. SRS §3.2 still says "consumed/released", §6.3 scenario 4 says "releases", and #51 FR-09/scenario 4 also use release wording. Ask Burcu to use CONSUMED for preparation and RELEASED only for Pending cancellation; do not change the UI to the older wording.
 - **O-07. Inactive low-stock rule.** The UI/API draft excludes inactive ingredients from alerts; SRS FR-14 does not state this exception. #68 CR-03 remains open for Burcu. This review documents the draft-only detail rather than assuming the requirement has changed.
@@ -245,14 +256,14 @@ No new architecture decision is approved by this UI comparison. ADR-001's writte
 | D-2 | Draft alignment complete: SRS/backlog and #62 say deactivation; 04g–04i exist, #68 CR-04 resolved. Burcu/team review and merge pending. No automatic rollback to hard delete. | F-02, D-9a |
 | D-3 | **Open UI scope:** SRS #54 FR-13 and backlog #55 US-13 AC2/4 require traceable/viewable history. Audit is drawn, reservation/consumption movement views are not. Decide how prototype/MVP UI covers the remaining history; do not silently exclude it. | F-03 |
 | D-4 | **Open UI scope:** backlog #55 US-05 AC1 requires creating and updating recipes. Only edit is drawn; API creates the first recipe with a new menu item. Decide whether and when that create UI is required. | F-04 |
-| D-5 | Closed in Figma; current SRS/backlog/API/ADR/schema drafts all say create at zero then adjust. CR-01 still awaits Burcu's formal confirmation; sources not merged. | F-05, D-9b |
+| D-5 | Closed in Figma; current SRS/backlog/API/ADR/schema sources all say create at zero then adjust. Burcu confirmed CR-01 on 18 Nov ([review](https://github.com/seng321-7th-team/PantryChef/pull/68#pullrequestreview-5957095073)). ADR #64 is merged; SRS #54, backlog #55, API #62 and schema #66 are not. | F-05, D-9b |
 | D-6 | **Open UI scope:** confirm how staff/ORDER_LATE_CANCEL permission assignment is provided. SRS #54 §8 question 2 is open. Prototype role/permission previews do not implement account management. | F-06 |
 | D-7 | Answered in architecture drafts: `order_status_history`, cancellation columns on `orders`, `audit_logs`; #68 R-03 records the mapping. Merge and migration/runtime validation are pending, not the table-name question. | C-01 |
 | D-8 | Answered in ADR-010 and C4 Container #62: 15–30 s polling. Frontend implementation/test remains pending. | O-01 |
 
 Until the open UI scope questions are answered, no missing P0 capability is declared out of scope by this review.
 
-**D-9 remains three separate dispositions:** D-9a soft delete and D-9c WAITER-only creation match the current SRS/backlog/API/UI drafts but need team review/merge; D-9b zero-stock creation is applied across drafts and Figma, with Burcu's CR-01 confirmation still pending. "Aligned in drafts", "approved" and "merged" are different states.
+**D-9 remains three separate dispositions:** D-9a soft delete matches the current SRS/backlog/API/UI drafts but needs team review/merge. D-9b zero-stock creation is applied across drafts and Figma, and Burcu confirmed CR-01. D-9c WAITER-only creation is **open**: SRS FR-06, API draft #62 and Figma say WAITER, backlog US-06 AC1 says Waiter or Manager (F-07); the requirement and API owners decide. "Aligned in drafts", "approved" and "merged" are different states.
 
 ## 7a. Closed findings and update log (18 Nov 2026)
 
@@ -263,7 +274,10 @@ Until the open UI scope questions are answered, no missing P0 capability is decl
 | "Kitchen conflict error missing" (FR-019) | **Closed in Figma.** `scr-03d-kitchen-conflict`. |
 | Waiter cancel dialog and authorized-waiter late cancel had no frames | **Closed in Figma.** `scr-02d`, `scr-05f`, `scr-05g`, `scr-05h`. |
 | General error text in `scr-07a-states` ("Nothing was changed") | **Closed.** The 500 card now reads "We couldn't confirm the result. Refresh to check the latest status." Checked on a screenshot on 18 Nov. |
-| Frame count "18" | Replaced by 31 (live check, 18 Nov). |
+| Frame count "18" | Replaced by 31 (live check, 18 Nov), then by 32 (Figma export of 18 Nov, 23:47, adds `scr-03e-kitchen-ready`). |
+| Mark as ready had no prototype target (FR-10/US-10) | **Updated in Figma.** Mark as ready on #1042 leads to `scr-03e-kitchen-ready` from `scr-03c` and from `scr-03d` (Flow 6). Demo interactions cover #1042 only. A click-through of these transitions is not recorded yet. |
+| CR-01 (zero stock at creation) confirmation | **Confirmed** by Burcu on 18 Nov in her review of #68. |
+| Order creation role (D-9c) | **Open** as F-07 since backlog #55 `beba8c6` changed US-06 AC1. |
 | Login placeholder contrast (O-02) | **Checked; no contrast fix needed.** `#6B7280` on `#FFFFFF` (100% opacity) gives 4.83:1, above 4.5:1 (WCAG 2.1 AA, normal text); verified manually by Tuğçe on 18 November 2026. No Figma change. |
 | Current requirement baseline | Added FR-01–FR-14 / US-01–US-14 matrix from #54/#55; old #45 matrix retained as historical only. |
 | Architecture questions D-7/D-8 | Answered by #66/#68 and ADR-010/C4 respectively; review/merge and implementation checks remain separate. |
@@ -276,7 +290,8 @@ Status words: **Matches API draft** (follows PR #62, not merged), **Decision pen
 
 ## 8. Next steps (proposal)
 
-1. Burcu answers the three UI scope questions D-3/D-4/D-6 and confirms CR-01; a missing prototype frame is not automatically an MVP exclusion.
-2. Burcu aligns consumption terminology in SRS/#51 and clarifies inactive low-stock behavior; Burcu/Bilgesu identify the superseded SRS/backlog PRs.
-3. Complete review/merge of the cited drafts. Re-check against the merged develop; preserve old commit evidence as history. A pending merge alone is not a new business-rule mismatch.
-4. Revisit frames only if an owner explicitly requires a missing UI capability or changes an approved rule. No new design, API behavior or scope decision is introduced by this update.
+1. Burcu answers the three UI scope questions D-3/D-4/D-6; a missing prototype frame is not automatically an MVP exclusion.
+2. The requirement and API owners resolve F-07 (who may create orders) so that US-06 AC1, FR-06 and the API give one expected result.
+3. Burcu aligns consumption terminology in SRS/#51 and clarifies inactive low-stock behavior; Burcu/Bilgesu identify the superseded SRS/backlog PRs.
+4. Complete review/merge of the cited drafts. Re-check against the merged develop; preserve old commit evidence as history. A pending merge alone is not a new business-rule mismatch.
+5. Revisit frames only if an owner explicitly requires a missing UI capability or changes an approved rule. No new design, API behavior or scope decision is introduced by this update.
