@@ -302,7 +302,7 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. A waiter can select menu items and positive portion quantities.
+1. An authorized Waiter or Manager can create an order by selecting valid menu items and positive portion quantities.
 2. Invalid or empty orders are rejected.
 3. A successfully created order receives a unique identifier.
 4. Its initial state is `Pending`.
