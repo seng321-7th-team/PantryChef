@@ -10,7 +10,7 @@ This is a click-through script for the Figma prototype. It uses only clicks that
 
 **General demo start:** open the *General demo prototype* link in `figma-links.md`. It starts at `scr-01-login`. Choose a role with the prototype-only buttons (Waiter, Chef, Manager). The two Flow 8 / Flow 9 links start directly at their frames and are for short side demos.
 
-Where a step follows the API draft in PR #62 (head `866122e`, not merged), it is marked **(API draft #62)**.
+Where a step follows API draft #62, it is marked **(API draft #62)**. The current checked head is `f061da2` (not merged); OpenAPI content is unchanged from `866122e`/`cb634c3`. Current cross-check sources: SRS #54 `0ad80b3`, backlog #55 `ec1911a`, ADR #64 `60d1a8b` and schema #66 `fa446c1`. Draft agreement is not an implementation or merge claim.
 
 ## Part 1 – Waiter (about 3 minutes)
 
@@ -53,12 +53,12 @@ Open the Flow 8 link (`scr-07a-states`): loading, empty states, `INTERNAL_ERROR`
 - The prototype does not call a backend. Do not say that stock, reservations or the audit log were really changed.
 - Deactivate and Reactivate are prototype transitions between frames.
 - PR #62 is a draft API version and is not merged. Soft delete and waiter-only order creation are still pending in the team. For initial stock the drafts now say "start at zero, then adjust", and `scr-04d` to `scr-04f` follow it since the 18 Nov re-export.
-- Not shown: stock movements and reservation views, new menu item, staff and permission management, delivery (not a feature).
+- Not shown: stock movements and reservation views, new menu item with its first recipe, staff and permission management. These remain product-owner UI scope questions. Delivery is outside the MVP. A successful demo rehearsal does not prove backend requirements or numeric NFR targets.
 
 ## Checklist before the demo
 
 - [x] The general demo link opens in a private window without signing in to Figma, and the demo scenario was rehearsed from Flow 1 (verified manually by Tuğçe on 18 November 2026).
 - [x] The Flow 8 and Flow 9 links open at the right frame (checked by Codex on 18 Nov in a signed-in Figma session).
-- [x] The Flow 8 and Flow 9 links open in a private window without signing in to Figma (verified manually by Tuğçe on 18 November 2026). Flow 8 is static; for Flow 9 only the start frame was opened, the Deactivate/Reactivate transitions were not re-tested.
-- [ ] Flow 9: 04g → 04h → 04g, then 04g → 04h → 04i → 04g (verified in the live prototype in a browser by Codex on 18 Nov).
+- [x] The Flow 8 and Flow 9 links open in a private window without signing in to Figma (verified manually by Tuğçe on 18 November 2026). Flow 8 is static. Flow 9: The standalone-link check covered only the start frame. Deactivate/Reactivate transitions were subsequently tested during the demo rehearsal; see the item below.
+- [x] Flow 9: 04g → 04h → 04i → 04g (Deactivate, then Reactivate) – verified manually by Tuğçe on 18 November 2026 during the demo rehearsal. The 04h Cancel → 04g step is not counted as verified by this check. Earlier, Codex verified 04g → 04h → 04g and 04g → 04h → 04i → 04g in the live prototype in a browser on 18 Nov (historical evidence).
 - [x] The file is shared as "Anyone can view" (checked by Codex on 18 Nov in a signed-in Figma session; opening without signing in was verified manually by Tuğçe on 18 November 2026 for the general demo link and the Flow 8 and Flow 9 links).

@@ -11,7 +11,7 @@ Frame names (`scr-…`) are the Figma frame names listed in [`figma-links.md`](f
 Status words used in this file:
 
 - **Matches API draft** – the frame agrees with the API draft in PR #62 (head `866122e`, version 0.2.0, not merged). `develop` still has version 0.1.0.
-- **Decision pending** – the team has not confirmed it. Pull request comments were not available for this check, so no team confirmation is recorded.
+- **Decision pending** – a formal team/product-owner decision, review or merge is still pending. Current draft agreement and owner responses are recorded separately; this label does not mean that the matching draft implementation is absent.
 - **Applied in Figma** – the change exists in the live file and was checked on a screenshot. This is not a test of any backend.
 
 ## 1. Scope of the prototype
@@ -60,7 +60,7 @@ In the prototype, **Deactivate ingredient** (04g → 04h → 04i) and **Reactiva
 
 | Topic | Frames | Status |
 |---|---|---|
-| Only the waiter creates orders | `scr-02a`, `scr-02b`, `scr-02c`; no manager order screen | Applied in Figma. Matches API draft #62 (`createOrder` roles: WAITER). **Not yet true in `develop`:** `api/openapi.yaml` 0.1.0 still lists WAITER and MANAGER. Hiding the manager screen does not settle this; the API, API README and UML must agree. **Decision pending.** |
+| Only the waiter creates orders | `scr-02a`, `scr-02b`, `scr-02c`; no manager order screen | Applied in Figma. Matches API draft #62 (`createOrder` roles: WAITER). **Not yet true in `develop`:** `api/openapi.yaml` 0.1.0 still lists WAITER and MANAGER. API, API README and UML already agree in draft #62, as Ayşe confirmed in her PR response. Formal review/merge remains pending; hiding a UI action is not server-side authorization. |
 | Waiter cancels a `PENDING` order | `scr-02a` → `scr-02d` → `scr-02a` | Applied in Figma |
 | Manager cancels a `PENDING` order | `scr-05d` | Applied in Figma |
 | Late cancel (`PREPARING` / `READY`): manager or waiter with `ORDER_LATE_CANCEL`; reason required, 3–500 characters (`422 CANCELLATION_REASON_REQUIRED`); stock is not restored | `scr-05b`, `scr-05f`, `scr-05e`, `scr-05h` | Applied in Figma. Matches API 0.1.0. |
@@ -77,7 +77,7 @@ Permissions for `ORDER_LATE_CANCEL` and the chef role are not changed by this pr
 | API draft (PR #62, head `866122e`) | No `initialQuantity`; the ingredient starts at zero and the opening stock is entered with `POST /inventory/adjustments`, reason `INITIAL_STOCK`. (Head `dbb06be` had an optional `initialQuantity`; ADR-009 is Rejected in PR #64, head `07fd074`.) |
 | Figma `scr-04d` to `scr-04f` | No Initial stock field since the 18 Nov re-export (about 01:35); helper "Starts with 0 stock. Add stock using Adjust." The earlier 18 Nov export had an optional field. |
 
-All four sources now describe "start at zero, then adjust". The SRS, backlog and API drafts are not merged yet, so the item is closed in Figma only. Neither document is changed by this task.
+All four sources now describe "start at zero, then adjust". Figma work is complete and draft alignment is applied. Burcu's formal CR-01 confirmation and review/merge of the sources remain pending; these are separate from the design fix. No requirement is changed by this UI documentation task.
 
 ## 5. States shown in `scr-07a-states`
 
@@ -86,3 +86,14 @@ Loading; empty waiter orders; empty kitchen board; server error 500 `INTERNAL_ER
 ## 6. Not shown in the prototype
 
 Stock movements and reservation views, new menu item with its first recipe, staff and permission management, "Show inactive" filter for the inventory list. They depend on decisions listed in [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/7e4fbde08b14ae2198cc1b865dffe9ec5afe78b4/docs/ui-ux/ui-user-story-review.md) (PR #50, commit `7e4fbde`) and are not drawn.
+
+## 7. Alignment checkpoint (18 Nov)
+
+Compared with SRS #54 `0ad80b3`, refined backlog #55 `ec1911a`, API/diagrams #62 `f061da2`, ADR #64 `60d1a8b`, schema #66 `fa446c1` and consistency review #68 `46e8d1c`. The earlier source hashes in the detailed tables identify the original checks; no merged status is inferred from them.
+
+- Core roles, zero-stock creation, stock reservation/consumption, cancellation, immutable recipes and 15–30 s polling align in the drafts.
+- #68 records CR-04 (deactivate/reactivate views) as resolved. Those screens exist; approval of the underlying API draft is separate.
+- Recipe creation (FR-05/US-05), complete reservation/consumption history (FR-13/US-13) and staff/permission assignment (SRS §8 question 2) remain open UI coverage questions for Burcu. Do not mark these requirements out of scope without her decision.
+- **Prototype limits:** Mark as ready has no target; Pending cancel returns a reused list; login/role previews do not authenticate; no actual stock or audit mutations occur. Expected behavior in the flow document is distinct from a tested prototype transition.
+- The draft suppresses inactive low-stock alerts, while SRS FR-14 needs that exception clarified (#68 CR-03).
+- The UI supports NFR-09/10 design review; it does not prove performance, concurrent correctness, real authorization, rollback, automated test coverage or Chrome/Firefox application compatibility. PR #50 contains the current FR/NFR evidence matrix.

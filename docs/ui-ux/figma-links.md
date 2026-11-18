@@ -90,7 +90,7 @@ Live check on the page "03 Screens v2": 31 frames, each 1280 × 800. The names b
 - Prototype description: [`ui-prototype.md`](ui-prototype.md)
 - Demo script: [`demo-scenario.md`](demo-scenario.md)
 - Consistency review of the screens against the User Stories: [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/7e4fbde08b14ae2198cc1b865dffe9ec5afe78b4/docs/ui-ux/ui-user-story-review.md) (S2-31, PR #50, commit `7e4fbde`; not on `develop` yet)
-- API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop` at `0c3e244`, identical at `5dd8253`, version 0.1.0). The latest ingredient and order-creation behavior shown in the frames follows the API draft in **PR #62**, head `866122e` (version 0.2.0, **not merged**); `api/openapi.yaml` is unchanged in `cb634c3`. Since the 18 Nov re-export, `scr-04d` to `scr-04f` follow the same zero-stock rule (`866122e` removed the optional `initialQuantity` that head `dbb06be` had).
+- API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop` at `0c3e244`, identical at `5dd8253`, version 0.1.0). The ingredient and order-creation behavior shown in the frames follows API draft **PR #62**, current checked head `f061da2` (version 0.2.0, **not merged**); its OpenAPI content is unchanged from `866122e`/`cb634c3`. Since the 18 Nov re-export, `scr-04d` to `scr-04f` follow the same zero-stock rule (`866122e` removed the optional `initialQuantity` that head `dbb06be` had).
 
 ## 6. Status and open items
 
@@ -112,3 +112,9 @@ Live check on the page "03 Screens v2": 31 frames, each 1280 × 800. The names b
 - The role buttons on the login frames and the "Preview as" switch on the orders frames exist only for the prototype. In the real application, the role and permissions come from the signed-in account.
 - Deactivate and Reactivate change the state immediately in the prototype (04g → 04h → 04i). They are separate actions and are **not** part of "Save changes". See `ui-prototype.md`.
 - Screens that the review lists as missing or undecided are not part of these 31 frames.
+
+## 8. Requirement and architecture alignment checkpoint
+
+Current reviewed drafts (18 Nov, none merged): SRS #54 `0ad80b3`, backlog #55 `ec1911a`, FR/NFR #51 `fc70b81`, API/diagrams #62 `f061da2`, ADRs #64 `60d1a8b`, schema #66 `fa446c1`, consistency review #68 `46e8d1c`. PR #50's current mapping uses FR-01–FR-14; the older FR-001–FR-027 mapping is historical. Existing commit-pinned links above remain valid snapshots and need not track every new commit.
+
+The deactivation screen gap is resolved (#68 CR-04). Recipe creation, reservation/consumption-history views and staff/permission-management UI remain product-owner scope questions, not new screens added by this checkpoint. No PNG/PDF or Figma content is changed. Flow 9's later demo rehearsal is recorded in demo-scenario.md separately from the earlier standalone-link test; Tuğçe's check does not include the confirmation dialog's Cancel branch.
