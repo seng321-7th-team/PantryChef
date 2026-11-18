@@ -6,21 +6,21 @@
 **Owner:** Tuğçe Çevik · **Reviewer:** Ayşe Dural
 **Status:** Draft
 
-Frame names (`scr-…`) are the Figma frame names listed in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/1a9b1baae5627d7d6cfb16df42bd9b014a1cd916/docs/ui-ux/figma-links.md) (S2-33, PR #71, commit `1a9b1ba`; not on `develop` yet). Rules and error codes come from [`api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.1.0) and [`docs/product-backlog.md`](../product-backlog.md). Where a flow follows API draft PR #62 (current checked head `f061da2`, version 0.2.0, **not merged**), the text says so. Its OpenAPI rules are unchanged from `866122e`/`cb634c3`. Order flow: `PENDING` → `PREPARING` → `READY`. `CANCELLED` is terminal. There is no delivery feature.
+Frame names (`scr-…`) are the Figma frame names listed in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/d0e2e3565254e91450fe6a5442d7aaadd31168d3/docs/ui-ux/figma-links.md) (S2-33, PR #71, commit `d0e2e35`; not on `develop` yet). Rules and error codes come from [`api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.1.0) and [`docs/product-backlog.md`](../product-backlog.md). Where a flow follows API draft PR #62 (current checked head `f061da2`, version 0.2.0, **not merged**), the text says so. Its OpenAPI rules are unchanged from `866122e`/`cb634c3`. Order flow: `PENDING` → `PREPARING` → `READY`. `CANCELLED` is terminal. There is no delivery feature.
 
-Flows only cover what the 31 frames show. Features that the User Stories require but the frames do not show are listed in [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/7e4fbde08b14ae2198cc1b865dffe9ec5afe78b4/docs/ui-ux/ui-user-story-review.md) (PR #50, commit `7e4fbde`) and are **not** drawn here.
+Flows only cover what the 32 frames show. Features that the User Stories require but the frames do not show are listed in [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/be77d62d40d1aaa226c6079db3b50821a94442d5/docs/ui-ux/ui-user-story-review.md) (PR #50, commit `be77d62`) and are **not** drawn here.
 
 ## Flow list and Figma starting points
 
-The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/1a9b1baae5627d7d6cfb16df42bd9b014a1cd916/docs/ui-ux/figma-links.md) (PR #71, commit `1a9b1ba`). The eight Mermaid diagrams of the earlier version render on GitHub (checked on 18 Nov). U1a and the revised U2 (added in commit `0e57700`, unchanged since) also render on GitHub with their boxes and arrows (verified manually by Tuğçe on 18 November 2026).
+The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/d0e2e3565254e91450fe6a5442d7aaadd31168d3/docs/ui-ux/figma-links.md) (PR #71, commit `d0e2e35`). The eight Mermaid diagrams of the earlier version render on GitHub (checked on 18 Nov). U1a and the revised U2 also render on GitHub with their boxes and arrows (verified manually by Tuğçe on 18 November 2026). U3 and U4 were changed for the 32-frame export; their rendering on GitHub has not been checked yet.
 
 | Section | Flow | Figma flow starting point |
 |---|---|---|
 | U1 | Waiter creates an order | Flow 1 (login, role button Waiter) |
 | U1a | Sign-in errors | Flow 1 starts at `scr-01-login`; `scr-01b` and `scr-01c` are drawn states (see U1a) |
 | U2 | Waiter cancels, and late cancel | Flow 1 (login, role button Waiter), then Orders |
-| U3 | Chef prepares an order | Flow 2 (`scr-03a-kitchen-board`) |
-| U4 | Chef: order already started | Flow 6: kitchen conflict (`scr-03d-kitchen-conflict`) |
+| U3 | Chef prepares an order | Flow 2 (`scr-03a-kitchen-board`), demo order #1042 |
+| U4 | Chef: order already started, then Mark as ready | Flow 6: kitchen conflict (`scr-03d-kitchen-conflict`) |
 | U5 | Manager manages inventory and creates an ingredient | Flow 3 (`scr-04a-inventory`) |
 | U6 | Manager: ingredient lifecycle (edit, deactivate, reactivate) | Flow 9: ingredient lifecycle (`scr-04g-inventory-edit-ingredient`) |
 | U7 | Manager cancels orders and reads the audit log | Flow 4 (`scr-05a-orders-and-audit`) |
@@ -33,7 +33,7 @@ For the general demo, start at `scr-01-login` (Flow 1) and choose a role.
 
 ## U1 – Waiter creates an order (US-06, US-07)
 
-Only the waiter creates orders in the prototype. There is no manager screen for this. API draft #62 restricts `createOrder` to WAITER; `develop` (0.1.0) still lists WAITER and MANAGER (open item, see [`docs/ui-ux/ui-prototype.md`](https://github.com/seng321-7th-team/PantryChef/blob/1a9b1baae5627d7d6cfb16df42bd9b014a1cd916/docs/ui-ux/ui-prototype.md), PR #71, commit `1a9b1ba`).
+Only the waiter creates orders in the prototype. There is no manager screen for this. SRS #54 FR-06 and API draft #62 restrict `createOrder` to WAITER; backlog #55 US-06 AC1 at `beba8c6` says "Waiter or Manager" (open conflict, [review on #55](https://github.com/seng321-7th-team/PantryChef/pull/55#pullrequestreview-5960692446)); `develop` (0.1.0) still lists WAITER and MANAGER (open item, see [`docs/ui-ux/ui-prototype.md`](https://github.com/seng321-7th-team/PantryChef/blob/d0e2e3565254e91450fe6a5442d7aaadd31168d3/docs/ui-ux/ui-prototype.md), PR #71, commit `d0e2e35`).
 
 ```mermaid
 flowchart TD
@@ -87,28 +87,34 @@ Opening the Orders tab is allowed for waiters (`GET /orders`, roles MANAGER, CHE
 
 ## U3 – Chef prepares an order (US-08, US-09, US-10)
 
+Prototype path for the demo order #1042. Counters are Pending / Preparing / Ready.
+
 ```mermaid
 flowchart TD
-    A([Login, role Chef<br/>scr-01-login]) --> B[Kitchen board<br/>scr-03a-kitchen-board]
-    B --> C[Start preparing on a PENDING order]
-    C --> D[Deducting stock...<br/>only this order is locked<br/>scr-03b-kitchen-deducting]
-    D --> E[Order is PREPARING<br/>stock deducted once<br/>scr-03c-kitchen-preparing]
-    E --> F[Mark as ready<br/>button on the Preparing card]
-    F --> G([Order is READY<br/>no second stock deduction])
+    A([Login, role Chef<br/>scr-01-login]) --> B[Kitchen board, #1042 PENDING<br/>counters 3 / 1 / 1<br/>scr-03a-kitchen-board]
+    B -->|Start preparing on #1042| C[Deducting stock...<br/>only #1042 is locked<br/>counters 3 / 1 / 1<br/>scr-03b-kitchen-deducting]
+    C --> D[#1042 PREPARING<br/>stock deducted once<br/>counters 2 / 2 / 1<br/>scr-03c-kitchen-preparing]
+    D -->|Mark as ready on #1042| E([#1042 READY<br/>no additional stock deducted<br/>counters 2 / 1 / 2<br/>scr-03e-kitchen-ready])
 ```
 
-The "Mark as ready" button is visible on the Preparing cards (`scr-03a`, `scr-03c`). In the prototype it has no link to another frame; the READY result is described here from the Ready column on the board. The last two arrows in U3 describe the expected API behavior, not a tested clickable prototype transition. The board says "Updates automatically"; the team decision is polling `GET /orders` every 15–30 seconds (O-01 in `ui-user-story-review.md`).
+| | Clickable prototype | API behaviour (draft #62, not merged) |
+|---|---|---|
+| Which orders | Demo interactions cover order #1042 only. Start preparing on #1040 and #1043 and Mark as ready on #1041 are drawn at 40% opacity and have no prototype connection. | Any `PENDING` order can be moved to `PREPARING` and any `PREPARING` order to `READY` by a chef (`PATCH /orders/{orderId}/status`). The #1042-only limit is not a product rule. |
+| Start preparing | `scr-03a` → `scr-03b` → `scr-03c`. "Deducting stock…" is a simulated state; no backend call. | One transaction: `ACTIVE` reservations become `CONSUMED` and `onHand` is deducted once. A repeated request never deducts twice; an invalid transition returns `409 INVALID_STATUS_TRANSITION`. |
+| Mark as ready | `scr-03c` → `scr-03e` | No stock movement. |
+| Board refresh | The frames are static. | The board polls `GET /orders` every 15–30 seconds (team decision, ADR-010; O-01 in `ui-user-story-review.md`). |
+
+The click-through of `scr-03a` → `scr-03b` → `scr-03c` → `scr-03e` is not recorded as tested yet. Flow 2 was checked only at its start frame (#1042 under `Pending`, counters 3 / 1 / 1).
 
 ## U4 – Chef: order already started (Figma Flow 6)
 
 ```mermaid
 flowchart TD
-    A[Kitchen board<br/>scr-03a-kitchen-board] --> B[Another chef already started #1042]
-    B --> C[Message: Order #1042 was already started<br/>Code INVALID_STATUS_TRANSITION<br/>board refreshed<br/>scr-03d-kitchen-conflict]
-    C --> A
+    A[Kitchen board<br/>scr-03a-kitchen-board] -.->|Another chef already started #1042| B[Message: Order #1042 was already started<br/>Code INVALID_STATUS_TRANSITION<br/>board refreshed<br/>counters 2 / 2 / 1<br/>scr-03d-kitchen-conflict]
+    B -->|Mark as ready on #1042| C([#1042 READY<br/>no additional stock deducted<br/>counters 2 / 1 / 2<br/>scr-03e-kitchen-ready])
 ```
 
-This frame is a separate starting point. It is not linked from `scr-03a` on purpose.
+`scr-03d-kitchen-conflict` is a separate starting point (Flow 6). It is not linked from `scr-03a` on purpose; the dashed arrow is API behaviour: a second `PREPARING` request for an order that is no longer `PENDING` returns `409 INVALID_STATUS_TRANSITION` and the board is refreshed. In the prototype, Mark as ready on #1042 in `scr-03d` leads to `scr-03e-kitchen-ready`. Flow 6 was checked only at its start frame; the click to `scr-03e` is not recorded as tested yet.
 
 ## U5 – Manager manages inventory and creates an ingredient (US-02, US-03, US-04, US-14)
 
@@ -191,9 +197,9 @@ Not drawn (API behaviour, draft #62): publishing a recipe version that uses an i
 
 ## Current cross-document alignment
 
-SRS [#54 `0ad80b3`](https://github.com/seng321-7th-team/PantryChef/blob/0ad80b38ee696db5e7d8ffc47ef00eebad8a4b12/docs/srs.md) FR-01–FR-14 and backlog [#55 `ec1911a`](https://github.com/seng321-7th-team/PantryChef/blob/ec1911a24554d8cfafa3330c80a5bd1bc8080329/docs/product-backlog.md) US-01–US-14 (MVP; US-15 and US-16 are P1, post-MVP) are the current reviewed requirement drafts. API/diagrams [#62 `f061da2`](https://github.com/seng321-7th-team/PantryChef/blob/f061da27501bf7fc62b39aa278aeb7693259864e/api/openapi.yaml) retain the same OpenAPI rules used above; ADRs [#64 `60d1a8b`](https://github.com/seng321-7th-team/PantryChef/blob/60d1a8ba08c21d8e07f873a4fe218c15c36dfae7/docs/architecture/architecture-decisions.md) and schema [#66 `fa446c1`](https://github.com/seng321-7th-team/PantryChef/blob/fa446c1eb6ad0d075c8fbd85e9b7974021bee9d1/docs/architecture/database-schema.md) match the core UI behaviors. They are not merged. The original version notes above are historical evidence, not claims that older PR heads are still current.
+SRS [#54 `0ad80b3`](https://github.com/seng321-7th-team/PantryChef/blob/0ad80b38ee696db5e7d8ffc47ef00eebad8a4b12/docs/srs.md) FR-01–FR-14 and backlog [#55 `beba8c6`](https://github.com/seng321-7th-team/PantryChef/blob/beba8c6baf1e49c98773262237645063d60d46db/docs/product-backlog.md) US-01–US-14 (MVP; US-15 and US-16 are P1, post-MVP) are the current reviewed requirement drafts. Backlog US-06 AC1 ("Waiter or Manager") differs from SRS FR-06 and API draft #62 (WAITER); this is open finding F-07 in PR #50. U1 follows the waiter-only design. API/diagrams [#62 `f061da2`](https://github.com/seng321-7th-team/PantryChef/blob/f061da27501bf7fc62b39aa278aeb7693259864e/api/openapi.yaml) retain the same OpenAPI rules used above; ADRs [#64 `60d1a8b`](https://github.com/seng321-7th-team/PantryChef/blob/60d1a8ba08c21d8e07f873a4fe218c15c36dfae7/docs/architecture/architecture-decisions.md) and schema [#66 `fa446c1`](https://github.com/seng321-7th-team/PantryChef/blob/fa446c1eb6ad0d075c8fbd85e9b7974021bee9d1/docs/architecture/database-schema.md) match the core UI behaviors. ADR #64 is merged into `develop` (`3688747`); its Proposed records stay Proposed. The other drafts are not merged. The original version notes above are historical evidence, not claims that older PR heads are still current.
 
-The current FR/NFR mapping and open scope decisions are maintained by PR #50; its existing pinned link identifies the earlier committed review until that PR is updated. No backend/NFR pass is inferred from these diagrams.
+The current FR/NFR mapping and open scope decisions are maintained by PR #50 (linked above at commit `be77d62`). No backend/NFR pass is inferred from these diagrams.
 
 ## Not drawn (no frame)
 
