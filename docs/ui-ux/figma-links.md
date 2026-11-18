@@ -118,4 +118,3 @@ Live check on the page "03 Screens v2": 31 frames, each 1280 × 800. The names b
 Current reviewed drafts (18 Nov, none merged): SRS #54 `0ad80b3`, backlog #55 `ec1911a`, FR/NFR #51 `fc70b81`, API/diagrams #62 `f061da2`, ADRs #64 `60d1a8b`, schema #66 `fa446c1`, consistency review #68 `46e8d1c`. PR #50's current mapping uses FR-01–FR-14; the older FR-001–FR-027 mapping is historical. Existing commit-pinned links above remain valid snapshots and need not track every new commit.
 
 The deactivation screen gap is resolved (#68 CR-04). Recipe creation, reservation/consumption-history views and staff/permission-management UI remain product-owner scope questions, not new screens added by this checkpoint. No PNG/PDF or Figma content is changed. Flow 9's later demo rehearsal is recorded in demo-scenario.md separately from the earlier standalone-link test; Tuğçe's check does not include the confirmation dialog's Cancel branch.
-
