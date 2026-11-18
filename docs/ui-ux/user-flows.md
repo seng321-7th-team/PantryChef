@@ -12,7 +12,7 @@ Flows only cover what the 31 frames show. Features that the User Stories require
 
 ## Flow list and Figma starting points
 
-The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/1a9b1baae5627d7d6cfb16df42bd9b014a1cd916/docs/ui-ux/figma-links.md) (PR #71, commit `1a9b1ba`). The eight Mermaid diagrams of the earlier version render on GitHub (checked by Codex on 18 Nov). U1a and the revised U2 (commit `0e57700`) pass a local syntax check; their rendering on GitHub has not been checked yet.
+The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/1a9b1baae5627d7d6cfb16df42bd9b014a1cd916/docs/ui-ux/figma-links.md) (PR #71, commit `1a9b1ba`). The eight Mermaid diagrams of the earlier version render on GitHub (checked by Codex on 18 Nov). U1a and the revised U2 (added in commit `0e57700`, unchanged since) also render on GitHub with their boxes and arrows (verified manually by Tuğçe on 18 November 2026).
 
 | Section | Flow | Figma flow starting point |
 |---|---|---|
