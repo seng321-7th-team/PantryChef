@@ -101,7 +101,7 @@ Loading; empty waiter orders; empty kitchen board; server error 500 `INTERNAL_ER
 
 ## 6. Not shown in the prototype
 
-Stock movements and reservation views, new menu item with its first recipe, staff and permission management, "Show inactive" filter for the inventory list. They depend on decisions D-3, D-4 and D-6 listed in [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/be77d62d40d1aaa226c6079db3b50821a94442d5/docs/ui-ux/ui-user-story-review.md) (PR #50, commit `be77d62`) and are not drawn.
+Stock movements and reservation views, new menu item with its first recipe, staff and permission management, "Show inactive" filter for the inventory list. They depend on decisions D-3, D-4 and D-6 listed in [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/432cc0866262441f749c544ed245be0ad192afff/docs/ui-ux/ui-user-story-review.md) (PR #50, commit `432cc08`) and are not drawn.
 
 ## 7. Alignment checkpoint (18 Nov)
 
