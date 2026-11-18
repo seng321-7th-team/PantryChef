@@ -198,4 +198,3 @@ The current FR/NFR mapping and open scope decisions are maintained by PR #50; it
 ## Not drawn (no frame)
 
 Stock movements and reservations view, new menu item with its first recipe, staff and permission management (granting the late-cancel permission), "Show inactive" filter. These depend on Burcu's decisions listed in `ui-user-story-review.md`. A manager order-creation screen is not drawn on purpose (waiter-only order creation).
-
