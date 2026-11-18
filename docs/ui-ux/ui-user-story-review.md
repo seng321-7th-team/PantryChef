@@ -270,7 +270,7 @@ Until the open UI scope questions are answered, no missing P0 capability is decl
 | New comparison on 18 Nov | NFR evidence limits, optional status replay, network retry qualification and remaining owner questions recorded without changing scope. |
 | `MENU_ITEM_UNAVAILABLE` shown as 409 | Corrected to 422 in `scr-07a-states` (matches the OpenAPI file). |
 | Optional Initial stock field in `scr-04d` to `scr-04f` (F-05, D-9b) | **Closed in Figma.** Removed in the 18 Nov re-export (about 01:35); the three PNGs and the PDF were re-exported. |
-| Flow 9 transitions (04g → 04h → 04g, 04h → 04i, 04i → 04g) | Verified in the live prototype in a browser by Codex on 18 Nov. Prototype only; no backend involved. Not recorded as broken or missing. |
+| Flow 9 transitions (04g → 04h → 04g, 04h → 04i, 04i → 04g) | Verified in the live prototype in a browser on 18 Nov. Prototype only; no backend involved. Not recorded as broken or missing. |
 
 Status words: **Matches API draft** (follows PR #62, not merged), **Decision pending** (no team confirmation recorded), **Applied in Figma** (exists in the live file and was checked on a screenshot).
 
@@ -280,3 +280,4 @@ Status words: **Matches API draft** (follows PR #62, not merged), **Decision pen
 2. Burcu aligns consumption terminology in SRS/#51 and clarifies inactive low-stock behavior; Burcu/Bilgesu identify the superseded SRS/backlog PRs.
 3. Complete review/merge of the cited drafts. Re-check against the merged develop; preserve old commit evidence as history. A pending merge alone is not a new business-rule mismatch.
 4. Revisit frames only if an owner explicitly requires a missing UI capability or changes an approved rule. No new design, API behavior or scope decision is introduced by this update.
+
