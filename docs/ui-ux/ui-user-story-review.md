@@ -230,7 +230,7 @@ No new architecture decision is approved by this UI comparison. ADR-001's writte
 ## 6. Other observations
 
 - **O-01. "Updates automatically" (kitchen board).** ADR-010 and C4 Container #62 now document polling every 15–30 seconds. OpenAPI describes the request, not a push channel. The UI and architecture descriptions align; live background refresh still needs implementation testing. D-8 is answered at documentation level.
-- **O-02. Login placeholder contrast.** The username placeholder ("e.g. waiter01") has low contrast in the login frame. Figma fix, Tuğçe.
+- **O-02. Login placeholder contrast.** Checked; no contrast fix needed. The username placeholder ("e.g. waiter01") in `scr-01-login` is `#6B7280` on `#FFFFFF`, both at 100% opacity. The calculated contrast ratio is 4.83:1, above the WCAG 2.1 AA minimum of 4.5:1 for normal text (verified manually by Tuğçe on 18 November 2026). The frame was not changed.
 - **O-03. Backlog version.** The current matrix and gaps have been checked against refined backlog #55 at `ec1911a`. It is delivered in a PR but not merged. The Sprint 1 backlog remains only a historical baseline.
 - **O-04. Manager creating orders.** Merged API 0.1.0 allows WAITER and MANAGER on createOrder. Current draft #62 restricts creation to WAITER in OpenAPI, README and UML; Ayşe confirmed this in her #62 response and #68 R-02. The current SRS/backlog and waiter-only Figma agree. Draft alignment is complete; formal review/merge remains pending. GET /orders remains available to MANAGER, CHEF and WAITER.
 
@@ -264,6 +264,7 @@ Until the open UI scope questions are answered, no missing P0 capability is decl
 | Waiter cancel dialog and authorized-waiter late cancel had no frames | **Closed in Figma.** `scr-02d`, `scr-05f`, `scr-05g`, `scr-05h`. |
 | General error text in `scr-07a-states` ("Nothing was changed") | **Closed.** The 500 card now reads "We couldn't confirm the result. Refresh to check the latest status." Checked on a screenshot on 18 Nov. |
 | Frame count "18" | Replaced by 31 (live check, 18 Nov). |
+| Login placeholder contrast (O-02) | **Checked; no contrast fix needed.** `#6B7280` on `#FFFFFF` (100% opacity) gives 4.83:1, above 4.5:1 (WCAG 2.1 AA, normal text); verified manually by Tuğçe on 18 November 2026. No Figma change. |
 | Current requirement baseline | Added FR-01–FR-14 / US-01–US-14 matrix from #54/#55; old #45 matrix retained as historical only. |
 | Architecture questions D-7/D-8 | Answered by #66/#68 and ADR-010/C4 respectively; review/merge and implementation checks remain separate. |
 | New comparison on 18 Nov | NFR evidence limits, optional status replay, network retry qualification and remaining owner questions recorded without changing scope. |
