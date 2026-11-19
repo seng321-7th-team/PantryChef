@@ -294,7 +294,7 @@
         </UserObject>
         <UserObject label="Recipe and ingredient change records" mermaidId="e:R-&gt;AU#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.36;exitY=1;entryX=0.76;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;" mermaidBaseValue="Recipe and ingredient change records" id="1FK3T7TXAukMDOGE-Ive-18">
           <mxCell edge="1" parent="1FK3T7TXAukMDOGE-Ive-1" source="1FK3T7TXAukMDOGE-Ive-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.36;exitY=1;entryX=0.76;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="1FK3T7TXAukMDOGE-Ive-7">
-            <mxGeometry relative="1" as="geometry">
+            <mxGeometry relative="1" as="geometry" x="0.62">
               <Array as="points">
                 <mxPoint x="1060" y="1028" />
                 <mxPoint x="738" y="1028" />
@@ -396,7 +396,7 @@
         </UserObject>
         <UserObject label="HTTPS / JSON - /v1 / JWT" mermaidId="e:UI-&gt;H#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;" mermaidBaseValue="HTTPS / JSON - /v1 / JWT" id="1FK3T7TXAukMDOGE-Ive-27">
           <mxCell edge="1" parent="cIFprRn_FBI3PIYw_5sK-1" source="1FK3T7TXAukMDOGE-Ive-25" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="1FK3T7TXAukMDOGE-Ive-2">
-            <mxGeometry relative="1" as="geometry">
+            <mxGeometry relative="1" as="geometry" x="-0.55">
               <Array as="points" />
             </mxGeometry>
           </mxCell>
