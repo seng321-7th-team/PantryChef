@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Contract | [`api/openapi.yaml`](openapi.yaml) — OpenAPI **3.1.0**, API version `0.1.0` |
+| Contract | [`api/openapi.yaml`](openapi.yaml) — OpenAPI **3.1.0**, API version `0.2.0` |
 | Owner (A/R) | Ayşe Dural — Lead Software Architect and Technical Lead |
 | Consulted | Burcu Ücük (requirements), Beyzanur Alpay (testability), Emre Boz (CI), Tuğçe Çevik (integration) |
 | Sprint tasks | S1-08, S1-09, S1-10, S1-25 (API part) — see `docs/sprint1-task-board.md` |
@@ -26,14 +26,14 @@ npx --yes @redocly/cli@2.64.1 lint api/openapi.yaml
 npx --yes @redocly/cli@2.64.1 lint api/openapi.yaml --extends recommended
 ```
 
-Result on 2026-11-05: **valid with both rulesets — 0 errors, 0 warnings**, no lint-ignore file.
+Result on 2026-11-17 (v0.2.0): **valid with both rulesets — 0 errors, 0 warnings**, no lint-ignore file.
 All request and response examples are validated against their schemas.
 
 | Metric | Value |
 |---|---|
 | Paths | 23 |
 | Operations | 33 |
-| Schemas | 51 |
+| Schemas | 52 |
 | Parameters | 19 |
 | Tags | 10 |
 
@@ -65,7 +65,8 @@ npx --yes @redocly/cli@2.64.1 build-docs api/openapi.yaml -o pantrychef-api.html
 | Pagination | `page` (from 1) and `size` (1–100, default 20); responses return `{ items, page }` |
 | Time | ISO 8601 `date-time` in UTC |
 | Units | `g`, `ml`, `piece`; no unit conversion in the MVP |
-| Deletion | Users are deactivated (`active: false`); menu items are archived; ingredients are deleted only if unused |
+| Initial stock | New ingredients start with `onHand = 0`; the opening stock is entered with `POST /inventory/adjustments` and reason `INITIAL_STOCK` |
+| Deletion | Users are deactivated (`active: false`); menu items are archived; ingredients are deactivated with `DELETE /ingredients/{ingredientId}` (soft delete, `active: false`) and never hard-deleted |
 
 ---
 
@@ -85,7 +86,7 @@ stateDiagram-v2
 
 | Request | From | Allowed roles | Success | Typical errors |
 |---|---|---|---|---|
-| `POST /orders` | — | WAITER, MANAGER | `201` order in `PENDING` | `409 INSUFFICIENT_STOCK`, `422 MENU_ITEM_UNAVAILABLE`, `422 IDEMPOTENCY_KEY_REUSED` |
+| `POST /orders` | — | WAITER | `201` order in `PENDING` | `409 INSUFFICIENT_STOCK`, `422 MENU_ITEM_UNAVAILABLE`, `422 IDEMPOTENCY_KEY_REUSED` |
 | `PATCH …/status` `PREPARING` | `PENDING` | CHEF | `200` | `409 INVALID_STATUS_TRANSITION` (also on a repeated start) |
 | `PATCH …/status` `READY` | `PREPARING` | CHEF | `200` | `409 INVALID_STATUS_TRANSITION` |
 | `PATCH …/status` `CANCELLED` | `PENDING` | WAITER, MANAGER | `200` | `403 FORBIDDEN` (chef) |
@@ -122,7 +123,7 @@ stateDiagram-v2
 | FR-09 | Release reservations on Pending cancel | `updateOrderStatus` (`CANCELLED` from `PENDING`) |
 | FR-10 | Elevated authorization for late cancel | `updateOrderStatus` → `403 LATE_CANCEL_NOT_PERMITTED` |
 | FR-11 | No automatic stock restore after late cancel | `updateOrderStatus` (documented), `createStockAdjustment` for corrections |
-| FR-12 | Managers maintain ingredients and recipes | `createIngredient`, `updateIngredient`, `deleteIngredient`, `createMenuItem`, `replaceRecipe` |
+| FR-12 | Managers maintain ingredients and recipes | `createIngredient`, `updateIngredient`, `deactivateIngredient`, `createMenuItem`, `replaceRecipe` |
 | FR-13 | Low-stock monitoring and alerts | `listLowStockAlerts`, `listInventory?lowStock=true`, `InventoryItem.lowStock` |
 | FR-14 | Record significant operations | `listStockMovements`, `listAuditLogs`, `Order.statusHistory` |
 | FR-15 | Prevent duplicate order submissions | `Idempotency-Key` (required) on `createOrder` |
@@ -152,7 +153,7 @@ stateDiagram-v2
 |---|---|
 | S1-08 Prepare initial OpenAPI YAML | `api/openapi.yaml`, validated (0 errors, 0 warnings) |
 | S1-09 Order, inventory and recipe operations | `Orders`, `Inventory`, `Ingredients`, `Recipes`, `Menu Items`, `Reservations` tags |
-| S1-10 Errors, idempotency, cancel checks (403/409) | `Problem`, `ErrorCode` (15 codes), `Idempotency-Key`, `403`/`409`/`422` responses |
+| S1-10 Errors, idempotency, cancel checks (403/409) | `Problem`, `ErrorCode` (16 codes), `Idempotency-Key`, `403`/`409`/`422` responses |
 | S1-25 Late-cancel policy: actor, reason, timestamp, server-side checks | `updateOrderStatus`, `Cancellation`, `AuditLogEntry`, `Permission` |
 
 ---
@@ -167,6 +168,8 @@ stateDiagram-v2
 | A-4 | Prices are in Turkish lira (TRY). | Single-restaurant MVP (Proposal §9.1) |
 | A-5 | Units are `g`, `ml` and `piece`; no unit conversion. | Proposal §9.1, recipe quantities per portion |
 | A-6 | Each order item keeps the recipe version used for its reservations. | Decision D-07, RACI §3.9 |
+| A-7 | Ingredients are soft-deleted: `DELETE /ingredients/{ingredientId}` (MANAGER only) sets `active: false`. History (recipe versions, orders, reservations, stock movements, audit) is kept; inactive ingredients cannot be used in new recipe versions (`422 INGREDIENT_INACTIVE`) and menu items whose current recipe uses one cannot be ordered (`422 MENU_ITEM_UNAVAILABLE`). Existing `PENDING` orders continue normally. `PUT` with `active: true` reactivates. | Backlog US-02 (AC 6), US-05 (AC 4) |
+| A-8 | New ingredients start with `onHand = 0`. The opening stock is entered with `POST /inventory/adjustments` and reason `INITIAL_STOCK`, like every other stock change, so it always has an `ADJUSTMENT` movement and an audit entry. | SRS FR-02 (PR #54), backlog US-02 AC 1 (PR #55), Figma 04d; consistency review CR-01 (PR #68) |
 
 ---
 
@@ -175,3 +178,4 @@ stateDiagram-v2
 | Version | Date | Author | Change |
 |---|---|---|---|
 | 0.1.0 | 2026-11-05 | Ayşe Dural | Initial Sprint 1 draft; aligned with Proposal, Vision, RACI and D-12 |
+| 0.2.0 | 2026-11-17 | Ayşe Dural | Ingredient soft delete (`deactivateIngredient`, `Ingredient.active`, `INGREDIENT_INACTIVE`, `INGREDIENT_DEACTIVATED`/`INGREDIENT_REACTIVATED` audit actions); initial stock entered through a separate `INITIAL_STOCK` adjustment (A-7, A-8); `POST /orders` restricted to WAITER |
