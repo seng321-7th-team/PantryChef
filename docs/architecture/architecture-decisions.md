@@ -221,6 +221,10 @@ the header on `POST /orders`, makes it optional on `PATCH /orders/{orderId}/stat
   The response status, body and headers are saved on success.
 - Same key and same body: the saved response is returned with `Idempotent-Replayed: true`.
   Same key and different body: `422 IDEMPOTENCY_KEY_REUSED`.
+- A second request with the same key while the first is still running waits on the key row. When
+  the first commits, it receives the saved response with `Idempotent-Replayed: true`; when the first
+  rolls back, it is processed normally. There is no separate "in progress" response (QA review on
+  PR #82, D-04).
 - A rollback also removes the claim, so a failed request never leaves a permanently locked key.
 - Records older than 24 hours are removed by a scheduled task in the `api` container (S2-23, S2-27).
 

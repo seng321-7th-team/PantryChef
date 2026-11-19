@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: PantryChef API
-  version: 0.2.0
+  version: 0.2.1
   summary: Restaurant order management with recipe-based ingredient reservation and exactly-once stock consumption.
   description: |
     PantryChef connects restaurant orders to ingredient inventory. This contract is the
@@ -12,7 +12,7 @@ info:
 
     | Transition | Who | Request | Inventory effect |
     |---|---|---|---|
-    | (new) → `PENDING` | Waiter | `POST /orders` | One `ACTIVE` reservation per required ingredient. `onHand` unchanged. |
+    | (new) → `PENDING` | Waiter | `POST /orders` | One `ACTIVE` reservation per order item and required ingredient. `onHand` unchanged. |
     | `PENDING` → `PREPARING` | Chef | `PATCH /orders/{orderId}/status` with `PREPARING` | Reservations become `CONSUMED`; `onHand` is deducted **exactly once**, atomically. |
     | `PREPARING` → `READY` | Chef | `PATCH /orders/{orderId}/status` with `READY` | None. |
     | `PENDING` → `CANCELLED` | Waiter, Manager | `PATCH /orders/{orderId}/status` with `CANCELLED` | Reservations become `RELEASED`. `onHand` unchanged. |
@@ -54,6 +54,12 @@ info:
     key and the same body returns the original response (with `Idempotent-Replayed: true`)
     and does not create a second order. `PATCH /orders/{orderId}/status` accepts the same
     header; a repeated `PREPARING` request never deducts stock twice.
+
+    Keys are scoped to the authenticated user and the operation (for a status change, the
+    order). A request whose key is still being processed waits until the first request
+    finishes and then receives its saved response (`Idempotent-Replayed: true`); if the
+    first request failed, the waiting request is processed normally. There is no separate
+    "in progress" error. A `POST /orders` without the header returns `400`.
 
     ## Errors
 
@@ -954,7 +960,8 @@ paths:
         Roles: WAITER. In one transaction the system computes the required
         ingredients from each menu item's recipe (recipe quantity x ordered quantity), checks
         that every ingredient has enough available stock, and creates one `ACTIVE`
-        reservation per ingredient. The order starts in `PENDING`; `onHand` is not changed.
+        reservation per order item and ingredient (an ingredient used by two order items
+        gets two reservations). The order starts in `PENDING`; `onHand` is not changed.
 
         If any ingredient is short, nothing is reserved and `409 INSUFFICIENT_STOCK` is
         returned with the list of shortages.
@@ -1386,7 +1393,7 @@ components:
       name: Idempotency-Key
       in: header
       required: true
-      description: Client-generated unique key (UUID recommended). Keys are kept for 24 hours.
+      description: Client-generated unique key (UUID recommended). Keys are kept for 24 hours. A missing key returns `400`.
       schema:
         type: string
         minLength: 8
@@ -1414,7 +1421,7 @@ components:
 
   responses:
     BadRequest:
-      description: The request is malformed (invalid JSON, wrong parameter type or format).
+      description: The request is malformed (invalid JSON, wrong parameter type or format, or a missing required header such as `Idempotency-Key`).
       content:
         application/problem+json:
           schema:
