@@ -31,9 +31,9 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 | S2-05 | MVP Scope & Out-of-Scope Definition | Burcu Ücük | Bilgesu | `docs/srs.md (scope section)` | TBD – verify first | To Do (provisional) |
 | S2-06 | Sprint 2 Task Board oluşturma ve yönetme | Bilgesu Nacak | Burcu | `docs/sprint2-task-board.md` | #38 / PR #39 | Done |
 | S2-07 | Sprint 2 RACI Matrix | Bilgesu Nacak | Tuğçe | `docs/sprint2-raci.md` | #40 / PR #41 | Done |
-| S2-08 | Sprint Planning, Stand-up, Review, Retrospective kayıtları | Bilgesu Nacak | Tuğçe | `docs/sprint2-meeting-notes.md` | TBD – verify first | To Do (provisional) |
-| S2-09 | GitHub Issues, PR Tracking & Impediment Log | Bilgesu Nacak | Emre | `GitHub Project #4 / PR & impediment records` | TBD – verify first | To Do (provisional) |
-| S2-10 | Sprint 2 Deliverables Consistency Review | Bilgesu Nacak | Beyzanur | `Cross-document review evidence` | TBD – verify first | To Do (provisional) |
+| S2-08 | Sprint Planning, Stand-up, Review, Retrospective kayıtları | Bilgesu Nacak | Tuğçe | `docs/sprint2-meeting-notes.md` | Issue #42 | In Progress |
+| S2-09 | GitHub Issues, PR Tracking & Impediment Log | Bilgesu Nacak | Emre | `GitHub Project #4 / docs/sprint2-progress-impediments.md` | Issue #57 / PR #58 | In Progress |
+| S2-10 | Sprint 2 Deliverables Consistency Review | Bilgesu Nacak | Beyzanur | `docs/sprint2-deliverables-consistency-review.md` | Issue #59 / PR #60 | In Progress |
 | S2-11 | Sprint 2 Submission Package & Teams Upload | Bilgesu Nacak | Burcu | `docs/sprint2-submission.md` | TBD – verify first | To Do (provisional) |
 | S2-37 | Sprint 2 Peer Evaluation & Contribution Assessment | Bilgesu Nacak | Tüm ekip | `Peer evaluation record (private when needed)` | TBD – verify first | To Do (provisional) |
 | S2-12 | C4 System Context Diagram | Ayşe Dural | Emre | `docs/architecture/c4/` | TBD – verify first | To Do (provisional) |
