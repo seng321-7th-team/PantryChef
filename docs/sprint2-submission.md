@@ -80,9 +80,9 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 | S2-06 | Sprint 2 Task Board | #38 | #39 | Completed — merged |
 | S2-07 | Sprint 2 RACI Matrix | #40 | #41 | Completed — merged |
 | S2-08 | Sprint 2 Meeting Notes | #42 | #77 | In Progress — awaiting review |
-| S2-09 | Progress & Impediment Tracking | #57 | #58 | In Progress — review status to be verified |
+| S2-09 | Progress & Impediment Tracking | #57 | #58 | Document merged into develop — ongoing tracking In Progress |
 | S2-10 | Deliverables Consistency Review | #59 | #60 | In Progress — additional verification required |
-| S2-11 | Submission Package & Teams Upload | #78 | Pending | In Progress — submission preparation |
+| S2-11 | Submission Package & Teams Upload | #78 | #79 | In Progress — submission preparation, review pending |
 
 ### 5.1 Related GitHub Links
 
@@ -97,6 +97,7 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 - [S2-10 — Issue #59](https://github.com/seng321-7th-team/PantryChef/issues/59)
 - [S2-10 — PR #60](https://github.com/seng321-7th-team/PantryChef/pull/60)
 - [S2-11 — Issue #78](https://github.com/seng321-7th-team/PantryChef/issues/78)
+- [S2-11 — PR #79](https://github.com/seng321-7th-team/PantryChef/pull/79)
 
 ### 5.2 Additional Coordination Evidence
 
@@ -105,7 +106,7 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 | Sprint 2 Task Board status update | PR #69 | Peer review / merge status pending verification |
 | Sprint 2 Team Roles documentation update | PR #56 | Peer review / merge status pending verification |
 | Sprint 2 team coordination records | `docs/sprint2-meeting-notes.md` | Draft submitted for review |
-| Sprint 2 progress and impediment records | `docs/sprint2-progress-impediments.md` | Draft submitted for review |
+| Sprint 2 progress and impediment records | `docs/sprint2-progress-impediments.md` | PR #58 merged into develop; Issue #57 open for ongoing tracking |
 | Sprint 2 cross-document consistency review | `docs/sprint2-deliverables-consistency-review.md` | Partial review |
 | Sprint 2 release/tag | Pending | Awaiting final release evidence |
 
@@ -154,7 +155,7 @@ The references below identify known Issues and Pull Requests. Final approval, me
 | Functional and Non-functional Requirements | Burcu Ücük | #49 | #51 | Final review pending verification |
 | UI Design and User Story Consistency | Tuğçe Çevik | #48 | #50 | Final review pending verification |
 | User-flow Diagrams | Tuğçe Çevik | #52 | #70 | Final review pending verification |
-| Figma Links and UI Documentation | Tuğçe Çevik | #53 | #71 | Changes requested — re-review required |
+| Figma Links and UI Documentation | Tuğçe Çevik | #53 | #71 | Approved by Bilgesu Nacak; CI passed; merge pending |
 | API, Ingredient Rules and Architecture Alignment | Ayşe Dural | #61 | #62 | Final review pending verification |
 | Architecture Decision Records | Ayşe Dural | #63 | #64 | Final review pending verification |
 | Database Schema Documentation | Ayşe Dural | #65 | #66 | Final review pending verification |
@@ -174,7 +175,7 @@ For each deliverable, verify:
 
 ### 8.2 Outstanding Review Notes
 
-- PR #71: The Scrum Master requested changes regarding demo state clarity, Figma access verification, and the Start preparing interaction. The affected prototype flow requires re-verification after corrections.
+- PR #71: The previous review findings were addressed. The Scrum Master manually re-tested the #1042 Chef flow (Pending → Preparing → Ready) on November 19, 2026 and approved the updated UI/UX documentation. Design and Flow 2–7 access checks are documented. The PR remains open pending merge.
 - Requirements, architecture, and UI/UX documents may reference other open PRs. Cross-document alignment must be checked against their final approved versions.
 - No unverified Pull Request is treated as merged or accepted.
 - The final release/tag and Microsoft Teams submission evidence remain pending.
