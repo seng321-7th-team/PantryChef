@@ -75,7 +75,7 @@ This update records verified Scrum Master coordination activities following the 
 | Task / Activity | Evidence | Verified Status | Remaining Action |
 |---|---|---|---|
 | S2-08 — Meeting Notes | Issue #42 / PR #77 | Approved by Tuğçe Çevik and merged into develop (01ec498) | Continue recording actual Sprint Review and Retrospective outcomes |
-| S2-09 — Progress & Impediments | Issue #57 / PR #58 | Approved by Emre Boz and merged into develop | Record reviewer follow-ups and continue issue tracking |
+| S2-09 — Progress & Impediments | Issue #57 / PR #58 | Approved by Emre Boz and merged into develop (6105c8d) | Record reviewer follow-ups and continue issue tracking |
 | S2-10 — Deliverables Consistency Review | Issue #59 / PR #60 | Review feedback addressed; CI passed; approval pending | Await Beyzanur Alpay's approval and complete outstanding cross-document verification |
 | S2-11 — Submission Package | Issue #78 / PR #79 | Approved by Burcu Ücük and merged into develop (a630a62) | Update final evidence, release information, and submission status |
 | Sprint 2 Task Board Update | PR #69 | Approved by Burcu Ücük and merged into develop (1c7f4d3) | Keep task statuses and Issue/PR references current |
