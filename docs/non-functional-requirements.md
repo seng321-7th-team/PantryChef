@@ -58,7 +58,13 @@ The system shall recognize the Waiter, Chef/Kitchen Staff, and Restaurant Manage
 
 The system shall allow authorized Restaurant Managers to create, view, update, and deactivate ingredient records.
 
-Each ingredient shall have a name, measurement unit, physical quantity, and low-stock threshold.
+Each ingredient shall have a name, measurement unit, physical quantity, and low-stock threshold. Newly created ingredients shall start with zero physical and reserved stock. Ingredient creation shall not accept an opening stock quantity; initial stock shall be entered through a separate, authorized inventory adjustment with type `INITIAL_STOCK`.
+
+**Acceptance Criteria:**
+- A newly created ingredient has physical stock `0` and reserved stock `0`.
+- Supplying a nonzero opening quantity during ingredient creation is rejected rather than silently applied.
+- Only an authorized Restaurant Manager can record an `INITIAL_STOCK` adjustment; the adjustment records the actor, timestamp, quantity, and reason/type.
+- A successful `INITIAL_STOCK` adjustment changes physical stock exactly once and preserves inventory invariants.
 
 **Related Story:** US-02
 
@@ -76,7 +82,7 @@ Available stock shall not become negative through valid order operations.
 
 The system shall allow authorized managers to adjust physical inventory with a recorded reason, actor, and timestamp.
 
-Adjustments that would reduce physical stock below reserved stock shall be rejected.
+Adjustments that would reduce physical stock below reserved stock shall be rejected. An `INITIAL_STOCK` adjustment is a separate authorized operation from ingredient creation and shall be auditable.
 
 **Related Story:** US-04
 
@@ -196,15 +202,15 @@ The measurable targets below are **proposed Sprint 2 acceptance targets**, not v
 
 **NFR-01 — Response Time**
 
-Under a proposed test workload of 20 concurrent users, 95% of ordinary order-list and inventory-read requests should complete within 2 seconds in the agreed test environment.
+Under a proposed test workload of 20 concurrent users, 95% of ordinary order-list and inventory-read requests should complete within 2 seconds in the proposed test environment (a local Docker Compose setup with seeded test data, subject to confirmation against `docs/architecture/infrastructure-requirements.md`).
 
-**Verification:** Automated API response-time testing.
+**Verification:** Automated API response-time testing. Use a proposed 10-minute steady-state measurement window following a 2-minute warm-up, with at least 100 measured requests for each read-operation category. Report the request mix, achieved concurrency, p95 latency, successful and failed requests, and environment configuration. Proposed acceptance: p95 <= 2 seconds per read category and an HTTP/server error rate <= 1%, excluding intentionally invalid test inputs. These workload, sample, window, and error-budget values require technical-lead and QA approval.
 
 **NFR-02 — Transaction Performance**
 
-Under the same proposed workload, 95% of valid order creation and reservation transactions should complete within 3 seconds.
+Under the same proposed workload and test environment, 95% of valid order creation and atomic reservation transactions should complete within 3 seconds.
 
-**Verification:** Integration and performance testing.
+**Verification:** Integration and performance testing. Use a proposed 10-minute steady-state measurement window following a 2-minute warm-up, with at least 100 measured valid order-creation transactions and sufficient seeded inventory to prevent expected out-of-stock rejections from distorting latency. Report p95 end-to-end transaction latency, request mix, achieved concurrency, successful/failed requests, and any inventory invariant violations. Proposed acceptance: p95 <= 3 seconds, HTTP/server error rate <= 1%, and zero inventory invariant violations. These values require technical-lead and QA approval.
 
 ### 4.2 Reliability and Data Integrity
 
@@ -304,6 +310,20 @@ A failed inventory-related transaction shall not leave partially committed order
 
 **Verification:** Simulated transaction failure and rollback tests.
 
+### 4.7 Backup and Deployment Security
+
+**NFR-16 — Backup and Restore**
+
+During use of the proposed demonstration environment, the PostgreSQL database shall be backed up using `pg_dump` at least once every 24 hours and before each sprint demonstration. The proposed recovery point objective (RPO) is at most 24 hours, and the proposed recovery time objective (RTO) is at most 30 minutes using documented restore steps. These targets are subject to confirmation by the infrastructure owner and QA.
+
+**Verification:** Review backup timestamps and restore documentation; restore a real backup into a test database before the final demonstration, check data integrity, and record elapsed recovery time.
+
+**NFR-17 — Authentication and Secrets**
+
+User passwords shall be stored as salted, one-way password hashes (for example, bcrypt), never as plaintext. Access tokens shall expire within at most one hour, consistent with the API draft's proposed `expiresIn: 3600` value. Database credentials and JWT signing secrets shall be supplied through environment variables or an equivalent secret-management mechanism and shall not be committed to the repository. If deployed to a publicly reachable host, the application shall be accessible only over HTTPS.
+
+**Verification:** Authentication configuration review, checks that stored passwords are not plaintext, token-expiration tests, repository secret scanning, and HTTPS deployment review when applicable. Confirm these requirements with the API and infrastructure owners.
+
 ## 5. Business Rules and Invariants
 
 The following rules are mandatory for MVP consistency:
@@ -322,15 +342,16 @@ The following rules are mandatory for MVP consistency:
 | BR-10 | Unauthorized operations and invalid transitions are rejected. |
 | BR-11 | Duplicate requests must not create duplicate inventory effects. |
 | BR-12 | Significant order and inventory operations must be traceable. |
+| BR-13 | New ingredients start with zero stock; opening stock is recorded only through a separate authorized `INITIAL_STOCK` adjustment. |
 
 ## 6. Requirements Traceability Matrix
 
 | Functional Requirement | Backlog Story | Related Quality Requirements |
 |---|---|---|
-| FR-01 | US-01 | NFR-06, NFR-07 |
+| FR-01 | US-01 | NFR-06, NFR-07, NFR-17 |
 | FR-02 | US-02 | NFR-07, NFR-08 |
 | FR-03 | US-03 | NFR-04 |
-| FR-04 | US-04 | NFR-03, NFR-08 |
+| FR-04 | US-04 | NFR-03, NFR-08, NFR-16 |
 | FR-05 | US-05 | NFR-07, NFR-11 |
 | FR-06 | US-06 | NFR-01, NFR-07 |
 | FR-07 | US-07 | NFR-02, NFR-03, NFR-04, NFR-05 |
@@ -339,7 +360,7 @@ The following rules are mandatory for MVP consistency:
 | FR-10 | US-10 | NFR-04, NFR-09 |
 | FR-11 | US-11 | NFR-03, NFR-05 |
 | FR-12 | US-12 | NFR-06, NFR-08 |
-| FR-13 | US-13 | NFR-08 |
+| FR-13 | US-13 | NFR-08, NFR-16 |
 | FR-14 | US-14 | NFR-04, NFR-09 |
 
 ## 7. Acceptance and Verification Scenarios
@@ -358,6 +379,10 @@ The following scenarios shall guide requirements validation:
 10. **Low-stock threshold:** An ingredient is flagged when available stock reaches or falls below its threshold.
 11. **Invalid transition:** An unsupported order state transition is rejected.
 12. **Transaction failure:** A failed operation leaves no partial inventory or order updates.
+13. **Ingredient opening stock:** A newly created ingredient starts at zero; only a separately authorized and logged `INITIAL_STOCK` adjustment establishes opening stock.
+14. **Performance protocol:** Execute the proposed read and order-creation load tests; record the measurement window, samples, request mix, error budget, and p95 latencies.
+15. **Backup recovery:** Restore a real database backup and record integrity checks and elapsed restore time.
+16. **Authentication security:** Check password hashing, token expiry, secret handling, and HTTPS if publicly deployed.
 
 ## 8. Dependencies and Assumptions
 
@@ -367,7 +392,8 @@ The following scenarios shall guide requirements validation:
 - Reservations are logical allocations rather than separate physical storage.
 - Detailed API paths and schemas are maintained in `api/openapi.yaml`.
 - The SRS document and architecture artifacts must follow the same approved business rules.
-- Proposed quantitative quality targets require technical and QA approval before being treated as baselines.
+- Proposed quantitative quality targets and the test protocol require technical and QA approval before being treated as baselines.
+- Proposed backup and authentication requirements require alignment with the SRS, OpenAPI, infrastructure documentation, and QA test plan.
 - Procurement and goods-receipt stories US-15 and US-16 are P1 post-MVP features and are excluded from these MVP requirements.
 
 ## 9. Review and Completion Checklist
@@ -377,7 +403,9 @@ The following scenarios shall guide requirements validation:
 - [ ] Backlog story references reviewed.
 - [ ] Functional requirements checked against the SRS.
 - [ ] API-related requirements reviewed against the OpenAPI draft.
-- [ ] Proposed performance targets reviewed by the technical lead.
+- [ ] Proposed performance targets and reproducible test protocol reviewed by the technical lead and QA.
+- [ ] FR-02 zero-stock and `INITIAL_STOCK` rules checked against SRS and OpenAPI.
+- [ ] NFR-16/17 reviewed against SRS, infrastructure documentation, and QA metrics.
 - [ ] Testability and verification scenarios reviewed by Beyzanur.
 - [ ] MVP scope and business rules confirmed.
 - [ ] Pull request linked to Issue #49.
@@ -388,10 +416,11 @@ The following scenarios shall guide requirements validation:
 - `docs/project-proposal.md`
 - `docs/system-vision.md`
 - `docs/product-backlog.md`
-- `docs/srs.md` — referenced by the Sprint 2 requirements task; availability to be confirmed
+- `docs/srs.md` — Sprint 2 SRS; cross-document alignment to be confirmed after this update
 - `api/openapi.yaml`
 - `docs/sprint2-task-board.md`
 - `docs/sprint2-raci.md`
+- `docs/architecture/infrastructure-requirements.md` — test environment and recovery alignment to be confirmed
 
 ## 11. Conclusion
 
