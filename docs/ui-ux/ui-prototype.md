@@ -76,7 +76,7 @@ In the prototype, **Deactivate ingredient** (04g → 04h → 04i) and **Reactiva
 
 | Topic | Frames | Status |
 |---|---|---|
-| Only the waiter creates orders | `scr-02a`, `scr-02b`, `scr-02c`; no manager order screen | Applied in Figma. Matches SRS #54 FR-06 and API draft #62 (`createOrder` roles: WAITER; API, API README and UML agree). `develop` 0.1.0 still lists WAITER and MANAGER. **Open conflict (F-07 in PR #50):** backlog #55 US-06 AC1 at `beba8c6` says "Waiter or Manager"; changes requested in the [#55 review](https://github.com/seng321-7th-team/PantryChef/pull/55#pullrequestreview-5960692446). The design stays waiter-only until the requirement and API owners decide. Hiding a UI action is not server-side authorization. |
+| Only the waiter creates orders | `scr-02a`, `scr-02b`, `scr-02c`; no manager order screen | Applied in Figma. Matches SRS #54 FR-06 and API draft #62 (`createOrder` roles: WAITER; API, API README and UML agree). Backlog #55 US-06 AC1 at `986583e` also says WAITER only (aligned in drafts; F-07 in PR #50 records the earlier "Waiter or Manager" wording at `beba8c6`). Re-review of #55 and the merges are pending; `develop` 0.1.0 still lists WAITER and MANAGER. Hiding a UI action is not server-side authorization. |
 | Waiter cancels a `PENDING` order | `scr-02a` → `scr-02d` → `scr-02a` | Applied in Figma |
 | Manager cancels a `PENDING` order | `scr-05d` | Applied in Figma |
 | Late cancel (`PREPARING` / `READY`): manager or waiter with `ORDER_LATE_CANCEL`; reason required, 3–500 characters (`422 CANCELLATION_REASON_REQUIRED`); stock is not restored | `scr-05b`, `scr-05f`, `scr-05e`, `scr-05h` | Applied in Figma. Matches API 0.1.0. |
@@ -105,10 +105,10 @@ Stock movements and reservation views, new menu item with its first recipe, staf
 
 ## 7. Alignment checkpoint (18 Nov)
 
-Compared with SRS #54 `0ad80b3`, refined backlog #55 `beba8c6`, API/diagrams #62 `f061da2`, ADR #64 `60d1a8b` (merged into `develop` as `3688747`; the records keep their own Accepted/Proposed/Rejected status), schema #66 `fa446c1` and consistency review #68 `46e8d1c`. The earlier source hashes in the detailed tables identify the original checks; no merged status is inferred from them.
+Compared with SRS #54 `0ad80b3`, refined backlog #55 `986583e`, API/diagrams #62 `f061da2`, ADR #64 `60d1a8b` (merged into `develop` as `3688747`; the records keep their own Accepted/Proposed/Rejected status), schema #66 `fa446c1` and consistency review #68 `46e8d1c`. The earlier source hashes in the detailed tables identify the original checks; no merged status is inferred from them.
 
 - Core roles, zero-stock creation, stock reservation/consumption, cancellation, immutable recipes and 15–30 s polling align in the drafts.
-- Order creation role: SRS FR-06 and API #62 say WAITER, backlog #55 US-06 AC1 says Waiter or Manager (open conflict, section 3).
+- Order creation role: SRS FR-06, backlog #55 US-06 AC1 and API #62 say WAITER (aligned in drafts, section 3); review and merge pending.
 - #68 records CR-04 (deactivate/reactivate views) as resolved. Those screens exist; approval of the underlying API draft is separate.
 - Recipe creation (FR-05/US-05), complete reservation/consumption history (FR-13/US-13) and staff/permission assignment (SRS §8 question 2) remain open UI coverage questions for Burcu. Do not mark these requirements out of scope without her decision.
 - **Prototype limits:** kitchen interactions cover order #1042 only (Mark as ready on #1042 leads to `scr-03e-kitchen-ready`; the other kitchen buttons are faded and not connected); Pending cancel returns a reused list; login/role previews do not authenticate; no actual stock or audit mutations occur. Expected behavior in the flow document is distinct from a tested prototype transition.

@@ -10,7 +10,7 @@ This is a click-through script for the Figma prototype (32 frames, export of 18 
 
 **General demo start:** open the *General demo prototype* link in `figma-links.md`. It starts at `scr-01-login`. Choose a role with the prototype-only buttons (Waiter, Chef, Manager). The two Flow 8 / Flow 9 links start directly at their frames and are for short side demos. Flow 2 to Flow 7 can be opened from the flow list in the prototype sidebar.
 
-Where a step follows API draft #62, it is marked **(API draft #62)**. The current checked head is `f061da2` (not merged); OpenAPI content is unchanged from `866122e`/`cb634c3`. Current cross-check sources: SRS #54 `0ad80b3`, backlog #55 `beba8c6`, ADR #64 `60d1a8b` (merged into `develop`) and schema #66 `fa446c1`. Draft agreement is not an implementation or merge claim.
+Where a step follows API draft #62, it is marked **(API draft #62)**. The current checked head is `f061da2` (not merged); OpenAPI content is unchanged from `866122e`/`cb634c3`. Current cross-check sources: SRS #54 `0ad80b3`, backlog #55 `986583e`, ADR #64 `60d1a8b` (merged into `develop`) and schema #66 `fa446c1`. Draft agreement is not an implementation or merge claim.
 
 **Scenario states:** The Waiter, Chef and Manager sections use independent, predefined Figma frames. Order IDs may be reused, but actions in one section do not update the other sections. The demo is not one continuous order lifecycle.
 
@@ -62,7 +62,7 @@ Open the Flow 8 link (`scr-07a-states`): loading, empty states, `INTERNAL_ERROR`
 - The prototype does not call a backend. Do not say that stock, reservations or the audit log were really changed.
 - Deactivate and Reactivate are prototype transitions between frames.
 - The #1042-only kitchen path is a demo limit, not a product rule.
-- PR #62 is a draft API version and is not merged. Soft delete and waiter-only order creation are still pending in the team; backlog #55 US-06 AC1 currently says "Waiter or Manager" (open conflict, see `figma-links.md` section 8). For initial stock the drafts say "start at zero, then adjust", and `scr-04d` to `scr-04f` follow it.
+- PR #62 is a draft API version and is not merged. Soft delete and waiter-only order creation are aligned in the drafts but not yet merged (see `figma-links.md` section 8). For initial stock the drafts say "start at zero, then adjust", and `scr-04d` to `scr-04f` follow it.
 - Not shown: stock movements and reservation views, new menu item with its first recipe, staff and permission management. These remain product-owner UI scope questions. Delivery is outside the MVP. A successful demo rehearsal does not prove backend requirements or numeric NFR targets.
 
 ## Checklist before the demo
