@@ -179,7 +179,7 @@ Existing orders shall preserve their original ingredient requirements after reci
 
 **FR-06 — Order Creation**
 
-The system shall allow authorized Waiters to create orders containing valid menu items and positive portion quantities.
+The system shall allow only authorized Waiters to create orders containing valid menu items and positive portion quantities. Restaurant Managers and Chefs/Kitchen Staff shall not be permitted to create orders.
 
 Successfully created orders shall receive unique identifiers and enter the `Pending` state.
 
