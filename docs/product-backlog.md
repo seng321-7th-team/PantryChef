@@ -11,8 +11,8 @@
 **QA Reviewer:** Beyzanur Alpay  
 **API Reviewer:** Ayşe  
 **Scope Reviewer:** Tuğçe  
-**Version:** 2.0 — Proposed refinement  
-**Date:** 17 November 2026  
+**Version:** 2.1 — Proposed refinement (waiter-only order creation)  
+**Date:** 19 November 2026  
 **Tracking:** [S2-02 — Issue #46](https://github.com/seng321-7th-team/PantryChef/issues/46)  
 **Status:** Draft — Pending QA, API, scope, and team review
 
@@ -302,7 +302,7 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. An authorized Waiter or Manager can create an order by selecting valid menu items and positive portion quantities.
+1. Only an authorized Waiter can create an order by selecting valid menu items and positive portion quantities. Managers and Chefs are not permitted to create orders.
 2. Invalid or empty orders are rejected.
 3. A successfully created order receives a unique identifier.
 4. Its initial state is `Pending`.
@@ -721,6 +721,7 @@ The following is a **proposed topic-level mapping**, not a verified mapping to s
 
 ### 12.1 Open Questions for Team Review
 
+- **API alignment action — order creation:** The approved Product Backlog rule is waiter-only order creation (US-06 AC1). The supplied OpenAPI draft currently lists `WAITER, MANAGER` for `POST /orders` (`createOrder`) and in its order-lifecycle summary. Ayşe (API owner) must remove `MANAGER` from order-creation authorization in both locations. This restriction does not change Manager permissions for pending-order cancellation, authorized late cancellation, inventory management, or purchase orders. QA should verify that Manager and Chef order-creation requests are rejected without creating orders or reservations.
 - Confirm exact SRS requirement IDs and API paths/operation IDs for each applicable story; do not invent missing identifiers.
 - Confirm whether the API draft supports idempotency for order creation and preparation transitions as required by US-07 and US-09.
 - Confirm how authorized waiter cancellation after preparation starts is represented and audited.
