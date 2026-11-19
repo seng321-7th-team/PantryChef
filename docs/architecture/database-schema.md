@@ -15,8 +15,8 @@ constraints, the rules that the database enforces and the rules that the service
 proposed PostgreSQL DDL. It follows the API contract v0.2.0 (ingredient soft delete, opening stock
 through a separate `INITIAL_STOCK` adjustment, order creation by WAITER).
 
-> This is a proposed schema. No migration has been run against a database yet; the DDL is checked
-> for consistency in this document only (see [section 10](#10-validation-and-open-points)).
+> This is a proposed schema. The DDL has been run once on PostgreSQL 16.4 during review; it is not yet
+> a project migration (see [section 10](#10-validation-and-open-points)).
 
 ## 1. Conventions
 
@@ -321,7 +321,7 @@ CREATE TABLE stock_movements (
         OR (type = 'ADJUSTMENT' AND reservation_id IS NULL)
     ),
     CONSTRAINT ck_stock_movements_reason CHECK (
-        (type = 'ADJUSTMENT' AND reason IN ('INITIAL_STOCK', 'PURCHASE_RECEIVED',
+        (type = 'ADJUSTMENT' AND reason IS NOT NULL AND reason IN ('INITIAL_STOCK', 'PURCHASE_RECEIVED',
             'PHYSICAL_COUNT_CORRECTION', 'WASTE', 'LATE_CANCELLATION_CORRECTION', 'OTHER'))
         OR (type <> 'ADJUSTMENT' AND reason IS NULL)
     )
@@ -492,9 +492,17 @@ Columns map one-to-one to the camelCase API fields (for example `on_hand` ↔ `o
   DDL, and every DDL foreign key points to an existing primary or unique key.
 - `CHECK` lists match the enumerations in `api/openapi.yaml` v0.2.0.
 
+**Run on PostgreSQL (review on PR #66, Emre Boz)**
+- The DDL of section 5 was run on PostgreSQL 16.4 (PGlite) without errors: 14 tables, 83 constraints,
+  36 indexes.
+- The section 7 flows were run as plain SQL (11 steps), followed by 25 negative checks that try to
+  break the rules above. 24 were rejected by the expected constraint; the one gap, an `ADJUSTMENT` row
+  with `reason = NULL` passing `ck_stock_movements_reason`, is fixed by the `reason IS NOT NULL` term.
+
 **Not yet done**
-- The DDL has not been run on a PostgreSQL server. It should be applied as the first migration of the
-  Sprint 3 backend skeleton and covered by integration tests for the constraints above (S2-21).
+- Row locks and parallel transactions (ADR-004) were not tested. The DDL should be applied as the first
+  migration of the Sprint 3 backend skeleton and covered by integration tests on a PostgreSQL service
+  container (S2-21, S2-27).
 
 **Open points**
 
@@ -511,3 +519,4 @@ Columns map one-to-one to the camelCase API fields (for example `on_hand` ↔ `o
 | 0.1 | 2026-11-18 | Ayşe Dural | First schema document for S2-15, aligned with the ER diagram and API v0.2.0 (PR #62) |
 | 0.2 | 2026-11-18 | Ayşe Dural | Ingredient creation starts at `on_hand = 0`; opening stock through a separate `INITIAL_STOCK` adjustment (consistency review CR-01, PR #68) |
 | 0.3 | 2026-11-18 | Ayşe Dural | ORM and migration tool owner aligned with S2-27 (PR #37) |
+| 0.4 | 2026-11-20 | Ayşe Dural | `ck_stock_movements_reason` rejects an `ADJUSTMENT` without a reason; section 10 records Emre's PostgreSQL run |
