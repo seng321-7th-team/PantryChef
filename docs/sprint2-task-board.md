@@ -5,7 +5,7 @@
 **Sprint:** Sprint 2 – Requirements & Architecture  
 **Deadline:** 24 November 2026, 23:59 (Türkiye time)  
 **Document Owner:** Bilgesu Nacak  
-**Document Status:** Planning draft – GitHub statuses and issue assignments pending verification
+**Document Status:** In Progress – Sprint 2 tracking updated; remaining task statuses require verification
 
 ## 1. Sprint goal
 
@@ -15,10 +15,10 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 
 - **Repository:** https://github.com/seng321-7th-team/PantryChef
 - **Existing project board:** https://github.com/orgs/seng321-7th-team/projects/4
-- **Workflow statuses:** Backlog, To Do, In Progress, In Review, Done
+- **Workflow statuses:** The existing Project #4 board uses Todo, In Progress, and Done. Pull requests awaiting approval are tracked as In Review in the documentation while their project status may remain In Progress.
 - **Task ID and GitHub Issue number are distinct identifiers.**
 - **Known existing issues:** #28 → S2-26; #29 → S2-23; #30 and #31 → S2-36. Do not reopen duplicates.
-- **Status convention:** All entries below are provisional To Do until the actual Project Board and PR evidence are checked.
+- **Status convention:** Verified tasks use their confirmed progress status. Entries marked `To Do (provisional)` remain unverified and must be checked against GitHub Issues, Pull Requests, and the Project Board before being updated.
 
 ## 3. Sprint 2 task board
 
@@ -29,12 +29,12 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 | S2-03 | Functional & Non-functional Requirements | Burcu Ücük | Beyzanur | `docs/non-functional-requirements.md` | TBD – verify first | To Do (provisional) |
 | S2-04 | Figma tasarımlarının gereksinimlerle uyumunu inceleme | Burcu Ücük | Tuğçe | `Figma prototype review` | TBD – verify first | To Do (provisional) |
 | S2-05 | MVP Scope & Out-of-Scope Definition | Burcu Ücük | Bilgesu | `docs/srs.md (scope section)` | TBD – verify first | To Do (provisional) |
-| S2-06 | Sprint 2 Task Board oluşturma ve yönetme | Bilgesu Nacak | Burcu | `docs/sprint2-task-board.md` | #38 / PR #39 | Done |
+| S2-06 | Sprint 2 Task Board oluşturma ve yönetme | Bilgesu Nacak | Burcu | `docs/sprint2-task-board.md` | Issue #38 / PR #39 / PR #69 | Done |
 | S2-07 | Sprint 2 RACI Matrix | Bilgesu Nacak | Tuğçe | `docs/sprint2-raci.md` | #40 / PR #41 | Done |
-| S2-08 | Sprint Planning, Stand-up, Review, Retrospective kayıtları | Bilgesu Nacak | Tuğçe | `docs/sprint2-meeting-notes.md` | Issue #42 | In Progress |
-| S2-09 | GitHub Issues, PR Tracking & Impediment Log | Bilgesu Nacak | Emre | `GitHub Project #4 / docs/sprint2-progress-impediments.md` | Issue #57 / PR #58 | In Progress |
+| S2-08 | Sprint Planning, Stand-up, Review, Retrospective kayıtları | Bilgesu Nacak | Tuğçe | `docs/sprint2-meeting-notes.md` | Issue #42 / PR #77 | In Progress |
+| S2-09 | GitHub Issues, PR Tracking & Impediment Log | Bilgesu Nacak | Emre | `GitHub Project #4 / docs/sprint2-progress-impediments.md` | Issue #57 / PR #58 / PR #83 | In Progress |
 | S2-10 | Sprint 2 Deliverables Consistency Review | Bilgesu Nacak | Beyzanur | `docs/sprint2-deliverables-consistency-review.md` | Issue #59 / PR #60 | In Progress |
-| S2-11 | Sprint 2 Submission Package & Teams Upload | Bilgesu Nacak | Burcu | `docs/sprint2-submission.md` | TBD – verify first | To Do (provisional) |
+| S2-11 | Sprint 2 Submission Package & Teams Upload | Bilgesu Nacak | Burcu | `docs/sprint2-submission.md` | Issue #78 / PR #79 | In Progress |
 | S2-37 | Sprint 2 Peer Evaluation & Contribution Assessment | Bilgesu Nacak | Tüm ekip | `Peer evaluation record (private when needed)` | TBD – verify first | To Do (provisional) |
 | S2-12 | C4 System Context Diagram | Ayşe Dural | Emre | `docs/architecture/c4/` | TBD – verify first | To Do (provisional) |
 | S2-13 | C4 Container Diagram | Ayşe Dural | Emre | `docs/architecture/c4/` | TBD – verify first | To Do (provisional) |
@@ -60,7 +60,7 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 | S2-30 | User-flow Diagrams | Tuğçe Çevik | Ayşe | `docs/ui-ux/user-flows.md` | TBD – verify first | To Do (provisional) |
 | S2-31 | UI Design–User Story Consistency Review | Tuğçe Çevik | Burcu | `UI / User Story review record` | TBD – verify first | To Do (provisional) |
 | S2-32 | Frontend UI Skeleton (ek hedef) | Tuğçe Çevik | Ayşe | `frontend/ (additional goal)` | TBD – verify first | To Do (provisional) |
-| S2-33 | Figma Links & UI Documentation | Tuğçe Çevik | Bilgesu | `docs/ui-ux/figma-links.md` | TBD – verify first | To Do (provisional) |
+| S2-33 | Figma Links & UI Documentation | Tuğçe Çevik | Bilgesu | `docs/ui-ux/figma-links.md` | Issue #53 / PR #71 | In Progress |
 
 ## 4. Board update procedure
 
@@ -81,6 +81,11 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 - [ ] UML Use Case, Class, Sequence and State diagrams are present.
 - [ ] Figma prototype and user flows have accessible links.
 - [ ] Required Issue, PR, release/tag and documentation links are in the Teams submission.
+- [ ] Manager order creation permissions are consistent across the Product Backlog, SRS, and OpenAPI (PR #55, PR #54, PR #62).
+- [ ] Quality metrics and requirements–test traceability evidence are verified (Issue #80).
+- [ ] Outstanding architecture, API, and UI/UX Pull Requests are reviewed and merged where required.
+- [ ] Final Sprint 2 task statuses and evidence references are synchronized across the Task Board, Progress Tracking, and Submission Package.
+
 
 ## 6. Risks and impediments
 
