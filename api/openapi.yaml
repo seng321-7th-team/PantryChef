@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: PantryChef API
-  version: 0.1.0
+  version: 0.2.0
   summary: Restaurant order management with recipe-based ingredient reservation and exactly-once stock consumption.
   description: |
     PantryChef connects restaurant orders to ingredient inventory. This contract is the
@@ -12,7 +12,7 @@ info:
 
     | Transition | Who | Request | Inventory effect |
     |---|---|---|---|
-    | (new) → `PENDING` | Waiter, Manager | `POST /orders` | One `ACTIVE` reservation per required ingredient. `onHand` unchanged. |
+    | (new) → `PENDING` | Waiter | `POST /orders` | One `ACTIVE` reservation per required ingredient. `onHand` unchanged. |
     | `PENDING` → `PREPARING` | Chef | `PATCH /orders/{orderId}/status` with `PREPARING` | Reservations become `CONSUMED`; `onHand` is deducted **exactly once**, atomically. |
     | `PREPARING` → `READY` | Chef | `PATCH /orders/{orderId}/status` with `READY` | None. |
     | `PENDING` → `CANCELLED` | Waiter, Manager | `PATCH /orders/{orderId}/status` with `CANCELLED` | Reservations become `RELEASED`. `onHand` unchanged. |
@@ -33,6 +33,20 @@ info:
     `available = onHand - reserved`. An order is accepted only if **every** required
     ingredient has enough available stock (all-or-nothing). Otherwise the request fails
     with `409 INSUFFICIENT_STOCK` and nothing changes.
+
+    ## Ingredient lifecycle
+
+    Ingredients are never hard-deleted. `POST /ingredients` creates an ingredient together
+    with its stock record, which starts at `onHand = 0`. The opening stock, like every
+    later stock change, is entered with `POST /inventory/adjustments` (reason
+    `INITIAL_STOCK` for the opening stock).
+
+    `DELETE /ingredients/{ingredientId}` is a **soft delete**: it sets `active` to `false`
+    (Restaurant Manager only). Recipes, orders, reservations, stock movements and audit
+    entries that refer to the ingredient are kept unchanged. An inactive ingredient cannot
+    be added to a new recipe version, and menu items whose current recipe uses it cannot
+    be ordered. `PENDING` orders created before the deactivation keep their reservations
+    and continue normally.
 
     ## Duplicate-request protection
 
@@ -63,7 +77,7 @@ tags:
   - name: Users
     description: Staff account management (Restaurant Manager only).
   - name: Ingredients
-    description: Ingredient catalogue (name, unit of measure, low-stock threshold).
+    description: Ingredient catalogue (name, unit of measure, low-stock threshold, active flag). Ingredients are deactivated, never hard-deleted.
   - name: Inventory
     description: Physical, reserved and available stock levels, authorized adjustments, stock movement history and low-stock alerts.
   - name: Menu Items
@@ -302,11 +316,19 @@ paths:
       tags: [Ingredients]
       operationId: listIngredients
       summary: List ingredients
-      description: 'Roles: MANAGER, CHEF, WAITER. Stock levels are served by `GET /inventory`.'
+      description: |
+        Roles: MANAGER, CHEF, WAITER. Stock levels are served by `GET /inventory`. Inactive
+        ingredients are included unless `active` is set.
       parameters:
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Size'
         - $ref: '#/components/parameters/Search'
+        - name: active
+          in: query
+          description: Filter by active flag. Use `true` when choosing ingredients for a recipe.
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: A page of ingredients.
@@ -323,17 +345,32 @@ paths:
       operationId: createIngredient
       summary: Create an ingredient
       description: |
-        Roles: MANAGER. The ingredient starts with `onHand = 0`. Initial stock is entered
-        with `POST /inventory/adjustments` and reason `INITIAL_STOCK`.
+        Roles: MANAGER. Creates an active ingredient and its stock record in one transaction.
+        If any step fails, nothing is created.
+
+        **Initial stock:** the stock record starts with `onHand = 0` and `reserved = 0`. The
+        opening stock is entered afterwards with `POST /inventory/adjustments` and reason
+        `INITIAL_STOCK`, so every stock change has an `ADJUSTMENT` movement and an audit entry.
+
+        Ingredient names are unique, including inactive ingredients (`409 DUPLICATE_RESOURCE`);
+        reactivate an inactive ingredient with `PUT /ingredients/{ingredientId}` instead of
+        creating it again.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IngredientInput'
+              $ref: '#/components/schemas/IngredientCreate'
+            examples:
+              mozzarella:
+                summary: Create mozzarella (stock is added with an INITIAL_STOCK adjustment)
+                value:
+                  name: Mozzarella
+                  unit: g
+                  lowStockThreshold: 1000
       responses:
         '201':
-          description: The ingredient was created.
+          description: The ingredient was created; its stock record holds `onHand = 0` and `reserved = 0`.
           headers:
             Location:
               $ref: '#/components/headers/Location'
@@ -374,17 +411,22 @@ paths:
     put:
       tags: [Ingredients]
       operationId: updateIngredient
-      summary: Replace an ingredient's name, unit and low-stock threshold
+      summary: Replace an ingredient's name, unit, low-stock threshold and active flag
       description: |
         Roles: MANAGER. Stock quantities cannot be changed here; use
         `POST /inventory/adjustments`. The unit cannot be changed while the ingredient
         has stock or active reservations (`409 RESOURCE_IN_USE`).
+
+        Setting `active` to `false` has the same effect as
+        `DELETE /ingredients/{ingredientId}`. Setting it back to `true` reactivates the
+        ingredient so it can be used in new recipe versions again. Each change of `active`
+        is audited (`INGREDIENT_DEACTIVATED` or `INGREDIENT_REACTIVATED`).
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IngredientInput'
+              $ref: '#/components/schemas/IngredientUpdate'
       responses:
         '200':
           description: The updated ingredient.
@@ -406,22 +448,51 @@ paths:
           $ref: '#/components/responses/UnprocessableContent'
     delete:
       tags: [Ingredients]
-      operationId: deleteIngredient
-      summary: Delete an ingredient
+      operationId: deactivateIngredient
+      summary: Deactivate an ingredient (soft delete)
       description: |
-        Roles: MANAGER. Fails with `409 RESOURCE_IN_USE` if the ingredient is used in any
-        recipe or has active reservations.
+        Roles: MANAGER. Sets `active` to `false`; the ingredient is **not** removed.
+
+        - Historical data is kept: recipe versions, order items, reservations, stock
+          movements and audit entries keep their references and snapshots.
+        - An inactive ingredient cannot be used in a new recipe version
+          (`422 INGREDIENT_INACTIVE` on `POST /menu-items` and `PUT /recipes/{menuItemId}`).
+        - Menu items whose current recipe uses an inactive ingredient cannot be ordered:
+          `POST /orders` returns `422 MENU_ITEM_UNAVAILABLE` and their `availablePortions` is `0`.
+          Use `GET /recipes?ingredientId=…` to find these recipes and publish new versions.
+        - `PENDING` orders created before the deactivation keep their `ACTIVE` reservations;
+          starting preparation consumes them and cancelling releases them as usual.
+        - The stock record stays visible in `GET /inventory` and can still be corrected with
+          `POST /inventory/adjustments` (for example `WASTE`). Inactive ingredients do not
+          raise low-stock alerts.
+
+        The change is audited (`INGREDIENT_DEACTIVATED`). Deactivating an ingredient that is
+        already inactive changes nothing and returns `200` with the current state.
+        Reactivate with `PUT /ingredients/{ingredientId}` and `active: true`.
       responses:
-        '204':
-          description: The ingredient was deleted.
+        '200':
+          description: The ingredient is inactive.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+              examples:
+                deactivated:
+                  summary: Deactivated ingredient
+                  value:
+                    id: 9b2e4d10-1c3a-4f5e-8a7b-0c1d2e3f4a51
+                    name: Mozzarella
+                    unit: g
+                    lowStockThreshold: 1000
+                    active: false
+                    createdAt: '2026-11-01T09:00:00Z'
+                    updatedAt: '2026-11-17T10:15:00Z'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
-        '409':
-          $ref: '#/components/responses/Conflict'
 
   /inventory:
     get:
@@ -430,14 +501,21 @@ paths:
       summary: List stock levels
       description: |
         Roles: MANAGER, CHEF, WAITER. Returns `onHand`, `reserved` and `available`
-        (`onHand - reserved`) for every ingredient.
+        (`onHand - reserved`) for every ingredient, including inactive ingredients
+        (`ingredientActive: false`) unless `active` is set.
       parameters:
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Size'
         - $ref: '#/components/parameters/Search'
+        - name: active
+          in: query
+          description: Filter by the ingredient's active flag.
+          required: false
+          schema:
+            type: boolean
         - name: lowStock
           in: query
-          description: When `true`, return only ingredients whose available stock is at or below their low-stock threshold.
+          description: When `true`, return only active ingredients whose available stock is at or below their low-stock threshold.
           required: false
           schema:
             type: boolean
@@ -480,8 +558,10 @@ paths:
       summary: Record an authorized stock adjustment
       description: |
         Roles: MANAGER. Changes `onHand` by `quantityDelta` (positive or negative) and writes
-        an `ADJUSTMENT` stock movement and an audit entry. This is the only way to correct
-        stock, including after a late cancellation. Rejected with
+        an `ADJUSTMENT` stock movement and an audit entry. This is the only way to change
+        stock, including the opening stock of a new ingredient (reason `INITIAL_STOCK`) and
+        corrections after a late cancellation. Adjustments are also allowed for inactive
+        ingredients. Rejected with
         `409 NEGATIVE_AVAILABLE_STOCK` if the result would make `onHand` lower than `reserved`.
       requestBody:
         required: true
@@ -570,8 +650,8 @@ paths:
       operationId: listLowStockAlerts
       summary: List current low-stock alerts
       description: |
-        Roles: MANAGER. Returns every ingredient whose available stock is at or below its
-        `lowStockThreshold`, lowest first. Alerts are shown in-app; no email or SMS in the MVP.
+        Roles: MANAGER. Returns every active ingredient whose available stock is at or below
+        its `lowStockThreshold`, lowest first. Inactive ingredients are not alerted. Alerts are shown in-app; no email or SMS in the MVP.
       responses:
         '200':
           description: The current low-stock alerts (may be empty).
@@ -592,6 +672,7 @@ paths:
       description: |
         Roles: MANAGER, CHEF, WAITER. `availablePortions` shows how many portions can be
         ordered right now based on available stock, so waiters avoid selling unavailable dishes.
+        It is `0` when the current recipe uses an inactive ingredient.
       parameters:
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Size'
@@ -617,7 +698,10 @@ paths:
       tags: [Menu Items]
       operationId: createMenuItem
       summary: Create a menu item with its recipe
-      description: 'Roles: MANAGER. A menu item cannot be created without a recipe; the recipe starts at version 1.'
+      description: |
+        Roles: MANAGER. A menu item cannot be created without a recipe; the recipe starts at
+        version 1. Every recipe line must reference an existing, active ingredient
+        (`422 INGREDIENT_INACTIVE` otherwise).
       requestBody:
         required: true
         content:
@@ -797,7 +881,9 @@ paths:
       description: |
         Roles: MANAGER. Replaces all recipe lines and increments `version`. Only new orders
         use the new version; existing orders keep their `recipeVersion` and reservations are
-        not recalculated. The change is audited (`RECIPE_UPDATED`).
+        not recalculated. Every line must reference an existing, active ingredient
+        (`422 INGREDIENT_INACTIVE` otherwise); older versions that use a now inactive
+        ingredient stay unchanged. The change is audited (`RECIPE_UPDATED`).
       requestBody:
         required: true
         content:
@@ -865,7 +951,7 @@ paths:
       operationId: createOrder
       summary: Create an order and reserve its ingredients
       description: |
-        Roles: WAITER, MANAGER. In one transaction the system computes the required
+        Roles: WAITER. In one transaction the system computes the required
         ingredients from each menu item's recipe (recipe quantity x ordered quantity), checks
         that every ingredient has enough available stock, and creates one `ACTIVE`
         reservation per ingredient. The order starts in `PENDING`; `onHand` is not changed.
@@ -971,8 +1057,9 @@ paths:
                         available: 320
         '422':
           description: |
-            `VALIDATION_FAILED`, `MENU_ITEM_UNAVAILABLE` (archived or inactive menu item) or
-            `IDEMPOTENCY_KEY_REUSED` (same key sent with a different body).
+            `VALIDATION_FAILED`, `MENU_ITEM_UNAVAILABLE` (archived or inactive menu item, or
+            its current recipe uses an inactive ingredient) or `IDEMPOTENCY_KEY_REUSED` (same
+            key sent with a different body).
           content:
             application/problem+json:
               schema:
@@ -1437,6 +1524,7 @@ components:
         - INVALID_STATUS_TRANSITION
         - CANCELLATION_REASON_REQUIRED
         - MENU_ITEM_UNAVAILABLE
+        - INGREDIENT_INACTIVE
         - IDEMPOTENCY_KEY_REUSED
         - INTERNAL_ERROR
     FieldError:
@@ -1634,7 +1722,7 @@ components:
       type: string
       description: Base unit of measure. No unit conversion in the MVP.
       enum: [g, ml, piece]
-    IngredientInput:
+    IngredientCreate:
       type: object
       required: [name, unit, lowStockThreshold]
       properties:
@@ -1648,9 +1736,26 @@ components:
           type: number
           minimum: 0
           description: An alert is raised when `available` is at or below this value.
+    IngredientUpdate:
+      type: object
+      required: [name, unit, lowStockThreshold, active]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        unit:
+          $ref: '#/components/schemas/Unit'
+        lowStockThreshold:
+          type: number
+          minimum: 0
+          description: An alert is raised when `available` is at or below this value.
+        active:
+          type: boolean
+          description: '`false` deactivates the ingredient (same as `DELETE`); `true` reactivates it.'
     Ingredient:
       type: object
-      required: [id, name, unit, lowStockThreshold, createdAt, updatedAt]
+      required: [id, name, unit, lowStockThreshold, active, createdAt, updatedAt]
       properties:
         id:
           type: string
@@ -1662,6 +1767,12 @@ components:
         lowStockThreshold:
           type: number
           minimum: 0
+        active:
+          type: boolean
+          description: |
+            `true` for a usable ingredient. `false` after deactivation: the ingredient stays
+            in historical recipes, orders, reservations and stock movements, but cannot be
+            used in new recipe versions or new orders.
         createdAt:
           type: string
           format: date-time
@@ -1671,13 +1782,16 @@ components:
     InventoryItem:
       type: object
       description: Stock level of one ingredient.
-      required: [ingredientId, ingredientName, unit, onHand, reserved, available, lowStockThreshold, lowStock, updatedAt]
+      required: [ingredientId, ingredientName, ingredientActive, unit, onHand, reserved, available, lowStockThreshold, lowStock, updatedAt]
       properties:
         ingredientId:
           type: string
           format: uuid
         ingredientName:
           type: string
+        ingredientActive:
+          type: boolean
+          description: The ingredient's `active` flag.
         unit:
           $ref: '#/components/schemas/Unit'
         onHand:
@@ -1697,7 +1811,7 @@ components:
           minimum: 0
         lowStock:
           type: boolean
-          description: '`true` when `available <= lowStockThreshold`.'
+          description: '`true` when the ingredient is active and `available <= lowStockThreshold`.'
         updatedAt:
           type: string
           format: date-time
@@ -1938,7 +2052,7 @@ components:
         availablePortions:
           type: integer
           minimum: 0
-          description: Portions that can be ordered now, computed from available stock and the recipe.
+          description: Portions that can be ordered now, computed from available stock and the current recipe. `0` if the recipe uses an inactive ingredient.
         createdAt:
           type: string
           format: date-time
@@ -2175,6 +2289,8 @@ components:
         - STOCK_ADJUSTED
         - RECIPE_UPDATED
         - USER_PERMISSIONS_CHANGED
+        - INGREDIENT_DEACTIVATED
+        - INGREDIENT_REACTIVATED
     AuditLogEntry:
       type: object
       required: [id, action, actor, entityType, entityId, occurredAt]
