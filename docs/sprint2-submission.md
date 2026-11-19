@@ -77,38 +77,49 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 
 | Task | Deliverable | Issue | Pull Request | Current Status |
 |---|---|---|---|---|
-| S2-06 | Sprint 2 Task Board | #38 | #39 | Completed — merged |
-| S2-07 | Sprint 2 RACI Matrix | #40 | #41 | Completed — merged |
-| S2-08 | Sprint 2 Meeting Notes | #42 | #77 | In Progress — awaiting review |
-| S2-09 | Progress & Impediment Tracking | #57 | #58 | Document merged into develop — ongoing tracking In Progress |
-| S2-10 | Deliverables Consistency Review | #59 | #60 | In Progress — additional verification required |
-| S2-11 | Submission Package & Teams Upload | #78 | #79 | In Progress — submission preparation, review pending |
+| S2-06 | Sprint 2 Task Board | #38 | #39, #69, #85 | Initial documentation and PR #69 merged; PR #85 awaiting Burcu's approval |
+| S2-07 | Sprint 2 RACI Matrix | #40 | #41 | Completed — merged into develop |
+| S2-08 | Sprint 2 Meeting Notes | #42 | #77 | PR #77 approved and merged; actual Sprint Review and Retrospective records remain pending |
+| S2-09 | Progress & Impediment Tracking | #57 | #58, #83 | Both PRs merged; Issue #57 remains Open / In Progress for ongoing tracking |
+| S2-10 | Deliverables Consistency Review | #59 | #60 | Review feedback addressed; awaiting Beyzanur's approval and final cross-document verification |
+| S2-11 | Submission Package & Teams Upload | #78 | #79 | PR #79 approved and merged; final evidence update and Microsoft Teams submission pending |
+
 
 ### 5.1 Related GitHub Links
 
 - [S2-06 — Issue #38](https://github.com/seng321-7th-team/PantryChef/issues/38)
 - [S2-06 — PR #39](https://github.com/seng321-7th-team/PantryChef/pull/39)
+- [S2-06 — Task Board Update PR #69](https://github.com/seng321-7th-team/PantryChef/pull/69)
+- [S2-06 — Task Board Final Sync PR #85](https://github.com/seng321-7th-team/PantryChef/pull/85)
+
 - [S2-07 — Issue #40](https://github.com/seng321-7th-team/PantryChef/issues/40)
 - [S2-07 — PR #41](https://github.com/seng321-7th-team/PantryChef/pull/41)
+
 - [S2-08 — Issue #42](https://github.com/seng321-7th-team/PantryChef/issues/42)
 - [S2-08 — PR #77](https://github.com/seng321-7th-team/PantryChef/pull/77)
+
 - [S2-09 — Issue #57](https://github.com/seng321-7th-team/PantryChef/issues/57)
 - [S2-09 — PR #58](https://github.com/seng321-7th-team/PantryChef/pull/58)
+- [S2-09 — Progress Follow-ups PR #83](https://github.com/seng321-7th-team/PantryChef/pull/83)
+
 - [S2-10 — Issue #59](https://github.com/seng321-7th-team/PantryChef/issues/59)
 - [S2-10 — PR #60](https://github.com/seng321-7th-team/PantryChef/pull/60)
+
 - [S2-11 — Issue #78](https://github.com/seng321-7th-team/PantryChef/issues/78)
 - [S2-11 — PR #79](https://github.com/seng321-7th-team/PantryChef/pull/79)
+
 
 ### 5.2 Additional Coordination Evidence
 
 | Evidence | Reference | Status |
 |---|---|---|
-| Sprint 2 Task Board status update | PR #69 | Peer review / merge status pending verification |
-| Sprint 2 Team Roles documentation update | PR #56 | Peer review / merge status pending verification |
-| Sprint 2 team coordination records | `docs/sprint2-meeting-notes.md` | Draft submitted for review |
-| Sprint 2 progress and impediment records | `docs/sprint2-progress-impediments.md` | PR #58 merged into develop; Issue #57 open for ongoing tracking |
-| Sprint 2 cross-document consistency review | `docs/sprint2-deliverables-consistency-review.md` | Partial review |
-| Sprint 2 release/tag | Pending | Awaiting final release evidence |
+| Sprint 2 Task Board status updates | PR #69, PR #85 | PR #69 merged into develop; PR #85 awaiting Burcu's approval |
+| Sprint 2 Team Roles documentation update | PR #56 | Final merge status pending verification |
+| Sprint 2 team coordination records | `docs/sprint2-meeting-notes.md`, PR #77 | PR #77 approved and merged; Sprint Review and Retrospective records remain pending |
+| Sprint 2 progress and impediment records | `docs/sprint2-progress-impediments.md`, PR #58, PR #83 | Both PRs merged into develop; Issue #57 remains Open / In Progress |
+| Sprint 2 cross-document consistency review | `docs/sprint2-deliverables-consistency-review.md`, PR #60 | CI passed; awaiting Beyzanur's approval and final verification |
+| Sprint 2 submission package | `docs/sprint2-submission.md`, PR #79 | PR #79 approved and merged; final submission pending |
+| Sprint 2 release/tag | Issue #31 | Awaiting Emre's final release/tag evidence |
 
 **Status Note:** Open or unverified Pull Requests are not considered approved or merged. All statuses must be checked against GitHub before final submission.
 
@@ -133,8 +144,8 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 - [ ] Team roles and individual contribution evidence recorded.
 - [ ] Relevant PR approvals and merge statuses verified.
 - [ ] Final GitHub release/tag recorded.
-- [ ] Submission package reviewed by Burcu Ücük.
-- [ ] Approved submission documentation merged into `develop`.
+- [x] Submission package reviewed by Burcu Ücük.
+- [x] Approved submission documentation merged into `develop`.
 - [ ] Final package submitted through Microsoft Teams.
 - [ ] Submission confirmation recorded.
 
@@ -150,17 +161,18 @@ The references below identify known Issues and Pull Requests. Final approval, me
 
 | Deliverable | Responsible Member | Issue | Pull Request | Verification Status |
 |---|---|---|---|---|
-| Detailed SRS | Burcu Ücük | #44 | #54 | Final review pending verification |
-| Refined Product Backlog | Burcu Ücük | #46 | #55 | Final review pending verification |
-| Functional and Non-functional Requirements | Burcu Ücük | #49 | #51 | Final review pending verification |
-| UI Design and User Story Consistency | Tuğçe Çevik | #48 | #50 | Final review pending verification |
-| User-flow Diagrams | Tuğçe Çevik | #52 | #70 | Final review pending verification |
-| Figma Links and UI Documentation | Tuğçe Çevik | #53 | #71 | Approved by Bilgesu Nacak; CI passed; merge pending |
-| API, Ingredient Rules and Architecture Alignment | Ayşe Dural | #61 | #62 | Final review pending verification |
-| Architecture Decision Records | Ayşe Dural | #63 | #64 | Final review pending verification |
-| Database Schema Documentation | Ayşe Dural | #65 | #66 | Final review pending verification |
-| Architecture–SRS–OpenAPI Consistency Review | Ayşe Dural | #67 | #68 | Final review pending verification |
-| Sprint 2 Release / Tag | Emre Boz | #31 | Pending verification | Release evidence pending |
+| Detailed SRS | Burcu Ücük | #44 | #54 | Approved by Bilgesu and Ayşe; awaiting final cross-document confirmation and merge |
+| Refined Product Backlog | Burcu Ücük | #46 | #55 | Beyzanur requested changes; awaiting corrections and re-review |
+| Functional and Non-functional Requirements | Burcu Ücük | #49 | #51 | Beyzanur requested changes; awaiting corrections and re-review |
+| UI Design and User Story Consistency | Tuğçe Çevik | #48 | #50 | Final review and merge status pending verification |
+| User-flow Diagrams | Tuğçe Çevik | #52 | #70 | Final review and merge status pending verification |
+| Figma Links and UI Documentation | Tuğçe Çevik | #53 | #71 | Approved by Bilgesu; CI passed; merge status pending verification |
+| API, Ingredient Rules and Architecture Alignment | Ayşe Dural | #61 | #62 | Emre approved; outstanding UML review findings awaiting verification |
+| Architecture Decision Records | Ayşe Dural | #63 | #64 | Approved and merged into develop |
+| Database Schema Documentation | Ayşe Dural | #65 | #66 | Emre requested SQL constraint correction; awaiting fix and approval |
+| Architecture–SRS–OpenAPI Consistency Review | Ayşe Dural | #67 | #68 | Burcu confirmed CR-01; remaining consistency findings under review |
+| Quality Metrics and QA Evidence | Beyzanur Alpay | #80 | #82 | Emre approved quality metrics; remaining QA review and verification pending |
+| Sprint 2 Release / Tag | Emre Boz | #31 | Pending verification | Final release/tag evidence pending |
 
 ### 8.1 Evidence Verification Rules
 
@@ -175,10 +187,24 @@ For each deliverable, verify:
 
 ### 8.2 Outstanding Review Notes
 
-- PR #71: The previous review findings were addressed. The Scrum Master manually re-tested the #1042 Chef flow (Pending → Preparing → Ready) on November 19, 2026 and approved the updated UI/UX documentation. Design and Flow 2–7 access checks are documented. The PR remains open pending merge.
-- Requirements, architecture, and UI/UX documents may reference other open PRs. Cross-document alignment must be checked against their final approved versions.
-- No unverified Pull Request is treated as merged or accepted.
-- The final release/tag and Microsoft Teams submission evidence remain pending.
+
+### 8.2 Outstanding Review Notes
+
+- PR #54: SRS approved by Bilgesu and Ayşe; final cross-document confirmation and merge pending.
+- PR #55 and PR #51: Beyzanur requested changes; corrections and re-review pending.
+- PR #62: Architecture and OpenAPI review completed by Emre; remaining UML review findings require verification.
+- PR #66: Database schema requires the SQL CHECK constraint correction identified by Emre.
+- PR #68: CR-01 confirmed by Burcu; remaining cross-document consistency findings are under review.
+- PR #71: Bilgesu approved the revised UI/UX documentation after testing the #1042 Chef flow on November 19, 2026. Final merge status requires verification.
+- PR #82: Quality metrics approved by Emre; remaining QA evidence and review requirements are pending.
+- PR #85: Sprint 2 Task Board final synchronization awaits Burcu's approval.
+- PR #60: Deliverables consistency review awaits Beyzanur's approval.
+- PR #79: Submission package approved and merged into develop; final evidence synchronization is in progress.
+- PR #64: Architecture Decision Records approved and merged into develop.
+- PR #77: Sprint 2 Meeting Notes approved and merged; actual Sprint Review and Retrospective records remain pending.
+- PR #83: Progress and impediment follow-up updates approved and merged; Issue #57 remains open for ongoing tracking.
+- Final GitHub release/tag information and Microsoft Teams submission confirmation are still pending.
+
 
 ### 8.3 Final Contribution Verification
 
