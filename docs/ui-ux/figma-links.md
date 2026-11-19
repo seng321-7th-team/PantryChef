@@ -119,7 +119,7 @@ All checks below are prototype checks of 18 November 2026. They cover screen nav
 | Flow 9 transitions 04g → 04h → 04i → 04g | Verified during the demo rehearsal. An earlier browser check also covered 04h Cancel → 04g. |
 | File sharing | "Anyone can view" (checked in a signed-in Figma session). |
 | Prototype links outside the demo scenario | Pending |
-| Independent reviewer re-check of the Chef path | Approved on 19 November 2026 at `44ea8c4` ([approval](https://github.com/seng321-7th-team/PantryChef/pull/71#pullrequestreview-5982246341)). Later commits change only F-07 wording and links; not reviewed separately. |
+| Independent reviewer re-check of the Chef path | Approved on 19 November 2026 at `44ea8c4` ([approval](https://github.com/seng321-7th-team/PantryChef/pull/71#pullrequestreview-5982246341)). Later commits change only F-07 wording, links and this review record; not reviewed separately. |
 
 Related status:
 
