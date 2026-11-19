@@ -21,20 +21,47 @@ Individual contributions are listed in [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md).
 
 | Deliverable | Owner | Location |
 |---|---|---|
-| Project proposal and license decision | Burcu Ücük | `docs/project-proposal.md`, `LICENSE` |
-| System vision and boundary, with context and order state diagrams | Burcu Ücük | `docs/system-vision.md` |
-| Initial product backlog | Burcu Ücük | `docs/product-backlog.md` |
-| OpenAPI draft | Ayşe Dural | `api/openapi.yaml` |
-| Team roles and RACI matrix | Bilgesu Nacak | `docs/team-roles-raci.md` |
-| Meeting notes and decision log | Bilgesu Nacak | `docs/sprint1-meeting-notes.md` |
-| Sprint 1 task board | Bilgesu Nacak | `docs/sprint1-task-board.md` |
-| Repository workflow (Git-Flow) | Bilgesu Nacak, Emre Boz | `docs/git-workflow.md` |
+| Project proposal and license decision | Burcu Ücük | [`docs/project-proposal.md`](docs/project-proposal.md), [`LICENSE`](LICENSE) |
+| System vision and boundary, with context and order state diagrams | Burcu Ücük | [`docs/system-vision.md`](docs/system-vision.md) |
+| Initial product backlog | Burcu Ücük | [`docs/product-backlog.md`](docs/product-backlog.md) |
+| OpenAPI draft | Ayşe Dural | [`api/openapi.yaml`](api/openapi.yaml) |
+| Team roles and RACI matrix | Bilgesu Nacak | [`docs/team-roles-raci.md`](docs/team-roles-raci.md) |
+| Meeting notes and decision log | Bilgesu Nacak | [`docs/sprint1-meeting-notes.md`](docs/sprint1-meeting-notes.md) |
+| Sprint 1 task board | Bilgesu Nacak | [`docs/sprint1-task-board.md`](docs/sprint1-task-board.md) |
+| Repository workflow (Git-Flow) | Bilgesu Nacak, Emre Boz | [`docs/git-workflow.md`](docs/git-workflow.md) |
 | Repository setup, branch protection and CI | Emre Boz | `.github/`, repo rulesets |
-| Individual contributions | All members | `CONTRIBUTIONS.md` |
+| Individual contributions | All members | [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md) |
 
 Beyzanur Alpay (QA) and Tuğçe Çevik (implementation and integration) review the Sprint 1 documents. Test cases are planned for Sprint 2.
 
 Each deliverable is added through its own issue and pull request.
+
+## Sprint 2 deliverables
+
+Sprint 2 covers the requirements and the architecture. Each row links to the merged document in `develop`.
+
+| Deliverable | Owner | Location |
+|---|---|---|
+| Software requirements specification (SRS) | Burcu Ücük | [`docs/srs.md`](docs/srs.md) |
+| Refined product backlog, user stories and acceptance criteria | Burcu Ücük | [`docs/product-backlog.md`](docs/product-backlog.md) |
+| Functional and non-functional requirements | Burcu Ücük | [`docs/non-functional-requirements.md`](docs/non-functional-requirements.md) |
+| Test plan and test cases | Beyzanur Alpay | [`test-plan.md`](docs/testing/test-plan.md), [`test-cases.md`](docs/testing/test-cases.md) |
+| Quality metrics and traceability matrix | Beyzanur Alpay | [`quality-metrics.md`](docs/testing/quality-metrics.md), [`traceability-matrix.md`](docs/testing/traceability-matrix.md) |
+| Figma prototype links, screen exports and demo scenario | Tuğçe Çevik | [`figma-links.md`](docs/ui-ux/figma-links.md), [`ui-prototype.md`](docs/ui-ux/ui-prototype.md), [`demo-scenario.md`](docs/ui-ux/demo-scenario.md) |
+| User-flow diagrams | Tuğçe Çevik | [`docs/ui-ux/user-flows.md`](docs/ui-ux/user-flows.md) |
+| UI design and user story consistency review | Tuğçe Çevik | [`docs/ui-ux/ui-user-story-review.md`](docs/ui-ux/ui-user-story-review.md) |
+| C4 (context, container, component), UML (use case, sequence, state, class) and ER diagrams | Ayşe Dural | [`docs/architecture/README.md`](docs/architecture/README.md) |
+| Database schema | Ayşe Dural | [`docs/architecture/database-schema.md`](docs/architecture/database-schema.md) |
+| Architecture decision records (ADR-001 to ADR-011) | Ayşe Dural | [`docs/architecture/architecture-decisions.md`](docs/architecture/architecture-decisions.md) |
+| Architecture, SRS and OpenAPI consistency review | Ayşe Dural | [`docs/architecture/consistency-review.md`](docs/architecture/consistency-review.md) |
+| OpenAPI contract v0.2.0 | Ayşe Dural | [`api/openapi.yaml`](api/openapi.yaml) |
+| Infrastructure and deployment requirements, deployment view | Emre Boz | [`infrastructure-requirements.md`](docs/architecture/infrastructure-requirements.md), [`deployment-view.png`](docs/architecture/deployment-view.png) |
+| Sprint 3 CI/CD and Docker readiness | Emre Boz | [`docs/devops/sprint3-readiness.md`](docs/devops/sprint3-readiness.md) |
+| Repository setup for Sprint 2 and docs link check | Emre Boz | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) |
+| Task board, RACI and meeting notes | Bilgesu Nacak | [`sprint2-task-board.md`](docs/sprint2-task-board.md), [`sprint2-raci.md`](docs/sprint2-raci.md), [`sprint2-meeting-notes.md`](docs/sprint2-meeting-notes.md) |
+| Progress and impediment tracking | Bilgesu Nacak | [`docs/sprint2-progress-impediments.md`](docs/sprint2-progress-impediments.md) |
+| Deliverables consistency review and retrospective agenda | Bilgesu Nacak | [`sprint2-deliverables-consistency-review.md`](docs/sprint2-deliverables-consistency-review.md), [`sprint2-review-retrospective-agenda.md`](docs/sprint2-review-retrospective-agenda.md) |
+| Submission package | Bilgesu Nacak | [`docs/sprint2-submission.md`](docs/sprint2-submission.md) |
 
 ## Repository layout
 
