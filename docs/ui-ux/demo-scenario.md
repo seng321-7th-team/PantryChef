@@ -16,7 +16,7 @@ Where a step follows API draft #62, it is marked **(API draft #62)**. The curren
 
 **Kitchen demo scope:** Demo interactions cover order #1042 only. On the kitchen frames, Start preparing on #1040 and #1043 and Mark as ready on #1041 are drawn at 40% opacity and have no prototype connection. This limit belongs to the prototype demo only; the application lets the chef start or complete any order in a valid state.
 
-**Review follow-up (18 Nov):** The [PR #71 review](https://github.com/seng321-7th-team/PantryChef/pull/71#pullrequestreview-5952870880) reported that Start preparing on the Pending orders #1040 and #1043 did not respond while #1042 was already Preparing. The kitchen frames were changed in Figma: `scr-03a` starts #1042 as Pending, the buttons outside the #1042 demo are faded, and `scr-03e-kitchen-ready` was added. Independent reviewer re-check pending.
+**Review follow-up (18 Nov):** The [PR #71 review](https://github.com/seng321-7th-team/PantryChef/pull/71#pullrequestreview-5952870880) reported that Start preparing on the Pending orders #1040 and #1043 did not respond while #1042 was already Preparing. The kitchen frames were changed in Figma: `scr-03a` starts #1042 as Pending, the buttons outside the #1042 demo are faded, and `scr-03e-kitchen-ready` was added. The Chef flow was re-reviewed and approved on 19 November 2026 at `44ea8c4` ([approval](https://github.com/seng321-7th-team/PantryChef/pull/71#pullrequestreview-5982246341)). Later commits change only the F-07 wording and cross-PR links and have not been reviewed separately.
 
 ## Part 1 – Waiter (about 3 minutes)
 
@@ -76,4 +76,4 @@ Prototype checks of 18 November 2026 (navigation and displayed content only; no 
 - [x] Kitchen buttons outside the #1042 demo have no prototype connection (checked in Figma).
 - [x] Flow 9: 04g → 04h → 04i → 04g verified during the demo rehearsal. An earlier browser check also covered 04h Cancel → 04g.
 - [x] File shared as "Anyone can view".
-- [ ] Independent reviewer re-check of the Chef path: pending.
+- [x] Independent reviewer re-check of the Chef path: approved on 19 November 2026 at `44ea8c4` ([approval](https://github.com/seng321-7th-team/PantryChef/pull/71#pullrequestreview-5982246341)). Later commits (F-07 wording and links only) not reviewed separately.
