@@ -5,8 +5,8 @@
 | Task | S2-17 Architecture–SRS–OpenAPI Consistency Review |
 | Owner | Ayşe Dural – Lead Software Architect and Technical Lead |
 | Reviewer | Burcu Ücük (Sprint 2 final task table v2.0) |
-| Date | 2026-11-18 |
-| Status | Draft – CR-01 fix applied, waiting for Burcu's confirmation |
+| Date | 2026-11-18, statuses updated 2026-11-20 |
+| Status | Ready for final review – CR-01 confirmed; CR-02, CR-03, CR-06 and CR-07 handed to their owners |
 
 This record compares the Sprint 2 requirements (SRS, functional and non-functional requirements,
 refined backlog) with the API contract and the architecture deliverables (C4, UML, ER, ADR, database
@@ -15,18 +15,18 @@ decide the open points. It does not change any requirement; changes are made by 
 
 ## 1. Sources
 
-None of the Sprint 2 sources below is merged into `develop` yet. Each is reviewed at the commit shown.
-The review has to be repeated once they are merged (section 7).
+The review was first made on 2026-11-18, when none of the Sprint 2 sources was merged. On
+2026-11-20 the finding statuses were checked again against `develop` `31ebb19` and the open PRs below.
 
-| Source | Owner | Pull request | Commit reviewed |
-|---|---|---|---|
-| SRS `docs/srs.md` (S2-01) | Burcu | #54 | `0ad80b3` |
-| Functional and non-functional requirements (S2-03) | Burcu | #51 | `fc70b81` |
-| Refined product backlog (S2-02) | Burcu | #55 | `ec1911a` |
-| System Vision, Sprint 1 backlog, meeting notes | Burcu, Bilgesu | merged | `develop` `0c3e244` |
-| OpenAPI v0.2.0, C4, UML and ER diagrams (S2-12 to S2-14, S2-34, S2-35) | Ayşe | #62 | `dbb06be` |
-| Architecture decision records (S2-16) | Ayşe | #64 | `e304bbf` |
-| Database schema (S2-15) | Ayşe | #66 | `c691206` |
+| Source | Owner | Pull request | Commit reviewed (18 Nov) | State on 20 Nov |
+|---|---|---|---|---|
+| SRS `docs/srs.md` (S2-01) | Burcu | #54 | `0ad80b3` | Merged (`31ebb19`) |
+| Functional and non-functional requirements (S2-03) | Burcu | #51 | `fc70b81` | Open, changes requested |
+| Refined product backlog (S2-02) | Burcu | #55 | `ec1911a` | Open at `986583e`, changes requested |
+| System Vision, Sprint 1 backlog, meeting notes | Burcu, Bilgesu | merged | `develop` `0c3e244` | Unchanged |
+| OpenAPI v0.2.0, C4, UML and ER diagrams (S2-12 to S2-14, S2-34, S2-35) | Ayşe | #62 | `dbb06be` | Merged (`1daf380`) |
+| Architecture decision records (S2-16) | Ayşe | #64 | `e304bbf` | Merged (`3688747`); status update in #87 |
+| Database schema (S2-15) | Ayşe | #66 | `c691206` | Open at `8c6949a`, waiting for approval |
 | UI design ↔ user story review (S2-31) | Tuğçe | #50 | `e81b764` |
 | Infrastructure and deployment requirements (S2-23) | Emre | #36 | `b112c9e` |
 
@@ -35,11 +35,13 @@ The review has to be repeated once they are merged (section 7).
 | Result | Count |
 |---|---|
 | Rules that agree across all sources | 13 (section 3) |
-| Findings | 7 (section 4): 1 applied and waiting for confirmation (CR-01), 2 resolved (CR-04, CR-05), 4 open (CR-02, CR-03, CR-06, CR-07) |
+| Findings | 7 (section 4): 3 resolved (CR-01, CR-04, CR-05), 1 partly resolved (CR-06), 3 open with an owner and a next step (CR-02, CR-03, CR-07) |
 | Questions resolved during Sprint 2 | 8 (section 5) |
 
 The order lifecycle, the stock model, cancellation rules, recipe versioning and idempotency agree
-everywhere. The one real conflict is how the opening stock of a new ingredient is entered (CR-01).
+everywhere. The one real conflict, how the opening stock of a new ingredient is entered (CR-01), is
+resolved and confirmed by Burcu. The open findings do not block Sprint 2: they are documentation
+follow-ups with an owner each.
 
 ## 3. What agrees
 
@@ -63,13 +65,13 @@ everywhere. The one real conflict is how the opening stock of a new ingredient i
 
 | ID | Priority | Finding | Owner / decides | Status |
 |---|---|---|---|---|
-| CR-01 | High | Initial stock at ingredient creation | Burcu decides; Ayşe updates | Applied in PR #62, #64, #66; waiting for Burcu's confirmation |
-| CR-02 | Medium | Three different FR numbering schemes | Burcu; Ayşe and Tuğçe update | Open |
-| CR-03 | Low | Low-stock alerts for inactive ingredients not stated in the SRS | Burcu | Open |
+| CR-01 | High | Initial stock at ingredient creation | Burcu decides; Ayşe updates | Resolved – confirmed by Burcu on PR #68; SRS FR-02 merged (#54), US-02 AC 2–4 in #55 |
+| CR-02 | Medium | Three different FR numbering schemes | Burcu; Ayşe and Tuğçe update | Open – SRS baseline merged; two documents still to renumber |
+| CR-03 | Low | Low-stock alerts for inactive ingredients not stated in the SRS | Burcu | Open – sentence proposed for FR-14 |
 | CR-04 | Low | No UI action for ingredient deactivation | Tuğçe | Resolved (Figma frames in PR #71) |
 | CR-05 | Low | C4 Context omits Customer and Supplier | Ayşe; Emre reviews | Resolved (PR #62, `cb634c3`) |
-| CR-06 | Low | ADR statuses wait for confirmation of D-01 to D-11 | Bilgesu, team | Open |
-| CR-07 | Process | Two open PRs each for S2-01 and S2-02 | Burcu, Bilgesu | Open |
+| CR-06 | Low | ADR statuses wait for confirmation of D-01 to D-11 | Bilgesu, team | Partly resolved – ADR-006 and ADR-008 Accepted in #87; ADR-004 and ADR-007 wait for D-01 to D-11 |
+| CR-07 | Process | Two open PRs each for S2-01 and S2-02 | Burcu, Bilgesu | Open – close #45 and #47; #55 is the backlog to merge |
 
 ### CR-01 – Initial stock at ingredient creation (High)
 
@@ -94,7 +96,17 @@ Burcu instead wants the quantity at creation, FR-02, US-02 AC 1 and Figma 04d mu
 **Applied (18 Nov).** The recommendation is applied so the three PRs no longer conflict with the
 requirements: `initialQuantity` removed from the API in PR #62 (`866122e`), ADR-009 marked Rejected in
 PR #64 (`07fd074`), and schema §7 updated in PR #66 (`5475872`). The user flows in PR #70 and the Figma
-frames in PR #71 follow the same rule. The finding is closed once Burcu confirms it.
+frames in PR #71 follow the same rule.
+
+**Resolved (20 Nov).** Evidence:
+
+| Check | Evidence |
+|---|---|
+| Requirements owner confirms the rule | Burcu's review comment on PR #68: new ingredients start with `onHand = 0`; opening stock is a separate `INITIAL_STOCK` adjustment |
+| SRS | FR-02 on `develop` (`31ebb19`, PR #54): physical stock is initialized to zero and initial stock is recorded through a separate authorized inventory adjustment |
+| Product backlog | US-02 in PR #55 (`6f189d7`): AC 2 `onHand = 0` and `reserved = 0`; AC 3 opening stock through an `INITIAL_STOCK` adjustment; AC 4 the adjustment records actor, timestamp and reason. Part of the backlog once #55 is merged |
+| API | `develop` `1daf380` (PR #62): no `initialQuantity`; `INITIAL_STOCK` adjustment reason; `api/README.md` A-8 |
+| ADR and schema | ADR-009 Rejected on `develop` (`3688747`); schema §7 in PR #66 |
 
 ### CR-02 – Three different FR numbering schemes (Medium)
 
@@ -109,11 +121,24 @@ The same identifier points to different requirements, so traceability tables can
 merged, Ayşe updates `api/README.md` §4.1, Tuğçe updates the UI review §2a, and the System Vision list
 is marked as the Sprint 1 numbering.
 
+**Status (20 Nov).** The SRS is merged with FR-01 to FR-14 (`31ebb19`), and PR #51 uses the same
+numbers, so the baseline is set. Still to do:
+
+| Document | Owner | Action | When |
+|---|---|---|---|
+| `api/README.md` §4.1 (still System Vision FR-01 to FR-20) | Ayşe | Re-map the table to SRS FR-01 to FR-14 | Sprint 3, first API PR |
+| UI review §2a (FR-001 to FR-027) | Tuğçe | Use SRS FR-01 to FR-14 | Before PR #50 is final |
+| System Vision §13 | Burcu | Add a note that FR-01 to FR-20 is the Sprint 1 numbering | With the next System Vision change |
+
 ### CR-03 – Low-stock alerts for inactive ingredients (Low)
 
 API v0.2.0 does not raise low-stock alerts for inactive ingredients (`listLowStockAlerts`,
 `InventoryItem.lowStock`). SRS FR-14 does not mention deactivated ingredients. Not a conflict, but the
 rule exists only in the API. **Recommendation:** add one sentence to FR-14 or FR-02.
+
+**Status (20 Nov).** Still open: FR-14 on `develop` (`31ebb19`) and in PR #51 has no rule for
+deactivated ingredients. Proposed sentence for Burcu, to add to FR-14: "Deactivated ingredients shall
+not raise low-stock alerts." The API already behaves this way, so no other document changes.
 
 ### CR-04 – No UI action for ingredient deactivation (Low)
 
@@ -135,11 +160,34 @@ ADR-004 and ADR-007 rely on D-02 to D-07 and D-11, which `docs/sprint1-meeting-n
 "pending confirmation", although the SRS treats them as mandatory business rules (BR-01 to BR-12).
 **Recommendation:** record the team confirmation in the meeting notes; the ADRs then move to Accepted.
 
+**Status (20 Nov).** Checked against `develop`:
+
+| ADR | Status on `develop` (`3688747`) | After PR #87 | Waits for |
+|---|---|---|---|
+| ADR-006 Roles, permissions and late cancellation | Accepted for the cancellation policy (D-12) | Accepted | — |
+| ADR-008 No hard deletes for referenced data | Proposed (part of PR #62) | Accepted (PR #62 merged as `1daf380`) | — |
+| ADR-009 Initial stock entered at ingredient creation | Rejected (CR-01) | Rejected | — |
+| ADR-004 Stock reservation and exactly-once consumption | Proposed (D-02 to D-06, D-11) | Proposed | D-02 to D-06 and D-11 confirmed |
+| ADR-007 Immutable recipe versions and order snapshots | Proposed (D-07) | Proposed | D-07 confirmed |
+
+`docs/sprint1-meeting-notes.md` §6 still lists D-01 to D-11 as "Pending confirmation". When Bilgesu
+records the team confirmation, Ayşe changes ADR-004 and ADR-007 to Accepted.
+
 ### CR-07 – Two open PRs each for S2-01 and S2-02 (Process)
 
 PR #45 and PR #54 both add the SRS; PR #47 and PR #55 both refine the backlog. The UI review read the
 older SRS (PR #45), which explains its different FR numbers (CR-02). **Recommendation:** close the
 superseded PRs (#45, #47) so that reviews use one version.
+
+**Status (20 Nov).**
+
+| Task | Current PR | Superseded PR | Action |
+|---|---|---|---|
+| S2-01 SRS | #54 – merged (`31ebb19`) | #45 – still open | Close #45 as superseded by #54 |
+| S2-02 Backlog | #55 – open, has the CR-01 and Waiter-only changes | #47 – still open, without them | Merge #55 after its review; close #47 as superseded by #55 |
+
+Order: close #45 now; finish the review of #55 and merge it; then close #47. Burcu owns both PRs;
+Bilgesu tracks them on the task board.
 
 ## 5. Resolved during Sprint 2
 
@@ -166,12 +214,16 @@ superseded PRs (#45, #47) so that reviews use one version.
 
 ## 7. Next steps and re-review
 
-1. Burcu confirms CR-01; the fix is already applied to PR #62, #64 and #66.
-2. Burcu and Bilgesu close the superseded PRs (CR-07).
-3. After the SRS (#54), requirements (#51), backlog (#55) and PR #62 are merged, the FR numbers are
-   aligned (CR-02) and this review is repeated against `develop`.
-4. The remaining low findings (CR-03, CR-06) are fixed by their owners; each fix is recorded here with
-   its PR number.
+| # | Action | Owner | Finding |
+|---|---|---|---|
+| 1 | Close #45; merge #55 after review; close #47 | Burcu, Bilgesu | CR-07 |
+| 2 | Add the inactive-ingredient sentence to FR-14 | Burcu | CR-03 |
+| 3 | Record team confirmation of D-01 to D-11 in the meeting notes | Bilgesu, team | CR-06 |
+| 4 | Change ADR-004 and ADR-007 to Accepted after step 3 | Ayşe | CR-06 |
+| 5 | Re-map `api/README.md` §4.1 and the UI review §2a to SRS FR-01 to FR-14 | Ayşe, Tuğçe | CR-02 |
+| 6 | Repeat this review against `develop` after #51 and #55 are merged | Ayşe; Burcu reviews | All |
+
+Each fix is recorded here with its PR number when it is made.
 
 ## Change log
 
@@ -179,3 +231,4 @@ superseded PRs (#45, #47) so that reviews use one version.
 |---|---|---|---|
 | 0.1 | 2026-11-18 | Ayşe Dural | First consistency review for S2-17 |
 | 0.2 | 2026-11-18 | Ayşe Dural | Status column; CR-01 applied, CR-04 and CR-05 resolved |
+| 0.3 | 2026-11-20 | Ayşe Dural | Statuses checked against `develop` `31ebb19`: CR-01 resolved with evidence; CR-02, CR-03, CR-06 and CR-07 updated with owners and next steps (requested by Bilgesu on PR #68) |
