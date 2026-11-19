@@ -98,10 +98,10 @@ Earlier exports (superseded): 18 Nov, about 01:35 – 31 frames, `scr-04d` to `s
 
 ## 5. Related documents
 
-- User flows: [`user-flows.md`](https://github.com/seng321-7th-team/PantryChef/blob/e1f93142c10e4f4d3ff90103a476f917fbf0030f/docs/ui-ux/user-flows.md) (S2-30, PR #70, commit `e1f9314`; not on `develop` yet)
+- User flows: [`user-flows.md`](https://github.com/seng321-7th-team/PantryChef/blob/dc91ff631972be1560705cbcfc325b0c5ea7aa80/docs/ui-ux/user-flows.md) (S2-30, PR #70, commit `dc91ff6`; not on `develop` yet)
 - Prototype description: [`ui-prototype.md`](ui-prototype.md)
 - Demo script: [`demo-scenario.md`](demo-scenario.md)
-- Consistency review of the screens against the User Stories: [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/432cc0866262441f749c544ed245be0ad192afff/docs/ui-ux/ui-user-story-review.md) (S2-31, PR #50, commit `432cc08`; not on `develop` yet)
+- Consistency review of the screens against the User Stories: [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/c1dbd05ad186c4194fb8789178cb5e77f656fae9/docs/ui-ux/ui-user-story-review.md) (S2-31, PR #50, commit `c1dbd05`; not on `develop` yet)
 - API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.1.0). Ingredient and order-creation behavior in the frames follows API draft **PR #62** at `f061da2` (version 0.2.0, **not merged**; OpenAPI content unchanged since `866122e`). `scr-04d` to `scr-04f` follow its zero-stock rule.
 
 ## 6. Verification
