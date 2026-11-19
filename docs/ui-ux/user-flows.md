@@ -6,13 +6,13 @@
 **Owner:** Tuğçe Çevik · **Reviewer:** Ayşe Dural
 **Status:** Draft
 
-Frame names (`scr-…`) are the Figma frame names listed in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/ce6030b0062cd3a5f6cf1e44f57d9f12ea6b30f4/docs/ui-ux/figma-links.md) (S2-33, PR #71, commit `ce6030b`; not on `develop` yet). Rules and error codes come from [`api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.1.0) and [`docs/product-backlog.md`](../product-backlog.md). Where a flow follows API draft PR #62 (current checked head `f061da2`, version 0.2.0, **not merged**), the text says so. Its OpenAPI rules are unchanged from `866122e`/`cb634c3`. Order flow: `PENDING` → `PREPARING` → `READY`. `CANCELLED` is terminal. There is no delivery feature.
+Frame names (`scr-…`) are the Figma frame names listed in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/bb1569ee79555a4950be7bde598ef2f0e7ffa0a7/docs/ui-ux/figma-links.md) (S2-33, PR #71, commit `bb1569e`; not on `develop` yet). Rules and error codes come from [`api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.1.0) and [`docs/product-backlog.md`](../product-backlog.md). Where a flow follows API draft PR #62 (current checked head `f061da2`, version 0.2.0, **not merged**), the text says so. Its OpenAPI rules are unchanged from `866122e`/`cb634c3`. Order flow: `PENDING` → `PREPARING` → `READY`. `CANCELLED` is terminal. There is no delivery feature.
 
 Flows only cover what the 32 frames show. Features that the User Stories require but the frames do not show are listed in [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/c1dbd05ad186c4194fb8789178cb5e77f656fae9/docs/ui-ux/ui-user-story-review.md) (PR #50, commit `c1dbd05`) and are **not** drawn here.
 
 ## Flow list and Figma starting points
 
-The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/ce6030b0062cd3a5f6cf1e44f57d9f12ea6b30f4/docs/ui-ux/figma-links.md) (PR #71, commit `ce6030b`). All nine Mermaid diagrams render on GitHub with their boxes, labels and arrows: U1, U1a, U2 and U5 to U8 checked on 18 November 2026 (unchanged since), U3 and U4 checked on 19 November 2026; result screenshots recorded. These checks cover diagram rendering only.
+The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/bb1569ee79555a4950be7bde598ef2f0e7ffa0a7/docs/ui-ux/figma-links.md) (PR #71, commit `bb1569e`). All nine Mermaid diagrams render on GitHub with their boxes, labels and arrows: U1, U1a, U2 and U5 to U8 checked on 18 November 2026 (unchanged since), U3 and U4 checked on 19 November 2026; result screenshots recorded. These checks cover diagram rendering only.
 
 | Section | Flow | Figma flow starting point |
 |---|---|---|
@@ -33,7 +33,7 @@ For the general demo, start at `scr-01-login` (Flow 1) and choose a role.
 
 ## U1 – Waiter creates an order (US-06, US-07)
 
-Only the waiter creates orders in the prototype. There is no manager screen for this. SRS #54 FR-06, backlog #55 US-06 AC1 at `986583e` and API draft #62 restrict order creation to WAITER (aligned in drafts; review and merge pending). `develop` (0.1.0) still lists WAITER and MANAGER until #62 is merged (see [`docs/ui-ux/ui-prototype.md`](https://github.com/seng321-7th-team/PantryChef/blob/ce6030b0062cd3a5f6cf1e44f57d9f12ea6b30f4/docs/ui-ux/ui-prototype.md), PR #71, commit `ce6030b`).
+Only the waiter creates orders in the prototype. There is no manager screen for this. SRS #54 FR-06, backlog #55 US-06 AC1 at `986583e` and API draft #62 restrict order creation to WAITER (aligned in drafts; review and merge pending). `develop` (0.1.0) still lists WAITER and MANAGER until #62 is merged (see [`docs/ui-ux/ui-prototype.md`](https://github.com/seng321-7th-team/PantryChef/blob/bb1569ee79555a4950be7bde598ef2f0e7ffa0a7/docs/ui-ux/ui-prototype.md), PR #71, commit `bb1569e`).
 
 ```mermaid
 flowchart TD
