@@ -265,6 +265,8 @@ The system shall identify an ingredient as low-stock when:
 
 `Available Stock <= Low-Stock Threshold`
 
+Deactivated ingredients shall not raise low-stock alerts.
+
 Alerts shall reflect relevant reservations, consumption, cancellations, and inventory adjustments.
 
 Authorized Restaurant Managers shall be able to view current low-stock items.
