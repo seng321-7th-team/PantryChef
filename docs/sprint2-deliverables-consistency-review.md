@@ -106,7 +106,9 @@ Each follow-up action must be updated only after its responsible owner provides 
 
 | Requirement / Business Rule | SRS | Product Backlog | NFR | Figma | C4 / UML | OpenAPI |
 |---|---|---|---|---|---|---|
-| Three primary actors and permissions | Verified | Verified | Pending | Pending | Pending | Pending |
+| Three primary actors (Waiter, Chef, Manager) | Verified | Verified | N/A | Pending | Pending | Pending |
+| Role-based operation permissions | Partially verified | Partially verified | N/A | Pending | Pending | Pending |
+| Manager order creation permission | Pending — cross-document conflict | Pending — cross-document conflict | N/A | Pending | Pending | Pending |
 | Pending → Preparing → Ready | Verified | Verified | Pending | Pending | Pending | Pending |
 | Atomic ingredient reservation | Verified | Verified | Pending | Pending | Pending | Pending |
 | Exactly-once stock consumption | Verified | Verified | Pending | Pending | Pending | Pending |
@@ -119,6 +121,28 @@ Each follow-up action must be updated only after its responsible owner provides 
 - **Partially verified:** Some relevant evidence was examined, but review is incomplete.
 - **Pending:** Not yet verified.
 - **N/A:** Not directly applicable to the artifact.
+
+### 7.1 Actor Coverage and Operation Permissions
+
+Actor coverage and operation permissions are verified separately.
+
+The three primary actors are Restaurant Manager, Waiter, and Chef/Kitchen Staff. The presence of these actors does not automatically verify their permissions.
+
+**Open finding — Manager order creation:**
+
+The refined Product Backlog (PR #55) and the SRS/OpenAPI documentation (PRs #54 and #62) contain differing descriptions of Manager order creation permissions.
+
+This item remains Pending until the Product Owner and Software Architect confirm the intended permission model.
+
+Relevant sources:
+- Product Backlog: https://github.com/seng321-7th-team/PantryChef/pull/55
+- SRS: https://github.com/seng321-7th-team/PantryChef/pull/54
+- OpenAPI draft: https://github.com/seng321-7th-team/PantryChef/pull/62
+
+Required follow-up: Confirm whether order creation is restricted to Waiters or also allowed for Managers, then align the affected documents.
+
+No final permission decision is claimed.
+
 
 ## 8. Review and Completion Checklist
 
@@ -142,6 +166,8 @@ Each follow-up action must be updated only after its responsible owner provides 
 - [S2-10 Issue #59](https://github.com/seng321-7th-team/PantryChef/issues/59)
 - [S2-10 Pull Request #60](https://github.com/seng321-7th-team/PantryChef/pull/60)
 - [SRS Pull Request #54](https://github.com/seng321-7th-team/PantryChef/pull/54)
+- [Quality Metrics and Requirements–Test Traceability — Issue #80](https://github.com/seng321-7th-team/PantryChef/issues/80)
+
 - `docs/system-vision.md`
 - `docs/product-backlog.md`
 - `docs/srs.md`
@@ -149,6 +175,16 @@ Each follow-up action must be updated only after its responsible owner provides 
 - `api/openapi.yaml`
 - `docs/sprint2-task-board.md`
 - `docs/sprint2-raci.md`
+
+### 9.1 Quality Metrics and Traceability Evidence
+
+Issue #80 is referenced as supporting evidence for the quality metrics and requirements–test traceability work.
+
+This reference identifies the related QA tracking record. It does not confirm that all quality targets have been measured or that the requirements–test traceability matrix has been fully verified.
+
+**Verification Status:** Pending final evidence review.
+
+**Related Owner:** Beyzanur Alpay — QA & Test Automation Engineer.
 
 ---
 
