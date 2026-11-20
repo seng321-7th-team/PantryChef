@@ -1,0 +1,68 @@
+/*
+ * Values sampled from the Figma kitchen frames scr-03a to scr-03e (export of 18 Nov 2026), plus the
+ * shared navigation, tables, badges and buttons of the page "03 Screens v2" (export of 20 Nov 2026).
+ * Inter is not bundled; the system font is used when Inter is not installed.
+ */
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* 03 Screens v2: navigation, panels, tables */
+  --color-border: #dde1e6;
+  --color-border-strong: #c4cad2;
+  --color-table-head: #f9fafb;
+  --color-link: #2457c5;
+  --color-nav-text: #59626e;
+  --color-nav-selected-bg: #e8eefb;
+  --color-nav-selected-text: #2457c5;
+  --color-disabled-bg: #f1f3f5;
+  --color-disabled-text: #6b737d;
+  --color-alert-bg: #fdeeea;
+  --color-alert-border: #e8a598;
+  --color-alert-text: #7a2414;
+  --color-danger-text: #9b2c1c;
+  --color-few-text: #8a4b00;
+  --color-cancelled-bg: #eceef1;
+  --color-cancelled-text: #4a525c;
+  --radius-panel: 12px;
+  --nav-height: 64px;
+  --nav-item-height: 44px;
+
+  --color-page: #f5f6f8;
+  --color-surface: #ffffff;
+  --color-column: #eceef1;
+  --color-divider: #e9ebef;
+
+  --color-text: #1b1f24;
+  --color-text-strong-muted: #3b4450;
+  --color-text-subtle: #4a525c;
+  --color-text-muted: #59626e;
+
+  --color-tab-bg: #e8eefb;
+  --color-tab-text: #1d46a0;
+
+  --color-pending-accent: #e0a526;
+  --color-pending-badge-bg: #fff3d6;
+  --color-pending-badge-text: #6b4200;
+
+  --color-preparing-accent: #2457c5;
+  --color-preparing-badge-bg: #dce8ff;
+  --color-preparing-badge-text: #1d46a0;
+
+  --color-ready-accent: #2e8b57;
+  --color-ready-badge-bg: #ddf3e4;
+  --color-ready-text: #17552e;
+
+  --color-button-primary: #2457c5;
+  --color-button-success: #2e7a4f;
+  --color-button-busy: #6b737d;
+
+  --color-warning-bg: #fff3d6;
+  --color-warning-text: #5c4300;
+  --color-error-text: #9b1c1c;
+
+  --radius-column: 12px;
+  --radius-card: 8px;
+  --radius-control: 8px;
+  --page-gutter: 24px;
+  --column-gap: 16px;
+}
