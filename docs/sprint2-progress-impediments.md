@@ -225,3 +225,36 @@ The following entries record verified Scrum Master coordination activities. Earl
 **Document Status:** In Progress — initial documentation merged; reviewer follow-ups and final Sprint 2 verification remain open.
 
 **Next Update:** Verify RFU-01–RFU-05 outcomes, remaining PR statuses, and final Sprint 2 evidence.
+
+
+## Progress Update — November 21, 2026
+
+This update records the latest verified Sprint 2 status. Previous progress snapshots and review findings are retained as historical evidence.
+
+### Merged Pull Requests
+
+- PR #66 — Database Schema: merged into `develop` (`93dbbe0`).
+- PR #70 — User-flow Diagrams: merged into `develop` (`4a462cb`).
+- PR #87 — ADR-006 and ADR-008 Updates: merged into `develop` (`57d1fe5`); both ADRs are now Accepted.
+- PR #93 — QA/OpenAPI Documentation Sync: merged into `develop` (`4227056`).
+
+### Pending Work and Dependencies
+
+- PR #84 — Sprint 2 README: both CI checks now pass (2/2). Final documentation corrections and reviewer approval remain pending.
+- PR #99 — Progress and Impediment Tracking: approved by Emre; this dated status update is being incorporated before merge.
+- PR #102 — Submission Package: final review and merge remain pending.
+- PR #96 — Sprint 2 Release: remains Draft; architecture approval and four passing checks are recorded. Final integration into `main`, tagging and GitHub release remain pending.
+- Issue #100 / PR #101 — Frontend UI Skeleton: implementation remains in progress; PR #101 is Draft.
+- UI documentation: outdated status references in `docs/ui-ux/ui-user-story-review.md` and `docs/ui-ux/ui-prototype.md` were reported on PR #96 for Tuğçe's follow-up.
+- Independent Figma prototype access verification remains pending.
+
+### Impediment IMP-01 — Follow-up
+
+On November 20, PR #84's documentation link check failed because the README referenced files from pull requests not yet merged into `develop`. This was a dependency/integration issue, not evidence that the intended document paths were incorrect. As of November 21, PR #70 has merged and PR #84 shows two successful CI checks. The CI failure is resolved; final README review and merge remain pending.
+
+### Scrum Master Coordination
+
+- Confirmed the merge status of PRs #66, #70, #87 and #93.
+- Recorded review feedback on PR #84 and the UI documentation follow-up on PR #96.
+- Rechecked PR #99 approval, CI results and outstanding integration dependencies.
+- Preserved earlier dated checkpoints; Sprint 2 final release and Teams submission are not yet complete.
