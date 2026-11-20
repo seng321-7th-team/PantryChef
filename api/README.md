@@ -1,13 +1,13 @@
-# PantryChef API — OpenAPI Draft (Sprint 1)
+# PantryChef API — OpenAPI Contract
 
 | Field | Value |
 |---|---|
 | Contract | [`api/openapi.yaml`](openapi.yaml) — OpenAPI **3.1.0**, API version `0.2.1` |
 | Owner (A/R) | Ayşe Dural — Lead Software Architect and Technical Lead |
 | Consulted | Burcu Ücük (requirements), Beyzanur Alpay (testability), Emre Boz (CI), Tuğçe Çevik (integration) |
-| Sprint tasks | S1-08, S1-09, S1-10, S1-25 (API part) — see `docs/sprint1-task-board.md` |
+| Sprint tasks | Sprint 1: S1-08, S1-09, S1-10, S1-25 (API part) — see `docs/sprint1-task-board.md`. Sprint 2: 0.2.0 (PR #62) and 0.2.1 (PR #91), see the change log |
 | Sources | `docs/project-proposal.md`, `docs/system-vision.md`, `docs/team-roles-raci.md`, decision D-12 |
-| Status | Draft — Pending PR Review |
+| Status | Merged into `develop` (v0.2.1); later changes go through pull requests |
 
 ---
 
@@ -26,7 +26,7 @@ npx --yes @redocly/cli@2.64.1 lint api/openapi.yaml
 npx --yes @redocly/cli@2.64.1 lint api/openapi.yaml --extends recommended
 ```
 
-Result on 2026-11-17 (v0.2.0): **valid with both rulesets — 0 errors, 0 warnings**, no lint-ignore file.
+Result on 2026-11-20 (v0.2.1): **valid with both rulesets — 0 errors, 0 warnings**, no lint-ignore file.
 All request and response examples are validated against their schemas.
 
 | Metric | Value |
