@@ -111,5 +111,5 @@ Manual prototype check of the 39-frame version, 20 November 2026, by the task ow
 Other evidence and open items:
 
 - [x] Before the manual check, 14 scenarios were simulated from the Figma reaction definitions. This is not a live browser test.
-- [ ] Flow 10 to Flow 13 opened without sign-in.
+- [x] Flow 10 to Flow 13 open without sign-in (private Chrome window, 20 Nov) at their start frames. Access check only; interactions not re-tested.
 - [ ] Separate review of the 39-frame additions of 20 Nov (D-3, D-4, D-6 frames, manager menu, PNG/PDF export and documentation).
