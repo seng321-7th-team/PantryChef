@@ -1,7 +1,7 @@
 # PantryChef Frontend – UI Skeleton
 
 **Task:** S2-32 – Frontend UI Skeleton (stretch goal) · **Owner:** Tuğçe Çevik · **Reviewer:** Ayşe Dural
-**Status:** Local delivery. No issue or pull request yet.
+**Status:** Draft for team review (issue #100). Not merged.
 
 React + TypeScript skeleton with a demo role preview, the role menus of the Figma page "03 Screens v2" and one screen per menu entry. The Chef kitchen board works against an orders service (in-memory mock by default, or the API). The waiter and manager screens show read-only Figma sample data. There is no backend, database, sign-in or production security in this build.
 
@@ -45,7 +45,7 @@ An unknown address shows "Page not found" with a link to the role choice. Dialog
 | Mode | Setting | Kitchen board | Waiter and manager screens |
 |---|---|---|---|
 | `mock` (default) | `VITE_ORDERS_MODE=mock` | In-memory sample orders #1039–#1043 (Pending 3 / Preparing 1 / Ready 1). `?mock=empty`, `?mock=many` (130 extra Pending orders) and `?mock=list-error` select other data sets. | Read-only sample data from the Figma frames (`src/api/mock/sampleScreens.ts`, `todaysSampleOrders()`). |
-| `http` | `VITE_ORDERS_MODE=http`, `VITE_API_BASE_URL=/v1` | Calls the API. The bearer token comes from `getDemoAccessToken()`, which returns no token in this build, so a real API answers `401`. | "This screen is not connected to the API yet." No fallback to sample data. |
+| `http` | `VITE_ORDERS_MODE=http`, `VITE_API_BASE_URL=/v1` | Calls the API. The bearer token comes from `getDemoAccessToken()`, which returns no token in this build, so a real API is expected to answer `401`. This was not tested: no API runs yet. | "This screen is not connected to the API yet." No fallback to sample data. |
 
 Copy `.env.example` to `.env.local` to change the mode. An unknown mode or scenario shows a configuration error; http mode never falls back to mock data.
 
@@ -55,7 +55,7 @@ The mock service follows the status transitions and error shapes of the API cont
 
 ## API contract comparison
 
-Compared with `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` (20 Nov 2026), field by field:
+Compared with `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` (20 Nov 2026), field by field. The API folder is unchanged on `develop` at `4227056` (21 Nov 2026).
 
 - **Requests used:** `GET /orders` (`status`, `sort`, `page`, `size`) and `PATCH /orders/{orderId}/status` with an `Idempotency-Key` header and `OrderStatusUpdate` body. Parameters, body, response schemas and error format match the contract. The header is optional on this operation in the contract; the board always sends it.
 - **Changed in `src/api/types.ts`:** `Order` now has the optional `preparationStartedAt` and `readyAt`; `Problem` has the optional `shortages` (`StockShortage[]`). The board does not use them yet.
@@ -67,13 +67,13 @@ Compared with `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` (20 Nov 2026), 
 
 | Source | Version used |
 |---|---|
-| ADR-001 (React + TypeScript, Accepted), ADR-006 (roles and permissions), ADR-010 (polling), ADR-011 (version pinning, Proposed) | `develop` at `7270d63` |
-| API contract | `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` |
+| ADR-001 (React + TypeScript, Accepted), ADR-006 (roles and permissions), ADR-010 (polling), ADR-011 (version pinning, Proposed) | `develop` at `4227056` |
+| API contract | `api/openapi.yaml` 0.2.1, compared at `7270d63`; unchanged at `4227056` |
 | Figma frames, colors, spacing and copy | Page "03 Screens v2", export of 20 Nov 2026 (PR #71, merged as `ca96339`) |
 | Chef flows U3/U4 | PR #70 |
 | Scope and evidence limits | PR #50, issue #48 |
 
-**Team decision and development tools.** React with TypeScript is the team decision (ADR-001, Accepted). The other tools of this folder and all exact versions are development choices of this skeleton; their team approval is not confirmed yet (owner: Ayşe Dural; versions are fixed with the Sprint 3 skeleton, ADR-011): Vite 8.3.8, Vitest 5.1.1 with jsdom and Testing Library, ESLint 10.15.0 with typescript-eslint 8.73.0, TypeScript 6.0.3, React 19.3.1, plain CSS. TypeScript 7 is not used because typescript-eslint 8.73.0 supports TypeScript below 6.1. No router, UI library, CSS framework or state package is used; screen changes use the location hash. Exact versions are in `package.json` and `package-lock.json`.
+**Team decision and development tools.** React with TypeScript is the team decision (ADR-001, Accepted). The other tools of this folder and all exact versions are development choices of this skeleton: Vite 8.3.8, Vitest 5.1.1 with jsdom and Testing Library, ESLint 10.15.0 with typescript-eslint 8.73.0, TypeScript 6.0.3, React 19.3.1, plain CSS. On 21 Nov 2026 the technical lead (Ayşe Dural) replied informally that the task owner may continue with the tools she prefers. The reply did not name or review specific tools or versions, and it is not an ADR or a written team record. Version pinning for the project stays with the Sprint 3 skeleton (ADR-011, Proposed). TypeScript 7 is not used because typescript-eslint 8.73.0 supports TypeScript below 6.1. No router, UI library, CSS framework or state package is used; screen changes use the location hash. Exact versions are in `package.json` and `package-lock.json`.
 
 ## Kitchen board behavior
 
@@ -86,9 +86,9 @@ Compared with `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` (20 Nov 2026), 
 - `409 INVALID_STATUS_TRANSITION` shows a warning ("Order #N was already started", or "could not be marked as ready") and reloads the board.
 - A failed refresh keeps the cards and shows the time of the last successful update.
 
-## Checks of this delivery (20 Nov 2026)
+## Checks of this delivery (20–21 Nov 2026)
 
-- `npm run typecheck`, `npm run lint`, `npm test` (42 tests: 31 kitchen board and service tests, 11 for routes, role menus, page changes and the sample screens) and `npm run build` pass.
+- `npm run typecheck`, `npm run lint`, `npm test` (42 tests: 31 kitchen board and service tests, 11 for routes, role menus, page changes and the sample screens) and `npm run build` pass, also after merging `develop` at `4227056` (21 Nov).
 - The eight screens were opened in Chrome at 1280 × 800 and at 390 px width (no page-level horizontal scroll) and compared with the Figma exports. No browser console errors.
 - Manual check by the task owner in the browser (mock mode): Waiter, Chef and Manager screens; no issues found.
 - These checks cover the UI in mock mode only. No API, authentication, authorization, concurrency or performance test was run.
@@ -98,7 +98,7 @@ Compared with `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` (20 Nov 2026), 
 - Only the kitchen board sends requests. Waiter and manager screens are read-only sample data; their actions are disabled and say so.
 - Only the first page of each kitchen column is loaded; there is no paging.
 - The Ready column shows all READY orders from the first page, newest created first. Which Ready orders the board should show is an open product question.
-- No sign-in, sign-out, session or token storage (demo role preview only). Real authentication (`POST /auth/login`, bearer token) and the backend do not exist yet; in http mode the kitchen board sends no token, so a real API answers `401`.
+- No sign-in, sign-out, session or token storage (demo role preview only). Real authentication (`POST /auth/login`, bearer token) and the backend do not exist yet; in http mode the kitchen board sends no token, so a real API is expected to answer `401` (not tested).
 - Not built yet: dialogs and results (adjust stock, new ingredient, edit ingredient, deactivate, cancel, late cancel, publish recipe, new menu item), inventory history (`scr-04j`, `scr-04k`), the common states of `scr-07a` outside the kitchen board, and the "Preview as" switch of the prototype.
 - No Docker, CI job or coverage gate is added.
 
@@ -113,7 +113,7 @@ Compared with `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` (20 Nov 2026), 
 
 | Decision | Owner |
 |---|---|
-| Frontend tool choices above | Ayşe Dural |
+| Written team record of the frontend tools above (general go-ahead from the technical lead on 21 Nov; tools and versions not reviewed) | Ayşe Dural |
 | Ready column scope and the three-request refresh | Burcu Ücük (product), Ayşe Dural (API) |
 | Node.js version pin and frontend CI job | Emre Boz (ADR-011, Sprint 3 readiness) |
 | Idempotency-Key on status changes (ADR-005 Proposed) | Ayşe Dural |
