@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Contract | [`api/openapi.yaml`](openapi.yaml) — OpenAPI **3.1.0**, API version `0.2.0` |
+| Contract | [`api/openapi.yaml`](openapi.yaml) — OpenAPI **3.1.0**, API version `0.2.1` |
 | Owner (A/R) | Ayşe Dural — Lead Software Architect and Technical Lead |
 | Consulted | Burcu Ücük (requirements), Beyzanur Alpay (testability), Emre Boz (CI), Tuğçe Çevik (integration) |
 | Sprint tasks | S1-08, S1-09, S1-10, S1-25 (API part) — see `docs/sprint1-task-board.md` |
@@ -179,3 +179,4 @@ stateDiagram-v2
 |---|---|---|---|
 | 0.1.0 | 2026-11-05 | Ayşe Dural | Initial Sprint 1 draft; aligned with Proposal, Vision, RACI and D-12 |
 | 0.2.0 | 2026-11-17 | Ayşe Dural | Ingredient soft delete (`deactivateIngredient`, `Ingredient.active`, `INGREDIENT_INACTIVE`, `INGREDIENT_DEACTIVATED`/`INGREDIENT_REACTIVATED` audit actions); initial stock entered through a separate `INITIAL_STOCK` adjustment (A-7, A-8); `POST /orders` restricted to WAITER |
+| 0.2.1 | 2026-11-20 | Ayşe Dural | Wording only, no schema change (QA review on PR #82, D-04, D-06, D-11): one reservation per order item and ingredient; keys scoped per user and operation; a same-key request in flight waits and receives the saved response; a missing `Idempotency-Key` on `POST /orders` returns `400` |
