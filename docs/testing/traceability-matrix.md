@@ -35,7 +35,7 @@ US-15 and US-16 are tracked by the backlog as post-MVP. See [test definitions](t
 | D-05 | Ayşe confirmed 200 replay for same key/body, 409 for different or omitted key and 422 for same key with changed body. | Technical review confirmed. TC-16/17 capture responses and no duplicate effects. |
 | D-06 | Ayşe confirmed 400 for malformed input and 422 VALIDATION_FAILED for rule violations with valid formats. Missing key returning 400 is proposed. | Partially confirmed. TC-04/10/32 updated; missing-key status awaits API wording. |
 | D-07 | Use two Chef sessions or direct PATCH calls. Disable polling or stub 409 for UI feedback. | Review-confirmed strategy. TC-29 separates live stock verification from stubbed UI feedback. |
-| D-08 | OpenAPI v0.2.0 excludes inactive ingredients from alerts. SRS FR-14 does not state that exception (architecture review #68 CR-03). | Burcu to confirm backlog/SRS scope. TC-31 documents the API baseline separately. |
+| D-08 | Confirmed in merged [PR #89](https://github.com/seng321-7th-team/PantryChef/pull/89): SRS FR-14 excludes deactivated ingredients from low-stock alerts, consistent with OpenAPI v0.2.0. | Confirmed. TC-31 covers the inactive-ingredient rule and remains planned. |
 | D-09 | Ayşe confirmed keys are scoped by user and operation, consistent with the schema. | Confirmed. TC-33 remains planned. |
 | D-10 | Architecture review #68 CR-02 records conflicting FR numbering in System Vision, the earlier SRS and the Sprint 2 SRS. | Burcu to confirm the canonical numbering. This matrix uses PR #54/#51 identifiers only. CR-01 opening stock follows the consistent current drafts, with Burcu’s final confirmation tracked by #68. |
 | D-11 | Ayşe confirmed one reservation and consumption movement per order item and ingredient. | Model confirmed. API wording awaits Ayşe’s update. TC-06/26 include a shared-ingredient variant. |
@@ -59,4 +59,4 @@ Numbers follow the acceptance criteria order in backlog PR #55. Planned refers t
 | US-11 | 1–4 → TC-16; 3 → TC-15 as well; 5 → TC-16 retry variants; 6 → TC-13/24 | AC5 response and stock expectations confirmed by technical review (D-05) |
 | US-12 | 1/2/3 → TC-17/18/25; 4/5/6/7 → TC-17; 3 also → TC-32; 8 → TC-18 | AC7 response, stock and audit expectations confirmed by technical review (D-05) |
 | US-13 | 1/2/3 → TC-19 (2/3 also TC-05/17); 4 → TC-19 audit read access; 5 → TC-19 immutability evidence | Access checks planned. Contract evidence is separate from pending implementation verification for AC5 |
-| US-14 | 1 → TC-04/20; 2 → TC-02/20; 3/4/5 → TC-20; inactive case → TC-31 | Inactive-ingredient acceptance pending D-08 |
+| US-14 | 1 → TC-04/20; 2 → TC-02/20; 3/4/5 → TC-20; FR-14 inactive-ingredient rule → TC-31 | D-08 confirmed by PR #89. TC-31 remains planned. |
