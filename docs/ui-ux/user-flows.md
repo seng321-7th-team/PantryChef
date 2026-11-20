@@ -12,7 +12,7 @@ Flows only cover what the 39 frames of the 20 Nov 2026 export show. Features tha
 
 ## Flow list and Figma starting points
 
-The numbers in this document (U1 to U12) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points (13 in the 20 Nov export) are the ones in `docs/ui-ux/figma-links.md` ([PR #71](https://github.com/seng321-7th-team/PantryChef/pull/71)). The first nine Mermaid diagrams render on GitHub with their boxes, labels and arrows: U1, U1a, U2 and U5 to U8 checked on 18 November 2026 (unchanged since), U3 and U4 checked on 19 November 2026; result screenshots recorded. The U10 to U12 diagrams were added on 20 November 2026; their GitHub rendering has not been checked yet. These checks cover diagram rendering only.
+The numbers in this document (U1 to U12) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points (13 in the 20 Nov export) are the ones in `docs/ui-ux/figma-links.md` ([PR #71](https://github.com/seng321-7th-team/PantryChef/pull/71)). The first nine Mermaid diagrams render on GitHub with their boxes, labels and arrows: U1, U1a, U2 and U5 to U8 checked on 18 November 2026 (unchanged since), U3 and U4 checked on 19 November 2026; result screenshots recorded. The U10 to U12 diagrams were added on 20 November 2026 and render on GitHub with their boxes, labels and arrows (checked at `81400e0` on 20 November 2026; result screenshots recorded). These checks cover diagram rendering only.
 
 | Section | Flow | Figma flow starting point |
 |---|---|---|
