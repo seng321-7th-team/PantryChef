@@ -99,7 +99,7 @@ This update records verified developments after the earlier November 20 snapshot
 | S2-10 — Deliverables Consistency Review | Issue #59 / PR #60 | PR merged; Issue #59 closed with acceptance criteria completed | Monitor any new cross-document inconsistencies |
 | S2-33 — Figma Documentation | Issue #53 / PR #71 | PR merged; Issue #53 closed | Verify remaining prototype access evidence |
 | UI Consistency Review | PR #50 | Merged (96bcbe3) | Verify related Issue status |
-| Database Schema | PR #66 | Emre approved; merge not confirmed | Ayşe to complete merge |
+| Database Schema | PR #66 | Emre approved; merged into `develop` (93dbbe0) | None |
 | User-flow Diagrams | PR #70 | Updated U10–U12 diagrams awaiting Ayşe's approval | Obtain approval and merge |
 | Architecture Decision Records | PR #87 | Emre approved; document-reference corrections remain pending | Ayşe to update references and merge |
 | QA Documentation Sync | PR #93 | Burcu approved; Ayşe's review remains pending | Complete technical review and merge |
