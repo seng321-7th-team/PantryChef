@@ -161,7 +161,7 @@ The November 17 impediment snapshot above is retained as historical evidence.
 
 | ID | Date Confirmed | Impediment | Impact | Owner | Mitigation / Next Action | Status |
 |---|---|---|---|---|---|---|
-| IMP-01 | Nov 20, 2026 | README documentation link check fails in PR #84 (1 passed, 1 failed) | PR #84 cannot be merged with all required checks passing; final release documentation remains incomplete | Emre Boz | Verify referenced files in `develop`, synchronize the README branch after dependency merges, correct remaining links, and rerun CI | Open |
+| IMP-01 | Nov 20, 2026 | Docs link check fails in PR #84 because the README links to files from PRs that were not merged yet (planned, see the PR #84 description) | PR #84 cannot be merged until the check passes | Emre Boz | Update the branch after each dependency merge. After #66 merged (014754b), only `docs/ui-ux/user-flows.md` from PR #70 is missing | Open, waits for PR #70 |
 
 **Tracking note:** PRs #66, #70, #87 and #93 have outstanding review, merge or correction actions. These are tracked as dependencies, not automatically classified as confirmed impediments.
 
