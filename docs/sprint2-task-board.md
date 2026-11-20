@@ -24,9 +24,9 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 
 | Task ID | Task | Owner | Reviewer | Expected deliverable | GitHub Issue | Status |
 |---|---|---|---|---|---|---|
-| S2-01 | Detailed Software Requirements Specification (SRS) | Burcu Ücük | Ayşe | `docs/srs.md` | TBD – verify first | To Do (provisional) |
-| S2-02 | Refined Product Backlog, User Stories, Acceptance Criteria | Burcu Ücük | Beyzanur | `docs/product-backlog.md` | TBD – verify first | To Do (provisional) |
-| S2-03 | Functional & Non-functional Requirements | Burcu Ücük | Beyzanur | `docs/non-functional-requirements.md` | TBD – verify first | To Do (provisional) |
+| S2-01 | Detailed Software Requirements Specification (SRS) | Burcu Ücük | Ayşe | `docs/srs.md` | Issue #44 / PR #54 | Done — approved and merged |
+| S2-02 | Refined Product Backlog, User Stories, Acceptance Criteria | Burcu Ücük | Beyzanur | `docs/product-backlog.md` | Issue #46 / PR #55 | Done — approved and merged |
+| S2-03 | Functional & Non-functional Requirements | Burcu Ücük | Beyzanur | `docs/non-functional-requirements.md` | Issue #49 / PR #51 | In Progress — changes addressed; reviewer re-approval pending |
 | S2-04 | Figma tasarımlarının gereksinimlerle uyumunu inceleme | Burcu Ücük | Tuğçe | `Figma prototype review` | TBD – verify first | To Do (provisional) |
 | S2-05 | MVP Scope & Out-of-Scope Definition | Burcu Ücük | Bilgesu | `docs/srs.md (scope section)` | TBD – verify first | To Do (provisional) |
 | S2-06 | Sprint 2 Task Board oluşturma ve yönetme | Bilgesu Nacak | Burcu | `docs/sprint2-task-board.md` | Issue #38 / PR #39 / PR #69 | Done |
@@ -82,7 +82,7 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 - [ ] Figma prototype and user flows have accessible links.
 - [ ] Required Issue, PR, release/tag and documentation links are in the Teams submission.
 - [ ] Manager order creation permissions are consistent across the Product Backlog, SRS, and OpenAPI (PR #55, PR #54, PR #62).
-- [ ] Quality metrics and requirements–test traceability evidence are verified (Issue #80).
+- [ ] Quality metrics and requirements–test traceability evidence are verified (Issue #81 / PR #82).
 - [ ] Outstanding architecture, API, and UI/UX Pull Requests are reviewed and merged where required.
 - [ ] Final Sprint 2 task statuses and evidence references are synchronized across the Task Board, Progress Tracking, and Submission Package.
 
