@@ -47,7 +47,7 @@ The following deliverables are required by the Sprint 2 assignment.
 |---|---|---|
 | D-01 | Detailed Software Requirements Specification (SRS) | PR #54 approved and merged; final submission link verification pending |
 | D-02 | Refined Product Backlog | PR #55 approved and merged; final submission link verification pending |
-| D-03 | Non-functional requirements and measurable quality specifications | Pending final verification |
+| D-03 | Non-functional requirements and measurable quality specifications | PR #51 approved and merged; final quality-evidence verification pending |
 | D-04 | Figma UI/UX prototypes | Pending final verification |
 | D-05 | User-flow diagrams | Pending final verification |
 | D-06 | C4 architecture models | Pending final verification |
@@ -164,7 +164,7 @@ The references below identify known Issues and Pull Requests. Final approval, me
 |---|---|---|---|---|
 | Detailed SRS | Burcu Ücük | #44 | #54 | Approved and merged into develop |
 | Refined Product Backlog | Burcu Ücük | #46 | #55 | Approved by Beyzanur and merged into develop; Issue #46 Closed / Done |
-| Functional and Non-functional Requirements | Burcu Ücük | #49 | #51 | Requested changes addressed; awaiting Beyzanur's re-review |
+| Functional and Non-functional Requirements | Burcu Ücük | #49 | #51 | Approved by Beyzanur and merged into develop |
 | UI Design and User Story Consistency | Tuğçe Çevik | #48 | #50 | Final review and merge status pending verification |
 | User-flow Diagrams | Tuğçe Çevik | #52 | #70 | Approved by Ayşe; final document synchronization and merge pending |
 | Figma Links and UI Documentation | Tuğçe Çevik | #53 | #71 | Approved by Bilgesu; subsequent documentation updates require final verification before merge |
@@ -191,7 +191,7 @@ For each deliverable, verify:
 
 - PR #54: Detailed SRS approved and merged into develop.
 - PR #55: Refined Product Backlog approved by Beyzanur and merged into develop.
-- PR #51: Functional and non-functional requirements updated to address requested changes; Beyzanur's re-review remains pending.
+- PR #51: Functional and non-functional requirements approved by Beyzanur and merged into develop.
 - PR #62: Architecture and OpenAPI documentation approved and merged into develop.
 - PR #66: Database schema SQL CHECK constraint correction committed; Emre's final re-review remains pending.
 - PR #68: Architecture–SRS–OpenAPI consistency findings remain under review.
