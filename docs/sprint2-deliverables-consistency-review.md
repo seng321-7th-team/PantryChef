@@ -108,7 +108,7 @@ Each follow-up action must be updated only after its responsible owner provides 
 |---|---|---|---|---|---|---|
 | Three primary actors (Waiter, Chef, Manager) | Verified | Verified | N/A | Pending | Pending | Pending |
 | Role-based operation permissions | Partially verified | Partially verified | N/A | Pending | Pending | Pending |
-| Manager order creation permission | Pending — cross-document conflict | Pending — cross-document conflict | N/A | Pending | Pending | Pending |
+| Manager order creation permission | Verified — WAITER only | Aligned in PR #55 (986583e); merge pending | N/A | Partially verified | Partially verified | Verified — WAITER only |
 | Pending → Preparing → Ready | Verified | Verified | Pending | Pending | Pending | Pending |
 | Atomic ingredient reservation | Verified | Verified | Pending | Pending | Pending | Pending |
 | Exactly-once stock consumption | Verified | Verified | Pending | Pending | Pending | Pending |
@@ -128,7 +128,22 @@ Actor coverage and operation permissions are verified separately.
 
 The three primary actors are Restaurant Manager, Waiter, and Chef/Kitchen Staff. The presence of these actors does not automatically verify their permissions.
 
-**Open finding — Manager order creation:**
+**Finding — Manager order creation: Resolved at requirements and API level; final backlog merge pending.**
+
+The agreed permission rule is that only authorized Waiters can create orders. Restaurant Managers and Chefs cannot create orders.
+
+The merged SRS (PR #54, FR-06) and OpenAPI contract (PR #62, POST /orders) specify WAITER-only order creation.
+
+The refined Product Backlog (PR #55) was updated in commit `986583e` to align US-06 AC1 with this rule. Beyzanur's re-review and final merge are still pending.
+
+Relevant sources:
+- Product Backlog: https://github.com/seng321-7th-team/PantryChef/pull/55
+- SRS: https://github.com/seng321-7th-team/PantryChef/blob/develop/docs/srs.md
+- OpenAPI: https://github.com/seng321-7th-team/PantryChef/blob/develop/api/openapi.yaml
+
+**Remaining follow-up:** Verify the final approved and merged Product Backlog, then confirm that the relevant UI/UX and QA traceability documents reflect the same WAITER-only rule.
+
+The permission decision is confirmed. Final cross-document verification remains In Progress.
 
 The refined Product Backlog (PR #55) and the SRS/OpenAPI documentation (PRs #54 and #62) contain differing descriptions of Manager order creation permissions.
 
