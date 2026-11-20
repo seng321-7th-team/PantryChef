@@ -10,26 +10,31 @@ Frame names (`scr-…`) are the Figma frame names listed in [`figma-links.md`](f
 
 Status words used in this file:
 
-- **Matches API 0.2.0** – the frame agrees with `api/openapi.yaml` version 0.2.0, merged into `develop` with PR #62 (19 Nov). Earlier versions of this file called it "API draft".
+- **Matches API 0.2.0** – the frame agrees with `api/openapi.yaml` version 0.2.0, merged into `develop` with PR #62 (19 Nov). Earlier versions of this file called it "API draft". API 0.2.1 (PR #91, 20 Nov) changes wording only, with no schema change; the label is kept.
+- **Added in Figma (20 Nov)** – the frame is part of the 39-frame export of 20 Nov 2026. Team review of these frames is pending.
 - **Decision pending** – a formal team decision or record is still pending (for example an ADR still Proposed). Merged requirement and API text is recorded separately; this label does not mean that the matching implementation exists.
 - **Applied in Figma** – the change exists in the live file and was checked on a screenshot. This is not a test of any backend.
 
 ## 1. Scope of the prototype
 
-Three roles, 32 frames.
+Three roles, 39 frames (Figma export of 20 Nov 2026). Seven optional frames on the page "04 Optional states - excluded" are not part of the delivery (see `figma-links.md` section 3).
 
 | Role | Screens |
 |---|---|
 | All | Login, login error, session expired, common states (`scr-01-login`, `scr-01b-login-error`, `scr-01c-session-expired`, `scr-07a-states`) |
 | Waiter | New order, My open orders, Orders (`scr-02a` to `scr-02d`, `scr-05c`, `scr-05f` to `scr-05h`) |
 | Chef | Kitchen board (`scr-03a` to `scr-03e`) |
-| Manager | Inventory and ingredient forms (`scr-04a` to `scr-04i`), Orders and audit log (`scr-05a` to `scr-05e`), Recipes (`scr-06a`, `scr-06b`) |
+| Manager | Inventory and ingredient forms (`scr-04a` to `scr-04i`), Inventory history (`scr-04j`, `scr-04k`), Orders and audit log (`scr-05a` to `scr-05e`), Recipes and New menu item (`scr-06a`, `scr-06b`, `scr-06c`, `scr-06e`, `scr-06f`, `scr-06h`), Staff permissions (`scr-08a`) |
+
+The 22 manager frames share one menu: Inventory / Recipes / Orders & audit / Staff permissions. The selected tab has a light-blue background.
 
 Order creation exists **only on the waiter screen** (`scr-02a`). There is no manager screen to create an order; the manager views orders and cancels them (`scr-05a`, `scr-05b`, `scr-05d`).
 
 Prototype-only aids: the Waiter / Chef / Manager buttons on the login frames and the "Preview as" switch on the orders frames. They exist only to move between roles in the demo.
 
-The Waiter, Chef and Manager sections are independent, predefined Figma scenarios. Order IDs are reused, but an action in one section does not update another section.
+The Waiter, Chef and Manager sections are independent, predefined Figma scenarios. Order IDs are reused, but an action in one section does not update another section, except for the prototype states below.
+
+**Prototype states.** Some results are Figma variable states on the same frames. The PDF and PNG files show the start values; the results appear only in the clickable prototype. The full list is in `figma-links.md` section 2. In short: cancelling Pending #1042 shows it as `Cancelled` in the manager list and removes it from the waiter's open orders; Publish v4 shows Menemen v4 with Olive oil 20 ml and keeps the v1–v3 history; the Tomatoes adjustment shows on hand 14500, reserved 350, available 14150; creating Bulgur adds it with 0 on hand, reserved and available, and Adjust on Bulgur shows an `INITIAL_STOCK` opening-stock example.
 
 ### Kitchen board (Chef)
 
@@ -84,6 +89,20 @@ In the prototype, **Deactivate ingredient** (04g → 04h → 04i) and **Reactiva
 
 Permissions for `ORDER_LATE_CANCEL` and the chef role are not changed by this prototype.
 
+## 3a. Inventory history, new menu item and staff permissions (D-3, D-4, D-6)
+
+The product owner decided on 20 Nov to include these views ([decision on PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50#issuecomment-7038140749)). The frames were added to the Sprint 2 prototype in the 39-frame export. The API mapping below compares the frames with API 0.2.1; open API questions are listed in `ui-user-story-review.md` section 7b ([PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50)) and are not answered by the prototype.
+
+| Frame | What it shows | API field or rule | Status |
+|---|---|---|---|
+| `scr-04j-stock-movements` | Inventory history, Stock movements tab. Rice sample: `ADJUSTMENT` (`INITIAL_STOCK`), `RESERVE`, `RELEASE`, `CONSUME`; change ("+50 g reserved", "-100 g on hand"), on hand after, reserved after, performed by, order or reason. Filters Ingredient, Order ID, Type, Date range. Note: late cancellation does not restore stock or create a stock movement. | `GET /inventory/movements` (MANAGER): `type`, signed `quantity`, `onHandAfter`, `reservedAfter`, `orderId`, `reason`, `performedBy`, `createdAt`; filters `ingredientId`, `orderId`, `type`, `from`, `to`. The movement has no ingredient name; the name comes from `GET /ingredients`. Orders are shown by a shortened order ID. | Added in Figma (20 Nov). Only the All types / RESERVE type filter is interactive. |
+| `scr-04k-reservations` | Reservations tab. Rice sample: `ACTIVE`, `CONSUMED`, `RELEASED`; order ID, quantity, created, resolved ("Not resolved" while active), order item ID. Filters Ingredient, Order ID, Status. Note: one reservation is associated with an order item and an ingredient. | `GET /reservations` (MANAGER, CHEF): `orderId`, `orderItemId`, `ingredientName`, `quantity`, `unit`, `status`, `createdAt`, `resolvedAt`; filters `orderId`, `ingredientId`, `status`. One reservation per order item and ingredient (API 0.2.1 wording). | Added in Figma (20 Nov). |
+| `scr-06c-new-menu-item` | Name *, Price (TRY) *, Description (optional), Active Yes; initial recipe lines with ingredient, quantity per portion and unit (read-only); "+ Add ingredient"; "Use each active ingredient once"; "At least one ingredient is required. The initial recipe is version 1." Cancel, Create menu item. | `POST /menu-items` (MANAGER), `MenuItemCreate`: `name`, `price`, `description`, `active`, `recipe.lines` (at least one, `ingredientId` + `quantity` > 0); recipe version 1. | Added in Figma (20 Nov). Fixed sample values; no free-form input. |
+| `scr-06f-new-menu-item-validation` | Quantity 0 on the Rice line: "Quantity per portion must be greater than 0." | `quantity` must be greater than 0. The frame names no error code. | Added in Figma (20 Nov). |
+| `scr-06e-menu-item-created` | Rice Bowl, 90.00 TRY, Active, "Initial recipe - v1", Rice 100 g per portion; Back to recipes, New menu item. With the Olive oil line added on `scr-06c`, the prototype also shows that line. | `201` with the created `MenuItem`; the recipe starts at version 1. | Added in Figma (20 Nov). |
+| `scr-06h-recipes-after-create` | Recipes list with Rice Bowl (recipe v1); the row opens the saved detail `scr-06e`. | `GET /menu-items`, `GET /recipes/{menuItemId}` | Added in Figma (20 Nov). |
+| `scr-08a-staff-permissions` | Active waiters Deniz Yilmaz (waiter01) and Elif Kaya (waiter02) with saved late-cancel access; "Allow late cancellation" toggle for Deniz Yilmaz. A change shows an unsaved-change message with Cancel and Save. Texts: "Other permissions and account details remain unchanged. Managers already have late-cancel access." | `GET /users?role=WAITER&active=true` (MANAGER); `PUT /users/{userId}` with the full `UserUpdate` (`fullName`, `role`, `permissions`, `active`), adding or removing `ORDER_LATE_CANCEL` and keeping the other values; audit action `USER_PERMISSIONS_CHANGED`. | Added in Figma (20 Nov). Only Deniz Yilmaz can be selected. Saving does not change the "Preview as" switch on the orders frames. |
+
 ## 4. Initial stock in SRS, backlog, API and Figma
 
 | Source | What it says about initial stock |
@@ -101,16 +120,16 @@ Loading; empty waiter orders; empty kitchen board; server error 500 `INTERNAL_ER
 
 ## 6. Not shown in the prototype
 
-Stock movements and reservation views, new menu item with its first recipe, staff and permission management, "Show inactive" filter for the inventory list. They depend on decisions D-3, D-4 and D-6 listed in `ui-user-story-review.md` ([PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50)) and are not drawn.
+"Show inactive" filter for the inventory list; editing or archiving an existing menu item; staff account management beyond the late-cancel permission. Stock movements and reservation views, new menu item with its first recipe and the late-cancel permission are drawn since the 20 Nov export (section 3a).
 
 ## 7. Alignment checkpoint (20 Nov)
 
-Compared with `develop` at `e197628`: SRS (PR #54), refined backlog (PR #55), API 0.2.0 and diagrams (PR #62), SRS FR-14 clarification (PR #89) and ADRs (PR #64) are merged; schema #66 and consistency review #68 are open. The source hashes in older tables identify earlier checks.
+Compared with `develop` at `7270d63`: SRS (PR #54), refined backlog (PR #55), FR/NFR (PR #51), API 0.2.0 and diagrams (PR #62), API 0.2.1 wording update (PR #91), SRS FR-14 clarification (PR #89), ADRs (PR #64) and the consistency review (PR #68) are merged; schema #66 is open. SRS and backlog are unchanged since the earlier check at `e197628`. The source hashes in older tables identify earlier checks.
 
 - Core roles, zero-stock creation, stock reservation/consumption, cancellation, immutable recipes and 15–30 s polling align in the merged SRS, backlog and API.
 - Order creation role: SRS FR-06, backlog US-06 AC1 and API 0.2.0 say WAITER (section 3); all merged. ADR-006 keeps it Proposed until PR #87.
 - #68 records CR-04 (deactivate/reactivate views) as resolved. Those screens exist; the soft-delete API is merged, ADR-008 stays Proposed until PR #87.
-- Recipe creation (FR-05/US-05), complete reservation/consumption history (FR-13/US-13) and staff/permission assignment (SRS §8 question 2) remain open UI coverage questions for Burcu. Do not mark these requirements out of scope without her decision.
-- **Prototype limits:** kitchen interactions cover order #1042 only (Mark as ready on #1042 leads to `scr-03e-kitchen-ready`; the other kitchen buttons are faded and not connected); Pending cancel returns a reused list; login/role previews do not authenticate; no actual stock or audit mutations occur. Expected behavior in the flow document is distinct from a tested prototype transition.
-- Inactive ingredients raise no low-stock alerts: stated in SRS FR-14 (PR #89) and API 0.2.0. `scr-04h` states it; no implementation or test covers it yet. #68 still lists CR-03 as open at its current head.
+- Recipe creation (FR-05/US-05, D-4), reservation/consumption history (FR-13/US-13, D-3) and the late-cancel permission (D-6) were decided by Burcu on 20 Nov and drawn in the 39-frame export (section 3a). Team review of these frames is pending. SRS §8 question 2 (scope of all `/users` operations) is not changed.
+- **Prototype limits:** kitchen interactions cover order #1042 only (Mark as ready on #1042 leads to `scr-03e-kitchen-ready`; the other kitchen buttons are faded and not connected); login/role previews do not authenticate; no actual stock or audit mutations occur; fields use fixed sample values. Variable states show one example of each action (section 1) and are not unlimited create, update or delete operations. Expected behavior in the flow document is distinct from a tested prototype transition.
+- Inactive ingredients raise no low-stock alerts: stated in SRS FR-14 (PR #89) and the API. `scr-04h` states it; no implementation or test covers it yet. #68 (merged) records CR-03 as resolved.
 - The UI supports NFR-09/10 design review; it does not prove performance, concurrent correctness, real authorization, rollback, automated test coverage or Chrome/Firefox application compatibility. PR #50 contains the current FR/NFR evidence matrix.
