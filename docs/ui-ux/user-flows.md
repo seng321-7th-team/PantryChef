@@ -6,13 +6,13 @@
 **Owner:** Tuğçe Çevik · **Reviewer:** Ayşe Dural
 **Status:** Draft
 
-Frame names (`scr-…`) are the Figma frame names listed in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/bb1569ee79555a4950be7bde598ef2f0e7ffa0a7/docs/ui-ux/figma-links.md) (S2-33, PR #71, commit `bb1569e`; not on `develop` yet). Rules and error codes come from [`api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.1.0) and [`docs/product-backlog.md`](../product-backlog.md). Where a flow follows API draft PR #62 (current checked head `f061da2`, version 0.2.0, **not merged**), the text says so. Its OpenAPI rules are unchanged from `866122e`/`cb634c3`. Order flow: `PENDING` → `PREPARING` → `READY`. `CANCELLED` is terminal. There is no delivery feature.
+Frame names (`scr-…`) are the Figma frame names listed in `docs/ui-ux/figma-links.md` ([PR #71](https://github.com/seng321-7th-team/PantryChef/pull/71), S2-33; not on `develop` yet). Rules and error codes come from [`api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.2.0 since PR #62 was merged on 19 Nov), the SRS and the refined backlog (merged in PR #54 and PR #55). Order flow: `PENDING` → `PREPARING` → `READY`. `CANCELLED` is terminal. There is no delivery feature.
 
-Flows only cover what the 32 frames show. Features that the User Stories require but the frames do not show are listed in [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/c1dbd05ad186c4194fb8789178cb5e77f656fae9/docs/ui-ux/ui-user-story-review.md) (PR #50, commit `c1dbd05`) and are **not** drawn here.
+Flows only cover what the 32 frames show. Features that the User Stories require but the frames do not show are listed in `docs/ui-ux/ui-user-story-review.md` ([PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50)) and are **not** drawn here.
 
 ## Flow list and Figma starting points
 
-The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in [`docs/ui-ux/figma-links.md`](https://github.com/seng321-7th-team/PantryChef/blob/bb1569ee79555a4950be7bde598ef2f0e7ffa0a7/docs/ui-ux/figma-links.md) (PR #71, commit `bb1569e`). All nine Mermaid diagrams render on GitHub with their boxes, labels and arrows: U1, U1a, U2 and U5 to U8 checked on 18 November 2026 (unchanged since), U3 and U4 checked on 19 November 2026; result screenshots recorded. These checks cover diagram rendering only.
+The numbers in this document (U1 to U9) are section numbers of this file. They are not the Figma flow numbers. The Figma flow starting points are the ones in `docs/ui-ux/figma-links.md` ([PR #71](https://github.com/seng321-7th-team/PantryChef/pull/71)). All nine Mermaid diagrams render on GitHub with their boxes, labels and arrows: U1, U1a, U2 and U5 to U8 checked on 18 November 2026 (unchanged since), U3 and U4 checked on 19 November 2026; result screenshots recorded. These checks cover diagram rendering only.
 
 | Section | Flow | Figma flow starting point |
 |---|---|---|
@@ -33,7 +33,7 @@ For the general demo, start at `scr-01-login` (Flow 1) and choose a role.
 
 ## U1 – Waiter creates an order (US-06, US-07)
 
-Only the waiter creates orders in the prototype. There is no manager screen for this. SRS #54 FR-06, backlog #55 US-06 AC1 at `986583e` and API draft #62 restrict order creation to WAITER (aligned in drafts; review and merge pending). `develop` (0.1.0) still lists WAITER and MANAGER until #62 is merged (see [`docs/ui-ux/ui-prototype.md`](https://github.com/seng321-7th-team/PantryChef/blob/bb1569ee79555a4950be7bde598ef2f0e7ffa0a7/docs/ui-ux/ui-prototype.md), PR #71, commit `bb1569e`).
+Only the waiter creates orders in the prototype. There is no manager screen for this. SRS FR-06, backlog US-06 AC1 and API 0.2.0 (`createOrder`, "Roles: WAITER") restrict order creation to WAITER; all three are merged into `develop` (PR #54, #55, #62). ADR-006 still lists WAITER-only creation as Proposed. See `docs/ui-ux/ui-prototype.md` ([PR #71](https://github.com/seng321-7th-team/PantryChef/pull/71)).
 
 ```mermaid
 flowchart TD
@@ -97,7 +97,7 @@ flowchart TD
     D -->|Mark as ready on #1042| E([#1042 READY<br/>no additional stock deducted<br/>counters 2 / 1 / 2<br/>scr-03e-kitchen-ready])
 ```
 
-| | Clickable prototype | API behaviour (draft #62, not merged) |
+| | Clickable prototype | API behaviour (API 0.2.0 on `develop`) |
 |---|---|---|
 | Which orders | Demo interactions cover order #1042 only. Start preparing on #1040 and #1043 and Mark as ready on #1041 are drawn at 40% opacity and have no prototype connection. | Any `PENDING` order can be moved to `PREPARING` and any `PREPARING` order to `READY` by a chef (`PATCH /orders/{orderId}/status`). The #1042-only limit is not a product rule. |
 | Start preparing | `scr-03a` → `scr-03b` → `scr-03c`. "Deducting stock…" is a simulated state; no backend call. | One transaction: `ACTIVE` reservations become `CONSUMED` and `onHand` is deducted once. A repeated request never deducts twice; an invalid transition returns `409 INVALID_STATUS_TRANSITION`. |
@@ -134,11 +134,11 @@ flowchart TD
     I -->|Create| L([Ingredient created<br/>stock starts at 0<br/>opening stock via Adjust, reason INITIAL_STOCK])
 ```
 
-Since the 18 Nov re-export, `scr-04d` to `scr-04f` have no Initial stock field (helper text "Starts with 0 stock. Add stock using Adjust."). An ingredient is created with zero stock and the opening stock is entered with Adjust (reason `INITIAL_STOCK`), as in the SRS and backlog drafts and API draft #62 (`initialQuantity` removed in `866122e`; `api/openapi.yaml` unchanged in `cb634c3`). None of these drafts is merged (D-9b in `ui-user-story-review.md`).
+Since the 18 Nov re-export, `scr-04d` to `scr-04f` have no Initial stock field (helper text "Starts with 0 stock. Add stock using Adjust."). An ingredient is created with `onHand` 0 and the opening stock is entered as a separate adjustment with reason `INITIAL_STOCK`, as in SRS FR-02, backlog US-02 AC2–AC3 and API 0.2.0 (all merged; `initialQuantity` was removed in PR #62 at `866122e`). See D-9b in `ui-user-story-review.md`.
 
 ## U6 – Manager: ingredient lifecycle (Figma Flow 9)
 
-Follows API draft #62.
+Follows API 0.2.0 (merged in PR #62).
 
 ```mermaid
 flowchart TD
@@ -153,11 +153,11 @@ flowchart TD
 
 Notes:
 
-- **Deactivate and Reactivate are separate actions from Save changes.** In the prototype they change the state immediately. In the API draft they are their own requests (`DELETE /ingredients/{id}` soft delete returning `200`, or `PUT` with `active: true`).
+- **Deactivate and Reactivate are separate actions from Save changes.** In the prototype they change the state immediately. In the API they are their own requests (`DELETE /ingredients/{id}` soft delete returning `200`, or `PUT` with `active: true`).
 - Edit never changes stock. Unit cannot be changed while the ingredient has stock or active reservations (`409 RESOURCE_IN_USE`).
-- An inactive ingredient keeps history and existing pending orders, cannot be used in new recipes (`422 INGREDIENT_INACTIVE`), closes menu items that use it to new orders (`422 MENU_ITEM_UNAVAILABLE`, `availablePortions` 0), and raises no low-stock alert. Its stock stays visible and adjustable.
+- An inactive ingredient keeps history and existing pending orders, cannot be used in new recipes (`422 INGREDIENT_INACTIVE`), closes menu items that use it to new orders (`422 MENU_ITEM_UNAVAILABLE`, `availablePortions` 0), and raises no low-stock alert (SRS FR-14 since PR #89; API 0.2.0 `listLowStockAlerts`). Its stock stays visible and adjustable.
 - Stock **Out** (available 0) and ingredient **Inactive** are different states.
-- Audit (API draft #62): deactivation is recorded as `INGREDIENT_DEACTIVATED` and reactivation as `INGREDIENT_REACTIVATED`. No frame shows these audit entries (not drawn; API behaviour).
+- Audit (API 0.2.0): deactivation is recorded as `INGREDIENT_DEACTIVATED` and reactivation as `INGREDIENT_REACTIVATED`. No frame shows these audit entries (not drawn; API behaviour).
 
 ## U7 – Manager cancels orders and reads the audit log (US-11, US-12, US-13)
 
@@ -181,7 +181,7 @@ flowchart TD
     D --> E([RECIPE_UPDATED in audit log<br/>new orders use the new version<br/>existing orders keep theirs])
 ```
 
-Not drawn (API behaviour, draft #62): publishing a recipe version that uses an inactive ingredient is rejected with `422 INGREDIENT_INACTIVE`. No frame shows this error.
+Not drawn (API behaviour, API 0.2.0): publishing a recipe version that uses an inactive ingredient is rejected with `422 INGREDIENT_INACTIVE`. No frame shows this error.
 
 ## U9 – Common states (Figma Flow 8)
 
@@ -197,9 +197,9 @@ Not drawn (API behaviour, draft #62): publishing a recipe version that uses an i
 
 ## Current cross-document alignment
 
-SRS [#54 `0ad80b3`](https://github.com/seng321-7th-team/PantryChef/blob/0ad80b38ee696db5e7d8ffc47ef00eebad8a4b12/docs/srs.md) FR-01–FR-14 and backlog [#55 `986583e`](https://github.com/seng321-7th-team/PantryChef/blob/986583e69a25dc2332bce05cb266891e204da497/docs/product-backlog.md) US-01–US-14 (MVP; US-15 and US-16 are P1, post-MVP) are the current reviewed requirement drafts. Backlog US-06 AC1 at `986583e`, SRS FR-06 and API draft #62 all say WAITER; the earlier "Waiter or Manager" wording at `beba8c6` is recorded as F-07 in PR #50. U1 follows the waiter-only design. API/diagrams [#62 `f061da2`](https://github.com/seng321-7th-team/PantryChef/blob/f061da27501bf7fc62b39aa278aeb7693259864e/api/openapi.yaml) retain the same OpenAPI rules used above; ADRs [#64 `60d1a8b`](https://github.com/seng321-7th-team/PantryChef/blob/60d1a8ba08c21d8e07f873a4fe218c15c36dfae7/docs/architecture/architecture-decisions.md) and schema [#66 `fa446c1`](https://github.com/seng321-7th-team/PantryChef/blob/fa446c1eb6ad0d075c8fbd85e9b7974021bee9d1/docs/architecture/database-schema.md) match the core UI behaviors. ADR #64 is merged into `develop` (`3688747`); its Proposed records stay Proposed. The other drafts are not merged. The original version notes above are historical evidence, not claims that older PR heads are still current.
+Checked against `develop` at [`e197628`](https://github.com/seng321-7th-team/PantryChef/tree/e1976288f9cebfa80073159096ad625aef466f6b) (20 Nov): [SRS](https://github.com/seng321-7th-team/PantryChef/blob/e1976288f9cebfa80073159096ad625aef466f6b/docs/srs.md) FR-01–FR-14 (PR #54), [refined backlog](https://github.com/seng321-7th-team/PantryChef/blob/e1976288f9cebfa80073159096ad625aef466f6b/docs/product-backlog.md) US-01–US-14 (PR #55; US-15 and US-16 are P1, post-MVP) and [API 0.2.0](https://github.com/seng321-7th-team/PantryChef/blob/e1976288f9cebfa80073159096ad625aef466f6b/api/openapi.yaml) with the C4/UML/ER diagrams (PR #62) are merged. SRS FR-14 states that deactivated ingredients raise no low-stock alerts (PR #89, merged). The ADR document (PR #64) is merged; ADR-005, ADR-006 (WAITER-only creation) and ADR-008 remain Proposed while [PR #87](https://github.com/seng321-7th-team/PantryChef/pull/87) is open. The schema ([PR #66](https://github.com/seng321-7th-team/PantryChef/pull/66)) is not merged. The earlier backlog wording "Waiter or Manager" (#55 at `beba8c6`) is recorded as F-07 in PR #50. U1 follows the waiter-only design.
 
-The current FR/NFR mapping and open scope decisions are maintained by PR #50 (linked above at commit `c1dbd05`). No backend/NFR pass is inferred from these diagrams.
+The current FR/NFR mapping and open scope decisions are maintained in [PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50). No backend/NFR pass is inferred from these diagrams.
 
 ## Not drawn (no frame)
 
