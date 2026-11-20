@@ -85,7 +85,9 @@ Own Agile communication, role assignments, RACI, GitHub organization, Git-Flow (
 
 ### 2.3 Ayşe - Lead Software Architect and Technical Lead
 
-Own `api/openapi.yaml` draft: /orders, /orders/{id}/status, /reservations, /inventory, /recipes; schemas, errors, atomicity and idempotency. General role: C4/UML, architecture decisions/ADR and code review leadership. C4/UML and DB schema are S2 outputs; diagram/code synchronization is S3, architecture defense is Final.
+Own the OpenAPI contract defined in [`api/openapi.yaml`](../api/openapi.yaml), including API resources, request/response schemas, error handling, atomicity, and idempotency. The OpenAPI specification is the authoritative reference for current endpoints and API operations.
+
+General role: C4/UML diagrams, architecture decisions (ADR), and code review leadership. C4/UML diagrams and database schema are Sprint 2 deliverables; diagram/code synchronization belongs to Sprint 3, and architecture defense belongs to the Final delivery.
 
 ### 2.4 Beyzanur - Quality Assurance and Test Automation Engineer
 
@@ -633,11 +635,11 @@ This is a planned schedule, not a record of completed work.
 
 ### 9.2 Approval Status
 
-**Document Status:** Updated – Pending PR Review
+**Document Status:** Approved and Merged - PR #15
 
 **Team Review:** Conducted on November 4, 2026, with all six team members.
 
-**RACI Approval:** The corrected matrix is reviewed in PR #15.
+**RACI Approval:** The corrected Sprint 1 RACI matrix was reviewed, approved, and merged into 'develop' through PR #15.
 
 **Last Verified Meeting:** November 4, 2026.
 

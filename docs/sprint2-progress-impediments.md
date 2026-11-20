@@ -9,7 +9,7 @@
 **Reviewer:** Emre Boz — DevOps & CI/CD Infrastructure Engineer  
 **Related Issue:** #57 — S2-09  
 **Document Status:** In Progress  
-**Last Updated:** November 17, 2026
+**Last Updated:** November 20, 2026
 
 ---
 
@@ -68,6 +68,27 @@ This snapshot records selected activities that were directly reviewed or verifie
 
 ---
 
+### 4.1 Progress Update — November 20, 2026
+
+This update records verified Scrum Master coordination activities following the November 17 snapshot. Earlier records are retained as historical evidence.
+
+| Task / Activity | Evidence | Verified Status | Remaining Action |
+|---|---|---|---|
+| S2-08 — Meeting Notes | Issue #42 / PR #77 | Approved by Tuğçe Çevik and merged into develop (01ec498) | Continue recording actual Sprint Review and Retrospective outcomes |
+| S2-09 — Progress & Impediments | Issue #57 / PR #58 | Approved by Emre Boz and merged into develop (6105c8d) | Record reviewer follow-ups and continue issue tracking |
+| S2-10 — Deliverables Consistency Review | Issue #59 / PR #60 | Review feedback addressed; CI passed; approval pending | Await Beyzanur Alpay's approval and complete outstanding cross-document verification |
+| S2-11 — Submission Package | Issue #78 / PR #79 | Approved by Burcu Ücük and merged into develop (a630a62) | Update final evidence, release information, and submission status |
+| Sprint 2 Task Board Update | PR #69 | Approved by Burcu Ücük and merged into develop (1c7f4d3) | Keep task statuses and Issue/PR references current |
+| S2-33 — Figma Links & UI Documentation | Issue #53 / PR #71 | Reviewed and approved by Bilgesu Nacak | Confirm merge status and follow up on remaining UI/UX evidence |
+
+**Verification note:** An approved PR is not considered merged until the merge is confirmed. Merging a tracking document does not automatically complete all activities recorded in it.
+
+**Current coordination priorities:**
+- Follow up on PR #60's required approval.
+- Record the reviewer follow-up items associated with Issue #57.
+- Verify outstanding architecture, API, NFR, and UI/UX deliverables.
+- Update the final submission evidence before the Sprint 2 deadline.
+
 ## 5. Pending Reviews and Follow-up Actions
 
 | ID | Task / PR | Responsible | Follow-up Action | Status |
@@ -83,6 +104,25 @@ This snapshot records selected activities that were directly reviewed or verifie
 
 
 **Follow-up rule:** Each action remains open until its completion is verified through the relevant GitHub Issue, PR, or documented team confirmation.
+
+### 5.1 Reviewer Follow-up Register — Issue #57
+
+The following actions were raised during Emre Boz's review of Sprint 2 progress tracking.
+
+These items are tracked separately from the existing FU-01–FU-08 actions to preserve the original numbering and historical records.
+
+| ID | Area / Evidence | Follow-up Action | Status |
+|---|---|---|---|
+| RFU-01 | PR #54, PR #32, PR #56 | Verify the latest approval and merge status of these PRs and update the progress records accordingly. | Checked Nov 20: #32 approved by Bilgesu and Ayşe, merged Nov 17 (5dd8253). #54 approved by Bilgesu and Ayşe, #56 approved by Ayşe; both pass CI and wait for merge |
+| RFU-02 | Architecture PR #62 and PR #64 | Verify current review and merge status, including any outstanding architecture feedback. | Checked Nov 20: #64 approved by Emre, merged Nov 18 (3688747). #62 approved by Emre on Nov 18 after all review notes were fixed; waits for merge |
+| RFU-03 | PR #54 and PR #62 | Check consistency of initial inventory stock rules and Manager order creation permissions across the SRS and API documentation. | 
+Checked Nov 20: Burcu confirmed CR-01 in PR #68. New ingredients start with zero stock, and opening stock is entered through a separate INITIAL_STOCK adjustment. Order creation is WAITER-only in the updated SRS, backlog and OpenAPI drafts. Final cross-document verification and merges remain pending. |
+| RFU-04 | DevOps PR #36 and PR #37 | Verify review outcomes and coordinate any outstanding approval or merge actions. | Done: both approved by Ayşe and merged Nov 18 (a4e9987, 58bf8a6); issues #29 and #35 closed |
+| RFU-05 | GitHub invitations: nedima68 and goksuyldrm | Verify whether the invitations remain necessary, their current status, and any required repository access follow-up. | Checked Nov 20: mhmttemin accepted; nedima68 and goksuyldrm still pending (expire Nov 23). The repo is public, so this does not block access. Emre re-sends them if they expire |
+
+**Source:** [Issue #57 — Sprint 2 Progress & Impediment Tracking](https://github.com/seng321-7th-team/PantryChef/issues/57)
+
+**Tracking rule:** These follow-ups remain open until their outcomes are verified through GitHub or confirmed by the responsible team members. An earlier reviewer observation is not treated as proof of the current PR or invitation status.
 
 ## 6. Impediment Log
 
@@ -109,17 +149,23 @@ When an impediment is confirmed, add its description, impact, owner, mitigation 
 | Nov 17, 2026 | S2-10 review and retrospective preparation submitted for review | Issue #59 / PR #60 | Beyzanur assigned as reviewer; approval pending |
 
 
+
 ## 8. Review and Completion Checklist
 
 - [x] S2-09 Issue #57 created and assigned to the Scrum Master.
 - [x] Initial progress snapshot documented.
 - [x] Pending reviews and follow-up owners identified.
 - [x] Impediment tracking structure established.
-- [ ] Progress records checked against the latest GitHub Project Board.
-- [ ] Confirmed impediments updated as new evidence becomes available.
-- [ ] Documentation reviewed and approved by Emre Boz through PR #58.
-- [ ] Approved changes merged into `develop`.
-- [ ] Issue #57 closed after acceptance criteria are satisfied.
+- [x] Documentation reviewed and approved by Emre Boz through PR #58.
+- [x] Initial tracking documentation merged into `develop` through PR #58.
+- [x] November 20 progress update recorded.
+- [x] Reviewer follow-up actions RFU-01–RFU-05 documented.
+- [ ] Progress records verified against the latest GitHub Project Board.
+- [ ] Reviewer follow-up outcomes verified and updated.
+- [ ] Confirmed impediments recorded if identified.
+- [ ] Final Sprint 2 tracking and evidence verified.
+- [ ] Issue #57 closed after all applicable acceptance criteria are satisfied.
+
 
 ## 9. References
 
@@ -132,9 +178,10 @@ When an impediment is confirmed, add its description, impact, owner, mitigation 
 - `docs/sprint2-task-board.md`
 - `docs/sprint2-raci.md`
 - `docs/sprint2-meeting-notes.md`
+- [S2-09 Initial Tracking PR #58](https://github.com/seng321-7th-team/PantryChef/pull/58)
 
 ---
 
-**Document Status:** In Progress — subject to continued verification and peer review.
+**Document Status:** In Progress — initial documentation merged; reviewer follow-ups and final Sprint 2 verification remain open.
 
-**Next Update:** Recheck outstanding Pull Requests, task statuses, and confirmed impediments when new evidence becomes available.
+**Next Update:** Verify RFU-01–RFU-05 outcomes, remaining PR statuses, and final Sprint 2 evidence.
