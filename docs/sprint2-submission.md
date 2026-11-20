@@ -45,9 +45,9 @@ The following deliverables are required by the Sprint 2 assignment.
 
 | ID | Required Deliverable | Verification Status |
 |---|---|---|
-| D-01 | Detailed Software Requirements Specification (SRS) | Pending final verification |
-| D-02 | Refined Product Backlog | Pending final verification |
-| D-03 | Non-functional requirements and measurable quality specifications | Pending final verification |
+| D-01 | Detailed Software Requirements Specification (SRS) | PR #54 approved and merged; final submission link verification pending |
+| D-02 | Refined Product Backlog | PR #55 approved and merged; final submission link verification pending |
+| D-03 | Non-functional requirements and measurable quality specifications | PR #51 approved and merged; final quality-evidence verification pending |
 | D-04 | Figma UI/UX prototypes | Pending final verification |
 | D-05 | User-flow diagrams | Pending final verification |
 | D-06 | C4 architecture models | Pending final verification |
@@ -77,38 +77,49 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 
 | Task | Deliverable | Issue | Pull Request | Current Status |
 |---|---|---|---|---|
-| S2-06 | Sprint 2 Task Board | #38 | #39 | Completed — merged |
-| S2-07 | Sprint 2 RACI Matrix | #40 | #41 | Completed — merged |
-| S2-08 | Sprint 2 Meeting Notes | #42 | #77 | In Progress — awaiting review |
-| S2-09 | Progress & Impediment Tracking | #57 | #58 | Document merged into develop — ongoing tracking In Progress |
-| S2-10 | Deliverables Consistency Review | #59 | #60 | In Progress — additional verification required |
-| S2-11 | Submission Package & Teams Upload | #78 | #79 | In Progress — submission preparation, review pending |
+| S2-06 | Sprint 2 Task Board | #38 | #39, #69, #85 | Completed — all three PRs approved and merged into develop; Issue #38 closed |
+| S2-07 | Sprint 2 RACI Matrix | #40 | #41 | Completed — merged into develop |
+| S2-08 | Sprint 2 Meeting Notes | #42 | #77 | PR #77 approved and merged; Sprint Review and Retrospective records remain pending |
+| S2-09 | Progress & Impediment Tracking | #57 | #58, #83 | Both PRs merged; Issue #57 remains Open / In Progress for ongoing tracking |
+| S2-10 | Deliverables Consistency Review | #59 | #60 | PR #60 approved by Beyzanur and merged; Issue #59 remains Open / In Progress for final consistency tracking |
+| S2-11 | Submission Package & Teams Upload | #78 | #79, #88 | PR #79 approved and merged; PR #88 awaiting Burcu's final approval; Teams submission pending |
 
 ### 5.1 Related GitHub Links
 
 - [S2-06 — Issue #38](https://github.com/seng321-7th-team/PantryChef/issues/38)
 - [S2-06 — PR #39](https://github.com/seng321-7th-team/PantryChef/pull/39)
+- [S2-06 — Task Board Update PR #69](https://github.com/seng321-7th-team/PantryChef/pull/69)
+- [S2-06 — Task Board Final Sync PR #85](https://github.com/seng321-7th-team/PantryChef/pull/85)
+
 - [S2-07 — Issue #40](https://github.com/seng321-7th-team/PantryChef/issues/40)
 - [S2-07 — PR #41](https://github.com/seng321-7th-team/PantryChef/pull/41)
+
 - [S2-08 — Issue #42](https://github.com/seng321-7th-team/PantryChef/issues/42)
 - [S2-08 — PR #77](https://github.com/seng321-7th-team/PantryChef/pull/77)
+
 - [S2-09 — Issue #57](https://github.com/seng321-7th-team/PantryChef/issues/57)
 - [S2-09 — PR #58](https://github.com/seng321-7th-team/PantryChef/pull/58)
+- [S2-09 — Progress Follow-ups PR #83](https://github.com/seng321-7th-team/PantryChef/pull/83)
+
 - [S2-10 — Issue #59](https://github.com/seng321-7th-team/PantryChef/issues/59)
 - [S2-10 — PR #60](https://github.com/seng321-7th-team/PantryChef/pull/60)
+
 - [S2-11 — Issue #78](https://github.com/seng321-7th-team/PantryChef/issues/78)
 - [S2-11 — PR #79](https://github.com/seng321-7th-team/PantryChef/pull/79)
+- [S2-11 — Submission Package Final Sync PR #88](https://github.com/seng321-7th-team/PantryChef/pull/88)
+
 
 ### 5.2 Additional Coordination Evidence
 
 | Evidence | Reference | Status |
 |---|---|---|
-| Sprint 2 Task Board status update | PR #69 | Peer review / merge status pending verification |
-| Sprint 2 Team Roles documentation update | PR #56 | Peer review / merge status pending verification |
-| Sprint 2 team coordination records | `docs/sprint2-meeting-notes.md` | Draft submitted for review |
-| Sprint 2 progress and impediment records | `docs/sprint2-progress-impediments.md` | PR #58 merged into develop; Issue #57 open for ongoing tracking |
-| Sprint 2 cross-document consistency review | `docs/sprint2-deliverables-consistency-review.md` | Partial review |
-| Sprint 2 release/tag | Pending | Awaiting final release evidence |
+| Sprint 2 Task Board status updates | PR #69, PR #85 | Both PRs approved and merged into develop |
+| Sprint 2 Team Roles documentation update | PR #56 | Final merge status pending verification |
+| Sprint 2 team coordination records | `docs/sprint2-meeting-notes.md`, PR #77 | PR #77 approved and merged; Sprint Review and Retrospective records remain pending |
+| Sprint 2 progress and impediment records | `docs/sprint2-progress-impediments.md`, PR #58, PR #83 | Both PRs merged into develop; Issue #57 remains Open / In Progress |
+| Sprint 2 cross-document consistency review | `docs/sprint2-deliverables-consistency-review.md`, PR #60 | Approved by Beyzanur and merged; final cross-document verification remains In Progress |
+| Sprint 2 submission package | `docs/sprint2-submission.md`, PR #79, PR #88 | PR #79 merged; PR #88 pending Burcu's final approval; Teams submission pending |
+| Sprint 2 release/tag | Issue #31 | Awaiting Emre's final release/tag evidence |
 
 **Status Note:** Open or unverified Pull Requests are not considered approved or merged. All statuses must be checked against GitHub before final submission.
 
@@ -133,8 +144,9 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 - [ ] Team roles and individual contribution evidence recorded.
 - [ ] Relevant PR approvals and merge statuses verified.
 - [ ] Final GitHub release/tag recorded.
-- [ ] Submission package reviewed by Burcu Ücük.
-- [ ] Approved submission documentation merged into `develop`.
+- [x] Initial submission package (PR #79) reviewed and approved by Burcu Ücük.
+- [ ] Final submission package synchronization (PR #88) reviewed and approved by Burcu Ücük.
+- [x] Approved submission documentation merged into `develop`.
 - [ ] Final package submitted through Microsoft Teams.
 - [ ] Submission confirmation recorded.
 
@@ -150,17 +162,18 @@ The references below identify known Issues and Pull Requests. Final approval, me
 
 | Deliverable | Responsible Member | Issue | Pull Request | Verification Status |
 |---|---|---|---|---|
-| Detailed SRS | Burcu Ücük | #44 | #54 | Final review pending verification |
-| Refined Product Backlog | Burcu Ücük | #46 | #55 | Final review pending verification |
-| Functional and Non-functional Requirements | Burcu Ücük | #49 | #51 | Final review pending verification |
-| UI Design and User Story Consistency | Tuğçe Çevik | #48 | #50 | Final review pending verification |
-| User-flow Diagrams | Tuğçe Çevik | #52 | #70 | Final review pending verification |
-| Figma Links and UI Documentation | Tuğçe Çevik | #53 | #71 | Approved by Bilgesu Nacak; CI passed; merge pending |
-| API, Ingredient Rules and Architecture Alignment | Ayşe Dural | #61 | #62 | Final review pending verification |
-| Architecture Decision Records | Ayşe Dural | #63 | #64 | Final review pending verification |
-| Database Schema Documentation | Ayşe Dural | #65 | #66 | Final review pending verification |
-| Architecture–SRS–OpenAPI Consistency Review | Ayşe Dural | #67 | #68 | Final review pending verification |
-| Sprint 2 Release / Tag | Emre Boz | #31 | Pending verification | Release evidence pending |
+| Detailed SRS | Burcu Ücük | #44 | #54 | Approved and merged into develop |
+| Refined Product Backlog | Burcu Ücük | #46 | #55 | Approved by Beyzanur and merged into develop; Issue #46 Closed / Done |
+| Functional and Non-functional Requirements | Burcu Ücük | #49 | #51 | Approved by Beyzanur and merged into develop |
+| UI Design and User Story Consistency | Tuğçe Çevik | #48 | #50 | Final review and merge status pending verification |
+| User-flow Diagrams | Tuğçe Çevik | #52 | #70 | Approved by Ayşe; final document synchronization and merge pending |
+| Figma Links and UI Documentation | Tuğçe Çevik | #53 | #71 | Approved by Bilgesu; subsequent documentation updates require final verification before merge |
+| API, Ingredient Rules and Architecture Alignment | Ayşe Dural | #61 | #62 | Approved and merged into develop |
+| Architecture Decision Records | Ayşe Dural | #63 | #64 | Approved and merged into develop |
+| Database Schema Documentation | Ayşe Dural | #65 | #66 | SQL CHECK constraint correction committed; awaiting Emre's re-review and final merge |
+| Architecture–SRS–OpenAPI Consistency Review | Ayşe Dural | #67 | #68 | Burcu confirmed CR-01; remaining consistency findings under review |
+| Quality Metrics and QA Evidence | Beyzanur Alpay | #81 | #82 | Emre approved quality metrics and Ayşe approved test cases; remaining QA review and final merge pending |
+| Sprint 2 Release / Tag | Emre Boz | #31 | Pending verification | Final release/tag evidence pending |
 
 ### 8.1 Evidence Verification Rules
 
@@ -173,12 +186,26 @@ For each deliverable, verify:
 - Relevant CI checks have passed.
 - Final merge and release information is accurately recorded.
 
+
 ### 8.2 Outstanding Review Notes
 
-- PR #71: The previous review findings were addressed. The Scrum Master manually re-tested the #1042 Chef flow (Pending → Preparing → Ready) on November 19, 2026 and approved the updated UI/UX documentation. Design and Flow 2–7 access checks are documented. The PR remains open pending merge.
-- Requirements, architecture, and UI/UX documents may reference other open PRs. Cross-document alignment must be checked against their final approved versions.
-- No unverified Pull Request is treated as merged or accepted.
-- The final release/tag and Microsoft Teams submission evidence remain pending.
+- PR #54: Detailed SRS approved and merged into develop.
+- PR #55: Refined Product Backlog approved by Beyzanur and merged into develop.
+- PR #51: Functional and non-functional requirements approved by Beyzanur and merged into develop.
+- PR #62: Architecture and OpenAPI documentation approved and merged into develop.
+- PR #66: Database schema SQL CHECK constraint correction committed; Emre's final re-review remains pending.
+- PR #68: Architecture–SRS–OpenAPI consistency findings remain under review.
+- PR #70: User-flow diagrams approved by Ayşe; final document synchronization and merge status require verification.
+- PR #71: UI/UX documentation approved by Bilgesu; later documentation updates and final merge status require verification.
+- PR #82: Quality metrics approved by Emre and test cases approved by Ayşe; remaining QA review and merge pending.
+- PR #85: Sprint 2 Task Board updates approved by Burcu and merged into develop.
+- PR #60: Deliverables consistency review approved by Beyzanur and merged into develop; Issue #59 remains open for final tracking.
+- PR #88: Submission package synchronization awaiting Burcu's final approval.
+- PR #79: Initial submission package approved and merged into develop.
+- PR #64: Architecture Decision Records approved and merged into develop.
+- PR #77: Sprint 2 Meeting Notes approved and merged; Sprint Review and Retrospective records remain pending.
+- PR #83: Progress and impediment follow-up updates approved and merged; Issue #57 remains open for ongoing tracking.
+- Final GitHub release/tag information and Microsoft Teams submission confirmation are still pending.
 
 ### 8.3 Final Contribution Verification
 
