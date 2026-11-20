@@ -98,11 +98,11 @@ Earlier exports (superseded): 18 Nov, about 01:35 – 31 frames, `scr-04d` to `s
 
 ## 5. Related documents
 
-- User flows: [`user-flows.md`](https://github.com/seng321-7th-team/PantryChef/blob/dc91ff631972be1560705cbcfc325b0c5ea7aa80/docs/ui-ux/user-flows.md) (S2-30, PR #70, commit `dc91ff6`; not on `develop` yet)
+- User flows: `docs/ui-ux/user-flows.md` ([PR #70](https://github.com/seng321-7th-team/PantryChef/pull/70), S2-30; not on `develop` yet)
 - Prototype description: [`ui-prototype.md`](ui-prototype.md)
 - Demo script: [`demo-scenario.md`](demo-scenario.md)
-- Consistency review of the screens against the User Stories: [`ui-user-story-review.md`](https://github.com/seng321-7th-team/PantryChef/blob/c1dbd05ad186c4194fb8789178cb5e77f656fae9/docs/ui-ux/ui-user-story-review.md) (S2-31, PR #50, commit `c1dbd05`; not on `develop` yet)
-- API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.1.0). Ingredient and order-creation behavior in the frames follows API draft **PR #62** at `f061da2` (version 0.2.0, **not merged**; OpenAPI content unchanged since `866122e`). `scr-04d` to `scr-04f` follow its zero-stock rule.
+- Consistency review of the screens against the User Stories: `docs/ui-ux/ui-user-story-review.md` ([PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50), S2-31; not on `develop` yet)
+- API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.2.0 since PR #62 was merged on 19 Nov). Ingredient and order-creation behavior in the frames follows this version; `scr-04d` to `scr-04f` follow its zero-stock rule.
 
 ## 6. Verification
 
@@ -123,8 +123,8 @@ All checks below are prototype checks of 18 November 2026. They cover screen nav
 
 Related status:
 
-- PR #62 (API 0.2.0 draft) is not merged. Frames that depend on it are marked in `ui-prototype.md`.
-- Initial stock (D-9b) is done in Figma: no Initial stock field; helper "Starts with 0 stock. Add stock using Adjust." CR-01 is confirmed in the [PR #68 review](https://github.com/seng321-7th-team/PantryChef/pull/68#pullrequestreview-5957095073). SRS #54, backlog #55 and API #62 are not merged.
+- API 0.2.0 (PR #62) is merged into `develop`. Frames that follow it are marked in `ui-prototype.md`.
+- Initial stock (D-9b) is done in Figma: no Initial stock field; helper "Starts with 0 stock. Add stock using Adjust." CR-01 is confirmed in the [PR #68 review](https://github.com/seng321-7th-team/PantryChef/pull/68#pullrequestreview-5957095073). SRS FR-02, backlog US-02 and API 0.2.0 state the rule and are merged.
 
 ## 7. Known limits of the prototype
 
@@ -136,7 +136,8 @@ Related status:
 
 ## 8. Requirement and architecture alignment checkpoint
 
-Current reviewed sources (20 Nov): SRS #54 `0ad80b3`, backlog #55 `986583e`, FR/NFR #51 `fc70b81`, API/diagrams #62 `f061da2`, schema #66 `fa446c1` and consistency review #68 `46e8d1c` are open. ADR PR #64 (`60d1a8b`) is merged into `develop` (`3688747`); its records keep their own Accepted, Proposed or Rejected status. PR #50's current mapping uses FR-01–FR-14; the older FR-001–FR-027 mapping is historical. Commit-pinned links above are snapshots.
+Checked against `develop` at `e197628` (20 Nov): [SRS](https://github.com/seng321-7th-team/PantryChef/blob/e1976288f9cebfa80073159096ad625aef466f6b/docs/srs.md) (PR #54), [refined backlog](https://github.com/seng321-7th-team/PantryChef/blob/e1976288f9cebfa80073159096ad625aef466f6b/docs/product-backlog.md) (PR #55), [API 0.2.0](https://github.com/seng321-7th-team/PantryChef/blob/e1976288f9cebfa80073159096ad625aef466f6b/api/openapi.yaml) with C4/UML/ER (PR #62), the SRS FR-14 clarification (PR #89) and the ADR document (PR #64) are merged. FR/NFR #51, schema #66 and consistency review #68 are open. ADR records keep their own status; ADR-006 and ADR-008 stay Proposed while PR #87 is open. PR #50's current mapping uses FR-01–FR-14; the older FR-001–FR-027 mapping is historical.
 
-- Waiter-only order creation is aligned in the current drafts: SRS #54 FR-06, backlog #55 US-06 AC1 at `986583e` and API draft #62 say WAITER, and the Figma design keeps order creation on the waiter screen. The earlier conflict (US-06 AC1 "Waiter or Manager" at `beba8c6`) is recorded as F-07 in PR #50. Re-review of #55 and the merges of #54, #55 and #62 are pending; `develop` API 0.1.0 still lists WAITER and MANAGER.
+- Waiter-only order creation: SRS FR-06, backlog US-06 AC1 and API 0.2.0 (`createOrder`, "Roles: WAITER") are merged into `develop`, and the Figma design keeps order creation on the waiter screen. The earlier conflict (US-06 AC1 "Waiter or Manager" at `beba8c6`) is recorded as F-07 in PR #50.
+- Deactivated ingredients raise no low-stock alerts: SRS FR-14 (PR #89) and API 0.2.0 state this; `scr-04h` shows it in the confirmation text. No implementation or test covers it yet.
 - The deactivation screen gap is resolved (#68 CR-04). Recipe creation (D-4), reservation/consumption-history views (D-3) and staff/permission-management UI (D-6) remain product-owner scope questions, not new screens.

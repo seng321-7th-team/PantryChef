@@ -10,7 +10,7 @@ This is a click-through script for the Figma prototype (32 frames, export of 18 
 
 **General demo start:** open the *General demo prototype* link in `figma-links.md`. It starts at `scr-01-login`. Choose a role with the prototype-only buttons (Waiter, Chef, Manager). The two Flow 8 / Flow 9 links start directly at their frames and are for short side demos. Flow 2 to Flow 7 can be opened from the flow list in the prototype sidebar.
 
-Where a step follows API draft #62, it is marked **(API draft #62)**. The current checked head is `f061da2` (not merged); OpenAPI content is unchanged from `866122e`/`cb634c3`. Current cross-check sources: SRS #54 `0ad80b3`, backlog #55 `986583e`, ADR #64 `60d1a8b` (merged into `develop`) and schema #66 `fa446c1`. Draft agreement is not an implementation or merge claim.
+Steps that follow `api/openapi.yaml` 0.2.0 are marked **(API 0.2.0)**; this version is on `develop` since PR #62 was merged (19 Nov). Cross-check sources on `develop` at `e197628`: SRS (PR #54), refined backlog (PR #55), ADRs (PR #64); schema #66 is open. A merged document is not an implementation claim.
 
 **Scenario states:** The Waiter, Chef and Manager sections use independent, predefined Figma frames. Order IDs may be reused, but actions in one section do not update the other sections. The demo is not one continuous order lifecycle.
 
@@ -23,7 +23,7 @@ Where a step follows API draft #62, it is marked **(API draft #62)**. The curren
 1. `scr-01-login`: click **Waiter** → `scr-02a-waiter-default`.
 2. Show the portions available per dish and "My open orders" (#1042 `Pending` with Cancel, #1041 `Preparing` with "Ask a manager to cancel").
 3. Click **Add** on Köfte Plate → `scr-02b-waiter-insufficient-stock`: order not sent, `INSUFFICIENT_STOCK`. Say: the whole order is refused, nothing is reserved.
-4. Go back to the New order frame and click **Send to kitchen** → `scr-02c-waiter-order-sent`: order #1043 `Pending`. Only the waiter creates orders; there is no manager order screen **(API draft #62)**.
+4. Go back to the New order frame and click **Send to kitchen** → `scr-02c-waiter-order-sent`: order #1043 `Pending`. Only the waiter creates orders; there is no manager order screen **(API 0.2.0)**.
 5. Go to `scr-02a-waiter-default` (New order tab on `scr-02c`) and click **Cancel** on #1042 → `scr-02d-waiter-cancel-dialog`: reservations are released, physical stock is unchanged. Click **Keep order** or **Cancel order** → back to `scr-02a-waiter-default`.
 6. Click the **Orders** tab → `scr-05c-not-permitted-403`: a waiter without permission cannot late-cancel (`LATE_CANCEL_NOT_PERMITTED`).
 7. Click **Authorized waiter** → `scr-05g-authorized-waiter-orders`, click **Late cancel…** on #1041 → `scr-05f-authorized-waiter-late-cancel`: reason required (3–500 characters). Click **Cancel order** → `scr-05h-authorized-waiter-late-cancelled`: #1041 `Cancelled`. Say: used ingredients are not returned to stock.
@@ -46,7 +46,7 @@ Counters are given as Pending / Preparing / Ready.
 2. Click **Adjust** on Tomatoes → `scr-04b-inventory-adjust-dialog` (reason required) → Save → back to the list. Click **Adjust** on Chicken breast → `scr-04c-inventory-adjust-error` (`NEGATIVE_AVAILABLE_STOCK`).
 3. Click **+ New ingredient** → `scr-04d-inventory-new-ingredient`. Show the helper "Starts with 0 stock. Add stock using Adjust.": the ingredient starts at 0 and the opening stock is entered with Adjust (reason Initial stock). Cancel.
    Side frames: `scr-04e-new-ingredient-validation` and `scr-04f-new-ingredient-duplicate` (Flow 7) from the design file.
-4. Ingredient lifecycle (Flow 9), **(API draft #62)**: click **Edit** on Rice → `scr-04g-inventory-edit-ingredient`. Say: the unit is locked while the ingredient has stock or reservations; stock changes only through Adjust.
+4. Ingredient lifecycle (Flow 9), **(API 0.2.0)**: click **Edit** on Rice → `scr-04g-inventory-edit-ingredient`. Say: the unit is locked while the ingredient has stock or reservations; stock changes only through Adjust.
 5. Click **Deactivate ingredient** → `scr-04h-deactivate-confirm`. Click **Cancel** → back to `scr-04g`. Click **Deactivate ingredient** again, then **Deactivate** → `scr-04i-inventory-inactive-ingredient`: Rice shows an **Inactive** badge. Say: deactivation is separate from "Save changes" and takes effect at once in the prototype.
 6. Click **Reactivate ingredient** → back to `scr-04g` (Active).
 7. Click **Cancel** on `scr-04g` to return to `scr-04a-inventory`, then click the **Orders & audit** tab → `scr-05a-orders-and-audit`. Click **Cancel…** on #1042 → `scr-05d-pending-cancel-dialog` → **Cancel order** → back to `scr-05a`.
@@ -62,7 +62,7 @@ Open the Flow 8 link (`scr-07a-states`): loading, empty states, `INTERNAL_ERROR`
 - The prototype does not call a backend. Do not say that stock, reservations or the audit log were really changed.
 - Deactivate and Reactivate are prototype transitions between frames.
 - The #1042-only kitchen path is a demo limit, not a product rule.
-- PR #62 is a draft API version and is not merged. Soft delete and waiter-only order creation are aligned in the drafts but not yet merged (see `figma-links.md` section 8). For initial stock the drafts say "start at zero, then adjust", and `scr-04d` to `scr-04f` follow it.
+- API 0.2.0, the SRS and the refined backlog are merged, but nothing is implemented. Soft delete and waiter-only order creation are in the merged documents; ADR-006 and ADR-008 stay Proposed while PR #87 is open (see `figma-links.md` section 8). For initial stock the merged documents say "start at zero, then adjust", and `scr-04d` to `scr-04f` follow it.
 - Not shown: stock movements and reservation views, new menu item with its first recipe, staff and permission management. These remain product-owner UI scope questions. Delivery is outside the MVP. A successful demo rehearsal does not prove backend requirements or numeric NFR targets.
 
 ## Checklist before the demo
