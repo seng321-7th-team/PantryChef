@@ -11,7 +11,7 @@ Frame names (`scr-…`) are the Figma frame names listed in [`figma-links.md`](f
 Status words used in this file:
 
 - **Matches API 0.2.0** – the frame agrees with `api/openapi.yaml` version 0.2.0, merged into `develop` with PR #62 (19 Nov). Earlier versions of this file called it "API draft". API 0.2.1 (PR #91, 20 Nov) changes wording only, with no schema change; the label is kept.
-- **Added in Figma (20 Nov)** – the frame is part of the 39-frame export of 20 Nov 2026. Team review of these frames is pending.
+- **Added in Figma (20 Nov)** – the frame is part of the 39-frame export of 20 Nov 2026 (merged with PR #71). The seven frames of section 3a were reviewed by the product owner (PR #50 approval) and as static exports by the Scrum Master (PR #71 comment); see `ui-user-story-review.md` section 7.
 - **Decision pending** – a formal team decision or record is still pending (for example an ADR still Proposed). Merged requirement and API text is recorded separately; this label does not mean that the matching implementation exists.
 - **Applied in Figma** – the change exists in the live file and was checked on a screenshot. This is not a test of any backend.
 
@@ -58,8 +58,8 @@ Demo interactions cover order #1042 only. Start preparing on #1040 and #1043 and
 | `scr-04e-new-ingredient-validation` | "Name is required." Same helper text; no Initial stock field | Client validation | Applied in Figma |
 | `scr-04f-new-ingredient-duplicate` | `409 DUPLICATE_RESOURCE` ("An ingredient with this name already exists."). Same helper text; no Initial stock field | Names are unique, **including inactive ingredients**; reactivate an inactive one with `PUT` instead of creating it again | Applied in Figma. Matches API 0.2.0. |
 | `scr-04g-inventory-edit-ingredient` | Edit: name, low-stock threshold, Unit locked ("Locked while the ingredient has stock or reservations."), Status **Active**, "Deactivate ingredient". Note: "Stock on hand changes only through an adjustment." | `PUT /ingredients/{id}` with `name`, `unit`, `lowStockThreshold`, `active` (all required). Unit change with stock or active reservations: `409 RESOURCE_IN_USE`. Stock changes only through Adjust. | Applied in Figma. Matches API 0.2.0. |
-| `scr-04h-deactivate-confirm` | Confirmation text: history, stock records and existing pending orders are kept; no new recipes; menu items using it are closed to new orders; no low-stock alerts; can be reactivated | `DELETE /ingredients/{id}` is a **soft delete** and returns `200` with the ingredient (`active: false`); a repeat call changes nothing. Audit action `INGREDIENT_DEACTIVATED`. | Applied in Figma. Matches API 0.2.0. **Decision pending** (ADR-008 Proposed; PR #87 open). |
-| `scr-04i-inventory-inactive-ingredient` | Ingredient Inactive: grey "Inactive" badge in the list and in the dialog, "Reactivate ingredient" | `PUT` with `active: true`. Audit action `INGREDIENT_REACTIVATED`. | Applied in Figma. Matches API 0.2.0. **Decision pending** (ADR-008 Proposed; PR #87 open). |
+| `scr-04h-deactivate-confirm` | Confirmation text: history, stock records and existing pending orders are kept; no new recipes; menu items using it are closed to new orders; no low-stock alerts; can be reactivated | `DELETE /ingredients/{id}` is a **soft delete** and returns `200` with the ingredient (`active: false`); a repeat call changes nothing. Audit action `INGREDIENT_DEACTIVATED`. | Applied in Figma. Matches API 0.2.0. ADR-008 Accepted (PR #87). |
+| `scr-04i-inventory-inactive-ingredient` | Ingredient Inactive: grey "Inactive" badge in the list and in the dialog, "Reactivate ingredient" | `PUT` with `active: true`. Audit action `INGREDIENT_REACTIVATED`. | Applied in Figma. Matches API 0.2.0. ADR-008 Accepted (PR #87). |
 
 Inactive ingredients in API 0.2.0 (what the UI text relies on):
 
@@ -81,7 +81,7 @@ In the prototype, **Deactivate ingredient** (04g → 04h → 04i) and **Reactiva
 
 | Topic | Frames | Status |
 |---|---|---|
-| Only the waiter creates orders | `scr-02a`, `scr-02b`, `scr-02c`; no manager order screen | Applied in Figma. Matches SRS FR-06, backlog US-06 AC1 and API 0.2.0 (`createOrder` roles: WAITER; API README and UML agree), all merged into `develop`. F-07 in PR #50 records the earlier "Waiter or Manager" wording at `beba8c6`. ADR-006 keeps WAITER-only creation as Proposed (PR #87 open). Hiding a UI action is not server-side authorization. |
+| Only the waiter creates orders | `scr-02a`, `scr-02b`, `scr-02c`; no manager order screen | Applied in Figma. Matches SRS FR-06, backlog US-06 AC1 and API 0.2.0 (`createOrder` roles: WAITER; API README and UML agree), all merged into `develop`. F-07 in PR #50 records the earlier "Waiter or Manager" wording at `beba8c6`. ADR-006, including WAITER-only creation, is Accepted (PR #87). Hiding a UI action is not server-side authorization. |
 | Waiter cancels a `PENDING` order | `scr-02a` → `scr-02d` → `scr-02a` | Applied in Figma |
 | Manager cancels a `PENDING` order | `scr-05d` | Applied in Figma |
 | Late cancel (`PREPARING` / `READY`): manager or waiter with `ORDER_LATE_CANCEL`; reason required, 3–500 characters (`422 CANCELLATION_REASON_REQUIRED`); stock is not restored | `scr-05b`, `scr-05f`, `scr-05e`, `scr-05h` | Applied in Figma. Matches API 0.2.0. |
@@ -91,7 +91,7 @@ Permissions for `ORDER_LATE_CANCEL` and the chef role are not changed by this pr
 
 ## 3a. Inventory history, new menu item and staff permissions (D-3, D-4, D-6)
 
-The product owner decided on 20 Nov to include these views ([decision on PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50#issuecomment-7038140749)). The frames were added to the Sprint 2 prototype in the 39-frame export. The API mapping below compares the frames with API 0.2.1; open API questions are listed in `ui-user-story-review.md` section 7b ([PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50)) and are not answered by the prototype.
+The product owner decided on 20 Nov to include these views ([decision on PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50#issuecomment-7038140749)). The frames were added to the Sprint 2 prototype in the 39-frame export. The API mapping below compares the frames with API 0.2.1; open API questions are listed in `ui-user-story-review.md` section 7b (merged with [PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50)) and are not answered by the prototype. They stay open for Sprint 3.
 
 | Frame | What it shows | API field or rule | Status |
 |---|---|---|---|
@@ -124,7 +124,9 @@ Loading; empty waiter orders; empty kitchen board; server error 500 `INTERNAL_ER
 
 ## 7. Alignment checkpoint (20 Nov)
 
-Compared with `develop` at `7270d63`: SRS (PR #54), refined backlog (PR #55), FR/NFR (PR #51), API 0.2.0 and diagrams (PR #62), API 0.2.1 wording update (PR #91), SRS FR-14 clarification (PR #89), ADRs (PR #64) and the consistency review (PR #68) are merged; schema #66 is open. SRS and backlog are unchanged since the earlier check at `e197628`. The source hashes in older tables identify earlier checks.
+Status update of 21 Nov (`develop` at `46f918d`): SRS, refined backlog and API 0.2.1 are unchanged since `7270d63`. The schema (#66), the ADR status update (#87), this document set (#71), the user flows (#70) and the review (#50) are merged. ADR-006 and ADR-008 are Accepted; ADR-004, ADR-005 and ADR-007 stay Proposed. The D-3, D-4 and D-6 frames were reviewed by the product owner (PR #50 approval) and, as static exports, by the Scrum Master (PR #71 comment); no separate review is recorded for the U10–U12 flows. Their API questions stay open for Sprint 3. The checkpoint of 20 Nov below is kept as recorded.
+
+Compared with `develop` at `7270d63` (20 Nov): SRS (PR #54), refined backlog (PR #55), FR/NFR (PR #51), API 0.2.0 and diagrams (PR #62), API 0.2.1 wording update (PR #91), SRS FR-14 clarification (PR #89), ADRs (PR #64) and the consistency review (PR #68) are merged; schema #66 is open. SRS and backlog are unchanged since the earlier check at `e197628`. The source hashes in older tables identify earlier checks.
 
 - Core roles, zero-stock creation, stock reservation/consumption, cancellation, immutable recipes and 15–30 s polling align in the merged SRS, backlog and API.
 - Order creation role: SRS FR-06, backlog US-06 AC1 and API 0.2.0 say WAITER (section 3); all merged. ADR-006 keeps it Proposed until PR #87.
