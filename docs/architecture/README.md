@@ -21,14 +21,14 @@ All diagrams follow the API contract [`api/openapi.yaml`](../../api/openapi.yaml
 
 ## Related documents
 
-These documents are in separate pull requests and are added to this folder when they are merged:
-
-| Task | Document | Pull request |
+| Task | Document | Status |
 |---|---|---|
-| S2-15 | `database-schema.md` – tables, DDL and transaction outlines | #66 |
-| S2-16 | `architecture-decisions.md` – ADR-001 to ADR-011 | #64 |
-| S2-17 | `consistency-review.md` – Architecture–SRS–OpenAPI review | #68 |
-| S2-23 | `infrastructure-requirements.md` and the deployment view (Emre Boz) | #36 |
+| S2-15 | `database-schema.md` – tables, DDL and transaction outlines | In PR #66 |
+| S2-16 | [`architecture-decisions.md`](architecture-decisions.md) – ADR-001 to ADR-011 | Merged (PR #64) |
+| S2-17 | `consistency-review.md` – Architecture–SRS–OpenAPI review | In PR #68 |
+| S2-23 | [`infrastructure-requirements.md`](infrastructure-requirements.md) and the [deployment view](deployment-view.png) (Emre Boz) | Merged (PR #36) |
+
+The documents still in a pull request are linked here once they are merged.
 
 ## Editing and exporting
 
