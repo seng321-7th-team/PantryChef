@@ -171,13 +171,15 @@ press "start preparation" twice. Partial updates would leave stock wrong (NFR-03
 ### Decision
 1. **Create order (`POST /orders`):** one transaction locks the affected `inventory` rows with
    `SELECT … FOR UPDATE` in a stable order (ascending ingredient id), re-checks `available` for every
-   ingredient, then saves the `PENDING` order, one `ACTIVE` reservation per ingredient and the higher
-   `reserved`. If any ingredient is short, everything rolls back and the API returns
+   ingredient, then saves the `PENDING` order, one `ACTIVE` reservation per order item and ingredient
+   and the higher `reserved`. If any ingredient is short, everything rolls back and the API returns
    `409 INSUFFICIENT_STOCK`.
 2. **Start preparation (`PENDING → PREPARING`):** one transaction locks the order row and then the
    stock rows in the same stable order, checks the current status, changes `ACTIVE` reservations to
-   `CONSUMED` and lowers `onHand` and `reserved` by the same amount. A repeated request finds the order
-   no longer `PENDING` and gets `409 INVALID_STATUS_TRANSITION`; stock is not touched again.
+   `CONSUMED` and lowers `onHand` and `reserved` by the same amount. A repeat with the same
+   `Idempotency-Key` and body returns the saved response with `Idempotent-Replayed: true` (ADR-005);
+   any other repeat finds the order no longer `PENDING` and gets `409 INVALID_STATUS_TRANSITION`.
+   Stock is not touched again in either case.
 3. **Ready:** no stock movement.
 4. **Pending cancellation:** `ACTIVE → RELEASED`, `reserved` goes down, `onHand` is unchanged.
    **Late cancellation** (`PREPARING` or `READY`) does not restore stock (ADR-006).
