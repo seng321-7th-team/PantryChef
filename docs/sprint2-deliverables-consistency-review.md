@@ -122,6 +122,7 @@ Each follow-up action must be updated only after its responsible owner provides 
 - **Pending:** Not yet verified.
 - **N/A:** Not directly applicable to the artifact.
 
+
 ### 7.1 Actor Coverage and Operation Permissions
 
 Actor coverage and operation permissions are verified separately.
@@ -145,20 +146,6 @@ Relevant sources:
 
 The permission decision is confirmed. Final cross-document verification remains In Progress.
 
-The refined Product Backlog (PR #55) and the SRS/OpenAPI documentation (PRs #54 and #62) contain differing descriptions of Manager order creation permissions.
-
-This item remains Pending until the Product Owner and Software Architect confirm the intended permission model.
-
-Relevant sources:
-- Product Backlog: https://github.com/seng321-7th-team/PantryChef/pull/55
-- SRS: https://github.com/seng321-7th-team/PantryChef/pull/54
-- OpenAPI draft: https://github.com/seng321-7th-team/PantryChef/pull/62
-
-Required follow-up: Confirm whether order creation is restricted to Waiters or also allowed for Managers, then align the affected documents.
-
-No final permission decision is claimed.
-
-
 ## 8. Review and Completion Checklist
 
 - [x] S2-10 Issue #59 created and aligned with the approved task name.
@@ -181,7 +168,9 @@ No final permission decision is claimed.
 - [S2-10 Issue #59](https://github.com/seng321-7th-team/PantryChef/issues/59)
 - [S2-10 Pull Request #60](https://github.com/seng321-7th-team/PantryChef/pull/60)
 - [SRS Pull Request #54](https://github.com/seng321-7th-team/PantryChef/pull/54)
-- [Quality Metrics and Requirements–Test Traceability — Issue #80](https://github.com/seng321-7th-team/PantryChef/issues/80)
+- [Sprint 2 QA Tracking — Issue #81](https://github.com/seng321-7th-team/PantryChef/issues/81)
+- [Sprint 2 QA Deliverables and Evidence — PR #82](https://github.com/seng321-7th-team/PantryChef/pull/82)
+
 
 - `docs/system-vision.md`
 - `docs/product-backlog.md`
@@ -191,13 +180,22 @@ No final permission decision is claimed.
 - `docs/sprint2-task-board.md`
 - `docs/sprint2-raci.md`
 
+
 ### 9.1 Quality Metrics and Traceability Evidence
 
-Issue #80 is referenced as supporting evidence for the quality metrics and requirements–test traceability work.
+Issue #81 tracks the Sprint 2 QA deliverables (S2-18–S2-22), including the Software Test Plan, quality metrics, test scenarios, and requirements–test traceability.
 
-This reference identifies the related QA tracking record. It does not confirm that all quality targets have been measured or that the requirements–test traceability matrix has been fully verified.
+PR #82 provides the corresponding QA documentation and review evidence.
 
-**Verification Status:** Pending final evidence review.
+Emre Boz has approved the S2-19 quality metrics, and Ayşe Dural has approved the S2-20/S2-21 test cases. Burcu Ücük's review of S2-18 and S2-22 remains pending.
+
+These approvals confirm the reviewed documentation scope, not the execution of all planned tests or the measurement of all quality targets.
+
+**Evidence:**
+- [Sprint 2 QA Tracking — Issue #81](https://github.com/seng321-7th-team/PantryChef/issues/81)
+- [Sprint 2 QA Deliverables — PR #82](https://github.com/seng321-7th-team/PantryChef/pull/82)
+
+**Verification Status:** In Progress — Final QA evidence and Product Owner review pending.
 
 **Related Owner:** Beyzanur Alpay — QA & Test Automation Engineer.
 
