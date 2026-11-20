@@ -101,7 +101,7 @@ This update records verified developments after the earlier November 20 snapshot
 | UI Consistency Review | PR #50 | Merged (96bcbe3) | Verify related Issue status |
 | Database Schema | PR #66 | Emre approved; merged into `develop` (93dbbe0) | None |
 | User-flow Diagrams | PR #70 | Updated U10–U12 diagrams awaiting Ayşe's approval | Obtain approval and merge |
-| Architecture Decision Records | PR #87 | Emre approved; document-reference corrections remain pending | Ayşe to update references and merge |
+| Architecture Decision Records | PR #87 | Emre approved; merged into `develop` (57d1fe5) | Optional: Ayşe updates the remaining document links and status text in a follow-up |
 | QA Documentation Sync | PR #93 | Burcu approved; Ayşe's review remains pending | Complete technical review and merge |
 | README Documentation | PR #84 | One CI check passed and one failed | Resolve documentation link failures |
 | Sprint 2 Release | PR #96 | Draft release PR; final integration pending | Complete deliverables before release |
