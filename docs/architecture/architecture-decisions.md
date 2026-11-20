@@ -7,7 +7,7 @@
 | Reviewer | Emre Boz (Sprint 2 final task table v2.0) |
 | Date | 2026-11-18 |
 | Status | Draft – pending review |
-| Related artifacts | [`api/openapi.yaml`](../../api/openapi.yaml), C4 / UML / ER diagrams under `docs/architecture/` (PR #62), [`docs/system-vision.md`](../system-vision.md), [`docs/sprint1-meeting-notes.md`](../sprint1-meeting-notes.md), `docs/architecture/infrastructure-requirements.md` (S2-23, PR #36), `docs/non-functional-requirements.md` (S2-03, PR #51) |
+| Related artifacts | [`api/openapi.yaml`](../../api/openapi.yaml), C4 / UML / ER diagrams under [`docs/architecture/`](README.md), [`docs/system-vision.md`](../system-vision.md), [`docs/sprint1-meeting-notes.md`](../sprint1-meeting-notes.md), [`docs/architecture/infrastructure-requirements.md`](infrastructure-requirements.md) (S2-23), `docs/non-functional-requirements.md` (S2-03, PR #51) |
 
 This document records the architecture decisions behind PantryChef: what was decided, why, which
 alternatives were considered and what each decision costs. Each record keeps the context and the
@@ -37,9 +37,9 @@ architecture sprint; verification happens when the backend is built (Sprint 3 on
 | [ADR-003](#adr-003-api-first-rest-contract) | API-first REST contract in OpenAPI 3.1, validated in CI | Accepted | PR #25, PR #6 |
 | [ADR-004](#adr-004-stock-reservation-and-exactly-once-consumption) | Stock reservation and exactly-once consumption in one database transaction | Proposed | D-02 to D-06, D-11, NFR-03, NFR-04 |
 | [ADR-005](#adr-005-persistent-idempotency-keys) | Persistent, user-scoped idempotency keys | Proposed | FR-15, FR-16, NFR-05 |
-| [ADR-006](#adr-006-roles-permissions-and-late-cancellation) | Three roles plus one permission; server-side checks; audited late cancellation | Accepted (D-12); order creation by WAITER only is Proposed (PR #62) | D-12, NFR-06, NFR-08 |
+| [ADR-006](#adr-006-roles-permissions-and-late-cancellation) | Three roles plus one permission; server-side checks; audited late cancellation | Accepted (D-12; WAITER-only order creation merged in PR #62) | D-12, NFR-06, NFR-08 |
 | [ADR-007](#adr-007-immutable-recipe-versions-and-order-snapshots) | Immutable recipe versions and order snapshots | Proposed | D-07 |
-| [ADR-008](#adr-008-no-hard-deletes-for-referenced-data) | No hard deletes for referenced data | Proposed | Backlog US-02, PR #62 |
+| [ADR-008](#adr-008-no-hard-deletes-for-referenced-data) | No hard deletes for referenced data | Accepted (merged in PR #62) | Backlog US-02, PR #62 |
 | [ADR-009](#adr-009-initial-stock-entered-at-ingredient-creation) | Initial stock entered at ingredient creation | Rejected – opening stock is a separate `INITIAL_STOCK` adjustment | SRS FR-02, US-02, CR-01 (PR #68) |
 | [ADR-010](#adr-010-kitchen-board-refresh-by-polling) | Kitchen board refreshes by polling, not WebSockets | Accepted (team decision recorded in S2-23) | `infrastructure-requirements.md` |
 | [ADR-011](#adr-011-container-based-deployment-and-version-pinning) | Docker Compose deployment; runtime and database versions pinned in Sprint 3 | Proposed | S2-23, S2-27 |
@@ -244,8 +244,8 @@ the header on `POST /orders`, makes it optional on `PATCH /orders/{orderId}/stat
 
 ## ADR-006: Roles, permissions and late cancellation
 
-**Status:** Accepted for the cancellation policy (decision D-12, approved by the team on
-2026-11-04). Restricting order creation to WAITER is Proposed in PR #62.
+**Status:** Accepted. The cancellation policy is decision D-12 (approved by the team on 2026-11-04);
+restricting order creation to WAITER is part of API v0.2.0, merged in PR #62.
 
 ### Context
 The system has three staff actors. Some waiters may cancel orders after preparation has started; the
@@ -261,7 +261,7 @@ team did not want a fourth role for that. Exceptional actions must be traceable 
 - Every check runs on the server. The JWT carries role and permissions; the UI may hide actions, but
   hiding is never the protection.
 - Late cancellations, stock adjustments, recipe changes and permission changes write immutable audit
-  entries; PR #62 adds ingredient deactivation and reactivation to this list.
+  entries; API v0.2.0 (PR #62) adds ingredient deactivation and reactivation to this list.
 
 ### Alternatives considered
 - **A separate "Senior Waiter" role:** clearer in the UI, but more role combinations to test and
@@ -302,7 +302,7 @@ and history must stay readable after a menu item or ingredient is renamed.
 
 ## ADR-008: No hard deletes for referenced data
 
-**Status:** Proposed – part of PR #62 (API v0.2.0).
+**Status:** Accepted – part of API v0.2.0, merged in PR #62.
 
 ### Context
 Orders, reservations, stock movements and audit entries refer to users, menu items and ingredients.
@@ -411,7 +411,6 @@ PostgreSQL version and container image open and point to this ADR.
 | Question | Owner | Needed for |
 |---|---|---|
 | Team confirmation of D-01 to D-11 (affects ADR-004 and ADR-007) | Bilgesu (meeting record), whole team | Changing those records to Accepted |
-| Review and merge of PR #62 (affects ADR-006 and ADR-008) | Emre, Tuğçe, Beyzanur, Burcu | Changing those records to Accepted |
 | Final demo host: team laptop or cloud VM | Emre, Bilgesu | ADR-011 |
 | Written record of the React + NestJS + PostgreSQL choice (ADR-001) | Bilgesu (S2-08), Ayşe | Source for ADR-001 |
 
@@ -422,3 +421,4 @@ PostgreSQL version and container image open and point to this ADR.
 | 0.1 | 2026-11-18 | Ayşe Dural | First ADR set for S2-16 (ADR-001 to ADR-011) |
 | 0.2 | 2026-11-18 | Ayşe Dural | ADR-009 rejected after consistency review CR-01 (PR #68); added the Rejected status |
 | 0.3 | 2026-11-18 | Ayşe Dural | Emre's review: ADR-001 source note, HTTP/HTTPS per IR-10 (ADR-003), PostgreSQL integration tests (ADR-004), cleanup task and versions table in S2-27 (ADR-005, ADR-011) |
+| 0.4 | 2026-11-20 | Ayşe Dural | ADR-006 and ADR-008 Accepted after PR #62 was merged; links to the merged diagrams and infrastructure requirements |
