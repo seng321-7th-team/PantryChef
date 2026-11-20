@@ -7,8 +7,8 @@ The NFR identifiers and proposed performance targets follow [PR #51](https://git
 
 | Requirement | Measurement and evidence | Pass condition |
 |---|---|---|
-| NFR-01 Response time | API load report for order list and inventory reads, per endpoint and with errors reported separately | At 20 concurrent users, p95 ≤ 2 s per read endpoint |
-| NFR-02 Transaction performance | API load report for valid order creation with sufficient seeded stock and unique keys | At 20 concurrent users, p95 ≤ 3 s for order creation with reservation |
+| NFR-01 Response time | Run the [Sprint 2 QA load-test baseline](#sprint-2-qa-load-test-baseline-d-02) and report GET /orders and GET /inventory separately | Successful requests meet p95 ≤ 2 s per read endpoint, and the shared sample minimum and error budget are met |
+| NFR-02 Transaction performance | Run the same [Sprint 2 QA load-test baseline](#sprint-2-qa-load-test-baseline-d-02) for valid POST /orders requests with reservation | Successful requests meet p95 ≤ 3 s, the shared sample minimum and error budget are met, and no inventory invariant is violated |
 | NFR-03 Atomic transactions | Compare committed state before and after rejected and injected-failure operations (TC-07, TC-15) | Zero partial commits across tested creation, preparation and pending cancellation failures |
 | NFR-04 Inventory consistency | Compare onHand, reserved and available after every stock case, including TC-08 | Available equals onHand minus reserved and remains nonnegative. Concurrent orders never over-reserve |
 | NFR-05 Duplicate protection | Compare order IDs, reservation counts, stock movement counts and balances across retries (TC-09, TC-12, TC-16, TC-17, TC-26, TC-27, TC-33) | One logical effect per operation across the replay cases |
@@ -23,18 +23,20 @@ The NFR identifiers and proposed performance targets follow [PR #51](https://git
 | NFR-14 Automated verification | CI report and case-to-test mapping for reservation, concurrent orders, consumption, cancellation and authorization | Each critical rule has a passing automated scenario once implemented. [Sprint 3 readiness](https://github.com/seng321-7th-team/PantryChef/blob/develop/docs/devops/sprint3-readiness.md) plans PostgreSQL integration tests in CI and a separate Jest gate of at least 50% backend unit-test line coverage |
 | NFR-15 Transaction recovery | Inject transaction failure, inspect persisted state, then retry successfully (TC-15) | No partial state persists. A valid retry produces one complete effect |
 
-## Proposed reproducible load protocol
+## Sprint 2 QA load-test baseline (D-02)
 
-Candidate operations are GET /orders, GET /inventory and POST /orders. Record the approved endpoint list, workload mix, warm-up, measurement window, minimum sample counts, data volume, build, hardware and error budget under D-02 before a formal run. Use sufficient stock and fresh keys for write samples. During the agreed window record offered concurrency, attempts, responses by status and timeouts. Calculate p95 separately per endpoint on successful requests using a documented percentile method. Calculate unexpected-error rate as unexpected failed or timed-out requests divided by all attempts. A run cannot pass until the approved sample minimum, latency thresholds and error budget all pass. The values in the table are source proposals; mark formal results Blocked until D-02 is resolved.
+[Burcu accepted](https://github.com/seng321-7th-team/PantryChef/pull/82#issuecomment-7038967983) [Emre’s configuration](https://github.com/seng321-7th-team/PantryChef/pull/82#discussion_r4630664043) as the Sprint 2 QA planning baseline. This is the shared QA protocol for NFR-01 and NFR-02. Execution and measurements are pending.
 
-### Open proposals for D-02
+| Setting | Baseline |
+|---|---|
+| Environment and tool | Build the local Docker Compose stack from the release tag and load seed data (IR-01, IR-02 and IR-12). Run k6 on the same machine. Record the release tag, CPU, RAM and operating system. Keep the k6 script with the other tests in the repository. |
+| Users and request mix | 20 virtual users with 1 second of think time. Send 40% `GET /orders`, 40% `GET /inventory` and 20% `POST /orders`. Use a fresh `Idempotency-Key` for each new order request. |
+| Dataset | Seed approximately 50 ingredients, 20 menu items and 500 existing orders. Provide enough stock to prevent expected stock shortages during order creation. |
+| Timing and samples | Warm up for 1 minute and exclude it from measurement. Measure for the next 5 minutes. Collect at least 200 successful requests per endpoint in that window. |
+| Latency | Calculate p95 from successful requests separately for each endpoint. Read endpoints must meet p95 ≤ 2 s and order creation with reservation must meet p95 ≤ 3 s. |
+| Error budget | Set the request timeout to 10 seconds. Count unexpected failures and timeouts once per attempt. Their combined count must be at most 1% of all attempts during measurement. |
 
-| Source | Warm-up | Measurement | Sample minimum | Workload and errors |
-|---|---|---|---|---|
-| [Emre’s QA review](https://github.com/seng321-7th-team/PantryChef/pull/82#discussion_r4630664043) | 1 min | 5 min | 200 successful requests per endpoint | 20 users, 1 s think time; GET /orders 40%, GET /inventory 40%, POST /orders 20%. Unexpected errors and timeouts ≤1% of attempts |
-| [NFR-01/02 in PR #51](https://github.com/seng321-7th-team/PantryChef/pull/51) | 2 min | 10 min | 100 measured requests per read category and 100 valid order creations | 20 concurrent users; report request mix; HTTP/server errors ≤1% excluding intentionally invalid inputs |
-
-The team must agree on one protocol before formal measurement.
+Record achieved concurrency, request counts by endpoint and response status, successful sample counts, unexpected failures, timeouts and p95 per endpoint using a documented percentile method. A run can pass only if the sample minimum, latency thresholds and error budget are all satisfied, with zero inventory invariant violations for order creation.
 
 ## Infrastructure review inputs
 

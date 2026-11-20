@@ -29,7 +29,7 @@ US-15 and US-16 are tracked by the backlog as post-MVP. See [test definitions](t
 | ID | Decision and evidence | Owner / follow-up |
 |---|---|---|
 | D-01 | Waiter-only order creation is confirmed by SRS FR-06, OpenAPI on develop and updated backlog #55. | TC-03 expects Manager 403 FORBIDDEN without mutation. |
-| D-02 | #51 and Emre’s #82 review propose different timings and sample definitions. Both are recorded in [quality metrics](quality-metrics.md). | Open. Burcu, Emre, technical lead and QA to confirm a single protocol. |
+| D-02 | [Burcu confirmed Emre’s configuration](https://github.com/seng321-7th-team/PantryChef/pull/82#issuecomment-7038967983) as the [Sprint 2 QA load-test baseline](quality-metrics.md#sprint-2-qa-load-test-baseline-d-02) for NFR-01/02. | Confirmed for Sprint 2 QA planning. Execution and measurements are pending. |
 | D-03 | Emre and proposed NFR-16 in #51 suggest RPO ≤24 hours and RTO ≤30 minutes. | Proposed. Infrastructure owner and QA confirmation and restore evidence pending. |
 | D-04 | Ayşe confirmed that a matching in-flight request waits, replays after commit, or proceeds normally after rollback. | Technical review confirmed. ADR wording planned for Sprint 3. TC-26/27. |
 | D-05 | Ayşe confirmed 200 replay for same key/body, 409 for different or omitted key and 422 for same key with changed body. | Technical review confirmed. TC-16/17 capture responses and no duplicate effects. |
