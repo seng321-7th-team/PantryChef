@@ -221,3 +221,44 @@ For each deliverable, verify:
 Individual contributions will be verified using the GitHub commit history, Issues, Pull Requests, review records, and accepted documentation.
 
 The final contribution summary must distinguish document authorship, implementation, technical review, coordination, and release activities.
+
+
+
+## 9. Verified Submission Status Update — November 21, 2026
+
+This section records verified Sprint 2 developments after the earlier submission-package review. Earlier status entries are retained as historical checkpoints. Where an earlier status differs, the newer verified status below takes precedence.
+
+### 9.1 Merged Deliverables and Documentation
+
+| Deliverable / Task | Evidence | Verified Status |
+|---|---|---|
+| Database Schema (S2-15) | Issue #65 / PR #66 | PR merged into `develop`; Issue #65 Closed / Done |
+| User-flow Diagrams (S2-30) | Issue #52 / PR #70 | PR merged into `develop`; Issue #52 Closed / Done |
+| ADR Updates (S2-16) | Issue #86 / PR #87 | PR merged into `develop`; Issue #86 Closed / Done; ADR-006 and ADR-008 Accepted |
+| QA/OpenAPI Documentation Sync | PR #93 | Merged into `develop` |
+| UI Design–User Story Consistency (S2-31) | Issue #48 / PR #50 | PR merged; Issue #48 Closed / Done |
+| Figma Links and UI Documentation (S2-33) | Issue #53 / PR #71 | PR merged; Issue #53 Closed / Done |
+| Progress and Impediment Tracking (S2-09) | Issue #57 / PR #99 | PR approved by Emre Boz and merged; Issue #57 Open / In Progress; 6/6 acceptance criteria checked |
+| Deliverables Consistency Review (S2-10) | Issue #59 / PR #60 | PR merged; Issue #59 Closed / Done |
+
+### 9.2 Outstanding Pull Requests and Dependencies
+
+- PR #104 — Sprint 2 Task Board status synchronization: 2/2 CI checks passed; Burcu Ücük's review is pending.
+- PR #103 — UI documentation status corrections: 2/2 CI checks passed; required reviewer approval and merge are pending.
+- PR #102 — This submission-package update: approved by Burcu Ücük; final status corrections are being incorporated before merge.
+- PR #101 / Issue #100 — Frontend UI Skeleton: work remains in progress; review and completion are pending.
+- PR #84 / Issue #30 — README documentation: both CI checks passed (2/2); documentation corrections and final reviewer approval remain pending.
+- PR #96 / Issue #31 — Sprint 2 release: PR remains Draft; Ayşe Dural approved the architecture-related changes; four CI checks passed. Final merge into `main`, tag creation and GitHub Release are pending.
+
+### 9.3 Remaining Verification and Submission Activities
+
+- Verify the final Figma prototype and user-flow access links independently.
+- Confirm that the submitted C4 and UML diagrams are accessible and consistent with the final architecture documentation.
+- Verify the latest review approvals, merge statuses, and individual contribution evidence.
+- Follow up on outstanding UI and architecture documentation status corrections.
+- Complete the actual Sprint Review and Retrospective records when those activities occur.
+- Confirm the applicable peer evaluation requirements under Issue #97.
+- Record the final GitHub release and `sprint-2` tag after their creation.
+- Submit the final package through Microsoft Teams and record the submission confirmation.
+
+**Final Submission Status:** Not submitted. Issue #78 remains Open / In Progress until final verification, release, and Teams submission are complete.
