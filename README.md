@@ -54,7 +54,7 @@ Sprint 2 covers the requirements and the architecture. Each row links to the mer
 | Database schema | Ayşe Dural | [`docs/architecture/database-schema.md`](docs/architecture/database-schema.md) |
 | Architecture decision records (ADR-001 to ADR-011) | Ayşe Dural | [`docs/architecture/architecture-decisions.md`](docs/architecture/architecture-decisions.md) |
 | Architecture, SRS and OpenAPI consistency review | Ayşe Dural | [`docs/architecture/consistency-review.md`](docs/architecture/consistency-review.md) |
-| OpenAPI contract v0.2.0 | Ayşe Dural | [`api/openapi.yaml`](api/openapi.yaml) |
+| OpenAPI contract v0.2.1 | Ayşe Dural | [`api/openapi.yaml`](api/openapi.yaml) |
 | Infrastructure and deployment requirements, deployment view | Emre Boz | [`infrastructure-requirements.md`](docs/architecture/infrastructure-requirements.md), [`deployment-view.png`](docs/architecture/deployment-view.png) |
 | Sprint 3 CI/CD and Docker readiness | Emre Boz | [`docs/devops/sprint3-readiness.md`](docs/devops/sprint3-readiness.md) |
 | Repository setup for Sprint 2 and docs link check | Emre Boz | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) |
