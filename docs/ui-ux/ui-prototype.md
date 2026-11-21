@@ -124,7 +124,11 @@ Loading; empty waiter orders; empty kitchen board; server error 500 `INTERNAL_ER
 
 ## 7. Alignment checkpoint (20 Nov)
 
-Status update of 21 Nov (`develop` at `46f918d`): SRS, refined backlog and API 0.2.1 are unchanged since `7270d63`. The schema (#66), the ADR status update (#87), this document set (#71), the user flows (#70) and the review (#50) are merged. ADR-006 and ADR-008 are Accepted; ADR-004, ADR-005 and ADR-007 stay Proposed. The D-3, D-4 and D-6 frames were reviewed by the product owner (PR #50 approval) and, as static exports, by the Scrum Master (PR #71 comment); no separate review is recorded for the U10–U12 flows. Their API questions stay open for Sprint 3. The checkpoint of 20 Nov below is kept as recorded.
+### Status update of 21 Nov
+
+Checked on `develop` at `46f918d`; the UI, API, ADR, SRS and backlog files are the same at `eb41d74`. SRS, refined backlog and API 0.2.1 are unchanged since `7270d63`. The schema (#66), the ADR status update (#87), this document set (#71), the user flows (#70) and the review (#50) are merged. ADR-006 and ADR-008 are Accepted; ADR-004, ADR-005 and ADR-007 stay Proposed. The D-3, D-4 and D-6 frames were reviewed by the product owner (PR #50 approval) and, as static exports, by the Scrum Master (PR #71 comment); neither is a live prototype test. No separate review is recorded for the manager menu changes on the other frames, the rest of the export and documentation, or the U10–U12 flows. Their API questions stay open for Sprint 3 and are not Sprint 2 release blockers.
+
+### Check of 20 Nov (kept as recorded)
 
 Compared with `develop` at `7270d63` (20 Nov): SRS (PR #54), refined backlog (PR #55), FR/NFR (PR #51), API 0.2.0 and diagrams (PR #62), API 0.2.1 wording update (PR #91), SRS FR-14 clarification (PR #89), ADRs (PR #64) and the consistency review (PR #68) are merged; schema #66 is open. SRS and backlog are unchanged since the earlier check at `e197628`. The source hashes in older tables identify earlier checks.
 
