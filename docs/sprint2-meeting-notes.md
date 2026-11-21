@@ -153,9 +153,11 @@ The following items were identified through Sprint 2 Pull Request reviews and co
 
 **Record limitation:** Dates represent the documented coordination checkpoint, not necessarily the original date when each technical issue first appeared.
 
+> Sprint 2 planning and progress updates were handled asynchronously in the team WhatsApp group and on GitHub. The confirmed decisions and follow-up actions are recorded in Sections 3 and 4. No separate Sprint Review or Retrospective meeting is planned for this sprint.
+
 ## 6. Sprint Review
 
-**Status:** Pending — not yet held or documented.
+**Status:** Not planned as a separate meeting for Sprint 2.
 
 | Field | To be recorded after the review |
 | --- | --- |
@@ -170,7 +172,7 @@ Record the actual SRS, backlog, NFR, Figma, C4/UML outputs reviewed, any feedbac
 
 ## 7. Sprint Retrospective
 
-**Status:** Pending — not yet held or documented.
+**Status:** Not planned as a separate meeting for Sprint 2.
 
 | Discussion point | Record after the retrospective |
 | --- | --- |
