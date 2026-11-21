@@ -104,3 +104,13 @@ For this sprint, the agreed task owner is **R/A** for each row and the agreed pe
 - `docs/sprint2-raci.md` — This matrix
 
 **Document status:** Prepared for peer review. Update this matrix if approved task ownership or review assignments change; do not mark completion before PR approval and merge.
+
+
+## 8. Current Review Assignments and Evidence — November 21, 2026
+
+| Task | Current responsibility and review evidence |
+|---|---|
+| S2-07 — Sprint 2 RACI Matrix | Bilgesu remains R/A. Tuğçe approved [#41](https://github.com/seng321-7th-team/PantryChef/pull/41), which merged into develop. [#40](https://github.com/seng321-7th-team/PantryChef/issues/40) is Closed / Done. |
+| S2-32 — Frontend UI Skeleton | Tuğçe remains R/A. Bilgesu took over as the consulted peer reviewer on November 21 and formally approved [#101](https://github.com/seng321-7th-team/PantryChef/pull/101). [#100](https://github.com/seng321-7th-team/PantryChef/issues/100) remains open / In Progress, with merge pending. |
+
+The [current task register](sprint2-task-board.md#9-current-status-and-evidence-register--november-21-2026) links the Issues, PRs and recorded approvals for the sprint. Delivery PRs target develop. The Sprint 2 release PR [#96](https://github.com/seng321-7th-team/PantryChef/pull/96) targets main.
