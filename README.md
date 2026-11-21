@@ -50,6 +50,7 @@ Sprint 2 covers the requirements and the architecture. The table below links to 
 | Figma prototype links, screen exports and demo scenario | Tuğçe Çevik | [`figma-links.md`](docs/ui-ux/figma-links.md), [`ui-prototype.md`](docs/ui-ux/ui-prototype.md), [`demo-scenario.md`](docs/ui-ux/demo-scenario.md) |
 | User-flow diagrams | Tuğçe Çevik | [`docs/ui-ux/user-flows.md`](docs/ui-ux/user-flows.md) |
 | UI design and user story consistency review | Tuğçe Çevik | [`docs/ui-ux/ui-user-story-review.md`](docs/ui-ux/ui-user-story-review.md) |
+| Frontend UI skeleton (React + TypeScript, mock data, stretch goal) | Tuğçe Çevik | [`frontend/README.md`](frontend/README.md) |
 | C4 (context, container, component), UML (use case, sequence, state, class) and ER diagrams | Ayşe Dural | [`docs/architecture/README.md`](docs/architecture/README.md) |
 | Database schema | Ayşe Dural | [`docs/architecture/database-schema.md`](docs/architecture/database-schema.md) |
 | Architecture decision records (ADR-001 to ADR-011) | Ayşe Dural | [`docs/architecture/architecture-decisions.md`](docs/architecture/architecture-decisions.md) |
@@ -73,6 +74,7 @@ docs/architecture/  C4, UML, database schema, ADRs and infrastructure requiremen
 docs/testing/       Test plan, test cases and quality metrics (Sprint 2)
 docs/ui-ux/         Figma links, user flows and screen exports (Sprint 2)
 docs/devops/        DevOps notes, e.g. Sprint 3 CI/CD and Docker readiness
+frontend/           React + TypeScript UI skeleton (Sprint 2, see frontend/README.md)
 .github/            Issue and pull request templates, CI workflows
 ```
 
