@@ -104,4 +104,52 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 - [ ] Bilgesu completes the submission package and Teams upload (S2-11).
 - [ ] Peer evaluation is recorded appropriately (S2-37).
 
+## 8. Verified Status Update — November 21, 2026
+
+This section records the latest verified Sprint 2 progress.
+Earlier task statuses are retained as historical tracking
+information. Where a status differs, this dated update
+reflects the newer verification.
+
+### 8.1 Verified Task and Pull Request Statuses
+
+| Task | Issue / PR | Verified Status | Remaining Action |
+|---|---|---|---|
+| S2-03 — Functional and Non-functional Requirements | PR #51 | Merged into `develop` | Continue final consistency verification |
+| S2-08 — Meeting Notes | Issue #42 / PR #98 | PR merged; Issue #42 remains In Progress | Record actual Sprint Review and Retrospective outcomes |
+| S2-09 — Progress and Impediment Tracking | Issue #57 / PR #99 | PR approved by Emre and merged; Issue #57 Open / In Progress; acceptance criteria 6/6 | Complete final Sprint 2 verification before closing |
+| S2-10 — Deliverables Consistency Review | Issue #59 / PR #60 | PR merged; Issue closed / Done | Monitor new inconsistencies |
+| S2-11 — Submission Package | Issue #78 / PR #88 / PR #102 | PR #88 and PR #102 merged into `develop`; PR #102 approved by Burcu Ücük; Issue #78 Open / In Progress | Complete final evidence verification, release information and Microsoft Teams submission |
+| S2-15 — Database Schema | Issue #65 / PR #66 | PR merged; Issue #65 closed | Verify Project Board status |
+| S2-16 — Architecture Decision Records | Issue #86 / PR #87 | PR merged; Issue #86 closed; ADR-006 and ADR-008 Accepted | Follow up on outdated architecture-document references |
+| S2-17 — Architecture Consistency Review | PR #68 | Merged into `develop` | Monitor outstanding consistency findings |
+| S2-30 — User-flow Diagrams | Issue #52 / PR #70 | PR approved by Ayşe and merged into `develop` | Verify Issue #52 and Project Board status |
+| S2-31 — UI Design–User Story Consistency Review | Issue #48 / PR #50 | PR merged; Issue closed / Done | Follow up on outdated UI-document references |
+| S2-32 — Frontend UI Skeleton | Issue #100 / PR #101 | In Progress; PR #101 Draft | Complete implementation and review |
+| S2-33 — Figma Links and UI Documentation | Issue #53 / PR #71 | PR merged; Issue closed / Done | Independent prototype access verification pending |
+| QA Documentation Synchronization | PR #93 | Merged into `develop` | Continue final evidence verification |
+| S2-36 — README Documentation | Issue #30 / PR #84 | CI 2/2 Passed; documentation review pending | Address review feedback and obtain approval |
+| S2-36 — Sprint 2 Release | Issue #31 / PR #96 | PR #96 Draft; Ayşe approved; CI 4/4 Passed | Merge remaining dependencies, finalize release, create tag |
+| S2-37 — Peer Evaluation | Issue #97 | Open; completion not verified | Confirm applicable evaluation requirements |
+
+### 8.2 Confirmed UI and Architecture Updates
+
+- PRs #50 and #71 are merged. Issues #48 and #53 are Closed, and both Project Board cards are Done.
+- PRs #66, #70, #87 and #93 are merged into `develop`.
+- ADR-006 and ADR-008 are Accepted.
+- Issue #100 and draft PR #101 track the additional Frontend UI Skeleton work.
+- Tuğçe's prototype access checks are documented in `docs/ui-ux/figma-links.md` Section 6. Independent team verification remains pending.
+- Outdated status references in the UI documentation were reported on PR #96 for follow-up.
+- Earlier dated progress snapshots are preserved; verified merges do not automatically prove that every related Issue is Done.
+
+### 8.3 Remaining Sprint 2 Coordination
+
+- Complete review and integration of PR #84. PR #102 has been approved and merged into `develop`.
+- Verify the latest Project Board statuses against the Task Board.
+- Complete outstanding UI and architecture documentation corrections.
+- Record actual Sprint Review and Retrospective outcomes when completed.
+- Confirm peer evaluation requirements and contribution evidence.
+- Keep PR #96 in Draft until release dependencies are satisfied.
+- Complete the Sprint 2 tag, GitHub Release and Microsoft Teams submission.
+
 **Prepared by:** Bilgesu Nacak – Scrum Master & Agile Process Coach
