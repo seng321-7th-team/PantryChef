@@ -1,7 +1,7 @@
 ---
 name: Task
-about: Documentation, design, or technical work such as a Sprint task (S1-XX)
-title: "[S1-XX] "
+about: Documentation, design, or technical work such as a Sprint task (S2-XX)
+title: "[S2-XX] "
 labels: ["task"]
 assignees: []
 ---
@@ -22,6 +22,6 @@ assignees: []
 
 ## Related
 
-- **Sprint task ID:** <!-- e.g. S1-08 -->
+- **Sprint task ID:** <!-- e.g. S2-03 -->
 - **Related issues / pull requests:**
 - **Dependencies:**
