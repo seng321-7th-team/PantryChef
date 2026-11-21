@@ -52,7 +52,7 @@ Limits of the evidence:
 
 ## 2a. Current SRS and backlog coverage (PR #54 / PR #55)
 
-This matrix uses SRS FR-01 to FR-14 and the corresponding US-01 to US-14. Coverage means visible design or described behavior, not implementation acceptance. Both documents are merged into `develop` (PR #54, PR #55); #45 is still open as the older SRS PR.
+This matrix uses SRS FR-01 to FR-14 and the corresponding US-01 to US-14. Coverage means visible design or described behavior, not implementation acceptance. Both documents are merged into `develop` (PR #54, PR #55); the older SRS PR #45 was closed without merge on 20 Nov and is retained only as a historical reference.
 
 | SRS / story | Requirement | Frames / flow | UI evidence and remaining limit |
 |---|---|---|---|
