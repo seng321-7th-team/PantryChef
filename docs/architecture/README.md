@@ -17,18 +17,18 @@ included in the submission ZIP without draw.io.
 | S2-15 | ER – identity, history and reliability tables | same file, page 2 | [Support ER](database/PantryChef_ER-2-support-er.png) |
 | S2-15 | Database constraints and transaction rules | same file, page 3 | [Constraints](database/PantryChef_ER-3-constraints-and-rules.png) |
 
-All diagrams follow the API contract [`api/openapi.yaml`](../../api/openapi.yaml) (v0.2.0).
+All diagrams follow the API contract [`api/openapi.yaml`](../../api/openapi.yaml) (v0.2.1).
 
 ## Related documents
 
 | Task | Document | Status |
 |---|---|---|
-| S2-15 | `database-schema.md` – tables, DDL and transaction outlines | In PR #66 |
+| S2-15 | [`database-schema.md`](database-schema.md) – tables, DDL and transaction outlines | Merged (PR #66) |
 | S2-16 | [`architecture-decisions.md`](architecture-decisions.md) – ADR-001 to ADR-011 | Merged (PR #64) |
-| S2-17 | `consistency-review.md` – Architecture–SRS–OpenAPI review | In PR #68 |
+| S2-17 | [`consistency-review.md`](consistency-review.md) – Architecture–SRS–OpenAPI review | Merged (PR #68) |
 | S2-23 | [`infrastructure-requirements.md`](infrastructure-requirements.md) and the [deployment view](deployment-view.png) (Emre Boz) | Merged (PR #36) |
 
-The documents still in a pull request are linked here once they are merged.
+All related documents are merged into `develop`.
 
 ## Editing and exporting
 
