@@ -177,7 +177,14 @@ The references below identify known Issues and Pull Requests. Final approval, me
 | Database Schema Documentation | Ayşe Dural | #65 | #66 | Emre approved PR #66 after the SQL CHECK constraint corrections. PR merged into `develop`. Issue #65 Closed / Done |
 | Architecture–SRS–OpenAPI Consistency Review | Ayşe Dural | #67 | #68 | PR #68 reviewed and merged into `develop`; CR-01 inventory initialization and WAITER-only order creation rules aligned across SRS and OpenAPI. Final consistency monitoring remains ongoing |
 | Quality Metrics and QA Evidence | Beyzanur Alpay | #81 | #82, #93 | PR #82 merged and Issue #81 is Closed / Done. Burcu approved the QA documentation follow-up PR #93, which merged into `develop` |
-| Sprint 2 Release / Tag | Emre Boz | #31 | #96 | Draft PR #96 targets `main` from `develop`; final integration, review, merge, `sprint-2` tag and GitHub Release remain pending |
+| Frontend UI Skeleton (S2-32, stretch goal) | Tuğçe Çevik | #100 | #101, #107 | PR #101 merged into `develop`. Issue #100 Closed / Done. PR #107 records the scope of Bilgesu's approval |
+| Infrastructure and Deployment Requirements (S2-23) | Emre Boz | #29 | #36 | Ayşe approved PR #36, which merged into `develop`. Issue #29 Closed / Done |
+| C4 Container Diagram Technical Review (S2-24) | Emre Boz | #33 | #62 (review) | Emre reviewed the C4 container diagram and approved PR #62. Issue #33 Closed / Done |
+| Performance, Security and Backup NFR Support (S2-25) | Emre Boz | #34 | #51, #82 (reviews) | Emre reviewed the backup and restore, authentication, and secrets requirements in PR #51 and approved PR #82. Issue #34 Closed / Done |
+| Repository Rules and Branch Protection Check (S2-26) | Emre Boz | #28 | #32 | Bilgesu and Ayşe approved PR #32, which merged into `develop`. Issue #28 Closed / Done |
+| Sprint 3 CI/CD and Docker Readiness (S2-27) | Emre Boz | #35 | #37 | Ayşe approved PR #37, which merged into `develop`. Issue #35 Closed / Done |
+| README Sprint 2 Links (S2-36) | Emre Boz | #30 | #84, #108 | Bilgesu approved PRs #84 and #108, which merged into `develop`. Issue #30 Closed / Done |
+| Sprint 2 Release / Tag (S2-36) | Emre Boz | #31 | #96 | Draft PR #96 targets `main` from `develop`; final integration, review, merge, `sprint-2` tag and GitHub Release remain pending |
 
 ### 8.1 Evidence Verification Rules
 
@@ -200,7 +207,7 @@ For each deliverable, verify:
 - PR #66: Emre approved the database schema corrections. The PR merged into `develop` and Issue #65 is closed.
 - PR #68: Architecture–SRS–OpenAPI consistency review completed and merged into `develop`. CR-01 inventory initialization and WAITER-only order creation rules were aligned; final cross-document consistency monitoring remains ongoing.
 - PR #70: Ayşe approved the updated user-flow diagrams. The PR merged into `develop` and Issue #52 is closed.
-- PR #71: Figma UI/UX documentation approved by Bilgesu Nacak and merged into `develop` (ca96339); Issue #53 Closed / Done. Public view access to Figma prototype links requires final verification.
+- PR #71: Figma UI/UX documentation approved by Bilgesu Nacak and merged into `develop` (ca96339); Issue #53 Closed / Done. All three prototype links opened without signing in.
 - PR #82: QA deliverables merged into `develop` and Issue #81 is closed. Follow-up PR #93 was approved by Burcu and merged.
 - PR #85: Sprint 2 Task Board updates approved by Burcu and merged into develop.
 - PR #60: Deliverables consistency review approved by Beyzanur Alpay and merged into `develop`; Issue #59 Closed / Done with all eight acceptance criteria satisfied.
@@ -239,21 +246,21 @@ This section records verified Sprint 2 developments after the earlier submission
 | QA/OpenAPI Documentation Sync | PR #93 | Merged into `develop` |
 | UI Design–User Story Consistency (S2-31) | Issue #48 / PR #50 | PR merged; Issue #48 Closed / Done |
 | Figma Links and UI Documentation (S2-33) | Issue #53 / PR #71 | PR merged; Issue #53 Closed / Done |
-| Progress and Impediment Tracking (S2-09) | Issue #57 / PR #99 | PR approved by Emre Boz and merged; Issue #57 Open / In Progress; 6/6 acceptance criteria checked |
+| Progress and Impediment Tracking (S2-09) | Issue #57 / PR #99 | PR approved by Emre Boz and merged; Issue #57 Closed / Done; 6/6 acceptance criteria checked |
 | Deliverables Consistency Review (S2-10) | Issue #59 / PR #60 | PR merged; Issue #59 Closed / Done |
 
-### 9.2 Outstanding Pull Requests and Dependencies
+### 9.2 Pull Request Status and Release Dependencies
 
-- PR #104 — Sprint 2 Task Board status synchronization: 2/2 CI checks passed; Burcu Ücük's review is pending.
-- PR #103 — UI documentation status corrections: 2/2 CI checks passed; required reviewer approval and merge are pending.
-- PR #102 — This submission-package update: approved by Burcu Ücük; final status corrections are being incorporated before merge.
-- PR #101 / Issue #100 — Frontend UI Skeleton: work remains in progress; review and completion are pending.
-- PR #84 / Issue #30 — README documentation: both CI checks passed (2/2); documentation corrections and final reviewer approval remain pending.
-- PR #96 / Issue #31 — Sprint 2 release: PR remains Draft; Ayşe Dural approved the architecture-related changes; four CI checks passed. Final merge into `main`, tag creation and GitHub Release are pending.
+- PRs #104 and #106 — Sprint 2 Task Board status updates merged into `develop`.
+- PR #103 — UI documentation corrections approved by Bilgesu and merged into `develop`.
+- PR #102 — Submission package update approved by Burcu and merged into `develop`.
+- PR #101 / Issue #100 — Frontend UI Skeleton merged into `develop`. Issue #100 Closed / Done. The approval scope is recorded in PR #107.
+- PRs #84 and #108 / Issue #30 — Sprint 2 README links and frontend entry merged into `develop`. Issue #30 Closed / Done.
+- PR #96 / Issue #31 — Sprint 2 release: PR remains Draft; Ayşe Dural approved the architecture-related changes. Final merge into `main`, tag creation and GitHub Release are pending.
 
 ### 9.3 Remaining Verification and Submission Activities
 
-- Verify the final Figma prototype and user-flow access links independently.
+- Figma prototype and user-flow link checks are complete. All three prototype links opened without signing in, and the user-flow document opened on `develop`.
 - Confirm that the submitted C4 and UML diagrams are accessible and consistent with the final architecture documentation.
 - Verify the latest review approvals, merge statuses, and individual contribution evidence.
 - Follow up on outstanding UI and architecture documentation status corrections.
