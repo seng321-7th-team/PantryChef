@@ -157,7 +157,7 @@ The following items were identified through Sprint 2 Pull Request reviews and co
 
 ## 6. Sprint Review
 
-**Status:** Pending — not yet held or documented.
+**Status:** Not planned as a separate meeting for Sprint 2.
 
 | Field | To be recorded after the review |
 | --- | --- |
@@ -172,7 +172,7 @@ Record the actual SRS, backlog, NFR, Figma, C4/UML outputs reviewed, any feedbac
 
 ## 7. Sprint Retrospective
 
-**Status:** Pending — not yet held or documented.
+**Status:** Not planned as a separate meeting for Sprint 2.
 
 | Discussion point | Record after the retrospective |
 | --- | --- |
