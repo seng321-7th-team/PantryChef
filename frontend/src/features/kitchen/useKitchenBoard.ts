@@ -8,6 +8,7 @@ import {
   type BoardData,
   type BoardStatus,
   columnQueries,
+  columnText,
   DEFAULT_POLL_INTERVAL_MS,
   type ErrorView,
   findLoadedStatus,
@@ -41,6 +42,11 @@ export interface KitchenBoardState {
   lastUpdatedAt: Date | null;
   actions: Record<string, CardAction>;
   notice: BoardNotice | null;
+  /**
+   * Result of the last status change that the server confirmed with the requested status, for
+   * example "Order #1042 moved to Preparing." Only the user's own action sets it; refreshes do not.
+   */
+  moveMessage: string | null;
 }
 
 export interface UseKitchenBoardOptions {
@@ -58,6 +64,7 @@ const initialState: KitchenBoardState = {
   lastUpdatedAt: null,
   actions: {},
   notice: null,
+  moveMessage: null,
 };
 
 /** Drops unresolved card actions that a fresh server view shows as completed or moved on. */
@@ -201,6 +208,7 @@ export function useKitchenBoard(service: OrdersService, options: UseKitchenBoard
           : createKey();
       const target = definition.target;
       updateActions((a) => ({ ...a, [order.id]: { target, from, key, phase: 'running' } }));
+      setState((s) => (s.moveMessage ? { ...s, moveMessage: null } : s));
 
       const controller = new AbortController();
       mutationControllers.current.add(controller);
@@ -217,7 +225,11 @@ export function useKitchenBoard(service: OrdersService, options: UseKitchenBoard
         });
         // moveOrder works on the current board, so a refresh that already showed this change is
         // not counted twice. The refresh below reconciles cases a first page cannot decide.
-        setState((s) => (s.data ? { ...s, data: moveOrder(s.data, updated, from) } : s));
+        // The message names only the confirmed status; a 2xx answer with another status is not
+        // reported as the requested move.
+        const moveMessage =
+          updated.status === target ? `Order #${order.orderNumber} moved to ${columnText[target].title}.` : null;
+        setState((s) => ({ ...s, ...(s.data ? { data: moveOrder(s.data, updated, from) } : {}), moveMessage }));
         refreshRef.current();
       } catch (error) {
         if (isAbortError(error) || !mounted.current) return;

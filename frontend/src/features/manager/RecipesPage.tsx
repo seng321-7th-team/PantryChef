@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import type { OrdersMode } from '../../api/createOrdersService';
 import { sampleRecipes } from '../../api/mock/sampleScreens';
 import { SampleDataPage } from '../../components/SampleDataPage';
+import { useMediaQuery } from '../../components/useMediaQuery';
 
 const dateTime = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false });
 const time = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
@@ -11,12 +12,17 @@ function published(iso: string): string {
   return date.toDateString() === new Date().toDateString() ? `Today ${time.format(date)}` : dateTime.format(date);
 }
 
+/** Same width at which app.css stacks the list and the details. */
+export const COMPACT_RECIPE_PICKER_QUERY = '(max-width: 900px)';
+
 /** scr-06a-recipes. Selecting a menu item works on the page; editing and creating are not connected. */
 export function RecipesPage({ mode }: { mode: OrdersMode }) {
   const recipes = useMemo(() => sampleRecipes(), []);
   const [selectedName, setSelectedName] = useState(recipes[0]!.menuItemName);
   const selected = recipes.find((entry) => entry.menuItemName === selectedName) ?? recipes[0]!;
   const current = selected.versions[0]!;
+  // Narrow screens stack the list above the details; a select keeps the details close to the top.
+  const compactPicker = useMediaQuery(COMPACT_RECIPE_PICKER_QUERY);
 
   return (
     <SampleDataPage
@@ -34,21 +40,41 @@ export function RecipesPage({ mode }: { mode: OrdersMode }) {
           <h2 id="menu-items" className="panel__title panel__title--padded">
             Menu items
           </h2>
-          <ul className="select-list">
-            {recipes.map((entry) => (
-              <li key={entry.menuItemName}>
-                <button
-                  type="button"
-                  className="select-list__item"
-                  aria-pressed={entry.menuItemName === selected.menuItemName}
-                  onClick={() => setSelectedName(entry.menuItemName)}
-                >
-                  <span>{entry.menuItemName}</span>
-                  <span className="tag">recipe v{entry.versions[0]!.version}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
+          {compactPicker ? (
+            <div className="recipe-picker">
+              <label htmlFor="recipe-picker" className="recipe-picker__label">
+                Menu item
+              </label>
+              <select
+                id="recipe-picker"
+                className="recipe-picker__select"
+                value={selected.menuItemName}
+                onChange={(event) => setSelectedName(event.target.value)}
+              >
+                {recipes.map((entry) => (
+                  <option key={entry.menuItemName} value={entry.menuItemName}>
+                    {entry.menuItemName} · recipe v{entry.versions[0]!.version}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : (
+            <ul className="select-list">
+              {recipes.map((entry) => (
+                <li key={entry.menuItemName}>
+                  <button
+                    type="button"
+                    className="select-list__item"
+                    aria-pressed={entry.menuItemName === selected.menuItemName}
+                    onClick={() => setSelectedName(entry.menuItemName)}
+                  >
+                    <span>{entry.menuItemName}</span>
+                    <span className="tag">recipe v{entry.versions[0]!.version}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </section>
 
         <div className="split__main">

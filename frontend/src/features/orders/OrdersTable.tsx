@@ -1,4 +1,5 @@
 import type { Order } from '../../api/types';
+import { CellLabel } from '../../components/CellLabel';
 import { OrderStatusBadge } from '../../components/StatusBadge';
 
 interface OrdersTableProps {
@@ -9,37 +10,57 @@ interface OrdersTableProps {
   viewer: 'waiter' | 'manager';
 }
 
-function itemsText(order: Order, withVersions: boolean): string {
-  return order.items
-    .map((line) => `${line.quantity}× ${line.menuItemName}${withVersions ? ` (v${line.recipeVersion})` : ''}`)
-    .join(', ');
+function lineText(line: Order['items'][number], withVersions: boolean): string {
+  return `${line.quantity}× ${line.menuItemName}${withVersions ? ` (v${line.recipeVersion})` : ''}`;
 }
 
 /** "Today's orders" table of scr-05a / scr-05c. Cancel actions are shown disabled: not connected yet. */
 export function OrdersTable({ orders, showRecipeVersions = false, viewer }: OrdersTableProps) {
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th scope="col">Order</th>
-          <th scope="col">Table</th>
-          <th scope="col">Items</th>
-          <th scope="col">Status</th>
-          <th scope="col">
+    // Explicit roles keep the table semantics when narrow screens show the rows as cards.
+    <table className="table table--stack table--orders" role="table">
+      <thead role="rowgroup">
+        <tr role="row">
+          <th scope="col" role="columnheader">
+            Order
+          </th>
+          <th scope="col" role="columnheader">
+            Table
+          </th>
+          <th scope="col" role="columnheader">
+            Items
+          </th>
+          <th scope="col" role="columnheader">
+            Status
+          </th>
+          <th scope="col" role="columnheader">
             <span className="visually-hidden">Actions</span>
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody role="rowgroup">
         {orders.map((order) => (
-          <tr key={order.id}>
-            <th scope="row">#{order.orderNumber}</th>
-            <td className="muted">{order.tableLabel}</td>
-            <td>{itemsText(order, showRecipeVersions)}</td>
-            <td>
+          <tr key={order.id} role="row">
+            <th scope="row" role="rowheader" className="table__title">
+              #{order.orderNumber}
+            </th>
+            <td role="cell" className="muted table__inline">
+              <CellLabel>Table</CellLabel>
+              {order.tableLabel}
+            </td>
+            <td role="cell" className="table__wide">
+              <CellLabel>Items</CellLabel>
+              <ul className="item-lines">
+                {order.items.map((line) => (
+                  <li key={line.id}>{lineText(line, showRecipeVersions)}</li>
+                ))}
+              </ul>
+            </td>
+            <td role="cell" className="table__status">
+              <CellLabel>Status</CellLabel>
               <OrderStatusBadge status={order.status} />
             </td>
-            <td className="table__action">
+            <td role="cell" className="table__action">
               {order.status === 'PENDING' ? (
                 <button type="button" className="btn btn--outline-muted" disabled title="Not connected in this build">
                   Cancel…

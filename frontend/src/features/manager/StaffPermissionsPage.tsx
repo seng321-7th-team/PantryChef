@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import type { OrdersMode } from '../../api/createOrdersService';
 import { sampleStaff } from '../../api/mock/sampleScreens';
 import type { User } from '../../api/types';
+import { CellLabel } from '../../components/CellLabel';
 import { SampleDataPage } from '../../components/SampleDataPage';
 import { href } from '../../navigation/routes';
 
@@ -29,30 +30,54 @@ export function StaffPermissionsPage({ mode }: { mode: OrdersMode }) {
       notImplemented="Changing and saving the late-cancel permission is not connected in this build."
     >
       <section className="panel" aria-label="Active waiters">
-        <table className="table table--compact">
-          <thead>
-            <tr>
-              <th scope="col">Full name</th>
-              <th scope="col">Username</th>
-              <th scope="col">Role</th>
-              <th scope="col">Account</th>
-              <th scope="col">Saved late-cancel access</th>
+        {/* Explicit roles keep the table semantics when narrow screens show the rows as cards. */}
+        <table className="table table--compact table--stack" role="table">
+          <thead role="rowgroup">
+            <tr role="row">
+              <th scope="col" role="columnheader">
+                Full name
+              </th>
+              <th scope="col" role="columnheader">
+                Username
+              </th>
+              <th scope="col" role="columnheader">
+                Role
+              </th>
+              <th scope="col" role="columnheader">
+                Account
+              </th>
+              <th scope="col" role="columnheader">
+                Saved late-cancel access
+              </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody role="rowgroup">
             {staff.map((user) => (
               <tr
                 key={user.id}
+                role="row"
                 className={user.id === selected.id ? 'table__row--selected' : undefined}
                 aria-current={user.id === selected.id ? 'true' : undefined}
               >
-                <th scope="row" className="table__plain">
+                <th scope="row" role="rowheader" className="table__plain table__title">
                   {user.fullName}
                 </th>
-                <td>{user.username}</td>
-                <td>{roleLabel(user)}</td>
-                <td>{user.active ? 'Active' : 'Inactive'}</td>
-                <td>Late cancel: {lateCancelText(user)}</td>
+                <td role="cell">
+                  <CellLabel>Username</CellLabel>
+                  {user.username}
+                </td>
+                <td role="cell">
+                  <CellLabel>Role</CellLabel>
+                  {roleLabel(user)}
+                </td>
+                <td role="cell">
+                  <CellLabel>Account</CellLabel>
+                  {user.active ? 'Active' : 'Inactive'}
+                </td>
+                <td role="cell">
+                  <CellLabel>Saved late-cancel access</CellLabel>
+                  Late cancel: {lateCancelText(user)}
+                </td>
               </tr>
             ))}
           </tbody>

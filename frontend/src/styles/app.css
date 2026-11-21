@@ -114,9 +114,29 @@ button {
   text-decoration: underline;
 }
 
+/* Wide screens: the menu panel is an inline part of the bar and the Menu button is not shown. */
+.app-header__menu {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  min-width: 0;
+}
+
+.app-nav-toggle {
+  display: none;
+}
+
+/* Safe-area insets (index.html sets viewport-fit=cover). */
+.app-header {
+  padding-left: max(var(--page-gutter), env(safe-area-inset-left));
+  padding-right: max(var(--page-gutter), env(safe-area-inset-right));
+}
+
 /* Page */
 .page {
-  padding: 24px var(--page-gutter);
+  padding: 24px max(var(--page-gutter), env(safe-area-inset-right)) 24px max(var(--page-gutter), env(safe-area-inset-left));
 }
 
 .page__title-row {
@@ -272,6 +292,81 @@ button {
   color: var(--color-ready-text);
 }
 
+/* Result of the user's last confirmed status change. In the page flow, so it never covers cards. */
+.board-feedback {
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  border-radius: var(--radius-control);
+  background: var(--color-ready-badge-bg);
+  color: var(--color-ready-text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.board-feedback:empty {
+  margin: 0;
+  padding: 0;
+}
+
+/* Status tabs of the kitchen board (rendered at 640 px and below only, see KitchenBoardPage). */
+.status-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0 calc(-1 * var(--page-gutter)) 12px;
+  padding: 8px var(--page-gutter);
+  background: var(--color-page);
+}
+
+.status-tab {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2px 6px;
+  min-height: 48px;
+  padding: 6px 4px;
+  border: 1px solid var(--color-border-strong);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 14px;
+  line-height: 1.2;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.status-tab[aria-selected='true'] {
+  font-weight: 700;
+}
+
+.status-tab--pending[aria-selected='true'] {
+  border-color: var(--color-pending-accent);
+  background: var(--color-pending-badge-bg);
+  color: var(--color-pending-badge-text);
+}
+
+.status-tab--preparing[aria-selected='true'] {
+  border-color: var(--color-preparing-accent);
+  background: var(--color-preparing-badge-bg);
+  color: var(--color-preparing-badge-text);
+}
+
+.status-tab--ready[aria-selected='true'] {
+  border-color: var(--color-ready-accent);
+  background: var(--color-ready-badge-bg);
+  color: var(--color-ready-text);
+}
+
+.status-tab__count {
+  min-width: 24px;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Order card */
 .order-card {
   padding: 14px;
@@ -300,6 +395,8 @@ button {
 }
 
 .order-card__heading {
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: var(--color-text-strong-muted);
   font-size: 13px;
   font-weight: 600;
@@ -324,11 +421,15 @@ button {
 }
 
 .order-card__item-name {
+  min-width: 0;
   font-size: 18px;
   font-weight: 600;
+  overflow-wrap: anywhere;
 }
 
 .order-card__recipe {
+  flex: 0 0 auto;
+  white-space: nowrap;
   color: var(--color-text-muted);
   font-size: 12px;
 }
@@ -617,6 +718,20 @@ button {
 }
 
 /* Tables */
+/* Field labels and units inside cells are shown only when a table is laid out as cards. */
+.cell-label,
+.cell-unit {
+  display: none;
+}
+
+.item-lines li {
+  display: inline;
+}
+
+.item-lines li:not(:last-child)::after {
+  content: ', ';
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -813,9 +928,26 @@ button {
   text-align: center;
 }
 
+/* Wide screens: the current order is always open in the side panel. */
+.order-summary__toggle {
+  display: none;
+}
+
+.draft-list__name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.menu-card__name {
+  overflow-wrap: anywhere;
+}
+
+/* Touch targets: at least 44 × 44 CSS px. */
 .qty-btn {
-  width: 36px;
-  height: 36px;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-control);
   background: var(--color-surface);
@@ -853,6 +985,30 @@ button {
 .select-list__item[aria-pressed='true'] .tag {
   background: var(--color-surface);
   font-weight: 400;
+}
+
+/* Recipes on narrow screens: one select instead of the menu item list. */
+.recipe-picker {
+  padding: 0 16px 16px;
+}
+
+.recipe-picker__label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.recipe-picker__select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 16px;
 }
 
 /* Audit log (scr-05a) */
@@ -1008,14 +1164,6 @@ button {
     --page-gutter: 16px;
   }
 
-  .board {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .board-column {
-    min-height: 0;
-  }
-
   .split,
   .split--recipes,
   .split--orders {
@@ -1031,8 +1179,473 @@ button {
     overflow-x: auto;
   }
 
+  /* Header: one row with the brand and the Menu button; the menu opens as a panel below it. */
+  .app-header {
+    position: relative;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .app-nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .app-nav-toggle[aria-expanded='true'] {
+    border-color: var(--color-link);
+    background: var(--color-nav-selected-bg);
+    color: var(--color-nav-selected-text);
+  }
+
+  .app-nav-toggle__icon {
+    position: relative;
+    width: 16px;
+    height: 2px;
+    background: currentColor;
+    box-shadow:
+      0 -5px 0 currentColor,
+      0 5px 0 currentColor;
+  }
+
+  .app-header__menu {
+    display: none;
+  }
+
+  .app-header__menu--static {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .app-header__menu[data-open='true'] {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    max-height: calc(100dvh - var(--nav-height));
+    padding: 8px max(var(--page-gutter), env(safe-area-inset-right)) 16px max(var(--page-gutter), env(safe-area-inset-left));
+    overflow-y: auto;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+    box-shadow: 0 8px 16px rgb(27 31 36 / 12%);
+  }
+
+  .app-header__menu[data-open='true'] .app-nav {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .app-header__menu[data-open='true'] .app-header__context {
+    margin: 8px 0 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-divider);
+  }
+
   .app-header__context {
     margin-left: 0;
+  }
+
+  /* Waiter New order: the current order is a bar at the bottom that opens into a panel. */
+  .split--waiter {
+    padding-bottom: calc(var(--order-bar-height) + env(safe-area-inset-bottom));
+  }
+
+  .order-summary {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 16px);
+    margin: 0;
+    padding: 10px max(var(--page-gutter), env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom))
+      max(var(--page-gutter), env(safe-area-inset-left));
+    overflow: hidden;
+    border-width: 1px 0 0;
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
+    box-shadow: 0 -4px 16px rgb(27 31 36 / 12%);
+  }
+
+  .order-summary__head {
+    display: grid;
+    grid-template-areas:
+      'title toggle'
+      'table toggle';
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0 12px;
+    margin: 0;
+  }
+
+  .order-summary__head h2 {
+    grid-area: title;
+    font-size: 16px;
+  }
+
+  .order-summary__table {
+    grid-area: table;
+    font-size: 12px;
+  }
+
+  .order-summary__toggle {
+    grid-area: toggle;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--color-link);
+    border-radius: var(--radius-control);
+    background: var(--color-surface);
+    color: var(--color-tab-text);
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .order-summary__body {
+    display: none;
+  }
+
+  .order-summary[data-open='true'] .order-summary__body {
+    display: block;
+    max-height: var(--order-sheet-body-height);
+    margin-top: 8px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* Keyboard focus scrolls to elements above the bar or the open panel, not under them. */
+  html:has(.order-summary) {
+    scroll-padding-bottom: calc(var(--order-bar-height) + env(safe-area-inset-bottom) + 8px);
+  }
+
+  html:has(.order-summary[data-open='true']) {
+    scroll-padding-bottom: calc(var(--order-bar-height) + var(--order-sheet-body-height) + env(safe-area-inset-bottom) + 16px);
+  }
+}
+
+/* Tables as labelled cards. The inventory table (8 columns, about 760 px wide) switches below 820 px;
+   the order and staff tables (about 490 and 380 px) switch at the phone width of 640 px. */
+@media (max-width: 819px) {
+  .table--stack-wide,
+  .table--stack-wide tbody,
+  .table--stack-wide tr,
+  .table--stack-wide th,
+  .table--stack-wide td {
+    display: block;
+  }
+
+  /* Column headers stay in the accessibility tree; each cell shows its own label instead. */
+  .table--stack-wide thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .table--stack-wide tbody tr {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 104px), 1fr));
+    gap: 12px 16px;
+    padding: 14px 16px;
+  }
+
+  .table--stack-wide tbody tr + tr {
+    border-top: 1px solid var(--color-divider);
+  }
+
+  .table--stack-wide tbody tr + tr > *,
+  .table--stack-wide.table--compact tbody tr + tr > * {
+    border-top: 0;
+  }
+
+  .table--stack-wide tbody th,
+  .table--stack-wide tbody td {
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+
+  .table--stack-wide tbody th.table__title {
+    grid-column: 1 / -1;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .table--stack-wide .num {
+    text-align: left;
+  }
+
+  .table--stack-wide .table__inline .cell-label {
+    display: inline;
+    margin: 0 6px 0 0;
+  }
+
+  .table--stack-wide .table__wide,
+  .table--stack-wide .table__action {
+    grid-column: 1 / -1;
+  }
+
+  .table--stack-wide .table__action {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    white-space: normal;
+  }
+
+  .table--stack-wide .table__action:empty {
+    display: none;
+  }
+
+  .table--stack-wide .table__action .btn + .btn {
+    margin-left: 0;
+  }
+
+  .table--stack-wide .cell-label {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--color-nav-text);
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .table--stack-wide .cell-unit {
+    display: inline;
+    margin-left: 4px;
+    color: var(--color-text-muted);
+    font-size: 13px;
+  }
+
+  .table--stack-wide .item-lines li {
+    display: block;
+  }
+
+  .table--stack-wide .item-lines li::after {
+    content: none;
+  }
+
+  .table--stack-wide .table__row--selected {
+    background: var(--color-nav-selected-bg);
+  }
+
+  .table--stack-wide .table__row--selected > * {
+    background: transparent;
+  }
+}
+
+@media (max-width: 640px) {
+  .table--stack,
+  .table--stack tbody,
+  .table--stack tr,
+  .table--stack th,
+  .table--stack td {
+    display: block;
+  }
+
+  /* Column headers stay in the accessibility tree; each cell shows its own label instead. */
+  .table--stack thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .table--stack tbody tr {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 104px), 1fr));
+    gap: 12px 16px;
+    padding: 14px 16px;
+  }
+
+  .table--stack tbody tr + tr {
+    border-top: 1px solid var(--color-divider);
+  }
+
+  .table--stack tbody tr + tr > *,
+  .table--stack.table--compact tbody tr + tr > * {
+    border-top: 0;
+  }
+
+  .table--stack tbody th,
+  .table--stack tbody td {
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+
+  .table--stack tbody th.table__title {
+    grid-column: 1 / -1;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .table--stack .num {
+    text-align: left;
+  }
+
+  .table--stack .table__inline .cell-label {
+    display: inline;
+    margin: 0 6px 0 0;
+  }
+
+  .table--stack .table__wide,
+  .table--stack .table__action {
+    grid-column: 1 / -1;
+  }
+
+  .table--stack .table__action {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    white-space: normal;
+  }
+
+  .table--stack .table__action:empty {
+    display: none;
+  }
+
+  .table--stack .table__action .btn + .btn {
+    margin-left: 0;
+  }
+
+  .table--stack .cell-label {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--color-nav-text);
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .table--stack .cell-unit {
+    display: inline;
+    margin-left: 4px;
+    color: var(--color-text-muted);
+    font-size: 13px;
+  }
+
+  .table--stack .item-lines li {
+    display: block;
+  }
+
+  .table--stack .item-lines li::after {
+    content: none;
+  }
+
+  .table--stack .table__row--selected {
+    background: var(--color-nav-selected-bg);
+  }
+
+  .table--stack .table__row--selected > * {
+    background: transparent;
+  }
+}
+
+/* Order cards: number and status on the first line, then table, items and actions. */
+@media (max-width: 640px) {
+  .table--orders tbody tr {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'title status'
+      'table table'
+      'items items'
+      'actions actions';
+    gap: 8px 16px;
+  }
+
+  .table--orders tbody th.table__title {
+    grid-area: title;
+  }
+
+  .table--orders .table__status {
+    grid-area: status;
+  }
+
+  .table--orders .table__inline {
+    grid-area: table;
+  }
+
+  .table--orders .table__wide {
+    grid-area: items;
+  }
+
+  .table--orders .table__action {
+    grid-area: actions;
+  }
+
+  /* The status badge names itself; its field label is not repeated next to the order number. */
+  .table--orders .table__status .cell-label {
+    display: none;
+  }
+
+  /* The staff table sits in a padded panel already. */
+  .table--compact.table--stack tbody tr {
+    padding: 12px 8px;
+  }
+}
+
+/* Kitchen board, tablet: Pending and Preparing side by side, Ready below at full width. */
+@media (max-width: 1023px) {
+  .board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .board-column {
+    min-height: 0;
+  }
+
+  .board-column--ready {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Two Ready cards per row on tablets only; on phones Ready cards fill the column like the others. */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .board-column--ready .board-column__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+/* Kitchen board, phone: one column at a time behind the status tabs. */
+@media (max-width: 640px) {
+  .board {
+    display: block;
+  }
+
+  /* Keyboard focus scrolls cards into view below the sticky tabs, not under them. */
+  html:has(.status-tabs) {
+    scroll-padding-top: 72px;
+  }
+}
+
+/* Very narrow phones: the counter goes under the label in every tab, so the three tabs match. */
+@media (max-width: 379px) {
+  .status-tab {
+    flex-direction: column;
   }
 }
 

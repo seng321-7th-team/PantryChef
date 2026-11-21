@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import type { OrdersMode } from '../../api/createOrdersService';
 import { todaysSampleOrders } from '../../api/mock/sampleOrders';
 import { SAMPLE_DRAFT, SAMPLE_MY_OPEN_ORDER_NUMBERS, sampleMenuItems } from '../../api/mock/sampleScreens';
@@ -38,6 +38,18 @@ export function NewOrderPage({ mode }: { mode: OrdersMode }) {
   }
 
   const draftLines = menu.filter((item) => draft.has(item.id));
+  const dishCount = [...draft.values()].reduce((sum, quantity) => sum + quantity, 0);
+
+  // On narrow screens the current order is a bar at the bottom that opens into a panel.
+  const [summaryOpen, setSummaryOpen] = useState(false);
+  const summaryToggleRef = useRef<HTMLButtonElement>(null);
+
+  function onSummaryKeyDown(event: KeyboardEvent) {
+    if (summaryOpen && event.key === 'Escape') {
+      setSummaryOpen(false);
+      summaryToggleRef.current?.focus();
+    }
+  }
 
   return (
     <SampleDataPage
@@ -45,7 +57,7 @@ export function NewOrderPage({ mode }: { mode: OrdersMode }) {
       mode={mode}
       notImplemented="The order is kept on this page only: Send to kitchen and Cancel are not connected in this build."
     >
-      <div className="split">
+      <div className="split split--waiter">
         <div className="split__main">
           <p className="section-hint">Portions available now</p>
           <ul className="menu-grid" aria-label="Menu">
@@ -107,44 +119,62 @@ export function NewOrderPage({ mode }: { mode: OrdersMode }) {
           </section>
         </div>
 
-        <aside className="panel split__side" aria-labelledby="current-order">
-          <div className="panel__title-row">
+        <aside
+          className="panel split__side order-summary"
+          aria-labelledby="current-order"
+          data-open={summaryOpen}
+          onKeyDown={onSummaryKeyDown}
+        >
+          <div className="panel__title-row order-summary__head">
             <h2 id="current-order" className="panel__title panel__title--large">
               Current order
             </h2>
-            <span className="muted">Table {SAMPLE_DRAFT.tableLabel}</span>
+            <span className="muted order-summary__table">Table {SAMPLE_DRAFT.tableLabel}</span>
+            {/* Shown on narrow screens only (app.css); on wider screens the order is always open. */}
+            <button
+              ref={summaryToggleRef}
+              type="button"
+              className="order-summary__toggle"
+              aria-expanded={summaryOpen}
+              aria-controls="order-summary-body"
+              onClick={() => setSummaryOpen((open) => !open)}
+            >
+              {summaryOpen ? 'Hide order' : 'Show order'} ({dishCount} {dishCount === 1 ? 'dish' : 'dishes'})
+            </button>
           </div>
-          {draftLines.length === 0 ? (
-            <p className="muted">No dishes added.</p>
-          ) : (
-            <ul className="draft-list">
-              {draftLines.map((item) => (
-                <li key={item.id} className="draft-list__row">
-                  <span className="row-list__grow">{item.name}</span>
-                  <button type="button" className="qty-btn" onClick={() => change(item, -1)} aria-label={`Remove one ${item.name}`}>
-                    −
-                  </button>
-                  <strong className="draft-list__qty">{draft.get(item.id)}</strong>
-                  <button
-                    type="button"
-                    className="qty-btn"
-                    onClick={() => change(item, 1)}
-                    disabled={draft.get(item.id) === item.availablePortions}
-                    aria-label={`Add one ${item.name}`}
-                  >
-                    +
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-          <button type="button" className="btn btn--primary btn--block" disabled>
-            Send to kitchen
-          </button>
-          <p className="small muted">
-            Sending is not connected in this build. In the application, the order is sent only if every dish can
-            be made (otherwise 409 INSUFFICIENT_STOCK and nothing is reserved).
-          </p>
+          <div id="order-summary-body" className="order-summary__body">
+            {draftLines.length === 0 ? (
+              <p className="muted">No dishes added.</p>
+            ) : (
+              <ul className="draft-list">
+                {draftLines.map((item) => (
+                  <li key={item.id} className="draft-list__row">
+                    <span className="draft-list__name">{item.name}</span>
+                    <button type="button" className="qty-btn" onClick={() => change(item, -1)} aria-label={`Remove one ${item.name}`}>
+                      −
+                    </button>
+                    <strong className="draft-list__qty">{draft.get(item.id)}</strong>
+                    <button
+                      type="button"
+                      className="qty-btn"
+                      onClick={() => change(item, 1)}
+                      disabled={draft.get(item.id) === item.availablePortions}
+                      aria-label={`Add one ${item.name}`}
+                    >
+                      +
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <button type="button" className="btn btn--primary btn--block" disabled>
+              Send to kitchen
+            </button>
+            <p className="small muted">
+              Sending is not connected in this build. In the application, the order is sent only if every dish can
+              be made (otherwise 409 INSUFFICIENT_STOCK and nothing is reserved).
+            </p>
+          </div>
         </aside>
       </div>
     </SampleDataPage>

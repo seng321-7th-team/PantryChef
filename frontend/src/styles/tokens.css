@@ -27,6 +27,10 @@
   --nav-height: 64px;
   --nav-item-height: 44px;
 
+  /* Narrow screens: bottom order bar of the waiter New order screen. */
+  --order-bar-height: 72px;
+  --order-sheet-body-height: min(60dvh, calc(100dvh - 160px));
+
   --color-page: #f5f6f8;
   --color-surface: #ffffff;
   --color-column: #eceef1;

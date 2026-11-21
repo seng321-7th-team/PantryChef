@@ -21,6 +21,10 @@ export const columnText: Record<BoardStatus, { title: string; subtitle: string }
   READY: { title: 'Ready', subtitle: 'Waiting for pickup' },
 };
 
+/** Element ids that link a status tab and its column on narrow screens. */
+export const columnPanelId = (status: BoardStatus) => `column-${status.toLowerCase()}-panel`;
+export const columnTabId = (status: BoardStatus) => `column-${status.toLowerCase()}-tab`;
+
 export interface ActionDefinition {
   target: KitchenTargetStatus;
   label: string;

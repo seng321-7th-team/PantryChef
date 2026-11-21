@@ -1,7 +1,8 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from './App';
+import { COMPACT_RECIPE_PICKER_QUERY } from './features/manager/RecipesPage';
 import { parseRoute } from './navigation/routes';
 
 const MOCK_ENV = { VITE_ORDERS_MODE: 'mock' };
@@ -21,8 +22,22 @@ function selected(name: string) {
     .map((link) => link.textContent);
 }
 
+/** Makes matchMedia answer `matches` for one query, as on a narrow screen. */
+function narrowScreenFor(query: string) {
+  vi.stubGlobal('matchMedia', (media: string) => ({
+    media,
+    matches: media === query,
+    addEventListener: () => undefined,
+    removeEventListener: () => undefined,
+  }));
+}
+
 beforeEach(() => {
   window.location.hash = '';
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
 });
 
 describe('routes', () => {
@@ -109,9 +124,59 @@ describe('App role preview and navigation', () => {
     expect(screen.getByText('Page not found')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Choose a role' })).toHaveAttribute('href', '#/');
   });
+
+  it('opens and closes the narrow-screen menu with the Menu button, Escape and a page link', async () => {
+    const user = userEvent.setup();
+    renderAt('#/manager/inventory');
+    const toggle = screen.getByRole('button', { name: 'Menu' });
+    const panel = document.getElementById(toggle.getAttribute('aria-controls')!)!;
+    expect(within(panel).getByRole('navigation', { name: 'Manager menu' })).toBeInTheDocument();
+    expect(screen.getAllByRole('navigation')).toHaveLength(1);
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await user.keyboard('{Escape}');
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(toggle).toHaveFocus();
+
+    await user.click(toggle);
+    await user.click(within(panel).getByRole('link', { name: 'Recipes' }));
+    expect(await screen.findByRole('heading', { level: 1, name: 'Recipes' })).toBeInTheDocument();
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('has no Menu button on the role choice', () => {
+    renderAt('');
+    expect(screen.queryByRole('button', { name: 'Menu' })).toBeNull();
+    expect(screen.getByText('Mock data')).toBeInTheDocument();
+  });
 });
 
 describe('sample-data screens', () => {
+  it('keeps one current order behind a toggle and still adds and removes dishes', async () => {
+    const user = userEvent.setup();
+    renderAt('#/waiter/new-order');
+    expect(screen.getAllByRole('complementary', { name: 'Current order' })).toHaveLength(1);
+    const toggle = screen.getByRole('button', { name: 'Show order (2 dishes)' });
+    const body = document.getElementById(toggle.getAttribute('aria-controls')!)!;
+    expect(within(body).getByText('Menemen')).toBeInTheDocument();
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    expect(toggle).toHaveAccessibleName('Hide order (2 dishes)');
+    await user.keyboard('{Escape}');
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(toggle).toHaveFocus();
+
+    await user.click(screen.getByRole('button', { name: 'Add Lentil Soup' }));
+    expect(toggle).toHaveAccessibleName('Show order (3 dishes)');
+    await user.click(within(body).getByRole('button', { name: 'Remove one Menemen' }));
+    expect(within(body).queryByText('Menemen')).toBeNull();
+    expect(toggle).toHaveAccessibleName('Show order (2 dishes)');
+  });
+
   it('keeps the waiter draft on the page and does not offer sending', async () => {
     const user = userEvent.setup();
     renderAt('#/waiter/new-order');
@@ -136,6 +201,88 @@ describe('sample-data screens', () => {
     expect(rows.map((row) => row.textContent)).toEqual(['Red lentils', 'Chicken breast', 'Minced beef']);
     expect(screen.getByRole('button', { name: 'Low stock only' })).toHaveAttribute('aria-pressed', 'true');
     for (const button of screen.getAllByRole('button', { name: /^(Edit|Adjust)$/ })) expect(button).toBeDisabled();
+  });
+
+  it('keeps each stock amount tied to its column and unit for screen readers and on cards', () => {
+    renderAt('#/manager/inventory');
+    const stock = screen.getByRole('region', { name: 'Stock' });
+    expect(within(stock).getAllByRole('columnheader').map((header) => header.textContent)).toEqual([
+      'Ingredient',
+      'Unit',
+      'On hand physical',
+      'Reserved pending orders',
+      'Available on hand − reserved',
+      'Threshold',
+      'Status',
+      'Actions',
+    ]);
+    const row = within(stock).getByRole('rowheader', { name: 'Red lentils' }).closest('tr')!;
+    const cells = within(row).getAllByRole('cell');
+    // The card labels and units are visible text only; the cell names stay the plain values.
+    expect(cells.slice(0, 5).map((cell) => cell.textContent)).toEqual([
+      'Unitg',
+      'On hand (physical)3000g',
+      'Reserved (pending orders)200g',
+      'Available (on hand − reserved)2800g',
+      'Threshold4000g',
+    ]);
+    expect(cells[1]).toHaveAccessibleName('3000');
+    expect(cells[3]).toHaveAccessibleName('2800');
+    for (const button of within(row).getAllByRole('button')) expect(button).toBeDisabled();
+  });
+
+  it('lists every item line of an order separately and keeps the cancel actions disabled', () => {
+    renderAt('#/manager/orders');
+    const row = screen.getByRole('rowheader', { name: '#1043' }).closest('tr')!;
+    expect(within(row).getAllByRole('listitem').map((item) => item.textContent)).toEqual([
+      '1× Menemen (v3)',
+      '1× Shepherd Salad (v2)',
+    ]);
+    expect(within(row).getByRole('button', { name: 'Cancel…' })).toBeDisabled();
+    for (const button of screen.getAllByRole('button', { name: 'Late cancel…' })) expect(button).toBeDisabled();
+  });
+
+  it('selects a recipe from the menu item list on wide screens', async () => {
+    const user = userEvent.setup();
+    renderAt('#/manager/recipes');
+    expect(screen.queryByRole('combobox')).toBeNull();
+    await user.click(screen.getByRole('button', { name: /^Grilled Chicken/ }));
+    expect(screen.getByRole('heading', { level: 2, name: /^Grilled Chicken/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^Grilled Chicken/ })).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('selects a recipe with one labelled select on narrow screens and updates the details', async () => {
+    narrowScreenFor(COMPACT_RECIPE_PICKER_QUERY);
+    const user = userEvent.setup();
+    renderAt('#/manager/recipes');
+    const picker = screen.getByRole('combobox', { name: 'Menu item' });
+    expect(screen.queryByRole('button', { name: /^Menemen/ })).toBeNull();
+    expect(within(picker).getAllByRole('option').map((option) => option.textContent)).toEqual([
+      'Menemen · recipe v3',
+      'Lentil Soup · recipe v1',
+      'Grilled Chicken · recipe v2',
+      'Shepherd Salad · recipe v2',
+      'Köfte Plate · recipe v1',
+      'Rice Pudding · recipe v1',
+    ]);
+    const history = () =>
+      within(screen.getByRole('region', { name: 'Version history' }))
+        .getAllByRole('listitem')
+        .map((item) => item.querySelector('strong')!.textContent);
+    expect(screen.getByRole('heading', { level: 2, name: /^Menemen/ })).toHaveTextContent('Current: v3');
+    expect(within(screen.getByRole('region', { name: /^Menemen/ })).getAllByRole('rowheader').map((cell) => cell.textContent)).toEqual([
+      'Eggs',
+      'Tomatoes',
+      'Olive oil',
+    ]);
+    expect(history()).toEqual(['v3', 'v2', 'v1']);
+
+    await user.selectOptions(picker, 'Grilled Chicken');
+    expect(picker).toHaveValue('Grilled Chicken');
+    expect(screen.getByRole('heading', { level: 2, name: /^Grilled Chicken/ })).toHaveTextContent('Current: v2');
+    expect(screen.getByText('The ingredient lines of this recipe are not part of the sample data.')).toBeInTheDocument();
+    expect(history()).toEqual(['v2']);
+    expect(screen.getByRole('button', { name: 'Edit recipe' })).toBeDisabled();
   });
 
   it('shows the staff permission read-only', () => {
