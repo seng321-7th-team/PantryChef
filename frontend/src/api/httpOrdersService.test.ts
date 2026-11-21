@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { ApiProblemError, NetworkError, RequestAbortedError, UnexpectedResponseError } from './errors';
+import { ApiProblemError, isUncertainOutcome, NetworkError, RequestAbortedError, UnexpectedResponseError } from './errors';
 import { createHttpOrdersService } from './httpOrdersService';
 
 const emptyPage = { items: [], page: { number: 1, size: 100, totalItems: 0, totalPages: 0 } };
@@ -75,6 +75,19 @@ describe('createHttpOrdersService', () => {
     await expect(service.listOrders({ status: 'PENDING', sort: 'createdAt', page: 1, size: 100 })).rejects.toBeInstanceOf(
       UnexpectedResponseError,
     );
+  });
+
+  it.each([
+    ['2xx with broken JSON', true, () => new Response('{"id":"o-1",', { status: 200, headers: { 'Content-Type': 'application/json' } })],
+    ['2xx with an unexpected Content-Type', true, () => new Response('<html>ok</html>', { status: 200, headers: { 'Content-Type': 'text/html' } })],
+    ['502 without Problem Details', true, () => new Response('<html>Bad gateway</html>', { status: 502, headers: { 'Content-Type': 'text/html' } })],
+    ['404 without Problem Details', false, () => new Response('<html>Not found</html>', { status: 404, headers: { 'Content-Type': 'text/html' } })],
+    ['409 Problem Details', false, () => jsonResponse({ type: 'about:blank', title: 'Conflict', status: 409, code: 'INVALID_STATUS_TRANSITION' }, 409, 'application/problem+json')],
+  ])('status change answered with %s: uncertain = %s', async (_name, uncertain, response) => {
+    const { service } = setup('t', async () => response());
+    const error = await service.updateOrderStatus('o-1', { status: 'PREPARING' }, 'k').catch((e: unknown) => e);
+    expect(error).toBeInstanceOf(Error);
+    expect(isUncertainOutcome(error)).toBe(uncertain);
   });
 
   it('separates network failures from cancelled requests', async () => {

@@ -82,13 +82,14 @@ Compared with `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` (20 Nov 2026), 
 - Polling every 20 s (ADR-010 range 15–30 s). At most one refresh group runs at a time; a request made during a refresh runs after it. Timers and requests stop when the board closes, including when another screen is opened.
 - Start preparing is offered on every Pending order and Mark as ready on every Preparing order. The Figma demo limit "#1042 only" is not applied. During a change only that card is locked ("Deducting stock…" or "Marking as ready…").
 - A successful change moves the card and both counters at once, then the board re-reads the server. A list response that started before the change is discarded.
-- Each status change uses a new `Idempotency-Key`. When the result is unknown (no response or 5xx), the card offers a retry that sends the same key and body. There is no automatic retry.
+- Each status change uses a new `Idempotency-Key`. When the result is unknown (no response, a 5xx answer, or a 2xx answer whose body cannot be read as JSON), the card offers a retry that sends the same key and body, and the board refreshes. If the refresh shows that the change was applied, the retry is removed. A 4xx answer is a definite rejection and is not offered as a retry with the same key. There is no automatic retry.
 - `409 INVALID_STATUS_TRANSITION` shows a warning ("Order #N was already started", or "could not be marked as ready") and reloads the board.
 - A failed refresh keeps the cards and shows the time of the last successful update.
 
 ## Checks of this delivery (20–21 Nov 2026)
 
-- `npm run typecheck`, `npm run lint`, `npm test` (42 tests: 31 kitchen board and service tests, 11 for routes, role menus, page changes and the sample screens) and `npm run build` pass, also after merging `develop` at `4227056` (21 Nov).
+- `npm ci`, `npm run typecheck`, `npm run lint`, `npm test` (49 tests: 38 kitchen board and service tests, 11 for routes, role menus, page changes and the sample screens) and `npm run build` pass after the retry fix (21 Nov). Before the fix, the same checks passed with 42 tests, also after merging `develop` at `4227056`.
+- The retry tests use the HTTP adapter with stubbed `fetch` responses and the in-memory mock service. They check how the client classifies results and which key and body it sends; they do not test a real backend, stock changes or concurrency.
 - The eight screens were opened in Chrome at 1280 × 800 and at 390 px width (no page-level horizontal scroll) and compared with the Figma exports. No browser console errors.
 - Manual check by the task owner in the browser (mock mode): Waiter, Chef and Manager screens; no issues found.
 - These checks cover the UI in mock mode only. No API, authentication, authorization, concurrency or performance test was run.

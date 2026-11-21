@@ -47,12 +47,16 @@ export function isAbortError(error: unknown): boolean {
 }
 
 /**
- * True when a write request may or may not have been applied: no response, or a 5xx answer.
- * A retry of the same logical operation must reuse its Idempotency-Key and body.
+ * True when a write request may or may not have been applied: no response, a 5xx answer, or a
+ * 2xx answer whose body could not be read (the server reported success, so the write may have
+ * been applied). A retry of the same logical operation must reuse its Idempotency-Key and body.
+ * A 4xx answer is a definite rejection.
  */
 export function isUncertainOutcome(error: unknown): boolean {
   if (error instanceof NetworkError) return true;
   if (error instanceof ApiProblemError) return error.status >= 500;
-  if (error instanceof UnexpectedResponseError) return error.status >= 500;
+  if (error instanceof UnexpectedResponseError) {
+    return (error.status >= 200 && error.status < 300) || error.status >= 500;
+  }
   return false;
 }

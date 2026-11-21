@@ -1,4 +1,4 @@
-import { ApiProblemError, NetworkError, RequestAbortedError } from '../errors';
+import { ApiProblemError, NetworkError, RequestAbortedError, UnexpectedResponseError } from '../errors';
 import type { OrdersService, RequestOptions } from '../ordersService';
 import type { ListOrdersQuery, Order, OrderPage, OrderStatus, OrderStatusUpdate, Problem } from '../types';
 import { sampleChef } from './sampleOrders';
@@ -11,6 +11,7 @@ import { sampleChef } from './sampleOrders';
 export type MockFault =
   | 'network' // request fails before the server applies it
   | 'network-after-apply' // write is applied, then the response is lost
+  | 'unreadable-after-apply' // write is applied, then the 2xx response body cannot be read
   | 'server-error' // 500 INTERNAL_ERROR
   | 'conflict'; // 409 INVALID_STATUS_TRANSITION
 
@@ -154,6 +155,7 @@ export function createMockOrdersService(options: MockOrdersServiceOptions): Mock
       const result = applyTransition(order, update.status);
       replays.set(idempotencyKey, { body, result });
       if (fault === 'network-after-apply') throw new NetworkError();
+      if (fault === 'unreadable-after-apply') throw new UnexpectedResponseError(200, 'Response body is not valid JSON');
       return result;
     },
   };

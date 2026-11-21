@@ -143,7 +143,10 @@ describe('KitchenBoardPage', () => {
     expect(within(column('Preparing')).queryByText(/Showing/)).toBeNull();
   });
 
-  it('retries an unknown result with the same key and body, and uses a new key for the next change', async () => {
+  it.each([
+    ['the response is lost', 'network-after-apply'],
+    ['the 2xx response body cannot be read', 'unreadable-after-apply'],
+  ] as const)('retries an unknown result (%s) with the same key and body, and uses a new key for the next change', async (_name, fault) => {
     const base = mock();
     let holdLists = false;
     const service: OrdersService = {
@@ -157,8 +160,9 @@ describe('KitchenBoardPage', () => {
     await loaded();
     holdLists = true;
 
-    base.failNext('update', 'network-after-apply'); // applied, response lost
+    base.failNext('update', fault); // applied on the server, but the client cannot confirm it
     await user.click(screen.getByRole('button', { name: 'Start preparing order #1042' }));
+    expect(await screen.findByText(/The result is unknown/)).toBeInTheDocument();
     await user.click(await screen.findByRole('button', { name: 'Retry start preparing order #1042' }));
     await waitFor(() => expect(cardNumbers('Preparing')).toContain('#1042 · Table 7'));
     expect(counts()).toBe('2 / 2 / 1');
@@ -177,6 +181,23 @@ describe('KitchenBoardPage', () => {
       'PREPARING',
       'READY',
     ]);
+  });
+
+  it('drops the retry when a refresh shows that an unreadable 2xx change was applied', async () => {
+    const base = mock();
+    const user = userEvent.setup();
+    renderBoard(base, { createIdempotencyKey: () => 'key-1' });
+    await loaded();
+
+    base.failNext('update', 'unreadable-after-apply');
+    await user.click(screen.getByRole('button', { name: 'Start preparing order #1042' }));
+    // The board refreshes after the unknown result and finds #1042 already Preparing.
+    await waitFor(() => expect(cardNumbers('Preparing')).toContain('#1042 · Table 7'));
+    expect(screen.queryByRole('button', { name: 'Retry start preparing order #1042' })).toBeNull();
+    expect(screen.queryByText(/The result is unknown/)).toBeNull();
+    expect(screen.getByRole('button', { name: 'Mark as ready order #1042' })).toBeEnabled();
+    expect(counts()).toBe('2 / 2 / 1');
+    expect(base.calls.update).toHaveLength(1);
   });
 
   it('reuses the key when the user retries after a network failure', async () => {
