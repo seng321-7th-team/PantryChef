@@ -31,3 +31,17 @@ jobs:
             exit 0
           fi
           npx --yes @redocly/cli@2.64.1 lint api/openapi.yaml
+
+  docs-links:
+    # Not a required check yet. It only reports broken links between repo files.
+    name: Docs link check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Check relative links in Markdown files
+        uses: lycheeverse/lychee-action@v2.9.0
+        with:
+          args: --offline --no-progress './**/*.md'
+          fail: true
