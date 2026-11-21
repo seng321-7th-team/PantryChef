@@ -132,7 +132,7 @@ reflects the newer verification.
 | S2-32 — Frontend UI Skeleton | Issue #100 / PR #101 | In Progress; PR #101 Draft | Complete implementation and review |
 | S2-33 — Figma Links and UI Documentation | Issue #53 / PR #71 | PR merged; Issue closed / Done | Independent prototype access verification pending |
 | QA Documentation Synchronization | PR #93 | Merged into `develop` | Continue final evidence verification |
-| S2-36 — README Documentation | Issue #30 / PR #84 | CI 2/2 Passed; documentation review pending | Address review feedback and obtain approval |
+| S2-36 — README Documentation | Issue #30 / PR #84 / PR #108 | PRs #84 and #108 approved by Bilgesu and merged into `develop`; Issue #30 Closed / Done | — |
 | S2-36 — Sprint 2 Release | Issue #31 / PR #96 | PR #96 Draft; Ayşe approved; CI 4/4 Passed | Merge remaining dependencies, finalize release, create tag |
 | S2-37 — Peer Evaluation | Issue #97 | Open; completion not verified | Confirm applicable evaluation requirements |
 

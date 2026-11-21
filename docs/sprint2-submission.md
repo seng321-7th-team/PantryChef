@@ -23,7 +23,7 @@
 | Sprint | Sprint 2 — Requirements & Architecture |
 | Submission Platform | Microsoft Teams |
 | Submission Deadline | November 24, 2026, 23:59 |
-| Release / Tag | Pending verification |
+| Release / Tag | Planned: [`sprint-2`](https://github.com/seng321-7th-team/PantryChef/releases/tag/sprint-2) (publication pending) |
 | Final Submission Status | Not submitted |
 
 ## 2. Team Members and Responsibilities
@@ -143,10 +143,10 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 
 - [ ] All mandatory Sprint 2 deliverables verified.
 - [ ] Final technical documentation links checked.
-- [ ] Figma prototypes and user-flow links verified.
+- [x] Figma prototypes and user-flow links verified.
 - [ ] C4 and UML diagram links verified.
-- [ ] Team roles and individual contribution evidence recorded.
-- [ ] Relevant PR approvals and merge statuses verified.
+- [x] Team roles and [individual contribution evidence](https://github.com/seng321-7th-team/PantryChef/issues/78#issuecomment-7062871701) recorded.
+- [x] PR approvals and merge statuses for the submitted deliverables verified.
 - [ ] Final GitHub release/tag recorded.
 - [x] Initial submission package (PR #79) reviewed and approved by Burcu Ücük.
 - [x] Final submission package synchronization (PR #88) reviewed and approved by Burcu Ücük; merged into `develop`.
