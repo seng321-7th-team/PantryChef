@@ -223,3 +223,19 @@ Append each additional confirmed meeting or team decision to this log, including
 **Next update:** Record the actual Sprint Review and Retrospective outcomes, confirm the peer evaluation completion status, and synchronize final PR and release references before submission. This document does not claim that unverified meetings or activities have occurred.
 
 **Last coordination checkpoint:** November 20, 2026 (Türkiye time).
+
+
+## 11. GitHub Coordination Follow-up — November 21, 2026
+
+| Follow-up | Verified outcome | Evidence |
+|---|---|---|
+| IMP-01 database schema | Emre approved the schema and it merged into develop. Issue closed. | [#65](https://github.com/seng321-7th-team/PantryChef/issues/65), [#66](https://github.com/seng321-7th-team/PantryChef/pull/66) |
+| IMP-03 README links | Both CI checks passed after the dependency merges. Final README review and merge remain open. | [#30](https://github.com/seng321-7th-team/PantryChef/issues/30), [#84](https://github.com/seng321-7th-team/PantryChef/pull/84) |
+| IMP-04 user flows | Ayşe approved; the PR merged into develop and the Issue closed. | [#52](https://github.com/seng321-7th-team/PantryChef/issues/52), [#70](https://github.com/seng321-7th-team/PantryChef/pull/70) |
+| IMP-05 ADR status | Emre approved; the PR merged into develop. ADR-006 and ADR-008 are Accepted. | [#86](https://github.com/seng321-7th-team/PantryChef/issues/86), [#87](https://github.com/seng321-7th-team/PantryChef/pull/87) |
+| IMP-06 release | The release PR remains Draft; main merge, tag and release remain pending. The UI documentation follow-up merged. | [#31](https://github.com/seng321-7th-team/PantryChef/issues/31), [#96](https://github.com/seng321-7th-team/PantryChef/pull/96), [#103](https://github.com/seng321-7th-team/PantryChef/pull/103) |
+
+- [x] Current meeting-notes update reviewed and approved by Tuğçe. [#77](https://github.com/seng321-7th-team/PantryChef/pull/77), [#98](https://github.com/seng321-7th-team/PantryChef/pull/98)
+- [x] Approved update merged into develop. [#98](https://github.com/seng321-7th-team/PantryChef/pull/98)
+- [ ] Record the Sprint Review and Retrospective once their outcomes are confirmed. [#42](https://github.com/seng321-7th-team/PantryChef/issues/42)
+- [ ] Confirm peer evaluation completion. [#97](https://github.com/seng321-7th-team/PantryChef/issues/97)
