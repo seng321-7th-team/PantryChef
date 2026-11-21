@@ -48,10 +48,10 @@ The following deliverables are required by the Sprint 2 assignment.
 | D-01 | Detailed Software Requirements Specification (SRS) | PR #54 approved and merged; final submission link verification pending |
 | D-02 | Refined Product Backlog | PR #55 approved and merged; final submission link verification pending |
 | D-03 | Non-functional requirements and measurable quality specifications | PR #51 approved and merged; final quality-evidence verification pending |
-| D-04 | Figma UI/UX prototypes | Pending final verification |
-| D-05 | User-flow diagrams | Pending final verification |
-| D-06 | C4 architecture models | Pending final verification |
-| D-07 | UML diagrams | Pending final verification |
+| D-04 | Figma UI/UX prototypes | [Prototype links](ui-ux/figma-links.md) verified. All three prototype links opened without signing in. PRs #71 and #103 merged. |
+| D-05 | User-flow diagrams | [User-flow diagrams](ui-ux/user-flows.md) verified on `develop`. Ayşe approved PR #70, which merged. |
+| D-06 | C4 architecture models | [C4 Context, Container, and Component diagrams](architecture/c4/) verified on `develop`. PR #62 merged. |
+| D-07 | UML diagrams | [UML Use Case, Sequence, State, and Class diagrams](architecture/uml/) verified on `develop`. PR #62 merged. |
 
 **Verification Rule:** A deliverable must not be marked as completed solely because a draft or an open Pull Request exists. Its final location, review status, and supporting evidence must be checked.
 
@@ -80,9 +80,9 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 | S2-06 | Sprint 2 Task Board | #38 | #39, #69, #85 | Completed — all three PRs approved and merged into develop; Issue #38 closed |
 | S2-07 | Sprint 2 RACI Matrix | #40 | #41 | Completed — merged into develop |
 | S2-08 | Sprint 2 Meeting Notes | #42 | #77, #98 | PRs #77 and #98 approved by Tuğçe Çevik and merged into `develop`; Issue #42 remains Open / In Progress pending actual Sprint Review and Retrospective records |
-| S2-09 | Progress & Impediment Tracking | #57 | #58, #83, #99 | PRs #58 and #83 approved and merged into `develop`; PR #99 has 2/2 passing CI checks and awaits Emre Boz's formal approval. Issue #57 remains Open / In Progress with 5/6 acceptance criteria checked |
+| S2-09 | Progress & Impediment Tracking | #57 | #58, #83, #99 | Emre approved PRs #58, #83, and #99, and all three merged into `develop`. Issue #57 is Closed / Done with 6/6 acceptance criteria checked |
 | S2-10 | Deliverables Consistency Review | #59 | #60 | PR #60 approved by Beyzanur Alpay and merged into `develop`; Issue #59 Closed / Done with all eight acceptance criteria satisfied |
-| S2-11 | Submission Package & Teams Upload | #78 | #79, #88 | PRs #79 and #88 approved and merged into `develop`; Issue #78 remains Open / In Progress. Final release information, deliverable verification and Microsoft Teams submission are pending |
+| S2-11 | Submission Package & Teams Upload | #78 | #79, #88, #102 | Burcu approved PRs #79, #88, and #102, and all three merged into `develop`. Issue #78 remains Open / In Progress pending release information and Teams submission |
 
 ### 5.1 Related GitHub Links
 
@@ -108,6 +108,7 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 - [S2-11 — Issue #78](https://github.com/seng321-7th-team/PantryChef/issues/78)
 - [S2-11 — PR #79](https://github.com/seng321-7th-team/PantryChef/pull/79)
 - [S2-11 — Submission Package Final Sync PR #88](https://github.com/seng321-7th-team/PantryChef/pull/88)
+- [S2-11 — Submission Evidence Update PR #102](https://github.com/seng321-7th-team/PantryChef/pull/102)
 
 
 ### 5.2 Additional Coordination Evidence
@@ -118,9 +119,9 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 | Sprint 2 Task Board status updates | PR #69, PR #85 | Both PRs approved and merged into `develop` |
 | Sprint 2 Team Roles documentation update | PR #56 | Approved by Ayşe Dural and merged into `develop`; updated team roles and documentation references are included |
 | Sprint 2 team coordination records | `docs/sprint2-meeting-notes.md`, PR #77, PR #98 | Both PRs approved by Tuğçe Çevik and merged into `develop`; Issue #42 remains Open / In Progress. Sprint Review and Retrospective records are pending |
-| Sprint 2 progress and impediment records | `docs/sprint2-progress-impediments.md`, PR #58, PR #83, PR #99 | PRs #58 and #83 merged into `develop`; PR #99 has 2/2 passing CI checks and awaits Emre Boz's approval. Issue #57 remains Open / In Progress with 5/6 acceptance criteria checked |
+| Sprint 2 progress and impediment records | `docs/sprint2-progress-impediments.md`, PR #58, PR #83, PR #99 | Emre approved PRs #58, #83, and #99, and all three merged into `develop`. Issue #57 is Closed / Done with 6/6 acceptance criteria checked |
 | Sprint 2 cross-document consistency review | `docs/sprint2-deliverables-consistency-review.md`, PR #60 | Approved by Beyzanur Alpay and merged into `develop`; Issue #59 Closed / Done with all eight acceptance criteria satisfied |
-| Sprint 2 submission package | `docs/sprint2-submission.md`, PR #79, PR #88 | Both PRs approved by Burcu Ücük and merged into `develop`; Issue #78 remains Open / In Progress. Final release evidence and Microsoft Teams submission are pending |
+| Sprint 2 submission package | `docs/sprint2-submission.md`, PR #79, PR #88, PR #102 | Burcu approved PRs #79, #88, and #102, and all three merged into `develop`. Issue #78 remains Open / In Progress pending final release evidence and Teams submission |
 | Sprint 2 release/tag | Issue #31 / PR #96 | Draft release PR prepared by Emre Boz; final integration, merge into `main`, `sprint-2` tag and GitHub Release remain pending |
 
 
@@ -168,14 +169,14 @@ The references below identify known Issues and Pull Requests. Final approval, me
 | Detailed SRS | Burcu Ücük | #44 | #54 | Approved and merged into develop |
 | Refined Product Backlog | Burcu Ücük | #46 | #55 | Approved by Beyzanur and merged into develop; Issue #46 Closed / Done |
 | Functional and Non-functional Requirements | Burcu Ücük | #49 | #51 | Approved by Beyzanur and merged into develop |
-| UI Design and User Story Consistency | Tuğçe Çevik | #48 | #50 | PR #50 merged into `develop` (96bcbe3); related Issue #48 closure and final acceptance criteria status require verification |
-| User-flow Diagrams | Tuğçe Çevik | #52 | #70 | Updated U10–U12 user-flow diagrams submitted for review; Ayşe Dural's approval of the latest changes remains pending. PR #70 is Open, awaiting final review and merge |
-| Figma Links and UI Documentation | Tuğçe Çevik | #53 | #71 | PR #71 approved by Bilgesu Nacak and merged into `develop` (ca96339); Issue #53 Closed / Done. Public access to Figma prototype links requires final verification |
+| UI Design and User Story Consistency | Tuğçe Çevik | #48 | #50 | Burcu approved PR #50, which merged into `develop`. Issue #48 Closed / Done |
+| User-flow Diagrams | Tuğçe Çevik | #52 | #70 | Ayşe approved PR #70, which merged into `develop`. Issue #52 Closed / Done. User-flow document link verified |
+| Figma Links and UI Documentation | Tuğçe Çevik | #53 | #71 | Bilgesu approved PR #71, which merged into `develop`. Issue #53 Closed / Done. All three prototype links opened without signing in |
 | API, Ingredient Rules and Architecture Alignment | Ayşe Dural | #61 | #62 | Approved and merged into develop |
-| Architecture Decision Records | Ayşe Dural | #63, #86 | #64, #87 | PR #64 approved and merged into `develop`; follow-up PR #87 approved by Emre Boz but remains Open, awaiting documentation-reference corrections and Ayşe Dural's merge action |
-| Database Schema Documentation | Ayşe Dural | #65 | #66 | SQL CHECK constraint correction reviewed and formally approved by Emre Boz; CI checks passed at last verification. PR #66 remains Open, awaiting Ayşe Dural's merge action |
+| Architecture Decision Records | Ayşe Dural | #63, #86 | #64, #87 | Emre approved PRs #64 and #87, which merged into `develop`. Issues #63 and #86 Closed / Done. ADR-006 and ADR-008 are Accepted |
+| Database Schema Documentation | Ayşe Dural | #65 | #66 | Emre approved PR #66 after the SQL CHECK constraint corrections. PR merged into `develop`. Issue #65 Closed / Done |
 | Architecture–SRS–OpenAPI Consistency Review | Ayşe Dural | #67 | #68 | PR #68 reviewed and merged into `develop`; CR-01 inventory initialization and WAITER-only order creation rules aligned across SRS and OpenAPI. Final consistency monitoring remains ongoing |
-| Quality Metrics and QA Evidence | Beyzanur Alpay | #81 | #82, #93 | PR #82 approved and merged into `develop`; Issue #81 Closed / Done. Follow-up QA documentation PR #93 approved by Burcu Ücük and awaiting Ayşe Dural's technical review and merge |
+| Quality Metrics and QA Evidence | Beyzanur Alpay | #81 | #82, #93 | PR #82 merged and Issue #81 is Closed / Done. Burcu approved the QA documentation follow-up PR #93, which merged into `develop` |
 | Sprint 2 Release / Tag | Emre Boz | #31 | #96 | Draft PR #96 targets `main` from `develop`; final integration, review, merge, `sprint-2` tag and GitHub Release remain pending |
 
 ### 8.1 Evidence Verification Rules
@@ -190,28 +191,28 @@ For each deliverable, verify:
 - Final merge and release information is accurately recorded.
 
 
-### 8.2 Outstanding Review Notes
+### 8.2 Review and Merge Evidence
 
 - PR #54: Detailed SRS approved and merged into develop.
 - PR #55: Refined Product Backlog approved by Beyzanur and merged into develop.
 - PR #51: Functional and non-functional requirements approved by Beyzanur and merged into develop.
 - PR #62: Architecture and OpenAPI documentation approved and merged into develop.
-- PR #66: Database schema SQL CHECK constraint corrections reviewed and formally approved by Emre Boz; CI checks passed at last verification. PR remains Open, awaiting Ayşe Dural's merge action.
+- PR #66: Emre approved the database schema corrections. The PR merged into `develop` and Issue #65 is closed.
 - PR #68: Architecture–SRS–OpenAPI consistency review completed and merged into `develop`. CR-01 inventory initialization and WAITER-only order creation rules were aligned; final cross-document consistency monitoring remains ongoing.
-- PR #70: Updated U10–U12 user-flow diagrams submitted for review. Ayşe Dural's approval of the latest changes remains pending; PR is Open and awaits final review and merge.
+- PR #70: Ayşe approved the updated user-flow diagrams. The PR merged into `develop` and Issue #52 is closed.
 - PR #71: Figma UI/UX documentation approved by Bilgesu Nacak and merged into `develop` (ca96339); Issue #53 Closed / Done. Public view access to Figma prototype links requires final verification.
-- PR #82: Quality metrics and QA evidence approved and merged into `develop`; Issue #81 Closed / Done. Follow-up PR #93 awaits Ayşe Dural's technical review and merge.
+- PR #82: QA deliverables merged into `develop` and Issue #81 is closed. Follow-up PR #93 was approved by Burcu and merged.
 - PR #85: Sprint 2 Task Board updates approved by Burcu and merged into develop.
 - PR #60: Deliverables consistency review approved by Beyzanur Alpay and merged into `develop`; Issue #59 Closed / Done with all eight acceptance criteria satisfied.
 - PR #88: Submission package synchronization approved by Burcu Ücük and merged into `develop`; final release evidence and Microsoft Teams submission remain pending.
 - PR #79: Initial submission package approved and merged into develop.
 - PR #64: Architecture Decision Records approved and merged into develop.
 - PR #77 and PR #98: Sprint 2 Meeting Notes updates approved by Tuğçe Çevik and merged into `develop`; Issue #42 remains Open / In Progress pending Sprint Review and Retrospective.
-- PR #83 and PR #99: PR #83 approved and merged into `develop`; PR #99 has 2/2 passing CI checks and awaits Emre Boz's approval. Issue #57 remains Open / In Progress.
-- PR #50: UI Design and User Story Consistency merged into `develop` (96bcbe3); related Issue #48 closure requires verification.
-- PR #87: Architecture Decision Record updates approved by Emre Boz; documentation-reference corrections and Ayşe Dural's merge remain pending.
-- PR #93: QA documentation synchronization approved by Burcu Ücük; Ayşe Dural's technical review remains pending.
-- PR #84: README documentation update remains Open with one passing and one failing CI check. Documentation-link failures require correction.
+- PR #83 and PR #99: Emre approved both updates and both merged into `develop`. Issue #57 is closed with 6/6 acceptance criteria checked.
+- PR #50: Burcu approved the UI consistency review. The PR merged into `develop` and Issue #48 is closed.
+- PR #87: Emre approved the ADR status update and the PR merged into `develop`. ADR-006 and ADR-008 are Accepted.
+- PR #93: Burcu approved the QA documentation synchronization and the PR merged into `develop`.
+- PR #84: Bilgesu approved the README update and the PR merged into `develop`. Issue #30 is closed. PR #108 added the frontend entry and also merged.
 - PR #96: Sprint 2 release PR remains in Draft. Final integration, merge into `main`, `sprint-2` tag and GitHub Release remain pending.
 
 - Final GitHub release/tag information and Microsoft Teams submission confirmation are still pending.
@@ -271,12 +272,12 @@ This section records verified Sprint 2 developments after the earlier submission
 | D-01 — Detailed SRS | [SRS](srs.md) | [#44](https://github.com/seng321-7th-team/PantryChef/issues/44), [#54](https://github.com/seng321-7th-team/PantryChef/pull/54) approved and merged. |
 | D-02 — Refined backlog | [Product backlog](product-backlog.md) | [#46](https://github.com/seng321-7th-team/PantryChef/issues/46), [#55](https://github.com/seng321-7th-team/PantryChef/pull/55) approved and merged. |
 | D-03 — Requirements and quality evidence | [FR/NFR](non-functional-requirements.md), [quality metrics](testing/quality-metrics.md), [traceability](testing/traceability-matrix.md) | [#49](https://github.com/seng321-7th-team/PantryChef/issues/49), [#81](https://github.com/seng321-7th-team/PantryChef/issues/81) closed. [#51](https://github.com/seng321-7th-team/PantryChef/pull/51), [#82](https://github.com/seng321-7th-team/PantryChef/pull/82), [#92](https://github.com/seng321-7th-team/PantryChef/pull/92) and [#93](https://github.com/seng321-7th-team/PantryChef/pull/93) merged. |
-| D-04 — Figma prototype | [Figma design and prototype links](ui-ux/figma-links.md) | [#53](https://github.com/seng321-7th-team/PantryChef/issues/53) closed. [#71](https://github.com/seng321-7th-team/PantryChef/pull/71) and the UI documentation follow-up [#103](https://github.com/seng321-7th-team/PantryChef/pull/103) merged. Independent prototype access verification pending. |
-| D-05 — User-flow diagrams | [User flows](ui-ux/user-flows.md) | [#52](https://github.com/seng321-7th-team/PantryChef/issues/52) closed; Ayşe approved [#70](https://github.com/seng321-7th-team/PantryChef/pull/70), which merged. Final access check pending. |
+| D-04 — Figma prototype | [Figma design and prototype links](ui-ux/figma-links.md) | [#53](https://github.com/seng321-7th-team/PantryChef/issues/53) closed. [#71](https://github.com/seng321-7th-team/PantryChef/pull/71) and the UI documentation follow-up [#103](https://github.com/seng321-7th-team/PantryChef/pull/103) merged. All three prototype links opened without signing in. |
+| D-05 — User-flow diagrams | [User flows](ui-ux/user-flows.md) | [#52](https://github.com/seng321-7th-team/PantryChef/issues/52) closed; Ayşe approved [#70](https://github.com/seng321-7th-team/PantryChef/pull/70), which merged. The user-flow document link was verified on `develop`. |
 | D-06 — C4 models | [Context](architecture/c4/PantryChef_C4-1-context.png), [Container](architecture/c4/PantryChef_C4-2-container.png), [Component](architecture/c4/PantryChef_C4-3-component.png) | [#72](https://github.com/seng321-7th-team/PantryChef/issues/72), [#73](https://github.com/seng321-7th-team/PantryChef/issues/73), [#75](https://github.com/seng321-7th-team/PantryChef/issues/75) closed; Emre approved [#62](https://github.com/seng321-7th-team/PantryChef/pull/62), which merged. |
 | D-07 — UML diagrams | [Use Case](architecture/uml/PantryChef_UML-1-use-case.png), [Sequence](architecture/uml/PantryChef_UML-2-sequence.png), [State](architecture/uml/PantryChef_UML-3-state.png), [Class](architecture/uml/PantryChef_UML-4-class.png) | [#74](https://github.com/seng321-7th-team/PantryChef/issues/74), [#76](https://github.com/seng321-7th-team/PantryChef/issues/76) closed; shared architecture PR [#62](https://github.com/seng321-7th-team/PantryChef/pull/62) merged. Separate formal approvals from the named UML reviewers are unverified. |
 
 - **Sprint coordination.** [#99](https://github.com/seng321-7th-team/PantryChef/pull/99) was approved by Emre and merged. [#57](https://github.com/seng321-7th-team/PantryChef/issues/57) is Closed / Done with 6/6 acceptance criteria checked. See the [closure note](https://github.com/seng321-7th-team/PantryChef/issues/57#issuecomment-7061635657). [#102](https://github.com/seng321-7th-team/PantryChef/pull/102) and [#104](https://github.com/seng321-7th-team/PantryChef/pull/104) were approved by Burcu and merged. See the [current task register](sprint2-task-board.md#9-current-status-and-evidence-register--november-21-2026) for individual evidence.
 - **Architecture and UI follow-ups.** [#66](https://github.com/seng321-7th-team/PantryChef/pull/66), [#87](https://github.com/seng321-7th-team/PantryChef/pull/87), [#93](https://github.com/seng321-7th-team/PantryChef/pull/93) and [#103](https://github.com/seng321-7th-team/PantryChef/pull/103) merged into develop. [#48](https://github.com/seng321-7th-team/PantryChef/issues/48) is Closed / Done. The frontend stretch goal [#100](https://github.com/seng321-7th-team/PantryChef/issues/100) is Closed / Done. [#101](https://github.com/seng321-7th-team/PantryChef/pull/101) merged into `develop`. Bilgesu’s recorded approval covers [`edc845a`](https://github.com/seng321-7th-team/PantryChef/commit/edc845a). Separate review of the responsive changes in [`953410e`](https://github.com/seng321-7th-team/PantryChef/commit/953410e) is unverified.
-- **README and release.** [#84](https://github.com/seng321-7th-team/PantryChef/pull/84) was approved by Bilgesu and merged, and [#30](https://github.com/seng321-7th-team/PantryChef/issues/30) is closed. [#96](https://github.com/seng321-7th-team/PantryChef/pull/96) remains Draft with Ayşe's approval recorded. Main merge, the sprint-2 tag and GitHub release remain pending.
+- **README and release.** [#84](https://github.com/seng321-7th-team/PantryChef/pull/84) was approved by Bilgesu and merged, and [#30](https://github.com/seng321-7th-team/PantryChef/issues/30) is closed. [#108](https://github.com/seng321-7th-team/PantryChef/pull/108) added the frontend entry and merged into `develop`. [#96](https://github.com/seng321-7th-team/PantryChef/pull/96) remains Draft with Ayşe's approval recorded. Main merge, the sprint-2 tag and GitHub release remain pending.
 - **Teams submission.** [#78](https://github.com/seng321-7th-team/PantryChef/issues/78) is open / In Progress. The final package is not submitted. The checklist still requires final artifact access and contribution checks, release details and Teams submission confirmation.
