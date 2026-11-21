@@ -125,10 +125,10 @@ Earlier exports (superseded): 18 Nov, 23:47 – 32 frames, before the manager me
 
 ## 5. Related documents
 
-- User flows: `docs/ui-ux/user-flows.md` ([PR #70](https://github.com/seng321-7th-team/PantryChef/pull/70), S2-30; not on `develop` yet)
+- User flows: [`user-flows.md`](user-flows.md) (S2-30, merged into `develop` by [PR #70](https://github.com/seng321-7th-team/PantryChef/pull/70) on 20 Nov)
 - Prototype description: [`ui-prototype.md`](ui-prototype.md)
 - Demo script: [`demo-scenario.md`](demo-scenario.md)
-- Consistency review of the screens against the User Stories: `docs/ui-ux/ui-user-story-review.md` ([PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50), S2-31; not on `develop` yet)
+- Consistency review of the screens against the User Stories: [`ui-user-story-review.md`](ui-user-story-review.md) (S2-31, merged into `develop` by [PR #50](https://github.com/seng321-7th-team/PantryChef/pull/50) on 20 Nov)
 - API contract: [`../../api/openapi.yaml`](../../api/openapi.yaml) (`develop`, version 0.2.1 since PR #91 was merged on 20 Nov; 0.2.1 changes wording only, no schema change). Ingredient and order-creation behavior in the frames follows API 0.2.0 (PR #62); `scr-04d` to `scr-04f` follow its zero-stock rule.
 
 ## 6. Verification
@@ -150,7 +150,7 @@ The checks below cover screen navigation and displayed content only, not backend
 | Flow 10 to Flow 13 opened without sign-in (private Chrome window) | Verified on 20 Nov: all four open at their start frames (`scr-06c-new-menu-item`, `scr-04j-stock-movements`, `scr-08a-staff-permissions`, `scr-06f-new-menu-item-validation`). Access check only; the interactions were not re-tested in this check. |
 | Prototype links outside the demo scenario | Pending |
 | Independent reviewer re-check of the Chef path | Approved on 19 November 2026 at `44ea8c4` ([approval](https://github.com/seng321-7th-team/PantryChef/pull/71#pullrequestreview-5982246341)). The approval covers the UI/UX prototype and documentation scope of that time (32-frame version). The commits after it up to `2bb8863` changed documentation text only (F-07 wording, links, this review record and the `develop` alignment) and were not reviewed separately. The Chef frames `scr-03a` to `scr-03e` in the 20 Nov export are pixel-identical to the approved export. |
-| Review of the 39-frame additions of 20 Nov (D-3, D-4, D-6 frames, manager menu, PNG/PDF export and documentation) | Pending. The 19 Nov approval does not cover them. |
+| Review of the 39-frame additions of 20 Nov (D-3, D-4, D-6 frames, manager menu, PNG/PDF export and documentation) | D-3, D-4 and D-6 frames: Burcu approved PR #50 at `a745b47` after checking them against her decisions; her approval covers design and requirements consistency, not implementation testing ([review](https://github.com/seng321-7th-team/PantryChef/pull/50#pullrequestreview-5997276396)). Bilgesu reviewed the static exports of the seven added frames and found no blocking visual inconsistencies ([PR #71 comment](https://github.com/seng321-7th-team/PantryChef/pull/71#issuecomment-7046524812)). Neither is a live prototype interaction test or an access check. Manager menu changes on the other frames, the rest of the PNG/PDF export and the documentation updates: Pending (no separate review recorded). The 19 Nov approval does not cover them. |
 
 Related status:
 
@@ -172,6 +172,17 @@ Related status:
 - The PDF and PNG files show start states. They do not show every interactive variable state of the Figma prototype.
 
 ## 8. Requirement and architecture alignment checkpoint
+
+### Status update of 21 Nov
+
+Checked against `develop` at `eb41d74`. SRS, refined backlog and API 0.2.1 are unchanged since `7270d63`.
+
+- The schema ([PR #66](https://github.com/seng321-7th-team/PantryChef/pull/66)) and the ADR status update ([PR #87](https://github.com/seng321-7th-team/PantryChef/pull/87)) are merged. ADR-006 (including WAITER-only order creation) and ADR-008 are Accepted. ADR-004, ADR-005 and ADR-007 stay Proposed.
+- The S2-30 user flows (PR #70), the S2-31 review (PR #50) and this document set with the 39-frame export (PR #71) are merged.
+- D-3, D-4 and D-6 frames: reviewed by the product owner (PR #50 approval) and, as static exports, by the Scrum Master (PR #71 comment); see section 6. No separate review is recorded for the manager menu changes on the other frames or for the U10–U12 flows in PR #70.
+- The API questions for these views in [`ui-user-story-review.md`](ui-user-story-review.md) section 7b stay open. They are not Sprint 2 release blockers; Ayşe will answer them for Sprint 3 ([PR #96 review](https://github.com/seng321-7th-team/PantryChef/pull/96#pullrequestreview-5999423412)).
+
+### Check of 20 Nov (kept as recorded)
 
 Checked against `develop` at `7270d63` (20 Nov): [SRS](https://github.com/seng321-7th-team/PantryChef/blob/7270d63c6d9e23b87ad46d2d0ea3f5153088af34/docs/srs.md) (PR #54), [refined backlog](https://github.com/seng321-7th-team/PantryChef/blob/7270d63c6d9e23b87ad46d2d0ea3f5153088af34/docs/product-backlog.md) (PR #55), FR/NFR (PR #51), [API 0.2.1](https://github.com/seng321-7th-team/PantryChef/blob/7270d63c6d9e23b87ad46d2d0ea3f5153088af34/api/openapi.yaml) with C4/UML/ER (PR #62; wording update PR #91), the SRS FR-14 clarification (PR #89), the ADR document (PR #64) and the consistency review (PR #68) are merged. Schema #66 is open. ADR records keep their own status; ADR-006 and ADR-008 stay Proposed while PR #87 is open. PR #50's current mapping uses FR-01–FR-14; the older FR-001–FR-027 mapping is historical. SRS and backlog are unchanged since the previous check at `e197628`.
 
