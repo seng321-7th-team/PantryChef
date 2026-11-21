@@ -258,3 +258,19 @@ On November 20, PR #84's documentation link check failed because the README refe
 - Recorded review feedback on PR #84 and the UI documentation follow-up on PR #96.
 - Rechecked PR #99 approval, CI results and outstanding integration dependencies.
 - Preserved earlier dated checkpoints; Sprint 2 final release and Teams submission are not yet complete.
+
+
+## 10. Current Progress and Open Follow-ups — November 21, 2026
+
+See the [current task and evidence register](sprint2-task-board.md#9-current-status-and-evidence-register--november-21-2026) for the Project Board comparison.
+
+| Item | Current status | Evidence |
+|---|---|---|
+| S2-09 tracking | Emre approved the update and it merged into develop. Issue remains open / In Progress with 6/6 acceptance criteria checked. Final sprint tracking is ongoing. | [#57](https://github.com/seng321-7th-team/PantryChef/issues/57), [#58](https://github.com/seng321-7th-team/PantryChef/pull/58), [#83](https://github.com/seng321-7th-team/PantryChef/pull/83), [#99](https://github.com/seng321-7th-team/PantryChef/pull/99) |
+| S2-11 submission package | Burcu approved the update and it merged into develop. Issue remains open / In Progress pending final verification, release details and Teams confirmation. | [#78](https://github.com/seng321-7th-team/PantryChef/issues/78), [#102](https://github.com/seng321-7th-team/PantryChef/pull/102) |
+| Task Board and UI documentation sync | Burcu approved the Task Board update and Bilgesu approved the UI documentation correction. Both merged into develop. | [#104](https://github.com/seng321-7th-team/PantryChef/pull/104), [#103](https://github.com/seng321-7th-team/PantryChef/pull/103) |
+| S2-32 frontend skeleton | Issue open / In Progress. PR is ready for review and Bilgesu has approved it. Merge pending. | [#100](https://github.com/seng321-7th-team/PantryChef/issues/100), [#101](https://github.com/seng321-7th-team/PantryChef/pull/101) |
+| IMP-01 README link check | Dependency merges resolved the previous CI failure. Both checks passed; final documentation review and merge remain open. | [#30](https://github.com/seng321-7th-team/PantryChef/issues/30), [#70](https://github.com/seng321-7th-team/PantryChef/pull/70), [#84](https://github.com/seng321-7th-team/PantryChef/pull/84) |
+| Sprint 2 release | Release Issue is Todo. PR is Draft and Ayşe's approval is recorded. Main merge, tag and release remain pending. | [#31](https://github.com/seng321-7th-team/PantryChef/issues/31), [#96](https://github.com/seng321-7th-team/PantryChef/pull/96) |
+
+Final Figma access verification, Sprint Review and Retrospective records, and Teams submission confirmation remain open.
