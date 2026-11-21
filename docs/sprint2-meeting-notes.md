@@ -157,31 +157,29 @@ The following items were identified through Sprint 2 Pull Request reviews and co
 
 ## 6. Sprint Review
 
-**Status:** Not planned as a separate meeting for Sprint 2.
+**Status:** Outcomes recorded from the team discussion on WhatsApp.
 
-| Field | To be recorded after the review |
+| Field | Outcome |
 | --- | --- |
-| Date / time and format | Pending |
-| Attendees | Pending |
-| Demonstrated or reviewed deliverables | Pending |
-| Accepted items and evidence links | Pending |
-| Stakeholder or reviewer feedback | Pending |
-| Rework or follow-up actions and owners | Pending |
-
-Record the actual SRS, backlog, NFR, Figma, C4/UML outputs reviewed, any feedback, and the corresponding Issue/PR links. Do not mark deliverables accepted before review.
+| Date / time and format | Outcome recorded November 21, 2026. Asynchronous discussion in the team WhatsApp group. |
+| Attendees | PantryChef team discussion. Individual attendance was not recorded. |
+| Demonstrated or reviewed deliverables | Detailed SRS and refined backlog, NFR and quality measures, Figma prototypes and user flows, and C4/UML architecture documentation. |
+| Accepted items and evidence links | The team reviewed all Sprint 2 deliverables and agreed the package could be submitted through Microsoft Teams on the evening of November 21. See the [submission package](sprint2-submission.md) for deliverable and PR links. |
+| Stakeholder or reviewer feedback | Issues identified during review were raised in GitHub comments, addressed, and followed through to merge. |
+| Rework or follow-up actions and owners | Bilgesu will coordinate the Teams submission after the release link is available. See [Issue #78](https://github.com/seng321-7th-team/PantryChef/issues/78). |
 
 ## 7. Sprint Retrospective
 
-**Status:** Not planned as a separate meeting for Sprint 2.
+**Status:** Outcomes recorded from the team discussion on WhatsApp.
 
-| Discussion point | Record after the retrospective |
+| Discussion point | Outcome |
 | --- | --- |
-| Date / time and attendees | Pending |
-| What went well | Pending |
-| What did not go well | Pending |
-| Improvements for the next sprint | Pending |
-| Action owner and target date | Pending |
-| Follow-up method | Pending |
+| Date / time and attendees | Outcome recorded November 21, 2026, from the team discussion on WhatsApp. Individual attendance was not recorded. |
+| What went well | Reviewers raised issues directly in GitHub comments. The team resolved the reported issues and merged the reviewed changes. |
+| What did not go well | The team reported that the process went well overall. Issues raised during reviews were handled as they came up. |
+| Improvements for the next sprint | The discussion identified GitHub comments and follow-up before merge as practices that worked well. No separate improvement action was recorded. |
+| Action owner and target date | No separate retrospective action owner or target date was recorded. |
+| Follow-up method | GitHub Issues, PR comments, and merge records. |
 
 ## 8. Meeting and decision log
 
