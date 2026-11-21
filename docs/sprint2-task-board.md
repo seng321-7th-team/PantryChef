@@ -61,8 +61,10 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 | S2-29 | Waiter, Chef & Manager Screen Designs | Tuğçe Çevik | Burcu | `Figma role-based screens` | [#71](https://github.com/seng321-7th-team/PantryChef/pull/71) | Unverified |
 | S2-30 | User-flow Diagrams | Tuğçe Çevik | Ayşe | `docs/ui-ux/user-flows.md` | [#52](https://github.com/seng321-7th-team/PantryChef/issues/52) / [#70](https://github.com/seng321-7th-team/PantryChef/pull/70) | Done |
 | S2-31 | UI Design–User Story Consistency Review | Tuğçe Çevik | Burcu | `UI / User Story review record` | [#48](https://github.com/seng321-7th-team/PantryChef/issues/48) / [#50](https://github.com/seng321-7th-team/PantryChef/pull/50) | Done |
-| S2-32 | Frontend UI Skeleton (ek hedef) | Tuğçe Çevik | Ayşe | `frontend/ (additional goal)` | [#100](https://github.com/seng321-7th-team/PantryChef/issues/100) / [#101](https://github.com/seng321-7th-team/PantryChef/pull/101) | In Progress |
+| S2-32 | Frontend UI Skeleton (ek hedef) | Tuğçe Çevik | Bilgesu | `frontend/ (additional goal)` | [#100](https://github.com/seng321-7th-team/PantryChef/issues/100) / [#101](https://github.com/seng321-7th-team/PantryChef/pull/101) | In Progress |
 | S2-33 | Figma Links & UI Documentation | Tuğçe Çevik | Bilgesu | `docs/ui-ux/figma-links.md` | [#53](https://github.com/seng321-7th-team/PantryChef/issues/53) / [#71](https://github.com/seng321-7th-team/PantryChef/pull/71), [#103](https://github.com/seng321-7th-team/PantryChef/pull/103) | Done |
+
+**Reviewer change (21 Nov 2026):** The reviewer of S2-32 (PR #101) changed from Ayşe to Bilgesu.
 
 ## 4. Board update procedure
 

@@ -70,12 +70,14 @@ For this sprint, the agreed task owner is **R/A** for each row and the agreed pe
 | S2-29 | Waiter, Chef and Manager Screen Designs | C | I | — | — | — | R/A | Burcu |
 | S2-30 | User-flow Diagrams | — | I | C | — | — | R/A | Ayşe |
 | S2-31 | UI Design–User Story Consistency Review | C | I | — | — | — | R/A | Burcu |
-| S2-32 | Frontend UI Skeleton (stretch goal) | — | I | C | — | — | R/A | Ayşe |
+| S2-32 | Frontend UI Skeleton (stretch goal) | — | I | C | — | — | R/A | Bilgesu |
 | S2-33 | Figma Links and UI Documentation | — | C | — | — | — | R/A | Bilgesu |
 | S2-34 | C4 Component Diagram | — | I | R/A | — | C | — | Emre |
 | S2-35 | UML State Diagram | — | I | R/A | C | — | — | Beyzanur |
 | S2-36 | Sprint 2 Git Tag, GitHub Release and README Links | — | C | — | — | R/A | — | Bilgesu |
 | S2-37 | Sprint 2 Peer Evaluation and Contribution Assessment | R | R/A | R | R | R | R | All team members |
+
+**Reviewer change (21 Nov 2026):** The PR reviewer of S2-32 (PR #101) changed from Ayşe to Bilgesu. Only the peer reviewer column changed; the RACI letters of S2-32 stay as they were.
 
 ## 5. Coordination and approval
 
