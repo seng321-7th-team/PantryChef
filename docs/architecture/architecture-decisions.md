@@ -6,7 +6,7 @@
 | Owner | Ayşe Dural – Lead Software Architect and Technical Lead |
 | Reviewer | Emre Boz (Sprint 2 final task table v2.0) |
 | Date | 2026-11-18 |
-| Status | Draft – pending review |
+| Status | Merged (PR #64, statuses updated in PR #87). Each record below has its own status: Accepted, Proposed or Rejected |
 | Related artifacts | [`api/openapi.yaml`](../../api/openapi.yaml), C4 / UML / ER diagrams under [`docs/architecture/`](README.md), [`docs/system-vision.md`](../system-vision.md), [`docs/sprint1-meeting-notes.md`](../sprint1-meeting-notes.md), [`docs/architecture/infrastructure-requirements.md`](infrastructure-requirements.md) (S2-23), `docs/non-functional-requirements.md` (S2-03, PR #51) |
 
 This document records the architecture decisions behind PantryChef: what was decided, why, which
@@ -422,3 +422,4 @@ PostgreSQL version and container image open and point to this ADR.
 | 0.2 | 2026-11-18 | Ayşe Dural | ADR-009 rejected after consistency review CR-01 (PR #68); added the Rejected status |
 | 0.3 | 2026-11-18 | Ayşe Dural | Emre's review: ADR-001 source note, HTTP/HTTPS per IR-10 (ADR-003), PostgreSQL integration tests (ADR-004), cleanup task and versions table in S2-27 (ADR-005, ADR-011) |
 | 0.4 | 2026-11-20 | Ayşe Dural | ADR-006 and ADR-008 Accepted after PR #62 was merged; links to the merged diagrams and infrastructure requirements |
+| 0.5 | 2026-11-21 | Ayşe Dural | Document status changed from draft to merged; the status of each record is unchanged |

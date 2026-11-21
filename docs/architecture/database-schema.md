@@ -6,13 +6,13 @@
 | Owner | Ayşe Dural – Lead Software Architect and Technical Lead |
 | Reviewer | Emre Boz (Sprint 2 final task table v2.0) |
 | Date | 2026-11-18 |
-| Status | Draft – pending review |
+| Status | Merged (PR #66); proposed schema, not yet implemented |
 | Database | PostgreSQL (version pinned in Sprint 3, see ADR-011) |
-| Related artifacts | ER diagram `docs/architecture/database/PantryChef_ER.drawio` and API contract v0.2.0 (both in PR #62), [`api/openapi.yaml`](../../api/openapi.yaml), `docs/architecture/architecture-decisions.md` (PR #64) |
+| Related artifacts | ER diagram `docs/architecture/database/PantryChef_ER.drawio` (PR #62), [`api/openapi.yaml`](../../api/openapi.yaml) v0.2.1 (PR #91; v0.2.0 in PR #62), [`architecture-decisions.md`](architecture-decisions.md) (PR #64) |
 
 This document is the textual companion of the ER diagram. It lists every table, the keys and
 constraints, the rules that the database enforces and the rules that the service must enforce, and a
-proposed PostgreSQL DDL. It follows the API contract v0.2.0 (ingredient soft delete, opening stock
+proposed PostgreSQL DDL. It follows the API contract v0.2.1 (ingredient soft delete, opening stock
 through a separate `INITIAL_STOCK` adjustment, order creation by WAITER).
 
 > This is a proposed schema. The DDL has been run once on PostgreSQL 16.4 during review; it is not yet
@@ -490,7 +490,7 @@ Columns map one-to-one to the camelCase API fields (for example `on_hand` ↔ `o
 **Checked in this document**
 - Every table, column, key and constraint of the ER diagram (pages 1–3, PR #62 version) appears in the
   DDL, and every DDL foreign key points to an existing primary or unique key.
-- `CHECK` lists match the enumerations in `api/openapi.yaml` v0.2.0.
+- `CHECK` lists match the enumerations in `api/openapi.yaml` v0.2.1 (unchanged from v0.2.0).
 
 **Run on PostgreSQL (review on PR #66, Emre Boz)**
 - The DDL of section 5 was run on PostgreSQL 16.4 (PGlite) without errors: 14 tables, 83 constraints,
@@ -520,3 +520,4 @@ Columns map one-to-one to the camelCase API fields (for example `on_hand` ↔ `o
 | 0.2 | 2026-11-18 | Ayşe Dural | Ingredient creation starts at `on_hand = 0`; opening stock through a separate `INITIAL_STOCK` adjustment (consistency review CR-01, PR #68) |
 | 0.3 | 2026-11-18 | Ayşe Dural | ORM and migration tool owner aligned with S2-27 (PR #37) |
 | 0.4 | 2026-11-20 | Ayşe Dural | `ck_stock_movements_reason` rejects an `ADJUSTMENT` without a reason; section 10 records Emre's PostgreSQL run |
+| 0.5 | 2026-11-21 | Ayşe Dural | Status set to merged (PR #66); references updated to API v0.2.1 (wording only, no schema change) |

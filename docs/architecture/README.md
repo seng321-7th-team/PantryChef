@@ -17,7 +17,7 @@ included in the submission ZIP without draw.io.
 | S2-15 | ER – identity, history and reliability tables | same file, page 2 | [Support ER](database/PantryChef_ER-2-support-er.png) |
 | S2-15 | Database constraints and transaction rules | same file, page 3 | [Constraints](database/PantryChef_ER-3-constraints-and-rules.png) |
 
-All diagrams follow the API contract [`api/openapi.yaml`](../../api/openapi.yaml) (v0.2.0).
+All diagrams follow the API contract [`api/openapi.yaml`](../../api/openapi.yaml) (v0.2.1).
 
 ## Related documents
 
