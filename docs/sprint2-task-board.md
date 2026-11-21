@@ -22,47 +22,47 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 
 ## 3. Sprint 2 task board
 
-> **Historical task table.** See the [current status and evidence register](#9-current-status-and-evidence-register--november-21-2026) in Section 9 for verified task statuses and Issue/PR links.
+> **Current task statuses.** See the [current status and evidence register](#9-current-status-and-evidence-register--november-21-2026) in Section 9 for verified task statuses and Issue/PR links.
 
 | Task ID | Task | Owner | Reviewer | Expected deliverable | GitHub Issue | Status |
 |---|---|---|---|---|---|---|
-| S2-01 | Detailed Software Requirements Specification (SRS) | Burcu Ücük | Ayşe | `docs/srs.md` | Issue #44 / PR #54 | Done — approved and merged |
-| S2-02 | Refined Product Backlog, User Stories, Acceptance Criteria | Burcu Ücük | Beyzanur | `docs/product-backlog.md` | Issue #46 / PR #55 | Done — approved and merged |
-| S2-03 | Functional & Non-functional Requirements | Burcu Ücük | Beyzanur | `docs/non-functional-requirements.md` | Issue #49 / PR #51 | In Progress — changes addressed; reviewer re-approval pending |
-| S2-04 | Figma tasarımlarının gereksinimlerle uyumunu inceleme | Burcu Ücük | Tuğçe | `Figma prototype review` | TBD – verify first | To Do (provisional) |
-| S2-05 | MVP Scope & Out-of-Scope Definition | Burcu Ücük | Bilgesu | `docs/srs.md (scope section)` | TBD – verify first | To Do (provisional) |
-| S2-06 | Sprint 2 Task Board oluşturma ve yönetme | Bilgesu Nacak | Burcu | `docs/sprint2-task-board.md` | Issue #38 / PR #39 / PR #69 | Done |
-| S2-07 | Sprint 2 RACI Matrix | Bilgesu Nacak | Tuğçe | `docs/sprint2-raci.md` | #40 / PR #41 | Done |
-| S2-08 | Sprint Planning, Stand-up, Review, Retrospective kayıtları | Bilgesu Nacak | Tuğçe | `docs/sprint2-meeting-notes.md` | Issue #42 / PR #77 | In Progress |
-| S2-09 | GitHub Issues, PR Tracking & Impediment Log | Bilgesu Nacak | Emre | `GitHub Project #4 / docs/sprint2-progress-impediments.md` | Issue #57 / PR #58 / PR #83 | In Progress |
-| S2-10 | Sprint 2 Deliverables Consistency Review | Bilgesu Nacak | Beyzanur | `docs/sprint2-deliverables-consistency-review.md` | Issue #59 / PR #60 | In Progress |
-| S2-11 | Sprint 2 Submission Package & Teams Upload | Bilgesu Nacak | Burcu | `docs/sprint2-submission.md` | Issue #78 / PR #79 | In Progress |
-| S2-37 | Sprint 2 Peer Evaluation & Contribution Assessment | Bilgesu Nacak | Tüm ekip | `Peer evaluation record (private when needed)` | TBD – verify first | To Do (provisional) |
-| S2-12 | C4 System Context Diagram | Ayşe Dural | Emre | `docs/architecture/c4/` | TBD – verify first | To Do (provisional) |
-| S2-13 | C4 Container Diagram | Ayşe Dural | Emre | `docs/architecture/c4/` | TBD – verify first | To Do (provisional) |
-| S2-14 | UML Use Case, Class & Sequence Diagrams | Ayşe Dural | Tuğçe | `docs/architecture/uml/` | TBD – verify first | To Do (provisional) |
-| S2-15 | ER Diagram & Database Schema | Ayşe Dural | Emre | `docs/architecture/database-schema.md` | TBD – verify first | To Do (provisional) |
-| S2-16 | Architecture Decision Records (ADR) | Ayşe Dural | Emre | `docs/architecture/architecture-decisions.md` | TBD – verify first | To Do (provisional) |
-| S2-17 | Architecture–SRS–OpenAPI Consistency Review | Ayşe Dural | Burcu | `Architecture/SRS/OpenAPI review record` | TBD – verify first | To Do (provisional) |
-| S2-34 | C4 Component Diagram | Ayşe Dural | Emre | `docs/architecture/c4/` | TBD – verify first | To Do (provisional) |
-| S2-35 | UML State Diagram | Ayşe Dural | Beyzanur | `docs/architecture/uml/` | TBD – verify first | To Do (provisional) |
-| S2-18 | Software Test Plan | Beyzanur Alpay | Burcu | `docs/testing/test-plan.md` | TBD – verify first | To Do (provisional) |
-| S2-19 | Quality Metrics & NFR Verification Criteria | Beyzanur Alpay | Emre | `docs/testing/quality-metrics.md` | TBD – verify first | To Do (provisional) |
-| S2-20 | Unit, Integration & E2E Test Scenarios | Beyzanur Alpay | Ayşe | `docs/testing/test-cases.md` | TBD – verify first | To Do (provisional) |
-| S2-21 | Stock Reservation, Cancellation & Idempotency Test Cases | Beyzanur Alpay | Ayşe | `docs/testing/test-cases.md` | TBD – verify first | To Do (provisional) |
-| S2-22 | Requirements–Test Traceability Matrix | Beyzanur Alpay | Burcu | `Requirements–test traceability record` | TBD – verify first | To Do (provisional) |
-| S2-23 | Infrastructure & Deployment Requirements | Emre Boz | Ayşe | `docs/architecture/infrastructure-requirements.md` | #29 | In Progress |
-| S2-24 | C4 Container Architecture Technical Review | Emre Boz | Ayşe | `C4 Container review record` | #33 | To Do (provisional) |
-| S2-25 | Performance, Security & Backup NFR Support | Emre Boz | Beyzanur | `NFR infrastructure review record` | #34 | To Do (provisional) |
-| S2-26 | Repository Rules & Branch Protection Verification | Emre Boz | Bilgesu | `Repository settings evidence` | #28 | In Progress |
-| S2-27 | Sprint 3 CI/CD & Docker Readiness Documentation | Emre Boz | Ayşe | `docs/devops/sprint3-readiness.md` | #35 | In Progress |
-| S2-36 | Sprint 2 Git Tag, GitHub Release & README Links | Emre Boz | Bilgesu | `Git tag / GitHub Release / README links` | #31, #30 | To Do (provisional) |
-| S2-28 | Figma UI/UX Prototype Design | Tuğçe Çevik | Burcu | `Figma prototype` | TBD – verify first | To Do (provisional) |
-| S2-29 | Waiter, Chef & Manager Screen Designs | Tuğçe Çevik | Burcu | `Figma role-based screens` | TBD – verify first | To Do (provisional) |
-| S2-30 | User-flow Diagrams | Tuğçe Çevik | Ayşe | `docs/ui-ux/user-flows.md` | TBD – verify first | To Do (provisional) |
-| S2-31 | UI Design–User Story Consistency Review | Tuğçe Çevik | Burcu | `UI / User Story review record` | TBD – verify first | To Do (provisional) |
-| S2-32 | Frontend UI Skeleton (ek hedef) | Tuğçe Çevik | Ayşe | `frontend/ (additional goal)` | TBD – verify first | To Do (provisional) |
-| S2-33 | Figma Links & UI Documentation | Tuğçe Çevik | Bilgesu | `docs/ui-ux/figma-links.md` | Issue #53 / PR #71 | In Progress |
+| S2-01 | Detailed Software Requirements Specification (SRS) | Burcu Ücük | Ayşe | `docs/srs.md` | [#44](https://github.com/seng321-7th-team/PantryChef/issues/44) / [#54](https://github.com/seng321-7th-team/PantryChef/pull/54) | Done |
+| S2-02 | Refined Product Backlog, User Stories, Acceptance Criteria | Burcu Ücük | Beyzanur | `docs/product-backlog.md` | [#46](https://github.com/seng321-7th-team/PantryChef/issues/46) / [#55](https://github.com/seng321-7th-team/PantryChef/pull/55) | Done |
+| S2-03 | Functional & Non-functional Requirements | Burcu Ücük | Beyzanur | `docs/non-functional-requirements.md` | [#49](https://github.com/seng321-7th-team/PantryChef/issues/49) / [#51](https://github.com/seng321-7th-team/PantryChef/pull/51) | Done |
+| S2-04 | Figma tasarımlarının gereksinimlerle uyumunu inceleme | Burcu Ücük | Tuğçe | `Figma prototype review` | [#50](https://github.com/seng321-7th-team/PantryChef/pull/50) | Unverified |
+| S2-05 | MVP Scope & Out-of-Scope Definition | Burcu Ücük | Bilgesu | `docs/srs.md (scope section)` | [#54](https://github.com/seng321-7th-team/PantryChef/pull/54) | Unverified |
+| S2-06 | Sprint 2 Task Board oluşturma ve yönetme | Bilgesu Nacak | Burcu | `docs/sprint2-task-board.md` | [#38](https://github.com/seng321-7th-team/PantryChef/issues/38) / [#39](https://github.com/seng321-7th-team/PantryChef/pull/39), [#43](https://github.com/seng321-7th-team/PantryChef/pull/43), [#69](https://github.com/seng321-7th-team/PantryChef/pull/69), [#85](https://github.com/seng321-7th-team/PantryChef/pull/85), [#104](https://github.com/seng321-7th-team/PantryChef/pull/104) | Done |
+| S2-07 | Sprint 2 RACI Matrix | Bilgesu Nacak | Tuğçe | `docs/sprint2-raci.md` | [#40](https://github.com/seng321-7th-team/PantryChef/issues/40) / [#41](https://github.com/seng321-7th-team/PantryChef/pull/41) | Done |
+| S2-08 | Sprint Planning, Stand-up, Review, Retrospective kayıtları | Bilgesu Nacak | Tuğçe | `docs/sprint2-meeting-notes.md` | [#42](https://github.com/seng321-7th-team/PantryChef/issues/42) / [#77](https://github.com/seng321-7th-team/PantryChef/pull/77), [#98](https://github.com/seng321-7th-team/PantryChef/pull/98) | In Progress |
+| S2-09 | GitHub Issues, PR Tracking & Impediment Log | Bilgesu Nacak | Emre | `GitHub Project #4 / docs/sprint2-progress-impediments.md` | [#57](https://github.com/seng321-7th-team/PantryChef/issues/57) / [#58](https://github.com/seng321-7th-team/PantryChef/pull/58), [#83](https://github.com/seng321-7th-team/PantryChef/pull/83), [#99](https://github.com/seng321-7th-team/PantryChef/pull/99) | Done |
+| S2-10 | Sprint 2 Deliverables Consistency Review | Bilgesu Nacak | Beyzanur | `docs/sprint2-deliverables-consistency-review.md` | [#59](https://github.com/seng321-7th-team/PantryChef/issues/59) / [#60](https://github.com/seng321-7th-team/PantryChef/pull/60) | Done |
+| S2-11 | Sprint 2 Submission Package & Teams Upload | Bilgesu Nacak | Burcu | `docs/sprint2-submission.md` | [#78](https://github.com/seng321-7th-team/PantryChef/issues/78) / [#79](https://github.com/seng321-7th-team/PantryChef/pull/79), [#88](https://github.com/seng321-7th-team/PantryChef/pull/88), [#102](https://github.com/seng321-7th-team/PantryChef/pull/102) | In Progress |
+| S2-37 | Sprint 2 Peer Evaluation & Contribution Assessment | Bilgesu Nacak | Tüm ekip | `Peer evaluation record (private when needed)` | [#97](https://github.com/seng321-7th-team/PantryChef/issues/97) | Todo |
+| S2-12 | C4 System Context Diagram | Ayşe Dural | Emre | `docs/architecture/c4/` | [#72](https://github.com/seng321-7th-team/PantryChef/issues/72) / [#62](https://github.com/seng321-7th-team/PantryChef/pull/62) | Done |
+| S2-13 | C4 Container Diagram | Ayşe Dural | Emre | `docs/architecture/c4/` | [#73](https://github.com/seng321-7th-team/PantryChef/issues/73) / [#62](https://github.com/seng321-7th-team/PantryChef/pull/62) | Done |
+| S2-14 | UML Use Case, Class & Sequence Diagrams | Ayşe Dural | Tuğçe | `docs/architecture/uml/` | [#74](https://github.com/seng321-7th-team/PantryChef/issues/74) / [#62](https://github.com/seng321-7th-team/PantryChef/pull/62) | Done |
+| S2-15 | ER Diagram & Database Schema | Ayşe Dural | Emre | `docs/architecture/database-schema.md` | [#65](https://github.com/seng321-7th-team/PantryChef/issues/65) / [#66](https://github.com/seng321-7th-team/PantryChef/pull/66) | Done |
+| S2-16 | Architecture Decision Records (ADR) | Ayşe Dural | Emre | `docs/architecture/architecture-decisions.md` | [#63](https://github.com/seng321-7th-team/PantryChef/issues/63), [#86](https://github.com/seng321-7th-team/PantryChef/issues/86), [#90](https://github.com/seng321-7th-team/PantryChef/issues/90) / [#64](https://github.com/seng321-7th-team/PantryChef/pull/64), [#87](https://github.com/seng321-7th-team/PantryChef/pull/87), [#91](https://github.com/seng321-7th-team/PantryChef/pull/91) | Done |
+| S2-17 | Architecture–SRS–OpenAPI Consistency Review | Ayşe Dural | Burcu | `Architecture/SRS/OpenAPI review record` | [#61](https://github.com/seng321-7th-team/PantryChef/issues/61), [#67](https://github.com/seng321-7th-team/PantryChef/issues/67) / [#62](https://github.com/seng321-7th-team/PantryChef/pull/62), [#68](https://github.com/seng321-7th-team/PantryChef/pull/68) | Done |
+| S2-34 | C4 Component Diagram | Ayşe Dural | Emre | `docs/architecture/c4/` | [#75](https://github.com/seng321-7th-team/PantryChef/issues/75) / [#62](https://github.com/seng321-7th-team/PantryChef/pull/62) | Done |
+| S2-35 | UML State Diagram | Ayşe Dural | Beyzanur | `docs/architecture/uml/` | [#76](https://github.com/seng321-7th-team/PantryChef/issues/76) / [#62](https://github.com/seng321-7th-team/PantryChef/pull/62) | Done |
+| S2-18 | Software Test Plan | Beyzanur Alpay | Burcu | `docs/testing/test-plan.md` | [#81](https://github.com/seng321-7th-team/PantryChef/issues/81) / [#82](https://github.com/seng321-7th-team/PantryChef/pull/82) | Done |
+| S2-19 | Quality Metrics & NFR Verification Criteria | Beyzanur Alpay | Emre | `docs/testing/quality-metrics.md` | [#81](https://github.com/seng321-7th-team/PantryChef/issues/81) / [#82](https://github.com/seng321-7th-team/PantryChef/pull/82), [#92](https://github.com/seng321-7th-team/PantryChef/pull/92) | Done |
+| S2-20 | Unit, Integration & E2E Test Scenarios | Beyzanur Alpay | Ayşe | `docs/testing/test-cases.md` | [#81](https://github.com/seng321-7th-team/PantryChef/issues/81) / [#82](https://github.com/seng321-7th-team/PantryChef/pull/82), [#93](https://github.com/seng321-7th-team/PantryChef/pull/93) | Done |
+| S2-21 | Stock Reservation, Cancellation & Idempotency Test Cases | Beyzanur Alpay | Ayşe | `docs/testing/test-cases.md` | [#81](https://github.com/seng321-7th-team/PantryChef/issues/81) / [#82](https://github.com/seng321-7th-team/PantryChef/pull/82), [#93](https://github.com/seng321-7th-team/PantryChef/pull/93) | Done |
+| S2-22 | Requirements–Test Traceability Matrix | Beyzanur Alpay | Burcu | `Requirements–test traceability record` | [#81](https://github.com/seng321-7th-team/PantryChef/issues/81) / [#82](https://github.com/seng321-7th-team/PantryChef/pull/82), [#93](https://github.com/seng321-7th-team/PantryChef/pull/93) | Done |
+| S2-23 | Infrastructure & Deployment Requirements | Emre Boz | Ayşe | `docs/architecture/infrastructure-requirements.md` | [#29](https://github.com/seng321-7th-team/PantryChef/issues/29) / [#36](https://github.com/seng321-7th-team/PantryChef/pull/36) | Done |
+| S2-24 | C4 Container Architecture Technical Review | Emre Boz | Ayşe | `C4 Container review record` | [#33](https://github.com/seng321-7th-team/PantryChef/issues/33) / [#62](https://github.com/seng321-7th-team/PantryChef/pull/62) | Done |
+| S2-25 | Performance, Security & Backup NFR Support | Emre Boz | Beyzanur | `NFR infrastructure review record` | [#34](https://github.com/seng321-7th-team/PantryChef/issues/34) / [#51](https://github.com/seng321-7th-team/PantryChef/pull/51), [#82](https://github.com/seng321-7th-team/PantryChef/pull/82) | Done |
+| S2-26 | Repository Rules & Branch Protection Verification | Emre Boz | Bilgesu | `Repository settings evidence` | [#28](https://github.com/seng321-7th-team/PantryChef/issues/28) / [#32](https://github.com/seng321-7th-team/PantryChef/pull/32) | Done |
+| S2-27 | Sprint 3 CI/CD & Docker Readiness Documentation | Emre Boz | Ayşe | `docs/devops/sprint3-readiness.md` | [#35](https://github.com/seng321-7th-team/PantryChef/issues/35) / [#37](https://github.com/seng321-7th-team/PantryChef/pull/37) | Done |
+| S2-36 | Sprint 2 Git Tag, GitHub Release & README Links | Emre Boz | Bilgesu | `Git tag / GitHub Release / README links` | [#30](https://github.com/seng321-7th-team/PantryChef/issues/30), [#31](https://github.com/seng321-7th-team/PantryChef/issues/31) / [#84](https://github.com/seng321-7th-team/PantryChef/pull/84), [#96](https://github.com/seng321-7th-team/PantryChef/pull/96) | In Progress (README); Todo (release) |
+| S2-28 | Figma UI/UX Prototype Design | Tuğçe Çevik | Burcu | `Figma prototype` | [#71](https://github.com/seng321-7th-team/PantryChef/pull/71) | Unverified |
+| S2-29 | Waiter, Chef & Manager Screen Designs | Tuğçe Çevik | Burcu | `Figma role-based screens` | [#71](https://github.com/seng321-7th-team/PantryChef/pull/71) | Unverified |
+| S2-30 | User-flow Diagrams | Tuğçe Çevik | Ayşe | `docs/ui-ux/user-flows.md` | [#52](https://github.com/seng321-7th-team/PantryChef/issues/52) / [#70](https://github.com/seng321-7th-team/PantryChef/pull/70) | Done |
+| S2-31 | UI Design–User Story Consistency Review | Tuğçe Çevik | Burcu | `UI / User Story review record` | [#48](https://github.com/seng321-7th-team/PantryChef/issues/48) / [#50](https://github.com/seng321-7th-team/PantryChef/pull/50) | Done |
+| S2-32 | Frontend UI Skeleton (ek hedef) | Tuğçe Çevik | Ayşe | `frontend/ (additional goal)` | [#100](https://github.com/seng321-7th-team/PantryChef/issues/100) / [#101](https://github.com/seng321-7th-team/PantryChef/pull/101) | In Progress |
+| S2-33 | Figma Links & UI Documentation | Tuğçe Çevik | Bilgesu | `docs/ui-ux/figma-links.md` | [#53](https://github.com/seng321-7th-team/PantryChef/issues/53) / [#71](https://github.com/seng321-7th-team/PantryChef/pull/71), [#103](https://github.com/seng321-7th-team/PantryChef/pull/103) | Done |
 
 ## 4. Board update procedure
 
