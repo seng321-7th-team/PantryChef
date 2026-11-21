@@ -59,8 +59,10 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 | S2-29 | Waiter, Chef & Manager Screen Designs | Tuğçe Çevik | Burcu | `Figma role-based screens` | TBD – verify first | To Do (provisional) |
 | S2-30 | User-flow Diagrams | Tuğçe Çevik | Ayşe | `docs/ui-ux/user-flows.md` | TBD – verify first | To Do (provisional) |
 | S2-31 | UI Design–User Story Consistency Review | Tuğçe Çevik | Burcu | `UI / User Story review record` | TBD – verify first | To Do (provisional) |
-| S2-32 | Frontend UI Skeleton (ek hedef) | Tuğçe Çevik | Ayşe | `frontend/ (additional goal)` | TBD – verify first | To Do (provisional) |
+| S2-32 | Frontend UI Skeleton (ek hedef) | Tuğçe Çevik | Bilgesu | `frontend/ (additional goal)` | TBD – verify first | To Do (provisional) |
 | S2-33 | Figma Links & UI Documentation | Tuğçe Çevik | Bilgesu | `docs/ui-ux/figma-links.md` | Issue #53 / PR #71 | In Progress |
+
+**Reviewer change (21 Nov 2026):** The reviewer of S2-32 (PR #101) changed from Ayşe to Bilgesu.
 
 ## 4. Board update procedure
 

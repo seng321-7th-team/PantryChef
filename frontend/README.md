@@ -1,6 +1,6 @@
 # PantryChef Frontend – UI Skeleton
 
-**Task:** S2-32 – Frontend UI Skeleton (stretch goal) · **Owner:** Tuğçe Çevik · **Reviewer:** Ayşe Dural
+**Task:** S2-32 – Frontend UI Skeleton (stretch goal) · **Owner:** Tuğçe Çevik · **Reviewer:** Bilgesu Nacak
 **Status:** Draft for team review (issue #100). Not merged.
 
 React + TypeScript skeleton with a demo role preview, the role menus of the Figma page "03 Screens v2" and one screen per menu entry. The Chef kitchen board works against an orders service (in-memory mock by default, or the API). The waiter and manager screens show read-only Figma sample data. There is no backend, database, sign-in or production security in this build.
