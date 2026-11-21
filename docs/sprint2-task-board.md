@@ -22,6 +22,8 @@ Deliver the detailed SRS and refined backlog, measurable non-functional requirem
 
 ## 3. Sprint 2 task board
 
+> **Historical task table.** See the [current status and evidence register](#9-current-status-and-evidence-register--november-21-2026) in Section 9 for verified task statuses and Issue/PR links.
+
 | Task ID | Task | Owner | Reviewer | Expected deliverable | GitHub Issue | Status |
 |---|---|---|---|---|---|---|
 | S2-01 | Detailed Software Requirements Specification (SRS) | Burcu Ücük | Ayşe | `docs/srs.md` | Issue #44 / PR #54 | Done — approved and merged |
