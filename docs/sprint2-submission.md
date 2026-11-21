@@ -23,7 +23,7 @@
 | Sprint | Sprint 2 — Requirements & Architecture |
 | Submission Platform | Microsoft Teams |
 | Submission Deadline | November 24, 2026, 23:59 |
-| Release / Tag | Pending verification |
+| Release / Tag | Planned: [`sprint-2`](https://github.com/seng321-7th-team/PantryChef/releases/tag/sprint-2) (publication pending) |
 | Final Submission Status | Not submitted |
 
 ## 2. Team Members and Responsibilities
@@ -143,10 +143,10 @@ The following table tracks the Scrum Master deliverables and their GitHub eviden
 
 - [ ] All mandatory Sprint 2 deliverables verified.
 - [ ] Final technical documentation links checked.
-- [ ] Figma prototypes and user-flow links verified.
+- [x] Figma prototypes and user-flow links verified.
 - [ ] C4 and UML diagram links verified.
-- [ ] Team roles and individual contribution evidence recorded.
-- [ ] Relevant PR approvals and merge statuses verified.
+- [x] Team roles and [individual contribution evidence](https://github.com/seng321-7th-team/PantryChef/issues/78#issuecomment-7062871701) recorded.
+- [x] PR approvals and merge statuses for the submitted deliverables verified.
 - [ ] Final GitHub release/tag recorded.
 - [x] Initial submission package (PR #79) reviewed and approved by Burcu Ücük.
 - [x] Final submission package synchronization (PR #88) reviewed and approved by Burcu Ücük; merged into `develop`.
@@ -174,6 +174,8 @@ The references below identify known Issues and Pull Requests. Final approval, me
 | Figma Links and UI Documentation | Tuğçe Çevik | #53 | #71 | Bilgesu approved PR #71, which merged into `develop`. Issue #53 Closed / Done. All three prototype links opened without signing in |
 | API, Ingredient Rules and Architecture Alignment | Ayşe Dural | #61 | #62 | Approved and merged into develop |
 | Architecture Decision Records | Ayşe Dural | #63, #86 | #64, #87 | Emre approved PRs #64 and #87, which merged into `develop`. Issues #63 and #86 Closed / Done. ADR-006 and ADR-008 are Accepted |
+| API Contract v0.2.1: Idempotency and Reservation (S2-16) | Ayşe Dural | [#90](https://github.com/seng321-7th-team/PantryChef/issues/90) | [#91](https://github.com/seng321-7th-team/PantryChef/pull/91) | Clarified idempotency and reservation wording. PR merged into `develop` |
+| Architecture README and ADR Status | Ayşe Dural | — | [#110](https://github.com/seng321-7th-team/PantryChef/pull/110) | Aligned the architecture README and ADR header with the merged documents. PR merged into `develop` |
 | Database Schema Documentation | Ayşe Dural | #65 | #66 | Emre approved PR #66 after the SQL CHECK constraint corrections. PR merged into `develop`. Issue #65 Closed / Done |
 | Architecture–SRS–OpenAPI Consistency Review | Ayşe Dural | #67 | #68 | PR #68 reviewed and merged into `develop`; CR-01 inventory initialization and WAITER-only order creation rules aligned across SRS and OpenAPI. Final consistency monitoring remains ongoing |
 | Quality Metrics and QA Evidence | Beyzanur Alpay | #81 | #82, #93 | PR #82 merged and Issue #81 is Closed / Done. Burcu approved the QA documentation follow-up PR #93, which merged into `develop` |
@@ -229,6 +231,10 @@ For each deliverable, verify:
 Individual contributions will be verified using the GitHub commit history, Issues, Pull Requests, review records, and accepted documentation.
 
 The final contribution summary must distinguish document authorship, implementation, technical review, coordination, and release activities.
+
+The [team contribution summary](https://github.com/seng321-7th-team/PantryChef/issues/78#issuecomment-7062871701) records authorship and review evidence for all six members. Ayşe authored the ADR set ([#64](https://github.com/seng321-7th-team/PantryChef/pull/64)), updated ADR-006 and ADR-008 to Accepted ([#87](https://github.com/seng321-7th-team/PantryChef/pull/87)), clarified the API contract wording ([#91](https://github.com/seng321-7th-team/PantryChef/pull/91)), and synchronized the architecture documentation status ([#110](https://github.com/seng321-7th-team/PantryChef/pull/110)).
+
+Ayşe also approved the repository setup ([#32](https://github.com/seng321-7th-team/PantryChef/pull/32)), infrastructure requirements ([#36](https://github.com/seng321-7th-team/PantryChef/pull/36)), Sprint 3 readiness notes ([#37](https://github.com/seng321-7th-team/PantryChef/pull/37)), team roles and RACI update ([#56](https://github.com/seng321-7th-team/PantryChef/pull/56)), Sprint 2 QA deliverables ([#82](https://github.com/seng321-7th-team/PantryChef/pull/82)), and inactive-ingredient alert clarification ([#89](https://github.com/seng321-7th-team/PantryChef/pull/89)).
 
 
 
