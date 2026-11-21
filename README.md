@@ -38,7 +38,7 @@ Each deliverable is added through its own issue and pull request.
 
 ## Sprint 2 deliverables
 
-Sprint 2 covers the requirements and the architecture. Each row links to the merged document in `develop`.
+Sprint 2 covers the requirements and the architecture. The table below links to the Sprint 2 deliverables.
 
 | Deliverable | Owner | Location |
 |---|---|---|
@@ -80,7 +80,7 @@ docs/devops/        DevOps notes, e.g. Sprint 3 CI/CD and Docker readiness
 
 1. Start from an issue. Use one of the issue templates.
 2. Branch from `develop`: `feature/<issue-number>-<short-name>`.
-3. Open a pull request into `develop`, link the issue with `Closes #<number>`, and request a teammate's review.
+3. Open a pull request into `develop` and request a teammate's review. Use `Closes #<number>` when the PR completes the issue, and `Refs #<number>` when the issue stays open.
 4. Merge after one approval and passing checks. Direct pushes to `main` and `develop` are blocked.
 
 The full rules are in [`docs/git-workflow.md`](docs/git-workflow.md).
