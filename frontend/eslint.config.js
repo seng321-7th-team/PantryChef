@@ -22,12 +22,12 @@ export default tseslint.config(
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'no-restricted-globals': [
         'error',
-        { name: 'fetch', message: 'Use ordersService; fetch belongs in src/api/httpOrdersService.ts.' },
+        { name: 'fetch', message: 'Use the service interfaces; fetch belongs in src/api/httpClient.ts.' },
       ],
     },
   },
   {
-    files: ['src/api/httpOrdersService.ts', 'src/**/*.test.{ts,tsx}'],
+    files: ['src/api/httpClient.ts', 'src/**/*.test.{ts,tsx}'],
     rules: { 'no-restricted-globals': 'off' },
   },
   {
