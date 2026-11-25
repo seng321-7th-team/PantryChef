@@ -203,6 +203,38 @@ describe('sample-data screens', () => {
     for (const button of screen.getAllByRole('button', { name: /^(Edit|Adjust)$/ })) expect(button).toBeDisabled();
   });
 
+  it('keeps a created ingredient listed after another screen, in step with the mock duplicate check', async () => {
+    // Mock mode only: the list and the duplicate answer both come from this app session, not an API.
+    const user = userEvent.setup();
+    renderAt('#/manager/inventory');
+    const bulgurRows = () =>
+      within(screen.getByRole('region', { name: 'Stock' })).queryAllByRole('rowheader', { name: 'Bulgur' });
+    const dialog = () => document.querySelector('dialog')!;
+
+    await user.click(screen.getByRole('button', { name: '+ New ingredient' }));
+    await user.type(within(dialog()).getByLabelText('Name'), 'Bulgur');
+    await user.type(within(dialog()).getByLabelText(/^Low-stock threshold/), '2000');
+    await user.click(within(dialog()).getByRole('button', { name: 'Create ingredient' }));
+    await vi.waitFor(() => expect(bulgurRows()).toHaveLength(1), { timeout: 3000 });
+
+    await user.click(within(screen.getByRole('navigation', { name: 'Manager menu' })).getByRole('link', { name: 'Recipes' }));
+    expect(await screen.findByRole('heading', { level: 1, name: 'Recipes' })).toBeInTheDocument();
+    await user.click(within(screen.getByRole('navigation', { name: 'Manager menu' })).getByRole('link', { name: 'Inventory' }));
+    expect(await screen.findByRole('heading', { level: 1, name: 'Inventory' })).toBeInTheDocument();
+
+    expect(bulgurRows()).toHaveLength(1);
+    expect(screen.getByRole('status')).toHaveTextContent('4 ingredients at or below their low-stock threshold');
+
+    await user.click(screen.getByRole('button', { name: '+ New ingredient' }));
+    await user.type(within(dialog()).getByLabelText('Name'), 'Bulgur');
+    await user.type(within(dialog()).getByLabelText(/^Low-stock threshold/), '500');
+    await user.click(within(dialog()).getByRole('button', { name: 'Create ingredient' }));
+    expect(
+      await within(dialog()).findByText('An ingredient with this name already exists.', undefined, { timeout: 3000 }),
+    ).toBeInTheDocument();
+    expect(bulgurRows()).toHaveLength(1);
+  });
+
   it('keeps each stock amount tied to its column and unit for screen readers and on cards', () => {
     renderAt('#/manager/inventory');
     const stock = screen.getByRole('region', { name: 'Stock' });

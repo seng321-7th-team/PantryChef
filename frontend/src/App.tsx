@@ -1,11 +1,14 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
+import { createIngredientsService } from './api/createIngredientsService';
 import {
   ConfigurationError,
   createOrdersService,
   readOrdersConfig,
   type OrdersMode,
 } from './api/createOrdersService';
+import type { IngredientsService } from './api/ingredientsService';
 import type { OrdersService } from './api/ordersService';
+import type { Ingredient } from './api/types';
 import { AppHeader } from './components/AppHeader';
 import { StateMessage } from './components/StateMessage';
 import { KitchenBoardPage } from './features/kitchen/KitchenBoardPage';
@@ -20,21 +23,36 @@ import { href, ROLE_NAV, type PageId, type Route } from './navigation/routes';
 import { useHashRoute } from './navigation/useHashRoute';
 import { getDemoAccessToken } from './session/demoSession';
 
-type Setup = { service: OrdersService; mode: OrdersMode; sourceLabel: string } | { error: string };
+type Setup =
+  | { service: OrdersService; ingredients: IngredientsService | null; mode: OrdersMode; sourceLabel: string }
+  | { error: string };
 
 function setUp(env: Record<string, string | undefined>): Setup {
   try {
     const config = readOrdersConfig(env, window.location.search);
     const service = createOrdersService(config, getDemoAccessToken);
+    const ingredients = createIngredientsService(config.mode);
     const sourceLabel = config.mode === 'mock' ? 'Mock data' : `API ${config.apiBaseUrl}`;
-    return { service, mode: config.mode, sourceLabel };
+    return { service, ingredients, mode: config.mode, sourceLabel };
   } catch (error) {
     if (error instanceof ConfigurationError) return { error: error.message };
     throw error;
   }
 }
 
-function renderPage(page: PageId, service: OrdersService, mode: OrdersMode) {
+/** Ingredients created in this app session. Lives as long as the ingredients service, so the two agree. */
+interface CreatedIngredients {
+  list: Ingredient[];
+  add: (ingredient: Ingredient) => void;
+}
+
+function renderPage(
+  page: PageId,
+  service: OrdersService,
+  ingredients: IngredientsService | null,
+  created: CreatedIngredients,
+  mode: OrdersMode,
+) {
   switch (page) {
     case 'waiter-new-order':
       return <NewOrderPage mode={mode} />;
@@ -43,7 +61,14 @@ function renderPage(page: PageId, service: OrdersService, mode: OrdersMode) {
     case 'chef-kitchen':
       return <KitchenBoardPage service={service} />;
     case 'manager-inventory':
-      return <InventoryPage mode={mode} />;
+      return (
+        <InventoryPage
+          mode={mode}
+          ingredientsService={ingredients}
+          createdIngredients={created.list}
+          onIngredientCreated={created.add}
+        />
+      );
     case 'manager-recipes':
       return <RecipesPage mode={mode} />;
     case 'manager-orders':
@@ -66,6 +91,11 @@ interface AppProps {
 
 export function App({ env = import.meta.env }: AppProps) {
   const [setup] = useState(() => setUp(env));
+  // App-scoped like the ingredients service: a created ingredient is still listed after a screen change.
+  const [createdIngredients, setCreatedIngredients] = useState<Ingredient[]>([]);
+  const addCreatedIngredient = useCallback((ingredient: Ingredient) => {
+    setCreatedIngredients((current) => [...current, ingredient]);
+  }, []);
   const route = useHashRoute();
 
   useEffect(() => {
@@ -101,7 +131,17 @@ export function App({ env = import.meta.env }: AppProps) {
     );
   } else {
     // The key remounts a screen when the route changes, so the kitchen board stops polling on leave.
-    content = <Fragment key={route.item.page}>{renderPage(route.item.page, setup.service, setup.mode)}</Fragment>;
+    content = (
+      <Fragment key={route.item.page}>
+        {renderPage(
+          route.item.page,
+          setup.service,
+          setup.ingredients,
+          { list: createdIngredients, add: addCreatedIngredient },
+          setup.mode,
+        )}
+      </Fragment>
+    );
   }
 
   return (

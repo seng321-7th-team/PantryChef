@@ -1,4 +1,4 @@
-import type { AuditLogEntry, InventoryItem, MenuItem, Recipe, User, UserSummary } from '../types';
+import type { AuditLogEntry, Ingredient, InventoryItem, MenuItem, Recipe, User, UserSummary } from '../types';
 import { sampleWaiter } from './sampleOrders';
 
 // Read-only sample data for the waiter and manager screens. Values are the start states of the
@@ -51,6 +51,23 @@ export function sampleInventory(): InventoryItem[] {
       updatedAt: today(12, 31),
     };
   });
+}
+
+/**
+ * The ingredients of scr-04a-inventory as `Ingredient` records, for the mock ingredients service.
+ * Same ids, names, units and thresholds as `sampleInventory()`. Figma has no creation dates, so
+ * `createdAt` is the same sample time as `updatedAt`.
+ */
+export function sampleIngredients(): Ingredient[] {
+  return sampleInventory().map((item) => ({
+    id: item.ingredientId,
+    name: item.ingredientName,
+    unit: item.unit,
+    lowStockThreshold: item.lowStockThreshold,
+    active: item.ingredientActive,
+    createdAt: item.updatedAt,
+    updatedAt: item.updatedAt,
+  }));
 }
 
 /** scr-02a-waiter-default: portions available now. */
