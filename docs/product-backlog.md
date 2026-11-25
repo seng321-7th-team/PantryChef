@@ -1,26 +1,25 @@
-<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/841ec732-603f-48b0-9918-5813a7f769a3" />
-# PantryChef — Product Backlog (Sprint 2 Refinement)
+# PantryChef — Product Backlog (Sprint 3 Refinement)
 
 **Project:** PantryChef — Restaurant Order and Inventory Management System  
 **Course:** BM 321 / SENG 321 — Software Engineering  
-**Baseline:** Sprint 1 — Project Foundation  
-**Current Sprint:** Sprint 2 — Requirements & Architecture  
-**Document:** Product Backlog — Sprint 2 Refinement  
+**Baseline:** Sprint 2 — Requirements & Architecture (PR #55)  
+**Current Sprint:** Sprint 3 — MVP & CI/CD  
+**Document:** Product Backlog — Sprint 3 Refinement  
 **File:** `docs/product-backlog.md`  
 **Responsible:** Burcu Ücük — Product Owner / Requirements Engineer  
 **QA Reviewer:** Beyzanur Alpay  
 **API Reviewer:** Ayşe  
 **Scope Reviewer:** Tuğçe  
-**Version:** 2.1 — Proposed refinement (waiter-only order creation)  
-**Date:** 19 November 2026  
-**Tracking:** [S2-02 — Issue #46](https://github.com/seng321-7th-team/PantryChef/issues/46)  
+**Version:** 3.0 — Proposed Sprint 3 refinement  
+**Date:** 25 November 2026  
+**Tracking:** [S3-02 — Issue #125](https://github.com/seng321-7th-team/PantryChef/issues/125)  
 **Status:** Draft — Pending QA, API, scope, and team review
 
 ---
 
 ## 1. Purpose
 
-This document refines the Sprint 1 product backlog for Sprint 2 (Requirements & Architecture). It retains the agreed Epics, Features, User Stories, implementation Tasks, Acceptance Criteria, priorities, Story Points, dependencies, and proposed responsible roles, while improving testability and traceability. It is a requirements-planning artifact, not evidence that the features have been implemented.
+This document refines the Sprint 2 product backlog for Sprint 3 (MVP & CI/CD). It retains the agreed Epics, Features, User Stories, implementation Tasks, Acceptance Criteria, priorities, Story Points, dependencies, and proposed responsible roles, while improving testability and traceability. It is a requirements-planning artifact, not evidence that the features have been implemented.
 
 The Sprint 1 Project Proposal and System Vision & Boundary are the scope baseline. The Sprint 2 SRS (`docs/srs.md`) and OpenAPI draft (`api/openapi.yaml`) are cross-check references; discrepancies must be resolved through team review rather than silently changing the approved behavior.
 
@@ -62,6 +61,9 @@ The following features are deferred:
 - Automated purchase orders.
 - Goods receipt processing.
 - Advanced analytics and demand forecasting.
+- Table reservations (ingredient reservations remain in scope).
+
+Staff account administration remains pending the S3-01 decision (#124); authentication and role authorization remain in scope.
 
 The `Delivered` order status is not part of the MVP. The Supplier is an external stakeholder, not an MVP application actor.
 
@@ -154,12 +156,15 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. The system recognizes the Waiter, Chef, and Restaurant Manager roles.
-2. Waiters can create orders and cancel eligible orders.
-3. Chefs can view kitchen orders and update preparation states.
-4. Restaurant Managers can manage inventory and recipes.
-5. Unauthorized operations are rejected without changing data.
-6. Authorized cancellation after preparation begins requires the appropriate permission.
+**Given** a staff account with a defined role and permissions,  
+**When** the account attempts the relevant protected operation, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** The system recognizes the Waiter, Chef, and Restaurant Manager roles.
+2. **Then:** Waiters can create orders and cancel eligible orders.
+3. **Then:** Chefs can view kitchen orders and update preparation states.
+4. **Then:** Restaurant Managers can manage inventory and recipes.
+5. **Then:** Unauthorized operations are rejected without changing data.
+6. **Then:** Authorized cancellation after preparation begins requires the appropriate permission.
 
 **Implementation Tasks**
 
@@ -185,14 +190,17 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. A manager can create an ingredient with a name, unit, and low-stock threshold.
-2. Newly created ingredients have onHand = 0 and reserved = 0.
-3. Initial physical stock is recorded separately through an authorized INITIAL_STOCK inventory adjustment.
-4. The initial stock adjustment records the responsible actor, timestamp, and reason.
-5. Required fields are validated.
-6. Physical quantity cannot be negative.
-7. Existing ingredient records can be updated by authorized managers; unauthorized users cannot modify ingredients.
-8. Deactivation does not invalidate historical order records.
+**Given** an ingredient management request and the relevant actor,  
+**When** the request is submitted or the resulting record is inspected, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** A manager can create an ingredient with a name, unit, and low-stock threshold.
+2. **Then:** Newly created ingredients have onHand = 0 and reserved = 0.
+3. **Then:** Initial physical stock is recorded separately through an authorized INITIAL_STOCK inventory adjustment.
+4. **Then:** The initial stock adjustment records the responsible actor, timestamp, and reason.
+5. **Then:** Required fields are validated.
+6. **Then:** Physical quantity cannot be negative.
+7. **Then:** Existing ingredient records can be updated by authorized managers; unauthorized users cannot modify ingredients.
+8. **Then:** Deactivation does not invalidate historical order records.
 
 **Implementation Tasks**
 
@@ -216,10 +224,13 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. Physical and reserved quantities are stored or reliably derived.
-2. Available quantity equals physical quantity minus reserved quantity.
-3. Available quantity cannot become negative through normal order operations.
-4. Inventory values are updated consistently after reservation, consumption, and cancellation.
+**Given** an ingredient with physical and reserved quantities,  
+**When** inventory is retrieved or an order operation occurs, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** Physical and reserved quantities are stored or reliably derived.
+2. **Then:** Available quantity equals physical quantity minus reserved quantity.
+3. **Then:** Available quantity cannot become negative through normal order operations.
+4. **Then:** Inventory values are updated consistently after reservation, consumption, and cancellation.
 
 **Implementation Tasks**
 
@@ -240,11 +251,14 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. Only authorized managers can adjust physical stock.
-2. Every adjustment includes a quantity change and reason.
-3. The system records the responsible user and timestamp.
-4. Adjustments that would make physical quantity lower than reserved quantity are rejected.
-5. Adjustments do not silently remove existing reservations.
+**Given** an inventory adjustment request and existing reservations,  
+**When** the adjustment is submitted, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** Only authorized managers can adjust physical stock.
+2. **Then:** Every adjustment includes a quantity change and reason.
+3. **Then:** The system records the responsible user and timestamp.
+4. **Then:** Adjustments that would make physical quantity lower than reserved quantity are rejected.
+5. **Then:** Adjustments do not silently remove existing reservations.
 
 **Implementation Tasks**
 
@@ -270,12 +284,15 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. A manager can create and update recipes.
-2. Each recipe contains ingredient references and quantities per portion.
-3. Ingredient quantities must be positive.
-4. A recipe cannot reference an unavailable or invalid ingredient.
-5. Only authorized users can modify recipes.
-6. Existing orders retain their original ingredient requirements when recipes are updated.
+**Given** a recipe or recipe update request,  
+**When** the recipe is saved or an existing order is inspected, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** A manager can create and update recipes.
+2. **Then:** Each recipe contains ingredient references and quantities per portion.
+3. **Then:** Ingredient quantities must be positive.
+4. **Then:** A recipe cannot reference an unavailable or invalid ingredient.
+5. **Then:** Only authorized users can modify recipes.
+6. **Then:** Existing orders retain their original ingredient requirements when recipes are updated.
 
 **Implementation Tasks**
 
@@ -302,12 +319,15 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. Only an authorized Waiter can create an order by selecting valid menu items and positive portion quantities. Managers and Chefs are not permitted to create orders.
-2. Invalid or empty orders are rejected.
-3. A successfully created order receives a unique identifier.
-4. Its initial state is `Pending`.
-5. The system stores the order's required ingredient quantities.
-6. The order is created only if its complete ingredient reservation succeeds.
+**Given** an order creation request with an actor and menu items,  
+**When** the request is submitted, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** Only an authorized Waiter can create an order by selecting valid menu items and positive portion quantities. Managers and Chefs are not permitted to create orders.
+2. **Then:** Invalid or empty orders are rejected.
+3. **Then:** A successfully created order receives a unique identifier.
+4. **Then:** Its initial state is `Pending`.
+5. **Then:** The system stores the order's required ingredient quantities.
+6. **Then:** The order is created only if its complete ingredient reservation succeeds.
 
 **Implementation Tasks**
 
@@ -330,14 +350,17 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. Ingredient requirements are calculated using recipes and ordered portions.
-2. The system checks available quantities for all required ingredients.
-3. If every ingredient is sufficient, all required quantities are reserved.
-4. Physical stock does not decrease at reservation time.
-5. If any ingredient is insufficient, the entire operation is rejected.
-6. Failed operations create no order and no partial reservations.
-7. Concurrent requests cannot reserve more than the available stock.
-8. Retrying the same logical request must not create duplicate orders or reservations.
+**Given** an order request and current ingredient availability,  
+**When** reservation is attempted or the request is retried, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** Ingredient requirements are calculated using recipes and ordered portions.
+2. **Then:** The system checks available quantities for all required ingredients.
+3. **Then:** If every ingredient is sufficient, all required quantities are reserved.
+4. **Then:** Physical stock does not decrease at reservation time.
+5. **Then:** If any ingredient is insufficient, the entire operation is rejected.
+6. **Then:** Failed operations create no order and no partial reservations.
+7. **Then:** Concurrent requests cannot reserve more than the available stock.
+8. **Then:** Retrying the same logical request must not create duplicate orders or reservations.
 
 **Implementation Tasks**
 
@@ -365,10 +388,13 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. Authorized kitchen staff can view pending orders.
-2. Each order displays its identifier, items, portions, and status.
-3. Cancelled orders are not presented as active preparation tasks.
-4. Unauthorized users cannot perform kitchen-only status updates.
+**Given** orders in the system and a staff actor,  
+**When** the kitchen queue is retrieved or a kitchen action is attempted, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** Authorized kitchen staff can view pending orders.
+2. **Then:** Each order displays its identifier, items, portions, and status.
+3. **Then:** Cancelled orders are not presented as active preparation tasks.
+4. **Then:** Unauthorized users cannot perform kitchen-only status updates.
 
 **Implementation Tasks**
 
@@ -389,14 +415,17 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. Only an authorized chef can start preparation.
-2. The operation is valid only for an order in `Pending`.
-3. The order transitions to `Preparing`.
-4. The order's active ingredient reservations transition to `CONSUMED`, and the corresponding reserved quantities decrease.
-5. Corresponding physical quantities are deducted exactly once.
-6. Status transition and inventory changes are atomic.
-7. Repeated requests cannot deduct physical inventory again.
-8. Failed transactions do not leave partially updated order or inventory records.
+**Given** an order and its reservations,  
+**When** start preparation is requested, including retries or failures, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** Only an authorized chef can start preparation.
+2. **Then:** The operation is valid only for an order in `Pending`.
+3. **Then:** The order transitions to `Preparing`.
+4. **Then:** The order's active ingredient reservations transition to `CONSUMED`, and the corresponding reserved quantities decrease.
+5. **Then:** Corresponding physical quantities are deducted exactly once.
+6. **Then:** Status transition and inventory changes are atomic.
+7. **Then:** Repeated requests cannot deduct physical inventory again.
+8. **Then:** Failed transactions do not leave partially updated order or inventory records.
 
 **Implementation Tasks**
 
@@ -419,11 +448,14 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. Only authorized kitchen staff can mark an order as `Ready`.
-2. The transition is allowed only from `Preparing`.
-3. The transition does not change physical or reserved stock.
-4. Invalid state transitions are rejected.
-5. The updated order status is visible to authorized staff.
+**Given** an order and a staff actor,  
+**When** mark ready is requested or the resulting state is inspected, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** Only authorized kitchen staff can mark an order as `Ready`.
+2. **Then:** The transition is allowed only from `Preparing`.
+3. **Then:** The transition does not change physical or reserved stock.
+4. **Then:** Invalid state transitions are rejected.
+5. **Then:** The updated order status is visible to authorized staff.
 
 **Implementation Tasks**
 
@@ -448,12 +480,15 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. A waiter or manager can cancel a `Pending` order.
-2. The order status changes to `Cancelled`.
-3. All reservations associated with the order are released atomically.
-4. Physical stock remains unchanged.
-5. Repeated cancellation requests do not release reservations more than once.
-6. A cancelled order cannot return to an active preparation state.
+**Given** an order and its reservations,  
+**When** early cancellation is requested or retried, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** A waiter or manager can cancel a `Pending` order.
+2. **Then:** The order status changes to `Cancelled`.
+3. **Then:** All reservations associated with the order are released atomically.
+4. **Then:** Physical stock remains unchanged.
+5. **Then:** Repeated cancellation requests do not release reservations more than once.
+6. **Then:** A cancelled order cannot return to an active preparation state.
 
 **Implementation Tasks**
 
@@ -475,14 +510,17 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. A restaurant manager may cancel an order in `Preparing` or `Ready`.
-2. A waiter may perform this action only with specific authorization.
-3. A cancellation reason is mandatory.
-4. The system records the actor, timestamp, order, previous status, and reason.
-5. The order changes to `Cancelled`.
-6. Consumed physical stock is not automatically restored.
-7. Repeated cancellation requests do not change inventory quantities.
-8. Unauthorized requests are rejected without modifying the order.
+**Given** an order after preparation and an actor with or without permission,  
+**When** late cancellation is requested or retried, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** A restaurant manager may cancel an order in `Preparing` or `Ready`.
+2. **Then:** A waiter may perform this action only with specific authorization.
+3. **Then:** A cancellation reason is mandatory.
+4. **Then:** The system records the actor, timestamp, order, previous status, and reason.
+5. **Then:** The order changes to `Cancelled`.
+6. **Then:** Consumed physical stock is not automatically restored.
+7. **Then:** Repeated cancellation requests do not change inventory quantities.
+8. **Then:** Unauthorized requests are rejected without modifying the order.
 
 **Implementation Tasks**
 
@@ -505,11 +543,14 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. Significant order transitions are recorded.
-2. Reservation, consumption, cancellation, and inventory adjustment events are traceable.
-3. Audit records include actor, timestamp, event type, and relevant identifiers.
-4. Authorized managers can view audit history.
-5. Unauthorized users cannot modify audit records through ordinary application operations.
+**Given** order and inventory events and a staff actor,  
+**When** events occur or history access is attempted, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** Significant order transitions are recorded.
+2. **Then:** Reservation, consumption, cancellation, and inventory adjustment events are traceable.
+3. **Then:** Audit records include actor, timestamp, event type, and relevant identifiers.
+4. **Then:** Authorized managers can view audit history.
+5. **Then:** Unauthorized users cannot modify audit records through ordinary application operations.
 
 **Implementation Tasks**
 
@@ -535,11 +576,14 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 
 **Acceptance Criteria**
 
-1. Each ingredient has a configurable low-stock threshold.
-2. An ingredient is flagged when its available quantity is less than or equal to its threshold.
-3. Alerts reflect reservations, consumption, cancellation, and inventory adjustments.
-4. Authorized managers can view current low-stock items.
-5. The system does not automatically create purchase orders in the MVP.
+**Given** an ingredient with a threshold and current availability,  
+**When** stock changes or alerts are retrieved, the following expected outcomes apply to the relevant positive or negative scenario:
+
+1. **Then:** Each ingredient has a configurable low-stock threshold.
+2. **Then:** An ingredient is flagged when its available quantity is less than or equal to its threshold.
+3. **Then:** Alerts reflect reservations, consumption, cancellation, and inventory adjustments.
+4. **Then:** Authorized managers can view current low-stock items.
+5. **Then:** The system does not automatically create purchase orders in the MVP.
 
 **Implementation Tasks**
 
@@ -636,7 +680,7 @@ Story Points indicate estimated implementation complexity, not hours or guarante
 **Estimated P1 Total:** 13 Story Points  
 **Estimated Overall Total:** 81 Story Points
 
-These estimates are preliminary and require team review. They represent the full planned product backlog, **not** the Sprint 2 implementation commitment. Sprint 2 focuses on requirements and architecture deliverables.
+These estimates are preliminary and require team review. They represent the planned backlog, not a confirmed Sprint 3 capacity commitment. Existing estimates and priorities are retained pending team review.
 
 ## 8. Suggested Implementation Order
 
@@ -675,9 +719,9 @@ Sprint 2 backlog refinement deliverables for Issue #46 are:
 4. Record unresolved scope, permission, API, or terminology differences for review; do not assume they are approved.
 5. Submit changes in a feature branch, link the pull request to Issue #46, obtain peer review, and merge into `develop` only after approval.
 
-**Completion evidence:** A reviewed and merged update to `docs/product-backlog.md` on `develop`. This draft alone does not satisfy that evidence requirement.
+**Completion evidence:** A reviewed and merged update to `docs/product-backlog.md` on `develop`. Sprint 2 baseline: PR #55. Sprint 3 completion requires separate review and merge.
 
-## 10. Sprint 2 Review and Validation Checklist
+## 10. Sprint 3 Review and Validation Checklist
 
 - [ ] Product scope verified with Tuğçe.
 - [ ] Acceptance Criteria reviewed with Beyzanur (QA).
@@ -703,7 +747,7 @@ A User Story is ready for implementation when:
 6. Required API or data model considerations are understood.
 7. No unresolved contradiction exists with the approved product scope.
 
-## 12. Sprint 2 Traceability and Review Matrix
+## 12. Sprint 3 Traceability and Review Matrix
 
 The following is a **proposed topic-level mapping**, not a verified mapping to specific SRS requirement IDs or OpenAPI operation IDs. Exact identifiers must be checked in the latest SRS and API draft before the related acceptance criteria are marked complete.
 
@@ -717,17 +761,40 @@ The following is a **proposed topic-level mapping**, not a verified mapping to s
 | US-11, US-12 | BR-07, BR-08, BR-10 | Cancellation and authorization | Pending releases reservations; post-start cancellation never restores consumed stock |
 | US-13 | BR-10 | Audit trail and history | Actor, timestamp, event and related entity IDs |
 | US-14 | MVP low-stock monitoring | Low-stock threshold and alert retrieval | Available-stock threshold, no automatic purchase order |
-| US-15, US-16 | P1, post-MVP | Future procurement and goods receipt | Not a Sprint 2 or MVP delivery commitment |
+| US-15, US-16 | P1, post-MVP | Future procurement and goods receipt | Not a Sprint 3 or MVP delivery commitment |
 
 ### 12.1 Open Questions for Team Review
 
-- **API alignment action — order creation:** The approved Product Backlog rule is waiter-only order creation (US-06 AC1). The supplied OpenAPI draft currently lists `WAITER, MANAGER` for `POST /orders` (`createOrder`) and in its order-lifecycle summary. Ayşe (API owner) must remove `MANAGER` from order-creation authorization in both locations. This restriction does not change Manager permissions for pending-order cancellation, authorized late cancellation, inventory management, or purchase orders. QA should verify that Manager and Chef order-creation requests are rejected without creating orders or reservations.
+- **API alignment — order creation:** The supplied Sprint 3 baseline OpenAPI `createOrder` description specifies `WAITER` only. Preserve US-06 AC1 and verify rejection of Manager and Chef requests in tests.
 - Confirm exact SRS requirement IDs and API paths/operation IDs for each applicable story; do not invent missing identifiers.
 - Confirm whether the API draft supports idempotency for order creation and preparation transitions as required by US-07 and US-09.
 - Confirm how authorized waiter cancellation after preparation starts is represented and audited.
 - Confirm how recipe snapshots/versioning and low-stock thresholds are represented in the data model.
 - Confirm story points, proposed owners, priorities, and dependencies with the development team.
 - Keep P1 procurement explicitly outside the MVP unless a formally approved scope change is recorded.
+
+### 12.2 Sprint 3 implementation and test traceability (working mapping)
+
+Task IDs follow the Sprint 3 team plan v2.4. GitHub issue numbers are included only where visible in the supplied issue list; #119 and #120 mappings are provisional pending issue-body review. API operation IDs are present in the supplied OpenAPI baseline; this is not evidence of implementation. QA task S3-24 will supply criterion-level test links. PR and test evidence remain pending for every row.
+
+| Story | SRS | Planned tasks / known issues | API operations (examples) | PR / test evidence |
+|---|---|---|---|---|
+| US-01 | FR-01 | S3-40, S3-31 | login, getCurrentUser | Pending |
+| US-02 | FR-02 | S3-37A, S3-34 | createIngredient, listIngredients, updateIngredient, deactivateIngredient | Pending |
+| US-03 | FR-03 | S3-37A, S3-34 | listInventory, getInventoryItem | Pending |
+| US-04 | FR-04 | S3-37B (#119), S3-34, S3-05 | createStockAdjustment | Pending |
+| US-05 | FR-05 | S3-37B (#119), S3-37A, S3-34, S3-05 | replaceRecipe, listRecipeVersions, getRecipe | Pending |
+| US-06 | FR-06 | S3-16, S3-32 | createOrder | Pending |
+| US-07 | FR-07 | S3-16, S3-32 | createOrder, listReservations | Pending |
+| US-08 | FR-08 | S3-33 | listOrders, getOrder | Pending |
+| US-09 | FR-09 | S3-17, S3-33 | updateOrderStatus | Pending |
+| US-10 | FR-10 | S3-17, S3-33 | updateOrderStatus | Pending |
+| US-11 | FR-11 | S3-18, S3-32 | updateOrderStatus | Pending |
+| US-12 | FR-12 | S3-18, S3-32 | updateOrderStatus | Pending |
+| US-13 | FR-13 | S3-38 (#120), S3-34 | listAuditLogs, listStockMovements | Pending |
+| US-14 | FR-14 | S3-38 (#120), S3-34 | listLowStockAlerts | Pending |
+
+US-15 and US-16 remain post-MVP. Menu item management and authentication details require a final story-coverage check with SRS/API owners; do not treat the existing recipe and authorization stories as complete coverage without review. Staff administration is pending #124. QA coordination: S3-20 through S3-25; CI: S3-26 and S3-27. No test or PR completion is claimed.
 
 ## 13. Final Scope Confirmation
 
@@ -745,4 +812,4 @@ Purchase orders and goods receipt are included in the initial backlog for future
 **Document Owner:** Burcu Ücük  
 **Deliverable:** `docs/product-backlog.md`  
 **Review Status:** Pending QA, API, scope, and team approval.  
-**Change Tracking:** [Issue #46](https://github.com/seng321-7th-team/PantryChef/issues/46); update and PR merge still required.
+**Change Tracking:** [Issue #125](https://github.com/seng321-7th-team/PantryChef/issues/125); Sprint 3 review and merge pending.
