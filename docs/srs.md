@@ -2,15 +2,17 @@
 
 **Course:** BM 321 / SENG 321 — Software Engineering  
 **Team:** Team 7  
-**Sprint:** Sprint 2 — Requirements & Architecture  
+**Sprint:** Sprint 3 — MVP & CI/CD  
+**Baseline:** Sprint 2 — Requirements & Architecture  
 **Document:** Detailed Software Requirements Specification  
 **Deliverable:** `docs/srs.md`  
 **Responsible:** Burcu Ücük — Product Owner and Requirements Engineer  
 **Reviewer:** Ayşe Dural — Architecture / API  
-**Related Issue:** [S2-01 — #44](https://github.com/seng321-7th-team/PantryChef/issues/44)  
-**Version:** 0.1 — Review Draft  
-**Date:** 17 November 2026  
-**Status:** Draft — Pending Ayşe's review and team approval
+**Related Issue:** [S3-03 — #129](https://github.com/seng321-7th-team/PantryChef/issues/129)  
+**Previous Issue:** S2-01 — #44  
+**Version:** 3.0 — Proposed Sprint 3 refinement  
+**Date:** 25 November 2026  
+**Status:** Draft — Pending technical, DevOps, QA and team review
 
 ---
 
@@ -29,9 +31,10 @@ PantryChef is a web-based restaurant order and ingredient-inventory coordination
 - `docs/project-proposal.md` — project objectives and scope.
 - `docs/system-vision.md` — actors, boundary, order lifecycle, and business rules.
 - `docs/product-backlog.md` — Epics and user stories US-01 through US-14 (and deferred stories).
-- `docs/non-functional-requirements.md` — FR-01 through FR-14 and NFR-01 through NFR-15.
+- `docs/non-functional-requirements.md` — FR-01 through FR-14 and NFR-01 through NFR-17.
 - `api/openapi.yaml` — Sprint 1 API draft; endpoint details are subject to review.
-- `docs/sprint2-task-board.md` and `docs/sprint2-raci.md` — Sprint 2 ownership and review workflow.
+- `docs/sprint2-task-board.md` and `docs/sprint2-raci.md` — historical Sprint 2 ownership and review workflow.
+- Sprint 3 scope decision (#124), backlog refinement (#125), and requirements refinement (#129).
 
 If these artifacts conflict, the discrepancy must be recorded and resolved with the relevant owners; this document does not silently override an approved baseline.
 
@@ -81,6 +84,7 @@ Customer self-ordering, payments and billing, table reservations, delivery/couri
 - Restaurant staff use the web application and enter correct ingredient quantities, units, and recipes.
 - Staff physically handle food and verify real-world inventory; the application maintains digital records only.
 - The OpenAPI file is a **draft contract**, not evidence of implemented endpoints.
+- Authentication and role authorization remain in scope; staff account administration remains pending the S3-01 scope decision (#124).
 - Exact infrastructure, deployment, browser-test versions, and performance-test environment require team agreement.
 - Purchase-order and supplier workflows remain deferred unless the team explicitly approves a scope change.
 
@@ -120,7 +124,7 @@ Each accepted order retains the recipe version and ingredient quantities used fo
 
 ## 4. Detailed Functional and Quality Requirements
 
-The following requirement identifiers and definitions are preserved from the Sprint 2 functional/non-functional requirements deliverable so that cross-document traceability remains stable. The proposed numeric NFR targets remain **pending technical and QA agreement**.
+The following requirement identifiers and definitions are preserved from the Sprint 2 functional/non-functional requirements deliverable so that cross-document traceability remains stable. The proposed numeric NFR targets remain **pending technical, DevOps and QA agreement**.
 
 ### 4.1 Functional Requirements
 
@@ -215,7 +219,7 @@ The system shall allow authorized Chefs to change an order from `Pending` to `Pr
 
 During this transition, the system shall atomically transition the order's active ingredient reservations to `CONSUMED`, decrease the corresponding reserved quantities, and deduct the corresponding physical stock exactly once.
 
-Repeated requests shall not cause duplicate deductions.
+Repeated requests shall not cause duplicate deductions. If the transaction fails, no partial order or inventory changes shall remain.
 
 **Related Story:** US-09
 
@@ -265,7 +269,7 @@ The system shall identify an ingredient as low-stock when:
 
 `Available Stock <= Low-Stock Threshold`
 
-Deactivated ingredients shall not raise low-stock alerts.
+Deactivated ingredients shall not raise low-stock alerts. This existing SRS rule requires confirmation against FR-14 in the companion requirements document, which does not explicitly state the exclusion.
 
 Alerts shall reflect relevant reservations, consumption, cancellations, and inventory adjustments.
 
@@ -279,21 +283,21 @@ The MVP shall not automatically create purchase orders.
 
 Non-functional requirements describe quality attributes and constraints.
 
-The measurable targets below are **proposed Sprint 2 acceptance targets**, not verified implementation results or previously approved performance commitments. They require review by the technical lead and QA engineer.
+The measurable targets below are **proposed Sprint 3 acceptance targets carried forward from Sprint 2**, not verified implementation results or approved performance commitments. They remain subject to review by the Technical Lead, DevOps Engineer, and QA Engineer. Final targets and measurement conditions shall be documented after team agreement.
 
 #### 4.2.1 Performance
 
 **NFR-01 — Response Time**
 
-Under a proposed test workload of 20 concurrent users, 95% of ordinary order-list and inventory-read requests should complete within 2 seconds in the agreed test environment.
+Under a proposed test workload of 20 concurrent users, 95% of ordinary order-list and inventory-read requests should complete within 2 seconds in the proposed test environment (a local Docker Compose setup with seeded test data, subject to confirmation against `docs/architecture/infrastructure-requirements.md`).
 
-**Verification:** Automated API response-time testing.
+**Verification:**  Automated API load testing using k6 in the agreed local Docker Compose environment. Use 20 concurrent virtual users with a 1-second think time, a 1-minute warm-up (excluded from results), and a 5-minute measurement window. The workload mix is 40% GET /orders, 40% GET /inventory, and 20% POST /orders with fresh Idempotency-Key values. Record at least 200 successful requests per read endpoint. Calculate p95 response time separately for each read endpoint, with an acceptance threshold of p95 ≤ 2 seconds. Unexpected errors and timeouts (10 seconds) must not exceed 1% of all attempts. Record the environment, workload, sample counts, latency results, and error rates. Formal verification remains pending until the tests are executed.
 
 **NFR-02 — Transaction Performance**
 
-Under the same proposed workload, 95% of valid order creation and reservation transactions should complete within 3 seconds.
+Under the same proposed workload and test environment, 95% of valid order creation and atomic reservation transactions should complete within 3 seconds.
 
-**Verification:** Integration and performance testing.
+**Verification:** Integration and performance testing using k6 in the agreed local Docker Compose environment. Use 20 concurrent virtual users with a 1-second think time, a 1-minute warm-up (excluded from results), and a 5-minute measurement window. The workload mix is 40% GET /orders, 40% GET /inventory, and 20% POST /orders, using a fresh Idempotency-Key for each new order. Use sufficient seeded inventory to avoid expected insufficient-stock rejections. Record at least 200 successful POST /orders requests. Measure p95 end-to-end transaction latency for successful valid order creation, with an acceptance threshold of p95 ≤ 3 seconds. Unexpected errors and timeouts (10 seconds) must not exceed 1% of all attempts, and there must be zero inventory invariant violations. Record the test environment, workload, sample counts, latency, error rates, and inventory consistency results. Formal verification remains pending until the tests are executed.
 
 #### 4.2.2 Reliability and Data Integrity
 
@@ -394,6 +398,20 @@ A failed inventory-related transaction shall not leave partially committed order
 **Verification:** Simulated transaction failure and rollback tests.
 
 
+#### 4.2.7 Backup and Deployment Security
+
+**NFR-16 — Backup and Restore**
+
+During use of the proposed demonstration environment, the PostgreSQL database shall be backed up using `pg_dump` at least once every 24 hours and before each sprint demonstration. The proposed recovery point objective (RPO) is at most 24 hours, and the proposed recovery time objective (RTO) is at most 30 minutes using documented restore steps. These targets are subject to confirmation by the infrastructure owner and QA.
+
+**Verification:** Review backup timestamps and restore documentation; restore a real backup into a test database before the final demonstration, check data integrity, and record elapsed recovery time.
+
+**NFR-17 — Authentication and Secrets**
+
+User passwords shall be stored as salted, one-way password hashes (for example, bcrypt), never as plaintext. Access tokens shall expire within at most one hour, consistent with the API draft's proposed `expiresIn: 3600` value. Database credentials and JWT signing secrets shall be supplied through environment variables or an equivalent secret-management mechanism and shall not be committed to the repository. If deployed to a publicly reachable host, the application shall be accessible only over HTTPS.
+
+**Verification:** Authentication configuration review, checks that stored passwords are not plaintext, token-expiration tests, repository secret scanning, and HTTPS deployment review when applicable. Confirm these requirements with the API and infrastructure owners.
+
 ## 5. External Interfaces and API Alignment
 
 ### 5.1 User interfaces
@@ -405,7 +423,7 @@ The Waiter interface should support order entry, current order status, and permi
 | Capability | OpenAPI draft operation | Linked requirement |
 |---|---|---|
 | Authentication/profile | `POST /auth/login`, `GET /auth/me` | FR-01 |
-| Staff management | `/users`, `/users/{userId}` | FR-01 |
+| Staff management (scope pending #124) | `/users`, `/users/{userId}` | FR-01 (authorization only; administration coverage pending) |
 | Ingredient management | `/ingredients`, `/ingredients/{ingredientId}` | FR-02 |
 | Stock availability and adjustment | `GET /inventory`, `/inventory/adjustments`, `/ingredients/{ingredientId}/stock` | FR-03, FR-04 |
 | Recipes and versions | `/recipes`, `/recipes/{menuItemId}/versions`, `/recipes/{menuItemId}` | FR-05 |
@@ -453,10 +471,10 @@ The following rules are mandatory for MVP consistency:
 
 | Functional Requirement | Backlog Story | Related Quality Requirements |
 |---|---|---|
-| FR-01 | US-01 | NFR-06, NFR-07 |
+| FR-01 | US-01 | NFR-06, NFR-07, NFR-17 |
 | FR-02 | US-02 | NFR-07, NFR-08 |
 | FR-03 | US-03 | NFR-04 |
-| FR-04 | US-04 | NFR-03, NFR-08 |
+| FR-04 | US-04 | NFR-03, NFR-08, NFR-16 |
 | FR-05 | US-05 | NFR-07, NFR-11 |
 | FR-06 | US-06 | NFR-01, NFR-07 |
 | FR-07 | US-07 | NFR-02, NFR-03, NFR-04, NFR-05 |
@@ -465,8 +483,31 @@ The following rules are mandatory for MVP consistency:
 | FR-10 | US-10 | NFR-04, NFR-09 |
 | FR-11 | US-11 | NFR-03, NFR-05 |
 | FR-12 | US-12 | NFR-06, NFR-08 |
-| FR-13 | US-13 | NFR-08 |
+| FR-13 | US-13 | NFR-08, NFR-16 |
 | FR-14 | US-14 | NFR-04, NFR-09 |
+
+### 6.2.1 Sprint 3 Implementation and Verification Traceability
+
+The following task mappings are carried forward from the proposed Sprint 3 backlog refinement (#125). Task IDs are not GitHub issue numbers. The #119 and #120 mappings remain provisional pending issue-body review. All implementation and test evidence remains pending.
+
+| User Story | Functional Requirement | Sprint 3 task references | Draft API operation IDs | Evidence |
+|---|---|---|---|---|
+| US-01 | FR-01 | S3-40, S3-31 | login, getCurrentUser | Pending |
+| US-02 | FR-02 | S3-37A, S3-34 | createIngredient, listIngredients, updateIngredient, deactivateIngredient | Pending |
+| US-03 | FR-03 | S3-37A, S3-34 | listInventory, getInventoryItem | Pending |
+| US-04 | FR-04 | S3-37B (#119), S3-34, S3-05 | createStockAdjustment | Pending |
+| US-05 | FR-05 | S3-37B (#119), S3-37A, S3-34, S3-05 | replaceRecipe, listRecipeVersions, getRecipe | Pending |
+| US-06 | FR-06 | S3-16, S3-32 | createOrder | Pending |
+| US-07 | FR-07 | S3-16, S3-32 | createOrder, listReservations | Pending |
+| US-08 | FR-08 | S3-33 | listOrders, getOrder | Pending |
+| US-09 | FR-09 | S3-17, S3-33 | updateOrderStatus | Pending |
+| US-10 | FR-10 | S3-17, S3-33 | updateOrderStatus | Pending |
+| US-11 | FR-11 | S3-18, S3-32 | updateOrderStatus | Pending |
+| US-12 | FR-12 | S3-18, S3-32 | updateOrderStatus | Pending |
+| US-13 | FR-13 | S3-38 (#120), S3-34 | listAuditLogs, listStockMovements | Pending |
+| US-14 | FR-14 | S3-38 (#120), S3-34 | listLowStockAlerts | Pending |
+
+Coordination: S3-01 (#124), S3-02 (#125), S3-14 (architecture/SRS/API consistency), S3-23 (quality metrics), and S3-24 (requirements/test traceability). Missing GitHub issue numbers and test IDs shall be added once confirmed. Menu item management and authentication story coverage require review; staff administration remains pending #124.
 
 ### 6.3 Acceptance and Verification Scenarios
 
@@ -507,12 +548,12 @@ The following scenarios shall guide requirements validation:
 ## 8. Open Questions and Approval Gates
 
 1. **Performance targets:** Confirm the proposed 20-user workload and 2-second/3-second p95 targets with Ayşe, Emre, and Beyzanur.
-2. **Authentication and staff management:** Confirm whether all `/users` operations are needed for the agreed MVP UI and implementation phase.
+2. **Authentication and staff management:** Confirm staff account administration scope through S3-01 (#124); authentication and role authorization remain in scope. Confirm menu item management and authentication story coverage with the backlog and API owners.
 3. **Recipe versioning:** Confirm API response details and persisted order-item recipe-version behavior with Ayşe.
 4. **Idempotency:** Confirm replay and mismatched-body behavior across order creation and status transitions.
 5. **UI validation:** Review Figma screens and role-specific actions with Tuğçe.
 6. **Testing:** Add real test-case IDs and verification evidence when Beyzanur's test artifacts are ready.
-7. **Document status:** Update the SRS status only after Ayşe's PR review and merge into `develop`.
+7. **Document status:** Update the SRS status only after required reviews and merge into `develop`.
 
 ## 9. Dependencies and Assumptions
 
@@ -530,12 +571,12 @@ The following scenarios shall guide requirements validation:
 - [ ] Functional requirements reviewed against the Project Proposal.
 - [ ] Requirements verified against the System Vision.
 - [ ] Backlog story references reviewed.
-- [ ] Functional requirements checked against the SRS.
+- [ ] Functional requirements checked against `docs/non-functional-requirements.md`.
 - [ ] API-related requirements reviewed against the OpenAPI draft.
-- [ ] Proposed performance targets reviewed by the technical lead.
+- [ ] Proposed performance targets and measurement conditions reviewed by Ayşe, Emre, and Beyzanur.
 - [ ] Testability and verification scenarios reviewed by Beyzanur.
 - [ ] MVP scope and business rules confirmed.
-- [ ] Pull request linked to Issue #44 (S2-01).
+- [ ] Pull request linked to Issue #129 (S3-03).
 - [ ] Changes reviewed and merged into `develop`.
 
 ## 11. Related Documents
@@ -553,24 +594,24 @@ This document establishes a structured and testable requirements baseline for th
 
 It preserves the approved order lifecycle, atomic ingredient reservation, exactly-once physical stock consumption, controlled cancellation, role-based authorization, and low-stock monitoring rules.
 
-The requirements will support Sprint 2 SRS refinement, architecture design, API consistency review, and future implementation and testing.
+The requirements will support Sprint 3 MVP implementation, CI/CD verification, architecture and API consistency review, and traceable testing.
 
 **Document Owner:** Burcu Ücük  
 **Review Status:** Pending Technical and QA Review  
-**Related Issue:** #44 — S2-01
+**Related Issue:** #129 — S3-03
 
 
-## 13. Definition of Done for S2-01 / Issue #44
+## 13. Definition of Done for S3-03 / Issue #129
 
-- [x] System purpose, boundaries, stakeholders, and primary roles documented.
-- [x] Functional requirements use stable identifiers and acceptance criteria.
-- [x] Inventory lifecycle, atomic reservation, exactly-once consumption, and cancellation rules documented.
-- [x] Authentication/authorization, recipe versions, low-stock alerts, and audit requirements included.
-- [x] NFRs referenced with proposed verification measures.
-- [x] Backlog-to-SRS and API-to-SRS traceability established at requirement/capability level.
-- [x] Assumptions, exclusions, and unresolved review decisions identified.
-- [ ] Ayşe completes GitHub PR review and requests/approves corrections.
-- [ ] Approved SRS merged into `develop`; Issue #44 closes through linked PR.
+- [ ] Existing FR, NFR, US and BR identifiers preserved and cross-checked.
+- [ ] Functional requirements aligned with the agreed Sprint 3 MVP scope.
+- [ ] Requirements linked to relevant implementation issues and verification activities.
+- [ ] Requirements reviewed for clarity, measurability and testability.
+- [ ] Performance targets and measurement conditions evaluated with Ayşe, Emre and Beyzanur; decisions documented.
+- [ ] Authorization, atomic reservation, stock consumption and cancellation rules preserved.
+- [ ] SRS, Product Backlog, requirements document and OpenAPI consistency reviewed.
+- [ ] Pending scope decisions and missing issue/test references explicitly documented.
+- [ ] Related pull request linked, reviewed and merged into `develop`.
 
 ---
 
