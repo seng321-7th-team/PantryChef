@@ -103,7 +103,7 @@ Sprint 3: Bilgesu owns the seed data and demo scenario (S3-11). Emre connects th
 
 Own feature implementation, cross-component integration, API/UI coordination, integration defect resolution and technical documentation support. No distinct S1 delivery is assigned. S2: Figma-based UI skeleton with Burcu; S3: first working MVP; Final: reliable main flow and technical documentation. Implement waiter/chef screens, stock/recipe management, reservation logic and real-time kitchen updates in the relevant later scope. Update YAML before API code changes and use reviewed PRs. System vision/boundary is Burcu’s; C4/UML is Ayşe’s S2 work.
 
-Sprint 3: Ayşe owns backend reservation logic (S3-16). Tuğçe owns frontend integration and the ingredient and menu APIs (S3-37A).
+Sprint 3: Ayşe owns backend reservation logic (S3-16). Tuğçe owns frontend integration and the ingredient and menu APIs (S3-37A). Emre owns recipe management, inventory adjustments, and available-portion calculation (S3-37B). Ayşe owns architecture documentation (S3-19).
 
 ---
 

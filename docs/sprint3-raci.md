@@ -69,4 +69,5 @@ The Sprint 3 v2.4 task owner is both responsible and accountable (R/A). The list
 
 - **Seed and setup:** Bilgesu owns the demo data and scenario (S3-11). Emre connects the seed command to setup (S3-29). Seed depends on the backend skeleton (S3-39), schema (S3-15) and authentication (S3-40). The opening-stock step uses the S3-37B adjustment API with `INITIAL_STOCK`. S3-37A is also needed if ingredients are created through the API.
 - **Orders and inventory:** Ayşe implements the reservation rules (S3-16), and Tuğçe integrates the UI. Tuğçe owns the ingredient and menu APIs (S3-37A). Emre owns recipes, inventory adjustments and available-portion calculation (S3-37B), plus low-stock alerts and operation history (S3-38).
-- **Architecture and delivery:** Ayşe owns C4/UML and ADR updates (S3-19). Emre owns the release (S3-30), Beyzanur owns the test report (S3-25), and Bilgesu coordinates final consistency and Teams submission (S3-12, S3-13).
+- **Architecture and delivery:** Ayşe owns C4/UML and ADR updates (S3-19). Emre owns the release (S3-30), and Bilgesu coordinates final consistency and Teams submission (S3-12, S3-13).
+- **Release evidence:** Beyzanur prepares the test report, coverage results, and CI evidence for the tagged commit. Emre verifies them.
