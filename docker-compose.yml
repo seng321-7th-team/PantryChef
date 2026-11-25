@@ -1,0 +1,32 @@
+# Local development setup (S3-29).
+# For now it only runs the database, so the backend can be built against a real PostgreSQL.
+# The api and web services are added when the backend and frontend images exist (ADR-011).
+#
+# Usage: copy .env.example to .env, then run `docker compose up -d db`.
+
+name: pantrychef
+
+services:
+  db:
+    # Major version pinned by ADR-011. CI uses the same version.
+    image: postgres:18
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-pantrychef}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env (copy .env.example)}
+      POSTGRES_DB: ${POSTGRES_DB:-pantrychef}
+      TZ: UTC
+      PGTZ: UTC
+    ports:
+      # Local development only, and only on this machine (IR-06).
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      # postgres:18 keeps its data under /var/lib/postgresql/18, so the volume goes one level up.
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:

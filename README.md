@@ -76,7 +76,21 @@ docs/ui-ux/         Figma links, user flows and screen exports (Sprint 2)
 docs/devops/        DevOps notes, e.g. Sprint 3 CI/CD and Docker readiness
 frontend/           React + TypeScript UI skeleton (Sprint 2, see frontend/README.md)
 .github/            Issue and pull request templates, CI workflows
+docker-compose.yml  Local PostgreSQL for development (Sprint 3)
+.env.example        Environment variables with dummy values, copy to .env
 ```
+
+## Local development
+
+The full steps to run the MVP come later in Sprint 3 (S3-29). For now the repo has a local PostgreSQL database:
+
+1. Install Docker Desktop.
+2. Copy `.env.example` to `.env` and set your own `POSTGRES_PASSWORD` (also in `DATABASE_URL`).
+3. Start the database: `docker compose up -d db`
+4. Check that it is healthy: `docker compose ps`
+5. Stop it with `docker compose down`. The data stays in the `pgdata` volume. `docker compose down -v` deletes it.
+
+The frontend runs on its own, see [`frontend/README.md`](frontend/README.md).
 
 ## How to contribute
 

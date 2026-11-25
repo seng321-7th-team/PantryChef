@@ -45,3 +45,23 @@ jobs:
         with:
           args: --offline --no-progress './**/*.md'
           fail: true
+
+  compose:
+    # Not a required check. Starts the database from docker-compose.yml to show that the file works (S3-29).
+    name: Docker Compose check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Start the database
+        run: |
+          cp .env.example .env
+          docker compose up -d --wait db
+
+      - name: Connect to the database
+        run: docker compose exec -T db sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "select version();"'
+
+      - name: Stop the database
+        if: always()
+        run: docker compose down -v
