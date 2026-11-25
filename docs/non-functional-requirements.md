@@ -3,11 +3,16 @@
 **Project:** PantryChef — Restaurant Order and Inventory Management System  
 **Course:** BM 321 / SENG 321 — Software Engineering  
 **Team:** Team 7  
-**Sprint:** Sprint 2 — Requirements and Architecture  
+**Baseline:** Sprint 2 — Requirements and Architecture  
+**Current Sprint:** Sprint 3 — MVP & CI/CD  
 **Responsible:** Burcu Ücük — Product Owner and Requirements Engineer  
-**Reviewer:** Beyzanur Alpay — QA Engineer  
-**Related Issue:** #49 — S2-03  
-**Document Status:** Draft — Pending Team Review
+**QA Reviewer:** Beyzanur Alpay  
+**Technical Reviewers:** Ayşe and Emre  
+**Related Issue:** [S3-03 — #129](https://github.com/seng321-7th-team/PantryChef/issues/129)  
+**Previous Issue:** #49 — S2-03  
+**Version:** 3.0 — Proposed Sprint 3 Refinement  
+**Date:** 25 November 2026  
+**Document Status:** Draft — Pending Technical, QA, and Team Review
 
 ---
 
@@ -98,7 +103,7 @@ Existing orders shall preserve their original ingredient requirements after reci
 
 **FR-06 — Order Creation**
 
-The system shall allow authorized Waiters to create orders containing valid menu items and positive portion quantities.
+The system shall allow only authorized Waiters to create orders containing valid menu items and positive portion quantities. Restaurant Managers and Chefs/Kitchen Staff shall not be permitted to create orders.
 
 Successfully created orders shall receive unique identifiers and enter the `Pending` state.
 
@@ -130,11 +135,11 @@ Cancelled orders shall not appear as active preparation tasks.
 
 **FR-09 — Preparation and Stock Consumption**
 
-The system shall allow authorized Chefs to change an order from `Pending` to `Preparing`.
+When an authorized Chef starts preparation, the system shall transition the order from `Pending` to `Preparing`.
 
-During this transition, the system shall atomically release the order's ingredient reservations and deduct the corresponding physical stock exactly once.
+Active ingredient reservations shall transition to `CONSUMED`, reserved quantities shall decrease, and physical stock shall be deducted exactly once within the same atomic transaction.
 
-Repeated requests shall not cause duplicate deductions.
+Repeated preparation requests shall not cause additional stock deductions. If the transaction fails, no partial order or inventory changes shall remain.
 
 **Related Story:** US-09
 
@@ -152,7 +157,7 @@ This transition shall not change physical or reserved inventory quantities.
 
 The system shall allow a Waiter or Restaurant Manager to cancel a `Pending` order.
 
-Cancellation shall release its ingredient reservations atomically without changing physical stock.
+Cancellation shall atomically transition active ingredient reservations to `RELEASED` and decrease reserved quantities without changing physical stock.
 
 Repeated cancellation requests shall not release the same reservation more than once.
 
@@ -196,7 +201,7 @@ The MVP shall not automatically create purchase orders.
 
 Non-functional requirements describe quality attributes and constraints.
 
-The measurable targets below are **proposed Sprint 2 acceptance targets**, not verified implementation results or previously approved performance commitments. They require review by the technical lead and QA engineer.
+The measurable targets below are **proposed Sprint 3 acceptance targets carried forward from Sprint 2**, not verified implementation results or approved performance commitments. They remain subject to review by the Technical Lead, DevOps Engineer, and QA Engineer. Final targets and measurement conditions shall be documented after team agreement.
 
 ### 4.1 Performance
 
@@ -361,6 +366,18 @@ The following rules are mandatory for MVP consistency:
 | FR-13 | US-13 | NFR-08, NFR-16 |
 | FR-14 | US-14 | NFR-04, NFR-09 |
 
+### Sprint 3 Implementation and Verification Traceability
+
+Existing FR, NFR, and US identifiers are preserved.
+
+- S3-01 — MVP scope definition (#124).
+- S3-02 — Refined product backlog (#125).
+- S3-14 — Architecture, SRS, and OpenAPI consistency.
+- S3-23 — Quality metrics and NFR verification.
+- S3-24 — Requirements and test traceability.
+
+Implementation issue references and test-case identifiers shall be added as they become available. Missing references remain pending and do not represent completed verification.
+
 ## 7. Acceptance and Verification Scenarios
 
 The following scenarios shall guide requirements validation:
@@ -406,7 +423,7 @@ The following scenarios shall guide requirements validation:
 - [ ] NFR-16/17 reviewed against SRS, infrastructure documentation, and QA metrics.
 - [ ] Testability and verification scenarios reviewed by Beyzanur.
 - [ ] MVP scope and business rules confirmed.
-- [ ] Pull request linked to Issue #49.
+- [ ] Pull request linked to Issue #129 (S3-03).
 - [ ] Changes reviewed and merged into `develop`.
 
 ## 10. Related Documents
@@ -426,8 +443,8 @@ This document establishes a structured and testable requirements baseline for th
 
 It preserves the approved order lifecycle, atomic ingredient reservation, exactly-once physical stock consumption, controlled cancellation, role-based authorization, and low-stock monitoring rules.
 
-The requirements will support Sprint 2 SRS refinement, architecture design, API consistency review, and future implementation and testing.
+The requirements will support Sprint 3 MVP implementation, API consistency, requirements traceability, and verification activities.
 
 **Document Owner:** Burcu Ücük  
 **Review Status:** Pending Technical and QA Review  
-**Related Issue:** #49 — S2-03
+**Related Issue:** #129 — S3-03
