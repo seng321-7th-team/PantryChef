@@ -292,8 +292,9 @@ button {
   color: var(--color-ready-text);
 }
 
-/* Result of the user's last confirmed status change. In the page flow, so it never covers cards. */
-.board-feedback {
+/* Result of the user's last confirmed status change (kitchen) or create (inventory). In the page flow, so it never covers content. */
+.board-feedback,
+.page-feedback {
   margin-bottom: 12px;
   padding: 8px 12px;
   border-radius: var(--radius-control);
@@ -303,7 +304,8 @@ button {
   font-weight: 600;
 }
 
-.board-feedback:empty {
+.board-feedback:empty,
+.page-feedback:empty {
   margin: 0;
   padding: 0;
 }
@@ -824,6 +826,91 @@ button {
   border-radius: var(--radius-control);
   background: var(--color-alert-bg);
   color: var(--color-alert-text);
+}
+
+/* Dialogs and form fields (scr-04d to scr-04f). Native <dialog> opened with showModal(). */
+.dialog {
+  width: min(460px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 24px;
+  border: 0;
+  border-radius: var(--radius-column);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 12px 32px rgb(27 31 36 / 0.18);
+}
+
+.dialog::backdrop {
+  background: rgb(27 31 36 / 0.35);
+}
+
+.dialog__title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.dialog__subtitle {
+  margin: 4px 0 20px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.btn--primary[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.field + .field {
+  margin-top: 16px;
+}
+
+.field__label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.field__input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 16px;
+}
+
+.field__input[aria-invalid='true'] {
+  border-color: var(--color-error-text);
+}
+
+.field__input:read-only:not(select),
+.field__input:disabled {
+  background: var(--color-disabled-bg);
+}
+
+.field__hint,
+.field__error {
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.field__hint {
+  color: var(--color-text-muted);
+}
+
+.field__error {
+  color: var(--color-error-text);
 }
 
 /* Two-column screen layouts */

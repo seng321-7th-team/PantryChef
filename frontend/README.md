@@ -29,12 +29,12 @@ Open `http://127.0.0.1:5173/` and choose a role. The address keeps the screen (f
 | Waiter | New order | `#/waiter/new-order` | `scr-02a` | Menu with portions available, current order (add, −, +) kept on the page only, My open orders. Send to kitchen and Cancel are disabled. |
 | Waiter | Orders | `#/waiter/orders` | `scr-05c` (without its 403 banner) | Today's orders. Cancel and Late cancel are disabled. |
 | Chef | Kitchen | `#/chef/kitchen` | `scr-03a` – `scr-03e` | Kitchen board with the orders service (see "Kitchen board behavior"). |
-| Manager | Inventory | `#/manager/inventory` | `scr-04a` | Stock table, low-stock banner, Low stock only filter. History, New ingredient, Edit and Adjust are disabled. |
+| Manager | Inventory | `#/manager/inventory` | `scr-04a`, `scr-04d` – `scr-04f` | Stock table, low-stock banner, Low stock only filter. New ingredient works against an in-memory mock (see "New ingredient"). History, Edit and Adjust are disabled. |
 | Manager | Recipes | `#/manager/recipes` | `scr-06a` | Menu items, current recipe, version history; selecting a menu item works. New menu item and Edit recipe are disabled. |
 | Manager | Orders & audit | `#/manager/orders` | `scr-05a` | Today's orders with recipe versions and the audit log. Cancel and Late cancel are disabled. |
 | Manager | Staff permissions | `#/manager/staff` | `scr-08a` (start state) | Active waiters and the late-cancel setting of Deniz Yilmaz. The toggle is disabled; nothing is saved. |
 
-An unknown address shows "Page not found" with a link to the role choice. Dialogs, error and result frames of Figma (for example `scr-04b`, `scr-05d`, `scr-06c`, `scr-04j`) are states of these screens and are not built yet.
+An unknown address shows "Page not found" with a link to the role choice. Dialogs, error and result frames of Figma (for example `scr-04b`, `scr-05d`, `scr-06c`, `scr-04j`) are states of these screens and are not built yet, except New ingredient (`scr-04d` – `scr-04f`).
 
 **Demo role preview.** The role is read from the address. It is not a sign-in: no account, password or permission is checked, and nothing is stored. "Change role" returns to the role choice. Hiding a screen in the UI is not access control; the API checks every request (ADR-006).
 
@@ -48,8 +48,8 @@ An unknown address shows "Page not found" with a link to the role choice. Dialog
 
 | Mode | Setting | Kitchen board | Waiter and manager screens |
 |---|---|---|---|
-| `mock` (default) | `VITE_ORDERS_MODE=mock` | In-memory sample orders #1039–#1043 (Pending 3 / Preparing 1 / Ready 1). `?mock=empty`, `?mock=many` (130 extra Pending orders) and `?mock=list-error` select other data sets. | Read-only sample data from the Figma frames (`src/api/mock/sampleScreens.ts`, `todaysSampleOrders()`). |
-| `http` | `VITE_ORDERS_MODE=http`, `VITE_API_BASE_URL=/v1` | Calls the API. The bearer token comes from `getDemoAccessToken()`, which returns no token in this build, so a real API is expected to answer `401`. This was not tested: no API runs yet. | "This screen is not connected to the API yet." No fallback to sample data. |
+| `mock` (default) | `VITE_ORDERS_MODE=mock` | In-memory sample orders #1039–#1043 (Pending 3 / Preparing 1 / Ready 1). `?mock=empty`, `?mock=many` (130 extra Pending orders) and `?mock=list-error` select other data sets. | Read-only sample data from the Figma frames (`src/api/mock/sampleScreens.ts`, `todaysSampleOrders()`). New ingredient uses the in-memory ingredients mock, which starts with the same sample ingredients (`sampleIngredients()`). |
+| `http` | `VITE_ORDERS_MODE=http`, `VITE_API_BASE_URL=/v1` | Calls the API. The bearer token comes from `getDemoAccessToken()`, which returns no token in this build, so a real API is expected to answer `401`. This was not tested: no API runs yet. | "This screen is not connected to the API yet." No fallback to sample data. There is no ingredients adapter yet, so New ingredient is not offered. |
 
 Copy `.env.example` to `.env.local` to change the mode. An unknown mode or scenario shows a configuration error; http mode never falls back to mock data.
 
@@ -65,6 +65,7 @@ Compared with `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` (20 Nov 2026), 
 - **Changed in `src/api/types.ts`:** `Order` now has the optional `preparationStartedAt` and `readyAt`; `Problem` has the optional `shortages` (`StockShortage[]`). The board does not use them yet.
 - **Kept on purpose:** `Problem.code` is a string, not the `ErrorCode` union, so an unknown code is still shown.
 - **Sample-data types** (`User`, `MenuItem`, `Recipe`, `RecipeLine`, `InventoryItem`, `AuditLogEntry`) use the contract's names and required fields. No request for them exists yet.
+- **Ingredient types** (`IngredientCreate`, `Ingredient`) were added from `api/openapi.yaml` 0.2.1 on `develop` at `ad4a654` (25 Nov 2026) for `POST /ingredients`. Only the in-memory mock uses them; no ingredient request is sent.
 - **Not in the contract, so not invented:** a "created by me" filter for My open orders, the keys of `AuditLogEntry.details` (the audit lines show the Figma text as sample display text), and ingredient lines for recipes other than Menemen (not drawn in Figma).
 
 ## Sources
@@ -93,6 +94,21 @@ Compared with `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` (20 Nov 2026), 
 - Keyboard focus after a status change: while the request runs the button is disabled and the browser drops its focus. When the request ends, focus goes back to the card's button if the card is still in its column, otherwise to the next card's button in the same column, the previous one, and then the selected status tab (narrow screens) or the column heading. This happens only after the user's own action and only if focus is still on the page itself; if the user focused or clicked something else, focus stays there. Refreshes and width changes alone do not move focus, and the success message never takes focus.
 - Layout by width: from 1024 px the three columns are side by side. From 641 to 1023 px Pending and Preparing are side by side and Ready is below them at full width. At 640 px and below, Pending, Preparing and Ready are tabs (Pending first) and only the chosen column is shown. Each tab shows the same counter as its column (`page.totalItems`). Arrow keys, Home and End move between the tabs. Only the user changes the chosen tab: polling and card actions keep it, and an emptied column shows "No orders". The tabs stay at the top of the screen while the list scrolls. Every width uses the same board data, polling and card actions, so a change of width keeps the cards, the counters and a running status change.
 
+## New ingredient (S3-34, issue #135)
+
+First part of S3-34. It works in mock mode only: the form calls `IngredientsService.createIngredient` with the `POST /ingredients` body, and the only implementation is an in-memory mock (`src/api/mock/mockIngredientsService.ts`). No HTTP request is sent. The HTTP adapter comes after the shared HTTP client (#134).
+
+- **Form** (`scr-04d`): Name, Unit (`g`, `ml`, `piece`; `g` first, as in Figma) and Low-stock threshold, whose label shows the chosen unit. There is no stock field: the contract creates the stock record with on hand 0 and reserved 0, and opening stock is a separate `INITIAL_STOCK` adjustment.
+- **Dialog**: a native modal `<dialog>`. Focus starts in Name, the page behind it is inert, and Escape or Cancel closes it without sending anything. Focus then returns to "+ New ingredient", and the next opening starts empty.
+- **While the request runs**: the button says "Creating…" and keeps focus, the fields are read-only, and Cancel and Escape do nothing. A second click or Enter sends no second request. A browser may still close a modal dialog on a repeated Escape; if the request then fails, the dialog opens again with the error.
+- **Success**: the dialog closes, the returned ingredient is added to the table with 0 on hand, reserved and available (badge Out), "Bulgur created. It starts with 0 stock." is announced, and focus returns to "+ New ingredient". The app keeps the created ingredients for as long as it keeps the mock service, so the row is still listed after going to another screen and back, and the same name gives the duplicate message. Both are cleared when the app is reloaded; nothing is stored in the browser.
+- **Errors**: the entered values stay. `409 DUPLICATE_RESOURCE` shows "An ingredient with this name already exists." under Name (`scr-04f`). Field errors in the Problem `errors[]` show under the field when `field` is exactly `name`, `unit` or `lowStockThreshold`; other spellings are listed above the form, because the contract only calls `field` a JSON path. No answer, a 5xx answer or an unreadable answer says the ingredient may have been created, and that a repeat finds out through the duplicate-name message, because `POST /ingredients` has no Idempotency-Key and names are unique in the contract. The inventory list cannot settle this: it is sample data plus this session's results, not `GET /inventory`. Showing the real list after an uncertain create needs the inventory API, which is a later S3-34 step. Other answers (for example 401 or 403) show the server's text and code. The first field with a message gets focus, otherwise the Create button.
+- **Mock**: it starts with the sample ingredients, which stay in `sampleScreens.ts`. It does not check the values. It only rejects a name that already exists, compared exactly as typed, because the contract does not say whether case or spaces count. Mock successes are not evidence of server-side validation or of the real API.
+
+**Validation (S3-05, not done yet).** `validateIngredientForm` in `src/features/manager/ingredientForm.ts` is the extension point for Burcu's separate PR, and it returns no errors yet. The form calls it on submit with the raw values (the threshold is the input text). Each returned message is shown under its field, the first invalid field gets focus, and nothing is sent while any message is returned. Server messages use the same place.
+
+**Payload safeguard.** Apart from that hook, the form makes one check of its own, and it is not input validation: the threshold must become a finite JSON number before a body can be built. An empty or non-finite threshold is not turned into 0 or NaN; no request is sent and the field shows "Enter the low-stock threshold as a number." A message from the S3-05 validator for the threshold replaces it. Name and unit are sent as typed, and business rules such as an empty name or a negative threshold are left to S3-05 and the API.
+
 ## Checks of this delivery (20–21 Nov 2026)
 
 - `npm ci`, `npm run typecheck`, `npm run lint`, `npm test` (49 tests: 38 kitchen board and service tests, 11 for routes, role menus, page changes and the sample screens) and `npm run build` pass after the retry fix (21 Nov). Before the fix, the same checks passed with 42 tests, also after merging `develop` at `4227056`.
@@ -111,11 +127,11 @@ Compared with `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` (20 Nov 2026), 
 
 ## Limits of this delivery
 
-- Only the kitchen board sends requests. Waiter and manager screens are read-only sample data; their actions are disabled and say so.
+- Only the kitchen board sends requests. Waiter and manager screens are read-only sample data; their actions are disabled and say so, except New ingredient, which uses the in-memory mock.
 - Only the first page of each kitchen column is loaded; there is no paging.
 - The Ready column shows all READY orders from the first page, newest created first. Which Ready orders the board should show is an open product question.
 - No sign-in, sign-out, session or token storage (demo role preview only). Real authentication (`POST /auth/login`, bearer token) and the backend do not exist yet; in http mode the kitchen board sends no token, so a real API is expected to answer `401` (not tested).
-- Not built yet: dialogs and results (adjust stock, new ingredient, edit ingredient, deactivate, cancel, late cancel, publish recipe, new menu item), inventory history (`scr-04j`, `scr-04k`), the common states of `scr-07a` outside the kitchen board, and the "Preview as" switch of the prototype.
+- Not built yet: dialogs and results (adjust stock, edit ingredient, deactivate, cancel, late cancel, publish recipe, new menu item), inventory history (`scr-04j`, `scr-04k`), the common states of `scr-07a` outside the kitchen board, and the "Preview as" switch of the prototype.
 - No Docker, CI job or coverage gate is added.
 
 ## Remaining work (proposal)
@@ -134,3 +150,5 @@ Compared with `api/openapi.yaml` 0.2.1 on `develop` at `7270d63` (20 Nov 2026), 
 | Node.js version pin and frontend CI job | Emre Boz (ADR-011, Sprint 3 readiness) |
 | Idempotency-Key on status changes (ADR-005 Proposed) | Ayşe Dural |
 | "My open orders" filter (no "created by me" filter in the API) | Ayşe Dural |
+| Ingredient names: case and surrounding spaces in the unique check, the `FieldError.field` format, and 400 or 422 for invalid values (S3-37A) | Ayşe Dural, Tuğçe Çevik |
+| New ingredient input rules, including the default unit and decimal thresholds (S3-05) | Burcu Ücük |

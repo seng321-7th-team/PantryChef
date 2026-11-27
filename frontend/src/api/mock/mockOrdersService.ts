@@ -1,7 +1,8 @@
-import { ApiProblemError, NetworkError, RequestAbortedError, UnexpectedResponseError } from '../errors';
+import { ApiProblemError, NetworkError, UnexpectedResponseError } from '../errors';
 import type { OrdersService, RequestOptions } from '../ordersService';
 import type { ListOrdersQuery, Order, OrderPage, OrderStatus, OrderStatusUpdate, Problem } from '../types';
 import { sampleChef } from './sampleOrders';
+import { wait } from './wait';
 
 // In-memory stand-in for the orders API. It follows the status transitions and error
 // shapes of api/openapi.yaml so the screen can be exercised without a backend.
@@ -46,24 +47,6 @@ const allowedTransitions: Record<OrderStatus, OrderStatus[]> = {
 function problem(status: number, code: string, title: string, detail?: string): ApiProblemError {
   const body: Problem = { type: `about:blank`, title, status, code, ...(detail ? { detail } : {}) };
   return new ApiProblemError(status, body);
-}
-
-function wait(ms: number, signal: AbortSignal | undefined): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (signal?.aborted) {
-      reject(new RequestAbortedError());
-      return;
-    }
-    const timer = setTimeout(() => {
-      signal?.removeEventListener('abort', onAbort);
-      resolve();
-    }, ms);
-    function onAbort() {
-      clearTimeout(timer);
-      reject(new RequestAbortedError());
-    }
-    signal?.addEventListener('abort', onAbort, { once: true });
-  });
 }
 
 const clone = <T,>(value: T): T => structuredClone(value);

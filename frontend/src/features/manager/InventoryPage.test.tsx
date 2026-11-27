@@ -16,7 +16,7 @@ vi.mock('../../api/mock/sampleScreens', async (importOriginal) => {
 describe('InventoryPage', () => {
   it('says so when Low stock only matches no ingredient, and shows all rows again when turned off', async () => {
     const user = userEvent.setup();
-    render(<InventoryPage mode="mock" />);
+    render(<InventoryPage mode="mock" ingredientsService={null} createdIngredients={[]} onIngredientCreated={() => {}} />);
     const stock = screen.getByRole('region', { name: 'Stock' });
     const filter = screen.getByRole('button', { name: 'Low stock only' });
     expect(within(stock).getAllByRole('rowheader')).toHaveLength(8);

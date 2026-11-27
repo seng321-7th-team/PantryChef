@@ -2,7 +2,8 @@
 // Compared field by field with api/openapi.yaml 0.2.1 on develop (7270d63). The order schemas below
 // are used by the kitchen board requests (GET /orders, PATCH /orders/{orderId}/status). The schemas in
 // the "Sample-data screens" section only type the read-only sample data of the waiter and manager
-// screens; no request for them exists in this build.
+// screens; no request for them exists in this build. `IngredientCreate` and `Ingredient` were added
+// from api/openapi.yaml 0.2.1 on develop (ad4a654) for the mock New ingredient form.
 
 export type OrderStatus = 'PENDING' | 'PREPARING' | 'READY' | 'CANCELLED';
 
@@ -112,6 +113,29 @@ export interface Problem {
   traceId?: string;
   errors?: FieldError[];
   shortages?: StockShortage[];
+}
+
+// ---------------------------------------------------------------------------------------------
+// Ingredients (POST /ingredients). In this build only the mock ingredients service uses them.
+
+/** `IngredientCreate`: request body of `POST /ingredients`. */
+export interface IngredientCreate {
+  /** 1–100 characters in the contract. */
+  name: string;
+  unit: Unit;
+  /** At least 0 in the contract. An alert is raised when `available` is at or below this value. */
+  lowStockThreshold: number;
+}
+
+/** `Ingredient`: response of `POST /ingredients` (201). The stock record starts with onHand 0 and reserved 0. */
+export interface Ingredient {
+  id: string;
+  name: string;
+  unit: Unit;
+  lowStockThreshold: number;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // ---------------------------------------------------------------------------------------------
