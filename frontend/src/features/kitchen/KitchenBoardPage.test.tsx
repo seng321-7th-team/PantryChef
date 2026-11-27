@@ -833,6 +833,8 @@ describe('KitchenBoardPage keyboard focus after a status change', () => {
 
     button('Start preparing order #1042').focus();
     await user.keyboard('{Enter}');
+    // jsdom moves focus off the now disabled button on its next render tick.
+    await waitFor(() => expect(document.body).toHaveFocus());
     // A click on text that cannot take focus leaves focus on the page itself.
     await user.click(screen.getByRole('heading', { level: 1, name: 'Kitchen board' }));
     expect(document.body).toHaveFocus();
