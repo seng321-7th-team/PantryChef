@@ -74,10 +74,10 @@ Performance, security and backup targets will be measurable NFRs. They are agree
 
 ## 6. CI/CD flow
 
-**Now (Sprint 2):**
+**Now (Sprint 3):**
 
 1. A feature branch is opened from `develop` for one issue (see [`docs/git-workflow.md`](../git-workflow.md)).
-2. The pull request runs two checks: `OpenAPI lint` (required) and `Docs link check`.
+2. The pull request runs `OpenAPI lint` and `Frontend build and test` (both required) and `Docs link check`.
 3. After one approval it is merged into `develop`.
 4. At the end of the sprint a release PR merges `develop` into `main`, and the `sprint-N` tag and GitHub release are created.
 
