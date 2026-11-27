@@ -57,8 +57,27 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Unit tests
-        run: npm test
+      - name: Unit tests with coverage
+        # Fails when line coverage is below 50% (threshold in vite.config.ts, S3-27).
+        run: npm run test:coverage
+
+      - name: Coverage summary
+        if: ${{ !cancelled() && hashFiles('frontend/coverage/coverage-summary.json') != '' }}
+        run: |
+          node -e '
+            const t = require("./coverage/coverage-summary.json").total;
+            const rows = ["lines", "statements", "branches", "functions"]
+              .map((k) => `| ${k} | ${t[k].pct}% | ${t[k].covered}/${t[k].total} |`);
+            console.log(["### Frontend unit test coverage", "", "| Metric | Coverage | Covered |", "| --- | --- | --- |", ...rows, "", "Gate: lines >= 50%"].join("\n"));
+          ' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage report
+        if: ${{ !cancelled() && hashFiles('frontend/coverage/coverage-summary.json') != '' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: frontend-coverage
+          path: frontend/coverage/
+          retention-days: 30
 
       - name: Typecheck and build
         run: npm run build
