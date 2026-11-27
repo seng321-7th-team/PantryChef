@@ -70,7 +70,7 @@ ADR-011 pins the versions once, in the Sprint 3 project skeleton. They are recor
 | What | Rule (ADR-011) | Pinned in | Version |
 |---|---|---|---|
 | Node.js | Active LTS at the start of Sprint 3 | `.nvmrc`, read by CI (`actions/setup-node`) and used as the base image tag in both Dockerfiles | Sprint 3 |
-| PostgreSQL | A major version still supported by the PostgreSQL project | `docker-compose.yml` and the CI service container | Sprint 3 |
+| PostgreSQL | A major version still supported by the PostgreSQL project | `docker-compose.yml` and the CI service container | 18 (`postgres:18`, S3-29) |
 | npm packages | Exact versions from the lock file | `package-lock.json` in `backend/` and `frontend/`, installed with `npm ci` | Sprint 3 |
 
 Keeping the Node.js version in one file means CI and Docker cannot drift apart.
