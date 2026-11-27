@@ -16,6 +16,7 @@ In Sprint 3 the team delivers the first working MVP. On the DevOps side this mea
 |---|---|
 | `main` and `develop` protected by rulesets: PR, 1 approval, no force push, no deletion | Active |
 | Required check `OpenAPI lint` (Redocly) on every PR | Active |
+| Required check `Frontend build and test` (lint, unit tests, build) on every PR | Active since S3-28 (job added in PR #121) |
 | `Docs link check` on every PR (not required) | Added by S2-26 (PR #32) |
 | `sprint-*` and `v*` tags protected | Active |
 | Secret scanning and push protection | Enabled |
@@ -29,7 +30,7 @@ In Sprint 3 the team delivers the first working MVP. On the DevOps side this mea
 | Docs link check | Every PR | Already exists | No |
 | Backend build and unit tests | Every PR | `npm ci`, `npm run build` and Jest unit tests in `backend/` | Yes, after its first green run on `develop` |
 | Coverage gate | Every PR | Jest `--coverage`; fails if backend line coverage is under 50% | Yes, together with the job above |
-| Frontend build and lint | Every PR | `npm ci`, `npm run build` and ESLint in `frontend/` | Yes, once the frontend exists |
+| Frontend build and test | Every PR | `npm ci`, ESLint, Vitest unit tests and `npm run build` in `frontend/` | Yes (S3-26 PR #121, required in S3-28) |
 | Integration tests | PRs to `develop` | Runs API tests against a real PostgreSQL service container | Later in Sprint 3 |
 | Docker image build | Tags | Builds the images that the demo runs | Final |
 | SonarQube analysis | Every PR | Code smells, duplication, technical debt | Final |

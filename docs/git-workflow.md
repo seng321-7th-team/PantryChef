@@ -76,6 +76,7 @@ Configured in Settings → Rules → Rulesets. Active rulesets: [Protect main br
 | No direct push, PR required | ✓ | ✓ |
 | 1 approval needed | ✓ | ✓ |
 | `OpenAPI lint` check must pass | ✓ | ✓ |
+| `Frontend build and test` check must pass (since Sprint 3) | ✓ | ✓ |
 | No force push, branch can't be deleted | ✓ | ✓ |
 | Merge commit only | ✓ | |
 
@@ -84,6 +85,8 @@ Configured in Settings → Rules → Rulesets. Active rulesets: [Protect main br
 ## 6. CI
 
 `.github/workflows/ci.yml` runs on every PR and push to `main` and `develop`. The **OpenAPI lint** job checks `api/openapi.yaml` with Redocly CLI, using the `minimal` rules from `redocly.yaml`. Real errors like invalid fields or broken `$ref`s fail the check, style issues only show up as warnings. If `api/openapi.yaml` doesn't exist yet, the job is skipped.
+
+The **Frontend build and test** job runs `npm ci`, `npm run lint`, the Vitest unit tests and `npm run build` in `frontend/`. It is a required check, so a PR whose branch is older than this job has to be updated from `develop` first ("Update branch" button on the PR).
 
 To run the same check locally (needs Node.js):
 
